@@ -1,0 +1,4 @@
+.idea
+packer_cache/
+secrets.yml
+*.img
