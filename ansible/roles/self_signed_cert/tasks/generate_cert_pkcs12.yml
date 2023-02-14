@@ -28,6 +28,9 @@
     certificate_path: "/tmp/fullchain_{{ item.common_name }}.crt"
     friendly_name: "{{ item.pkcs12_friendly_name }}"
     passphrase: "{{ item.pkcs12_passphrase }}"
+    mode: 0600
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
     state: present
   delegate_to: localhost
   become: false

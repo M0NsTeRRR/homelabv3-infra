@@ -7,7 +7,8 @@
     group: root
     mode: 0644
   notify:
-    - restart systemd-timesyncd
+    - Restart systemd-timesyncd
 
 - name: Enable ntp synchronization
   ansible.builtin.command: timedatectl set-ntp true
+  changed_when: false

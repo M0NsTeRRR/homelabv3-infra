@@ -45,16 +45,22 @@
         csr_path: "{{ certs_dir }}ca.csr"
         provider: selfsigned
 
-    - name: "Create {{ certificate_folder_path }} folder"
+    - name: "Create folder {{ certificate_folder_path }}"
       ansible.builtin.file:
         state: directory
         name: "{{ certs_dir }}{{ certificate_folder_path }}"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0740'
 
     - name: Add .gitkeep file
       ansible.builtin.copy:
         content: ""
         dest: "{{ certs_dir }}{{ certificate_folder_path }}/.gitkeep"
         force: false
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0640'
 
     - name: Generate client OpenSSL private key
       community.crypto.openssl_privatekey:

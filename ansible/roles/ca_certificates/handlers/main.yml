@@ -1,5 +1,5 @@
 ---
-- name: update ca-certificates
+- name: Update ca-certificates
   ansible.builtin.command: /usr/sbin/update-ca-certificates
   retries: 3
   delay: 3

@@ -79,7 +79,7 @@
     dest: /etc/exporter_exporter/ssl/ca.crt
     owner: exporter-exporter
     group: exporter-exporter
-  notify: restart exporter-exporter.service
+  notify: Restart exporter-exporter.service
 
 - name: Create empty expexp.yaml
   ansible.builtin.copy:
@@ -87,7 +87,7 @@
     dest: /etc/exporter_exporter/expexp.yaml
     owner: exporter-exporter
     group: exporter-exporter
-  notify: restart exporter-exporter.service
+  notify: Restart exporter-exporter.service
 
 - name: Configure exporter_exporter
   ansible.builtin.template:
@@ -96,7 +96,7 @@
     owner: exporter-exporter
     group: exporter-exporter
   with_items: "{{ exporter_exporter_nodes }}"
-  notify: restart exporter-exporter.service
+  notify: Restart exporter-exporter.service
 
 - name: Create systemd service file
   ansible.builtin.template:
@@ -106,6 +106,6 @@
     group: root
     mode: 0644
   notify:
-    - daemon-reload
-    - enable exporter-exporter.service
-    - restart exporter-exporter.service
+    - Daemon-reload
+    - Enable exporter-exporter.service
+    - Restart exporter-exporter.service

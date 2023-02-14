@@ -14,7 +14,7 @@
         - net.ipv6.conf.default.autoconf
         - net.ipv6.conf.default.accept_ra
         - net.ipv6.conf.default.accept_dad
-      notify: reboot the host
+      notify: Reboot the host
       when: ansible_distribution == "Debian"
 
     - name: Disable RA
@@ -22,7 +22,7 @@
         dest: /etc/netplan/99-netcfg-vmware.yaml
         regexp: '^\s\s\s\sens[0-9]+:\s\s\s\s\s(accept-ra:)?'
         line: '      accept-ra: no'
-      notify: netplan apply
+      notify: Netplan apply
       when: ansible_distribution == "Ubuntu"
 
     - name: Disable SLAAC
@@ -30,11 +30,11 @@
         dest: /etc/netplan/99-netcfg-vmware.yaml
         regexp: '^\s\s\s\sens[0-9]+:\s\s\s\s\s(ipv6-privacy:)?'
         line: '      ipv6-privacy: true'
-      notify: netplan apply
+      notify: Netplan apply
       when: ansible_distribution == "Ubuntu"
 
   handlers:
-    - name: reboot the host
+    - name: Reboot the host
       ansible.builtin.reboot:
-    - name: netplan apply
+    - name: Netplan apply
       ansible.builtin.shell: netplan apply

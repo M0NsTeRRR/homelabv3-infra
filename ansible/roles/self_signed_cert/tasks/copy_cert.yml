@@ -5,8 +5,9 @@
     state: directory
     owner: "{{ folder.owner }}"
     group: "{{ folder.group }}"
+    mode: 0640
 
-- name: "Copy {{ item.common_name }}.crt certificate"
+- name: "Copy .crt certificate {{ item.common_name }}"
   ansible.builtin.copy:
     src: "/tmp/{{ item.common_name }}.crt"
     dest: "{{ folder.path }}"
@@ -14,7 +15,7 @@
     owner: "{{ folder.owner }}"
     group: "{{ folder.group }}"
 
-- name: "Copy {{ item.common_name }}.pem certificate"
+- name: "Copy .pem certificate {{ item.common_name }}"
   ansible.builtin.copy:
     src: "/tmp/{{ item.common_name }}.pem"
     dest: "{{ folder.path }}"
@@ -23,7 +24,7 @@
     group: "{{ folder.group }}"
   when: item.upload_pem
 
-- name: "Copy {{ item.common_name }}.p12 certificate"
+- name: "Copy .p12 certificate {{ item.common_name }}"
   ansible.builtin.copy:
     src: "/tmp/{{ item.common_name }}.crt"
     dest: "{{ folder.path }}"

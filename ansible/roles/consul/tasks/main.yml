@@ -5,7 +5,7 @@
     port: "{{ item.port }}"
     proto: "{{ item.proto }}"
     comment: "{{ item.comment }}"
-  when: "{{ item.to_open }}"
+  when: item.to_open
   with_items:
     - {port: "8600", proto: tcp, to_open: true, comment: "Consul DNS"}
     - {port: "8600", proto: udp, to_open: true, comment: "Consul DNS"}
@@ -54,7 +54,7 @@
     update_cache: true
     state: "{{ consul_package_state }}"
   notify:
-    - restart consul.service
+    - Restart consul.service
 
 - name: Create consul configuration directory
   ansible.builtin.file:
@@ -69,7 +69,7 @@
     dest: /etc/consul.d/ssl/ca.crt
     owner: consul
     group: consul
-  notify: restart consul.service
+  notify: Restart consul.service
 
 - name: Configure consul
   ansible.builtin.template:
@@ -77,7 +77,7 @@
     dest: /etc/consul.d/consul.hcl
     owner: consul
     group: consul
-  notify: restart consul.service
+  notify: Restart consul.service
 
 - name: Configure consul services
   ansible.builtin.template:
@@ -86,7 +86,7 @@
     owner: consul
     group: consul
   with_items: "{{ consul_services }}"
-  notify: restart consul.service
+  notify: Restart consul.service
 
 - name: Create systemd service file
   ansible.builtin.copy:
@@ -96,6 +96,6 @@
     group: root
     mode: 0644
   notify:
-    - daemon-reload
-    - enable consul.service
-    - restart consul.service
+    - Daemon-reload
+    - Enable consul.service
+    - Restart consul.service

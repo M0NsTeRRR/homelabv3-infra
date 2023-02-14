@@ -5,14 +5,14 @@
     update_cache: true
     state: "{{ auditd_package_state }}"
   notify:
-    - restart auditd
+    - Restart auditd
 
 - name: Configure auditd rules
   ansible.builtin.copy:
     src: audit.rules
     dest: /etc/audit/rules.d/audit.rules
   notify:
-    - restart auditd
+    - Restart auditd
 
 - name: Forward auditd logs to local rsyslog
   ansible.builtin.lineinfile:
@@ -21,4 +21,4 @@
     line: "active = yes"
     state: "present"
   notify:
-    - restart auditd
+    - Restart auditd

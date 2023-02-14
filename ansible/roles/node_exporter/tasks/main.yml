@@ -17,8 +17,9 @@
   ansible.builtin.file:
     state: directory
     name: /opt/node_exporter/textfile_collector
-    owner: node-exporter
-    group: node-exporter
+    owner: exporter-exporter
+    group: exporter-exporter
+    mode: 0740
 
 - name: Check if node-exporter is already installed
   ansible.builtin.stat:
@@ -34,6 +35,9 @@
   ansible.builtin.get_url:
     url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.{{ ansible_system | lower }}-{{ arch }}.tar.gz"
     dest: /tmp/node-exporter.tar.gz
+    owner: exporter-exporter
+    group: exporter-exporter
+    mode: 0740
   when: not node_exporter.stat.exists or node_exporter_force_install
 
 - name: Extract latest binary of node-exporter
@@ -51,9 +55,9 @@
     dest: /usr/local/bin/node-exporter
     owner: exporter-exporter
     group: exporter-exporter
-    mode: 0700
-    remote_src: yes
-  notify: restart node-exporter.service
+    mode: 0740
+    remote_src: true
+  notify: Restart node-exporter.service
   when: not node_exporter.stat.exists or node_exporter_force_install
 
 - name: Create systemd service file
@@ -64,6 +68,6 @@
     group: root
     mode: 0644
   notify:
-    - daemon-reload
-    - enable node-exporter.service
-    - restart node-exporter.service
+    - Daemon-reload
+    - Enable node-exporter.service
+    - Restart node-exporter.service

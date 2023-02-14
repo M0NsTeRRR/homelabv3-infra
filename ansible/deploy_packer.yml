@@ -36,7 +36,7 @@
     - name: Include utils
       ansible.builtin.include_tasks: playbooks/utils.yml
   tasks:
-    - name: "Update {{ main_user }} password"
+    - name: "Update password of {{ main_user }}"
       ansible.builtin.user:
         name: "{{ main_user }}"
         password: "{{ main_password | password_hash('sha512') }}"

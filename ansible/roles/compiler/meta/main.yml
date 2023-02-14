@@ -4,11 +4,8 @@ galaxy_info:
   description: Install and configure Compiler
   company: Ludovic Ortega
   license: CeCILL
-  min_ansible_version: 2.11
+  min_ansible_version: "2.14"
   platforms:
     - name: Debian
       versions:
-        - buster
-    - name: Ubuntu
-      versions:
-        - focal
+        - bullseye

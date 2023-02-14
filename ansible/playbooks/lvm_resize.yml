@@ -9,10 +9,10 @@
     - name: LC_ALL=C sudo growpart /dev/sda 5
       ansible.builtin.shell: LC_ALL=C sudo growpart /dev/sda 5
 
-    - name: pvresize /dev/sda5
+    - name: Pvresize /dev/sda5
       ansible.builtin.command: pvresize /dev/sda5
 
-    - name: "Extend {{ item.key }}-root with all free spaces "
+    - name: "Extend all free spaces on {{ item.key }}-root"
       community.general.lvol:
         vg: "{{ item.key }}"
         lv: root

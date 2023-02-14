@@ -9,5 +9,8 @@
   ansible.builtin.copy:
     src: ssh.conf
     dest: /etc/fail2ban/jail.d/ssh.conf
+    owner: root
+    group: root
+    mode: 0700
   notify:
-    - restart fail2ban
+    - Restart fail2ban
