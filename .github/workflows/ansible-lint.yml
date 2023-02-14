@@ -8,11 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: copy .ansible-lint
-      shell: bash
-      run: |
-        cp ansible/.ansible-lint .
     - name: Lint Ansible Playbook
       uses: ansible/ansible-lint-action@main
       with:
-        path: "ansible/"
+        path: "--project-dir ansible ."
