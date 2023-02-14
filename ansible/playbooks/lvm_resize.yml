@@ -12,11 +12,10 @@
     - name: Pvresize /dev/sda5
       ansible.builtin.command: pvresize /dev/sda5
 
-    - name: "Extend all free spaces on {{ item.key }}-root"
+    - name: "Extend all free spaces on lvol root {{ item.key }}"
       community.general.lvol:
         vg: "{{ item.key }}"
         lv: root
         size: 100%FREE
         resizefs: true
       with_dict: "{{ ansible_lvm['vgs'] }}"
-      run_once: true
