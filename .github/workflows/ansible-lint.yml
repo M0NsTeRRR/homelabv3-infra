@@ -11,4 +11,4 @@ jobs:
     - name: Lint Ansible Playbook
       uses: ansible/ansible-lint-action@main
       with:
-        path: "-c ansible/.ansible-lint ."
+        path: "-c ansible/.ansible-lint ansible"
