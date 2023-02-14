@@ -15,7 +15,7 @@ locals {
 generate "remote_state" {
   path      = "backend.tf"
   if_exists = "overwrite_terragrunt"
-  contents = <<EOF
+  contents  = <<EOF
 terraform {
   backend "remote" {
     hostname = "${get_env("TF_VAR_tfc_hostname")}"
