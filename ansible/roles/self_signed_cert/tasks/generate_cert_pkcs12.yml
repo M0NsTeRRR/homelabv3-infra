@@ -18,6 +18,9 @@
   ansible.builtin.copy:
     content: "{{ ''.join(self_signed_cert_fullchain.complete_chain) }}"
     dest: "/tmp/fullchain_{{ item.common_name }}.crt"
+    mode: 0640
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
   delegate_to: localhost
 
 - name: Generate PKCS#12 file

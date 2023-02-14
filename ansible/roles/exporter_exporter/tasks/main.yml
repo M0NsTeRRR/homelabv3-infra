@@ -26,6 +26,7 @@
     name: /opt/exporter_exporter
     owner: exporter-exporter
     group: exporter-exporter
+    mode: 0740
 
 - name: Check if exporter_exporter is already installed
   ansible.builtin.stat:
@@ -41,6 +42,9 @@
   ansible.builtin.get_url:
     url: "https://github.com/QubitProducts/exporter_exporter/releases/download/v{{ exporter_exporter_version }}/exporter_exporter-{{ exporter_exporter_version }}.linux-{{ arch }}.tar.gz"
     dest: /tmp/exporter_exporter.tar.gz
+    owner: exporter-exporter
+    group: exporter-exporter
+    mode: 0740
   when: not exporter_exporter.stat.exists or exporter_exporter_force_install
 
 - name: Extract exporter_exporter binary
@@ -58,7 +62,7 @@
     dest: /usr/local/bin/exporter_exporter
     owner: exporter-exporter
     group: exporter-exporter
-    mode: 0700
+    mode: 0740
     remote_src: true
   notify: restart exporter-exporter.service
   when: not exporter_exporter.stat.exists or exporter_exporter_force_install
@@ -69,6 +73,7 @@
     state: directory
     owner: exporter-exporter
     group: exporter-exporter
+    mode: 0640
   with_items:
     - /etc/exporter_exporter/ssl
     - /etc/exporter_exporter/expexp.d
@@ -79,6 +84,7 @@
     dest: /etc/exporter_exporter/ssl/ca.crt
     owner: exporter-exporter
     group: exporter-exporter
+    mode: 0640
   notify: Restart exporter-exporter.service
 
 - name: Create empty expexp.yaml
@@ -87,6 +93,7 @@
     dest: /etc/exporter_exporter/expexp.yaml
     owner: exporter-exporter
     group: exporter-exporter
+    mode: 0640
   notify: Restart exporter-exporter.service
 
 - name: Configure exporter_exporter
@@ -95,6 +102,7 @@
     dest: "/etc/exporter_exporter/expexp.d/{{ item.name }}.yaml"
     owner: exporter-exporter
     group: exporter-exporter
+    mode: 0640
   with_items: "{{ exporter_exporter_nodes }}"
   notify: Restart exporter-exporter.service
 

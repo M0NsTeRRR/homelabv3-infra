@@ -11,6 +11,9 @@
   ansible.builtin.copy:
     src: audit.rules
     dest: /etc/audit/rules.d/audit.rules
+    owner: root
+    group: root
+    mode: 0640
   notify:
     - Restart auditd
 

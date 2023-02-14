@@ -66,7 +66,7 @@
     dest: /etc/systemd/system/node-exporter.service
     owner: root
     group: root
-    mode: 0644
+    mode: 0640
   notify:
     - Daemon-reload
     - Enable node-exporter.service
