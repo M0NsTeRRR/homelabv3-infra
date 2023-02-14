@@ -1,4 +1,17 @@
 .idea
+.vscode
+venv
 packer_cache/
+.terraform
+.terragrunt-cache
+terraform/account.hcl
+*.tfstate
+*.tfstate.backup
 secrets.yml
+secrets.env
+account.hcl
+*.crt*
+*.csr*
+*.key*
+*.pem*
 *.img

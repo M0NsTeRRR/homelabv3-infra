@@ -1,0 +1,31 @@
+---
+- name: Install cryptography python package
+  ansible.builtin.pip:
+    name: cryptography
+    state: present
+
+- name: Get certificate info
+  community.crypto.x509_certificate_info:
+    path: "{{ item.cert_remote_folder[0].path }}/{{ item.common_name }}.crt"
+  register: self_signed_cert_tlsa_info
+
+- name: Uninstall cryptography python package
+  ansible.builtin.pip:
+    name: cryptography
+    state: absent
+
+- name: "PATCH TLSA entry {{ item.common_name }}."
+  ansible.builtin.uri:
+    url: "https://{{ self_signed_cert_pdns.hostname }}/api/v1/servers/localhost/zones/{{ tlsa.pdns_zone }}."
+    method: PATCH
+    return_content: true
+    body_format: json
+    validate_certs: false
+    body: "{{ lookup('template', 'pdns_tlsa.json.j2') }}"
+    status_code: 204
+    headers:
+      Content-Type: application/json
+      X-Api-Key: "{{ self_signed_cert_pdns.api_key }}"
+  with_items: "{{ item.tlsa }}"
+  loop_control:
+    loop_var: tlsa

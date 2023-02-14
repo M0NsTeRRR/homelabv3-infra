@@ -1,0 +1,40 @@
+---
+- name: Disable SLAAC
+  hosts: all
+  become: true
+  tasks:
+    - name: Disable SLAAC
+      ansible.posix.sysctl:
+        name: "{{ item }}"
+        value: '0'
+      with_items:
+        - net.ipv6.conf.all.autoconf
+        - net.ipv6.conf.all.accept_ra
+        - net.ipv6.conf.all.accept_dad
+        - net.ipv6.conf.default.autoconf
+        - net.ipv6.conf.default.accept_ra
+        - net.ipv6.conf.default.accept_dad
+      notify: reboot the host
+      when: ansible_distribution == "Debian"
+
+    - name: Disable RA
+      ansible.builtin.lineinfile:
+        dest: /etc/netplan/99-netcfg-vmware.yaml
+        regexp: '^\s\s\s\sens[0-9]+:\s\s\s\s\s(accept-ra:)?'
+        line: '      accept-ra: no'
+      notify: netplan apply
+      when: ansible_distribution == "Ubuntu"
+
+    - name: Disable SLAAC
+      ansible.builtin.lineinfile:
+        dest: /etc/netplan/99-netcfg-vmware.yaml
+        regexp: '^\s\s\s\sens[0-9]+:\s\s\s\s\s(ipv6-privacy:)?'
+        line: '      ipv6-privacy: true'
+      notify: netplan apply
+      when: ansible_distribution == "Ubuntu"
+
+  handlers:
+    - name: reboot the host
+      ansible.builtin.reboot:
+    - name: netplan apply
+      ansible.builtin.shell: netplan apply

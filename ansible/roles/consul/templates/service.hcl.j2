@@ -1,0 +1,23 @@
+service {
+    name = "{{ item.name }}"
+    port = {{ item.port }}
+    address = "{{ inventory_hostname }}"
+    tags = [
+        {% for tag in item.tags %}
+        "{{ tag }}"{% if not loop.last %}, {% endif %}{% endfor %}
+    ]
+    meta {
+        {% for key, value in item.meta.items() %}
+        {{ key }} = "{{ value }}"
+        {% endfor %}
+    }
+
+    {% if 'checks' in item %}{% for check in item.checks %}check {
+        args = [
+        {% for arg in check.args %}
+        "{{ arg }}"{% if not loop.last %}, {% endif %}{% endfor %}
+        ]
+        interval = "{{ check.interval }}"
+    }{% endfor %}
+    {% endif %}
+}

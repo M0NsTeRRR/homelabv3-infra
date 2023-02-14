@@ -1,0 +1,51 @@
+---
+- name: Open required ports
+  community.general.ufw:
+    rule: allow
+    port: "22"
+    proto: tcp
+    comment: "SSH"
+
+- name: Install openssh-server
+  ansible.builtin.apt:
+    name: "openssh-server{% if openssh_server_version is defined %}={{ openssh_server_version }}{% endif %}"
+    update_cache: true
+    state: "{{ openssh_server_package_state }}"
+
+- name: Set sshd configuration
+  ansible.builtin.lineinfile:
+    dest: "/etc/ssh/sshd_config"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: "present"
+  with_items:
+    - {regexp: '^#?PrintMotd', line: 'PrintMotd no'}
+    - {regexp: '^#?LogLevel', line: 'LogLevel VERBOSE'}
+    - {regexp: '^#?MaxAuthTries', line: 'MaxAuthTries 3'}
+    - {regexp: '^#?MaxSessions', line: 'MaxSessions 2'}
+    - {regexp: '^#?AllowAgentForwarding', line: 'AllowAgentForwarding no'}
+    - {regexp: '^#?AllowTcpForwarding', line: 'AllowTcpForwarding no'}
+    - {regexp: '^#?TCPKeepAlive', line: 'TCPKeepAlive no'}
+    - {regexp: '^#?Compression', line: 'Compression no'}
+    - {regexp: '^#?ClientAliveInterval', line: 'ClientAliveInterval 120'}
+    - {regexp: '^#?ClientAliveCountMax', line: 'ClientAliveCountMax 2'}
+    - {regexp: '^#?X11Forwarding', line: 'X11Forwarding no'}
+    - {regexp: '^#?AuthenticationMethods', line: 'AuthenticationMethods publickey'}
+    - {regexp: '^#?PasswordAuthentication', line: 'PasswordAuthentication no'}
+    - {regexp: '^#?ChallengeResponseAuthentication', line: 'ChallengeResponseAuthentication no'}
+    - {regexp: '^#?PubkeyAuthentication', line: 'PubkeyAuthentication yes'}
+    - {regexp: '^#?UsePAM', line: 'UsePAM yes'}
+    - {regexp: '^#?PermitEmptyPasswords', line: 'PermitEmptyPasswords no'}
+    - {regexp: '^#?PermitRootLogin', line: 'PermitRootLogin no'}
+    - {regexp: '^#?AllowGroups', line: 'AllowGroups {% for group in openssh_server_allow_groups %}{{ group }}{% if not loop.last %} {% endif %}{% endfor %}'}
+    - {regexp: '^#?RekeyLimit', line: 'RekeyLimit 1G 1H'}
+    - {
+        regexp: '^#?KexAlgorithms',
+        line: >-
+                 KexAlgorithms diffie-hellman-group16-sha512,diffie-hellman-group-exchange-sha256,
+                 curve25519-sha256,curve25519-sha256@libssh.org
+      }
+    - {regexp: '^#?Ciphers', line: 'Ciphers chacha20-poly1305@openssh.com,aes256-gcm@openssh.com,aes128-gcm@openssh.com,aes256-ctr,aes192-ctr,aes128-ctr'}
+    - {regexp: '^#?MACs', line: 'MACs hmac-sha2-512-etm@openssh.com,hmac-sha2-256-etm@openssh.com,hmac-sha2-512,hmac-sha2-256'}
+    - {regexp: '^#?HostKeyAlgorithms', line: 'HostKeyAlgorithms ssh-ed25519,rsa-sha2-256,rsa-sha2-512'}
+  notify: restart sshd

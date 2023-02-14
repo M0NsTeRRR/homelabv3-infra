@@ -1,0 +1,33 @@
+---
+- name: Create remote folder for certificates
+  ansible.builtin.file:
+    path: "{{ folder.path }}"
+    state: directory
+    owner: "{{ folder.owner }}"
+    group: "{{ folder.group }}"
+
+- name: "Copy {{ item.common_name }}.crt certificate"
+  ansible.builtin.copy:
+    src: "/tmp/{{ item.common_name }}.crt"
+    dest: "{{ folder.path }}"
+    mode: 0640
+    owner: "{{ folder.owner }}"
+    group: "{{ folder.group }}"
+
+- name: "Copy {{ item.common_name }}.pem certificate"
+  ansible.builtin.copy:
+    src: "/tmp/{{ item.common_name }}.pem"
+    dest: "{{ folder.path }}"
+    mode: 0600
+    owner: "{{ folder.owner }}"
+    group: "{{ folder.group }}"
+  when: item.upload_pem
+
+- name: "Copy {{ item.common_name }}.p12 certificate"
+  ansible.builtin.copy:
+    src: "/tmp/{{ item.common_name }}.crt"
+    dest: "{{ folder.path }}"
+    mode: 0600
+    owner: "{{ folder.owner }}"
+    group: "{{ folder.group }}"
+  when: item.generate_pkcs12

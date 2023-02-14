@@ -1,0 +1,49 @@
+---
+- name: Resize LVM partition
+  hosts: all
+  become: true
+  tasks:
+    - name: Remove popularity-contest
+      ansible.builtin.apt:
+        name: popularity-contest
+        state: absent
+
+    - name: Install apt-transport-https
+      ansible.builtin.apt:
+        name: apt-transport-https
+        state: present
+
+    - name: Install rng-tools
+      ansible.builtin.apt:
+        name: rng-tools
+        state: present
+
+    - name: Install sysstat
+      ansible.builtin.apt:
+        name: sysstat
+        state: present
+
+    - name: Install ncdu
+      ansible.builtin.apt:
+        name: ncdu
+        state: present
+
+    - name: Install apt-show-versions
+      ansible.builtin.apt:
+        name: apt-show-versions
+        state: present
+
+    - name: Install debsums
+      ansible.builtin.apt:
+        name: debsums
+        state: present
+
+    - name: Install curl
+      ansible.builtin.apt:
+        name: curl
+        state: present
+
+    - name: Install cloud-initramfs-growroot
+      ansible.builtin.apt:
+        name: cloud-initramfs-growroot
+        state: present

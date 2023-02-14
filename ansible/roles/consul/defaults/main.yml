@@ -1,0 +1,26 @@
+---
+consul_package_state: latest
+# consul_version:
+consul_datacenter: "dc"
+consul_encrypt: "azertyuiop"
+consul_local_path_ca_certificate: "/etc/ssl/ca.crt"
+consul_ca_filename: "/etc/ssl/ca.crt"
+consul_cert_file_filename: "/etc/ssl/cert.crt"
+consul_key_file_filename: "/etc/ssl/cert.key"
+consul_retry_join:
+  - 192.168.0.1
+  - 192.168.0.2
+consul_server: false
+consul_services: {}
+
+# consul_services:
+#   - name: service
+#     port: 9000
+#     tags:
+#       - redis
+#     meta:
+#       prometheus_param_module: node-exporter
+#     checks:
+#       - args:
+#         - /usr/local/bin/check_redis.py
+#         interval: 10s

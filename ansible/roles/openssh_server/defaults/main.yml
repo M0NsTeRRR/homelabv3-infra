@@ -1,0 +1,5 @@
+---
+# openssh_server_version:
+openssh_server_package_state: latest
+openssh_server_allow_groups:
+  - wheel

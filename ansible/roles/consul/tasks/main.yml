@@ -1,0 +1,101 @@
+---
+- name: "Open required ports"
+  community.general.ufw:
+    rule: allow
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+    comment: "{{ item.comment }}"
+  when: "{{ item.to_open }}"
+  with_items:
+    - {port: "8600", proto: tcp, to_open: true, comment: "Consul DNS"}
+    - {port: "8600", proto: udp, to_open: true, comment: "Consul DNS"}
+    - {port: "8501", proto: tcp, to_open: true, comment: "Consul HTTPS API"}
+    - {port: "8301", proto: tcp, to_open: true, comment: "Consul LAN Serf"}
+    - {port: "8301", proto: udp, to_open: true, comment: "Consul LAN Serf"}
+    - {port: "8302", proto: tcp, to_open: "{{ consul_server }}", comment: "Consul WAN Serf"}
+    - {port: "8302", proto: udp, to_open: "{{ consul_server }}", comment: "Consul WAN Serf"}
+    - {port: "8300", proto: tcp, to_open: "{{ consul_server }}", comment: "Consul RPC server"}
+
+- name: Add consul group
+  ansible.builtin.group:
+    name: consul
+    system: true
+    state: present
+
+- name: Add consul user
+  ansible.builtin.user:
+    name: consul
+    system: true
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: consul
+
+- name: Install required packages by Consul
+  ansible.builtin.apt:
+    pkg:
+      - apt-transport-https
+      - gnupg-agent
+    state: present
+
+- name: Add Consul Apt signing key
+  ansible.builtin.get_url:
+    url: https://apt.releases.hashicorp.com/gpg
+    dest: /usr/share/keyrings/consul.asc
+
+- name: Add Consul Apt repository
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/consul.asc] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+    state: present
+    filename: consul
+
+- name: Install consul
+  ansible.builtin.apt:
+    name: "consul{% if consul_version is defined %}={{ consul_version }}{% endif %}"
+    update_cache: true
+    state: "{{ consul_package_state }}"
+  notify:
+    - restart consul.service
+
+- name: Create consul configuration directory
+  ansible.builtin.file:
+    name: /etc/consul.d/ssl
+    state: directory
+    owner: consul
+    group: consul
+
+- name: Add CA cert
+  ansible.builtin.copy:
+    src: "{{ consul_local_path_ca_certificate }}"
+    dest: /etc/consul.d/ssl/ca.crt
+    owner: consul
+    group: consul
+  notify: restart consul.service
+
+- name: Configure consul
+  ansible.builtin.template:
+    src: config.hcl.j2
+    dest: /etc/consul.d/consul.hcl
+    owner: consul
+    group: consul
+  notify: restart consul.service
+
+- name: Configure consul services
+  ansible.builtin.template:
+    src: service.hcl.j2
+    dest: "/etc/consul.d/{{ item.name }}.service.hcl"
+    owner: consul
+    group: consul
+  with_items: "{{ consul_services }}"
+  notify: restart consul.service
+
+- name: Create systemd service file
+  ansible.builtin.copy:
+    src: consul.service
+    dest: /etc/systemd/system/consul.service
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - daemon-reload
+    - enable consul.service
+    - restart consul.service

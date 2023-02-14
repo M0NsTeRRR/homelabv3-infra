@@ -1,0 +1,3 @@
+{% for module in modprobe_module_blacklist %}
+install {{ module }} /bin/true
+{% endfor %}

@@ -1,0 +1,15 @@
+name: Packer Lint
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Lint Packer Template
+      uses: hashicorp/packer-github-actions@master
+      with:
+        command: validate
+        arguments: -syntax-only
+        target: packer/templates/debian packer/templates/ubuntu packer/templates/raspi

@@ -1,0 +1,7 @@
+pre-commit
+# ansible
+dnspython
+netaddr
+cryptography
+# terraform
+paramiko

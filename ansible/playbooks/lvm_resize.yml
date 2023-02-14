@@ -1,0 +1,22 @@
+---
+- name: Resize LVM partition
+  hosts: all
+  become: true
+  tasks:
+    - name: LC_ALL=C sudo growpart /dev/sda 2
+      ansible.builtin.shell: LC_ALL=C sudo growpart /dev/sda 2
+
+    - name: LC_ALL=C sudo growpart /dev/sda 5
+      ansible.builtin.shell: LC_ALL=C sudo growpart /dev/sda 5
+
+    - name: pvresize /dev/sda5
+      ansible.builtin.command: pvresize /dev/sda5
+
+    - name: "Extend {{ item.key }}-root with all free spaces "
+      community.general.lvol:
+        vg: "{{ item.key }}"
+        lv: root
+        size: 100%FREE
+        resizefs: true
+      with_dict: "{{ ansible_lvm['vgs'] }}"
+      run_once: true

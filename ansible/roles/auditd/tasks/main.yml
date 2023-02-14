@@ -1,0 +1,24 @@
+---
+- name: Install auditd
+  ansible.builtin.apt:
+    name: "auditd{% if auditd_version is defined %}={{ auditd_version }}{% endif %}"
+    update_cache: true
+    state: "{{ auditd_package_state }}"
+  notify:
+    - restart auditd
+
+- name: Configure auditd rules
+  ansible.builtin.copy:
+    src: audit.rules
+    dest: /etc/audit/rules.d/audit.rules
+  notify:
+    - restart auditd
+
+- name: Forward auditd logs to local rsyslog
+  ansible.builtin.lineinfile:
+    dest: "/etc/audit/audit.rules"
+    regexp: "^(# )?active"
+    line: "active = yes"
+    state: "present"
+  notify:
+    - restart auditd

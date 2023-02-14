@@ -1,0 +1,62 @@
+---
+- name: Check that cert exist
+  ansible.builtin.stat:
+    path: "{{ directory.path }}/{{ item.common_name }}.crt"
+  with_items: "{{ item.cert_remote_folder }}"
+  loop_control:
+    loop_var: directory
+  register: self_signed_cert_stat
+
+- name: Check that private key exist
+  ansible.builtin.stat:
+    path: "{{ directory.path }}/{{ item.common_name }}.pem"
+  with_items: "{{ item.cert_remote_folder }}"
+  loop_control:
+    loop_var: directory
+  register: self_signed_private_key_stat
+
+- name: Check that private key exist
+  ansible.builtin.stat:
+    path: "{{ directory.path }}/{{ item.common_name }}.p12"
+  with_items: "{{ item.cert_remote_folder }}"
+  loop_control:
+    loop_var: directory
+  register: self_signed_pkcs12_stat
+
+- name: Check if a cert is missing
+  ansible.builtin.set_fact:
+    self_signed_cert_missing: "{{ self_signed_cert_stat.results | selectattr('stat.exists','equalto', False) | list | count > 0 }}"
+
+- name: Check if a private key is missing
+  ansible.builtin.set_fact:
+    self_signed_private_key_missing: "{{ self_signed_private_key_stat.results | selectattr('stat.exists','equalto', False) | list | count > 0 }}"
+
+- name: Check if a cert pkcs12 is missing
+  ansible.builtin.set_fact:
+    self_signed_pkcs12_missing: "{{ self_signed_pkcs12_stat.results | selectattr('stat.exists','equalto', False) | list | count > 0 }}"
+
+- name: Install cryptography python package
+  ansible.builtin.pip:
+    name: cryptography
+    state: present
+  when: not self_signed_cert_missing
+
+- name: Get information on certificate
+  community.crypto.x509_certificate_info:
+    path: "{{ cert.stat.path }}"
+  with_items: "{{ self_signed_cert_stat.results }}"
+  loop_control:
+    loop_var: cert
+  register: self_signed_cert_info
+  when: not self_signed_cert_missing
+
+- name: Uninstall cryptography python package
+  ansible.builtin.pip:
+    name: cryptography
+    state: absent
+  when: not self_signed_cert_missing
+
+- name: Check if a cert is expired
+  ansible.builtin.set_fact:
+    self_signed_cert_expired: "{{ self_signed_cert_info.results | selectattr('expired','equalto', True) | list | count > 0 }}"
+  when: not self_signed_cert_missing

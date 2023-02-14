@@ -1,0 +1,13 @@
+---
+- name: Install fail2ban
+  ansible.builtin.apt:
+    name: "fail2ban{% if fail2ban_version is defined %}={{ fail2ban_version }}{% endif %}"
+    update_cache: true
+    state: "{{ fail2ban_package_state }}"
+
+- name: Create /etc/fail2ban/jail.d/ssh.conf
+  ansible.builtin.copy:
+    src: ssh.conf
+    dest: /etc/fail2ban/jail.d/ssh.conf
+  notify:
+    - restart fail2ban

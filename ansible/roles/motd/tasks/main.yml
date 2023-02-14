@@ -1,0 +1,33 @@
+---
+- name: Install required packages
+  ansible.builtin.apt:
+    name:
+      - apt-config-auto-update
+      - figlet
+      - lolcat
+    state: present
+
+- name: Find all motd files
+  ansible.builtin.find:
+    path: /etc/update-motd.d
+    file_type: file
+    recurse: true
+  register: motd_files
+
+- name: Remove executions of all motd files
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    mode: a-x
+  with_items: "{{ motd_files.files }}"
+
+- name: Delete default motd
+  ansible.builtin.file:
+    state: absent
+    path: /etc/motd
+
+- name: Create motd
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/etc/update-motd.d/{{ item | basename }}"
+    mode: '0755'
+  with_fileglob: ./files/*

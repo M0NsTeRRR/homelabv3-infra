@@ -1,0 +1,3 @@
+---
+- name: update grub
+  ansible.builtin.command: update-grub

@@ -1,0 +1,43 @@
+---
+- name: Provision Image
+  hosts: default
+  become: true
+  vars:
+    ca_certificates_organization_name: "{{ organization }}"
+    ca_certificates_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
+    rsyslog_server: log.unicornafk.fr
+    rsyslog_port: 1514
+    rsyslog_local_path_ca_certificate: "{{ certs_dir }}rsyslog-server/client.crt"
+    rsyslog_local_path_certificate: "{{ certs_dir }}rsyslog-client/client.crt"
+    rsyslog_local_path_certificate_key: "{{ certs_dir }}rsyslog-client/client.pem"
+    systemd_timesyncd_ntp: "{{ ntp_servers.hosts }}"
+  roles:
+    - modprobe
+    - grub
+    - compiler
+    - auditd
+    - sysctl
+    - ufw
+    - motd
+    - node_exporter
+    - systemd_timesyncd
+    - user
+    - openssh_server
+    - fail2ban
+    - ca_certificates
+  pre_tasks:
+    - name: Update and upgrade all packages
+      ansible.builtin.apt:
+        upgrade: true
+        update_cache: true
+        autoclean: true
+        autoremove: true
+
+    - name: Include utils
+      ansible.builtin.include_tasks: playbooks/utils.yml
+  tasks:
+    - name: "Update {{ main_user }} password"
+      ansible.builtin.user:
+        name: "{{ main_user }}"
+        password: "{{ main_password | password_hash('sha512') }}"
+        update_password: always

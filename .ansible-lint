@@ -1,0 +1,11 @@
+---
+skip_list:
+  - '204'  # Lines should be no longer than 160 chars
+  - '305'  # Use shell only when shell functionality is required
+
+exclude_paths:
+  - .github/
+  - packer/
+  - ssh_pub_keys/
+  - ssl/
+  - terraform/

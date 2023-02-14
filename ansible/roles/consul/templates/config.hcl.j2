@@ -1,0 +1,56 @@
+{% if consul_server %}
+server = true
+bootstrap_expect = 3
+{% endif %}
+
+protocol = 3
+raft_protocol = 3
+
+addresses = {
+  https = "{{ lookup('community.general.dig', inventory_hostname) }} {{ lookup('community.general.dig', inventory_hostname, 'qtype=AAAA') }}"
+}
+
+ports = {
+  http = -1
+  https = 8501
+}
+
+log_level = "INFO"
+
+client_addr = "{{ lookup('community.general.dig', inventory_hostname) }} {{ lookup('community.general.dig', inventory_hostname, 'qtype=AAAA') }}"
+server_name = "{{ inventory_hostname }}"
+
+datacenter = "{{ consul_datacenter }}"
+data_dir = "/opt/consul"
+
+enable_syslog = true
+
+enable_local_script_checks = true
+
+encrypt = "{{ consul_encrypt }}"
+encrypt_verify_incoming = true
+encrypt_verify_outgoing = true
+
+ca_file = "{{ consul_ca_filename }}"
+cert_file = "{{ consul_cert_file_filename }}"
+key_file = "{{ consul_key_file_filename }}"
+verify_incoming = true
+verify_outgoing = true
+verify_server_hostname = true
+
+retry_join = {{ consul_retry_join|to_json }}
+
+telemetry = {
+  prometheus_retention_time = "120s"
+  disable_hostname = true
+}
+
+acl = {
+  enabled = true
+  default_policy = "allow"
+  enable_token_persistence = true
+}
+
+performance {
+  raft_multiplier = 1
+}

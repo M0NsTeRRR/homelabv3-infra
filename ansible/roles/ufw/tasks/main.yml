@@ -1,0 +1,16 @@
+---
+- name: Install ufw
+  ansible.builtin.apt:
+    name: "ufw{% if ufw_version is defined %}={{ ufw_version }}{% endif %}"
+    update_cache: true
+    state: "{{ ufw_package_state }}"
+
+- name: Allow SSH
+  community.general.ufw:
+    rule: allow
+    port: "22"
+    proto: tcp
+
+- name: Enable ufw
+  community.general.ufw:
+    state: enabled

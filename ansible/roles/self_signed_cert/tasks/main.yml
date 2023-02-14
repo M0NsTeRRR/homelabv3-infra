@@ -1,0 +1,4 @@
+---
+- name: "Generate cert {{ item }}"
+  ansible.builtin.include_tasks: generate_cert.yml
+  with_items: "{{ self_signed_certs }}"

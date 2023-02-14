@@ -1,0 +1,32 @@
+---
+self_signed_certs: []
+self_signed_cert_pdns: {}
+
+
+# self_signed_certs:
+#   - common_name: "host.example.com"
+#     country: "France"
+#     organization: "example"
+#     admin_email: "admin@example.com"
+#     ca_cert_local_path: "./certs/ca.crt"
+#     ca_private_local_path: "./certs/ca.pem"
+#     cert_remote_folder:
+#      - { path: /etc/nginx/ssl, owner: root, group: root }
+#     ownca_not_after: "+90d"
+#     pkcs12_friendly_name: example
+#     pkcs12_passphrase: password
+#     upload_pem: true
+#     generate_pkcs12: true
+#     subject_alt_name:
+#       - NS:example.com
+#     restart_systemd_services:
+#       - app
+#     force_renew: true
+#     tlsa:
+#       proto: tcp
+#       port: 443
+#       pdns_zone: example.com
+
+# self_signed_cert_pdns
+#  hostname: dns1.example.com
+#  api_key: azertyuiop

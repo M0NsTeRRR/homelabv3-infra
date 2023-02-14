@@ -1,0 +1,17 @@
+{
+    "rrsets": [
+    	{
+            "comments": [],
+            "changetype": "REPLACE",
+            "name": "_{{ tlsa.port }}._{{ tlsa.proto }}.{{ item.common_name }}.",
+            "records": [
+                {
+                    "content": "3 1 2 {{ self_signed_cert_tlsa_info.fingerprints.sha512 | replace(':','') }}",
+                    "disabled": false
+                }
+            ],
+            "ttl": 3600,
+            "type": "TLSA"
+        }
+    ]
+}

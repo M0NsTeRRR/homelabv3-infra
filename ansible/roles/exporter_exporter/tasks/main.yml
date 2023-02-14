@@ -1,0 +1,111 @@
+---
+- name: Open required ports
+  community.general.ufw:
+    rule: allow
+    port: "9998"
+    proto: tcp
+    comment: "exporter exporter"
+
+- name: Add exporter-exporter group
+  ansible.builtin.group:
+    name: exporter-exporter
+    system: true
+    state: present
+
+- name: Add exporter-exporter user
+  ansible.builtin.user:
+    name: exporter-exporter
+    system: true
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: exporter-exporter
+
+- name: Create exporter_exporter folder
+  ansible.builtin.file:
+    state: directory
+    name: /opt/exporter_exporter
+    owner: exporter-exporter
+    group: exporter-exporter
+
+- name: Check if exporter_exporter is already installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/exporter_exporter
+  register: exporter_exporter
+
+- name: Detect machine architecture
+  ansible.builtin.set_fact:
+    arch: "{% if ansible_architecture == 'aarch64' %}arm64{% else %}amd64{% endif %}"
+  when: not exporter_exporter.stat.exists or exporter_exporter_force_install
+
+- name: "Download exporter_exporter version {{ exporter_exporter_version }}"
+  ansible.builtin.get_url:
+    url: "https://github.com/QubitProducts/exporter_exporter/releases/download/v{{ exporter_exporter_version }}/exporter_exporter-{{ exporter_exporter_version }}.linux-{{ arch }}.tar.gz"
+    dest: /tmp/exporter_exporter.tar.gz
+  when: not exporter_exporter.stat.exists or exporter_exporter_force_install
+
+- name: Extract exporter_exporter binary
+  ansible.builtin.unarchive:
+    src: /tmp/exporter_exporter.tar.gz
+    dest: /opt/exporter_exporter
+    remote_src: true
+    list_files: true
+  register: archive_contents
+  when: not exporter_exporter.stat.exists or exporter_exporter_force_install
+
+- name: Copy exporter_exporter binary to /usr/local/bin
+  ansible.builtin.copy:
+    src: /opt/exporter_exporter/{{ archive_contents.files[0] }}exporter_exporter
+    dest: /usr/local/bin/exporter_exporter
+    owner: exporter-exporter
+    group: exporter-exporter
+    mode: 0700
+    remote_src: true
+  notify: restart exporter-exporter.service
+  when: not exporter_exporter.stat.exists or exporter_exporter_force_install
+
+- name: Create exporter_exporter folder
+  ansible.builtin.file:
+    name: "{{ item }}"
+    state: directory
+    owner: exporter-exporter
+    group: exporter-exporter
+  with_items:
+    - /etc/exporter_exporter/ssl
+    - /etc/exporter_exporter/expexp.d
+
+- name: Add CA cert
+  ansible.builtin.copy:
+    src: "{{ exporter_exporter_local_path_ca_certificate }}"
+    dest: /etc/exporter_exporter/ssl/ca.crt
+    owner: exporter-exporter
+    group: exporter-exporter
+  notify: restart exporter-exporter.service
+
+- name: Create empty expexp.yaml
+  ansible.builtin.copy:
+    src: expexp.yaml
+    dest: /etc/exporter_exporter/expexp.yaml
+    owner: exporter-exporter
+    group: exporter-exporter
+  notify: restart exporter-exporter.service
+
+- name: Configure exporter_exporter
+  ansible.builtin.template:
+    src: module.yaml.j2
+    dest: "/etc/exporter_exporter/expexp.d/{{ item.name }}.yaml"
+    owner: exporter-exporter
+    group: exporter-exporter
+  with_items: "{{ exporter_exporter_nodes }}"
+  notify: restart exporter-exporter.service
+
+- name: Create systemd service file
+  ansible.builtin.template:
+    src: exporter_exporter.service.j2
+    dest: /etc/systemd/system/exporter-exporter.service
+    owner: root
+    group: root
+    mode: 0644
+  notify:
+    - daemon-reload
+    - enable exporter-exporter.service
+    - restart exporter-exporter.service

@@ -1,0 +1,44 @@
+---
+- name: Install python3-pip
+  ansible.builtin.apt:
+    name: python3-pip
+    state: present
+
+- name: Install pexpect python package
+  ansible.builtin.pip:
+    name: pexpect
+    state: present
+
+- name: Generate GRUB password hash
+  ansible.builtin.expect:
+    command: grub-mkpasswd-pbkdf2
+    responses:
+      Enter password: '{{ grub_password }}'
+      Reenter password: '{{ grub_password }}'
+  no_log: true
+  register: grub_password_hashed
+
+- name: Configure GRUB header
+  ansible.builtin.lineinfile:
+    dest: "/etc/grub.d/40_custom"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: "present"
+  with_items:
+    - {regexp: '^(# )?set superusers', line: 'set superusers="{{ grub_user }}"'}
+    - {regexp: '^(# )?password_pbkdf2', line: 'password_pbkdf2 {{ grub_user }} {{ grub_password_hashed.stdout_lines[2] | replace("PBKDF2 hash of your password is ","") }} '}
+  no_log: true
+  notify: update grub
+
+- name: Protect only grub edit and console option
+  ansible.builtin.lineinfile:
+    dest: "/etc/grub.d/10_linux"
+    regexp: 'CLASS="--class gnu-linux --class gnu --class os"'
+    line: 'CLASS="--class gnu-linux --class gnu --class os --unrestricted"'
+    state: "present"
+  notify: update grub
+
+- name: Uninstall pexpect python package
+  ansible.builtin.pip:
+    name: pexpect
+    state: absent

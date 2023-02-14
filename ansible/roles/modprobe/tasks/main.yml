@@ -1,0 +1,5 @@
+---
+- name: Configure blacklisted kernel module
+  ansible.builtin.template:
+    src: blacklist.conf.j2
+    dest: /etc/modprobe.d/blacklist.conf
