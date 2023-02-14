@@ -1,5 +1,5 @@
 ---
 collections:
   - ansible.posix
-  - community.general.lvol
+  - community.general
   - community.crypto
