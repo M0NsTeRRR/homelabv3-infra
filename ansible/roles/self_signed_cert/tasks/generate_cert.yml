@@ -68,7 +68,7 @@
   with_items: "{{ item.cert_remote_folder }}"
   loop_control:
     loop_var: folder
-  register: copy_files
+  notify: Restart services that use SSL cert
   when: item.force_renew or
     self_signed_cert_missing or
     (item.upload_pem and self_signed_private_key_missing) or
@@ -93,15 +93,6 @@
     (item.upload_pem and self_signed_private_key_missing) or
     (item.generate_pkcs12 and self_signed_pkcs12_missing) or
     self_signed_cert_expired)
-
-- name: Restart services that use SSL cert
-  ansible.builtin.systemd:
-    name: "{{ service }}"
-    state: restarted
-  with_items: "{{ item.systemd_services }}"
-  loop_control:
-    loop_var: service
-  when: copy_files.changed
 
 - name: Clean local files
   ansible.builtin.file:

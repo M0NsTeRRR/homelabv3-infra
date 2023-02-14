@@ -1,0 +1,8 @@
+---
+- name: Restart services that use SSL cert
+  ansible.builtin.systemd:
+    name: "{{ service }}"
+    state: restarted
+  with_items: "{{ item.systemd_services }}"
+  loop_control:
+    loop_var: service
