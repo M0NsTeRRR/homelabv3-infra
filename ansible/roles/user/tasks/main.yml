@@ -3,7 +3,7 @@
   ansible.builtin.set_fact:
     ssh_pub_keys: "{{ lookup('fileglob', '../ssh_pub_keys/*.pub', wantlist=True) }}"
 
-- name: "Create {{ user_passwordless_sudo_group }} group"
+- name: "Create group {{ user_passwordless_sudo_group }}"
   ansible.builtin.group:
     name: "{{ user_passwordless_sudo_group }}"
     state: present
@@ -13,7 +13,7 @@
     path: /etc/sudoers.d
     mode: '0750'
 
-- name: "Allow {{ user_passwordless_sudo_group }} group to have passwordless sudo"
+- name: "Allow passwordless sudo for group {{ user_passwordless_sudo_group }} "
   ansible.builtin.lineinfile:
     dest: /etc/sudoers
     state: present

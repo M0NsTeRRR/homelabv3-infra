@@ -9,4 +9,7 @@
   ansible.builtin.copy:
     src: "{{ ca_certificates_local_path_ca_certificate }}"
     dest: "/usr/local/share/ca-certificates/{{ ca_certificates_organization_name }}.crt"
-  notify: update ca-certificates
+    owner: root
+    group: root
+    mode: 0644
+  notify: Update ca-certificates

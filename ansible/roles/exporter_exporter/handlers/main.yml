@@ -1,14 +1,14 @@
 ---
-- name: daemon-reload
+- name: Daemon-reload
   ansible.builtin.systemd:
     daemon_reload: true
 
-- name: restart exporter-exporter.service
+- name: Restart exporter-exporter.service
   ansible.builtin.systemd:
     name: exporter-exporter.service
     state: restarted
 
-- name: enable exporter-exporter.service
+- name: Enable exporter-exporter.service
   ansible.builtin.systemd:
     name: exporter-exporter.service
     enabled: true

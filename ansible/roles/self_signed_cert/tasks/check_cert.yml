@@ -25,15 +25,15 @@
 
 - name: Check if a cert is missing
   ansible.builtin.set_fact:
-    self_signed_cert_missing: "{{ self_signed_cert_stat.results | selectattr('stat.exists','equalto', False) | list | count > 0 }}"
+    self_signed_cert_missing: "{{ self_signed_cert_stat.results | selectattr('stat.exists', 'equalto', False) | list | count > 0 }}"
 
 - name: Check if a private key is missing
   ansible.builtin.set_fact:
-    self_signed_private_key_missing: "{{ self_signed_private_key_stat.results | selectattr('stat.exists','equalto', False) | list | count > 0 }}"
+    self_signed_private_key_missing: "{{ self_signed_private_key_stat.results | selectattr('stat.exists', 'equalto', False) | list | count > 0 }}"
 
 - name: Check if a cert pkcs12 is missing
   ansible.builtin.set_fact:
-    self_signed_pkcs12_missing: "{{ self_signed_pkcs12_stat.results | selectattr('stat.exists','equalto', False) | list | count > 0 }}"
+    self_signed_pkcs12_missing: "{{ self_signed_pkcs12_stat.results | selectattr('stat.exists', 'equalto', False) | list | count > 0 }}"
 
 - name: Install cryptography python package
   ansible.builtin.pip:
@@ -58,5 +58,5 @@
 
 - name: Check if a cert is expired
   ansible.builtin.set_fact:
-    self_signed_cert_expired: "{{ self_signed_cert_info.results | selectattr('expired','equalto', True) | list | count > 0 }}"
+    self_signed_cert_expired: "{{ self_signed_cert_info.results | selectattr('expired', 'equalto', True) | list | count > 0 }}"
   when: not self_signed_cert_missing

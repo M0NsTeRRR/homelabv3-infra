@@ -8,6 +8,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    - name: Copy ansible config
+      shell: bash
+      run: |
+        cp ansible/ansible.cfg .
+        cp ansible/requirements.yml .
+        cp ansible/password.sh .
+        cp ansible/.ansible-lint .
     - name: Lint Ansible Playbook
       uses: ansible/ansible-lint-action@main
       with:

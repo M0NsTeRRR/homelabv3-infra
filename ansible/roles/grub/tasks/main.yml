@@ -26,9 +26,9 @@
     state: "present"
   with_items:
     - {regexp: '^(# )?set superusers', line: 'set superusers="{{ grub_user }}"'}
-    - {regexp: '^(# )?password_pbkdf2', line: 'password_pbkdf2 {{ grub_user }} {{ grub_password_hashed.stdout_lines[2] | replace("PBKDF2 hash of your password is ","") }} '}
+    - {regexp: '^(# )?password_pbkdf2', line: 'password_pbkdf2 {{ grub_user }} {{ grub_password_hashed.stdout_lines[2] | replace("PBKDF2 hash of your password is ", "") }} '}
   no_log: true
-  notify: update grub
+  notify: Update grub
 
 - name: Protect only grub edit and console option
   ansible.builtin.lineinfile:
@@ -36,7 +36,7 @@
     regexp: 'CLASS="--class gnu-linux --class gnu --class os"'
     line: 'CLASS="--class gnu-linux --class gnu --class os --unrestricted"'
     state: "present"
-  notify: update grub
+  notify: Update grub
 
 - name: Uninstall pexpect python package
   ansible.builtin.pip:
