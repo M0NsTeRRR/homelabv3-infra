@@ -11,7 +11,7 @@ This is my Homelab v3 infrastructure.
 - Packer (version >= 1.8)
   - Packer builder arm
 - Terraform (version >= 1.3)
-  - Terragrunt (version >= 0.4)
+  - Terragrunt (version >= 0.43)
 
 Install python dependencies `pip3 install -r requirements.txt`
 
