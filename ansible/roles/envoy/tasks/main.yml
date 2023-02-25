@@ -1,0 +1,27 @@
+---
+- name: Install required packages by envoy
+  ansible.builtin.apt:
+    pkg:
+      - apt-transport-https
+      - gnupg-agent
+    state: present
+
+- name: Add envoy Apt signing key
+  ansible.builtin.get_url:
+    url: https://deb.dl.getenvoy.io/public/gpg.8115BA8E629CC074.key
+    dest: /usr/share/keyrings/getenvoy.asc
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Add envoy Apt repository
+  ansible.builtin.apt_repository:
+    repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/getenvoy.asc] https://deb.dl.getenvoy.io/public/deb/debian {{ ansible_distribution_release }} main"
+    state: present
+    filename: envoy
+
+- name: Install envoy
+  ansible.builtin.apt:
+    name: "getenvoy-envoy{% if envoy_version is defined %}={{ envoy_version }}{% endif %}"
+    update_cache: true
+    state: "{{ envoy_package_state }}"

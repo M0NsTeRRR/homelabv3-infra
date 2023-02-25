@@ -43,7 +43,7 @@
     dest: /usr/share/keyrings/consul.asc
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
 
 - name: Add Consul Apt repository
   ansible.builtin.apt_repository:
@@ -65,7 +65,7 @@
     state: directory
     owner: consul
     group: consul
-    mode: 0640
+    mode: "0640"
 
 - name: Add CA cert
   ansible.builtin.copy:
@@ -73,7 +73,7 @@
     dest: /etc/consul.d/ssl/ca.crt
     owner: consul
     group: consul
-    mode: 0640
+    mode: "0640"
   notify: Restart consul.service
 
 - name: Configure consul
@@ -82,7 +82,7 @@
     dest: /etc/consul.d/consul.hcl
     owner: consul
     group: consul
-    mode: 0640
+    mode: "0640"
   notify: Restart consul.service
 
 - name: Configure consul services
@@ -91,7 +91,7 @@
     dest: "/etc/consul.d/{{ item.name }}.service.hcl"
     owner: consul
     group: consul
-    mode: 0640
+    mode: "0640"
   with_items: "{{ consul_services }}"
   notify: Restart consul.service
 
@@ -101,7 +101,7 @@
     dest: /etc/systemd/system/consul.service
     owner: root
     group: root
-    mode: 0644
+    mode: "0644"
   notify:
     - Daemon-reload
     - Enable consul.service

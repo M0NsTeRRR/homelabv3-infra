@@ -18,7 +18,7 @@
   ansible.builtin.copy:
     content: "{{ ''.join(self_signed_cert_fullchain.complete_chain) }}"
     dest: "/tmp/fullchain_{{ item.common_name }}.crt"
-    mode: 0640
+    mode: "0640"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
   delegate_to: localhost
@@ -31,7 +31,7 @@
     certificate_path: "/tmp/fullchain_{{ item.common_name }}.crt"
     friendly_name: "{{ item.pkcs12_friendly_name }}"
     passphrase: "{{ item.pkcs12_passphrase }}"
-    mode: 0600
+    mode: "0600"
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
     state: present

@@ -5,4 +5,4 @@
     dest: /etc/modprobe.d/blacklist.conf
     owner: root
     group: root
-    mode: 0700
+    mode: "0700"

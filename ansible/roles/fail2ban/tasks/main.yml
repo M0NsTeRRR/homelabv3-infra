@@ -11,6 +11,6 @@
     dest: /etc/fail2ban/jail.d/ssh.conf
     owner: root
     group: root
-    mode: 0700
+    mode: "0700"
   notify:
     - Restart fail2ban

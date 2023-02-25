@@ -5,13 +5,13 @@
     state: directory
     owner: "{{ folder.owner }}"
     group: "{{ folder.group }}"
-    mode: 0640
+    mode: "0640"
 
 - name: "Copy .crt certificate {{ item.common_name }}"
   ansible.builtin.copy:
     src: "/tmp/{{ item.common_name }}.crt"
     dest: "{{ folder.path }}"
-    mode: 0640
+    mode: "0640"
     owner: "{{ folder.owner }}"
     group: "{{ folder.group }}"
 
@@ -19,7 +19,7 @@
   ansible.builtin.copy:
     src: "/tmp/{{ item.common_name }}.pem"
     dest: "{{ folder.path }}"
-    mode: 0600
+    mode: "0600"
     owner: "{{ folder.owner }}"
     group: "{{ folder.group }}"
   when: item.upload_pem
@@ -28,7 +28,7 @@
   ansible.builtin.copy:
     src: "/tmp/{{ item.common_name }}.crt"
     dest: "{{ folder.path }}"
-    mode: 0600
+    mode: "0600"
     owner: "{{ folder.owner }}"
     group: "{{ folder.group }}"
   when: item.generate_pkcs12
