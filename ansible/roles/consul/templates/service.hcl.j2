@@ -1,7 +1,6 @@
 service {
     name = "{{ item.name }}"
     port = {{ item.port }}
-    address = "{{ inventory_hostname }}"
     tags = [
         {% for tag in item.tags %}
         "{{ tag }}"{% if not loop.last %}, {% endif %}{% endfor %}
@@ -10,6 +9,10 @@ service {
         {% for key, value in item.meta.items() %}
         {{ key }} = "{{ value }}"
         {% endfor %}
+    }
+
+    connect {
+        sidecar_service {}
     }
 
     {% if 'checks' in item %}{% for check in item.checks %}check {

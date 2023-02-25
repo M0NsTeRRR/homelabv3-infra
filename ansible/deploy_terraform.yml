@@ -23,9 +23,6 @@
           - consul
           - exporter-exporter
         force_renew: true
-    exporter_exporter_nodes:
-      - name: node-exporter
-        port: 9100
     consul_services:
       - name: node-exporter
         port: 9998
@@ -47,6 +44,6 @@
           - "https://{{ inventory_hostname }}:9998/proxy?module=node-exporter"
         interval: 10s
   roles:
-    - exporter_exporter
+    - envoy
     - consul
     - self_signed_cert

@@ -1,0 +1,53 @@
+---
+- name: "Open required ports"
+  community.general.ufw:
+    rule: allow
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+    comment: "{{ item.comment }}"
+  when: item.to_open
+  with_items:
+    - {port: "8600", proto: tcp, to_open: true, comment: "Consul DNS"}
+
+- name: Add vault group
+  ansible.builtin.group:
+    name: vault
+    system: true
+    state: present
+
+- name: Add vault user
+  ansible.builtin.user:
+    name: vault
+    system: true
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: vault
+
+- name: Install required packages by Vault
+  ansible.builtin.apt:
+    pkg:
+      - apt-transport-https
+      - gnupg-agent
+    state: present
+
+- name: Add Vault Apt signing key
+  ansible.builtin.get_url:
+    url: https://apt.releases.hashicorp.com/gpg
+    dest: /usr/share/keyrings/vault.asc
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Add Vault Apt repository
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/vault.asc] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+    state: present
+    filename: vault
+
+- name: Install vault
+  ansible.builtin.apt:
+    name: "vault{% if vault_version is defined %}={{ vault_version }}{% endif %}"
+    update_cache: true
+    state: "{{ vault_package_state }}"
+  notify:
+    - Restart vault.service
