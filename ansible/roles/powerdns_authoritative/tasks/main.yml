@@ -1,0 +1,16 @@
+---
+- name: Install PowerDNS-authoritative
+  ansible.builtin.include_tasks: install.yml
+
+- name: Set inception date with YYYYMMDD format
+  ansible.builtin.set_fact:
+    inception_date: "{{ ansible_date_time.year }}{{ ansible_date_time.month }}{{ ansible_date_time.day }}"
+  delegate_to: localhost
+
+- name: Create tsig keys
+  ansible.builtin.include_tasks: provision_tsig_keys.yml
+  with_items: "{{ powerdns_authoritative_tsig_keys }}"
+
+- name: Create zones and reverse zones
+  ansible.builtin.include_tasks: provision_zones.yml
+  with_items: "{{ powerdns_authoritative_domains + powerdns_authoritative_subdomains + powerdns_authoritative_reverse_zones }}"

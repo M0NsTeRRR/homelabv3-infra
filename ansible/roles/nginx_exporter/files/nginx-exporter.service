@@ -1,0 +1,16 @@
+[Unit]
+Description=Nginx Exporter
+After=network-online.target
+
+[Service]
+Type=simple
+User=nginx_exporter
+Group=nginx_exporter
+ExecStart=/usr/local/bin/nginx-exporter \
+    -nginx.scrape-uri=http://127.0.0.1:8090/stub_status \
+    -web.listen-address=127.0.0.1:9113
+RestartSec=10
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

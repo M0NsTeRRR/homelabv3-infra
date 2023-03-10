@@ -1,0 +1,5 @@
+---
+- name: Restart pdns-recursor
+  ansible.builtin.systemd:
+    name: pdns-recursor
+    state: restarted

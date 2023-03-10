@@ -1,0 +1,76 @@
+---
+- name: Add nginx_exporter group
+  ansible.builtin.group:
+    name: nginx_exporter
+    system: true
+    state: present
+
+- name: Add nginx_exporter user
+  ansible.builtin.user:
+    name: nginx_exporter
+    system: true
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: nginx_exporter
+
+- name: "Create folder {{ item }}"
+  ansible.builtin.file:
+    name: "{{ item }}"
+    state: directory
+    owner: nginx_exporter
+    group: nginx_exporter
+    mode: "0740"
+  with_items:
+    - /opt/nginx_exporter
+    - /etc/nginx-exporter
+
+- name: Check if nginx-exporter is already installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/nginx-exporter
+  register: nginx_exporter
+
+- name: Detect machine architecture
+  ansible.builtin.set_fact:
+    arch: "{% if ansible_architecture == 'aarch64' %}arm64{% else %}amd64{% endif %}"
+  when: not nginx_exporter.stat.exists or nginx_exporter_force_install
+
+- name: "Download nginx-exporter binary version {{ nginx_exporter_version }}"
+  ansible.builtin.get_url:
+    url: "https://github.com/nginxinc/nginx-prometheus-exporter/releases/download/v{{ nginx_exporter_version }}/nginx-prometheus-exporter_{{ nginx_exporter_version }}_linux_{{ arch }}.tar.gz"
+    dest: /tmp/nginx-prometheus-exporter.tar.gz
+    owner: nginx_exporter
+    group: nginx_exporter
+    mode: "0700"
+  when: not nginx_exporter.stat.exists or nginx_exporter_force_install
+
+- name: Extract nginx-prometheus-exporter binary
+  ansible.builtin.unarchive:
+    src: /tmp/nginx-prometheus-exporter.tar.gz
+    dest: /opt/nginx_exporter
+    remote_src: true
+    list_files: true
+  register: archive_contents
+  when: not nginx_exporter.stat.exists or nginx_exporter_force_install
+
+- name: Copy nginx-exporter binary to /usr/local/bin
+  ansible.builtin.copy:
+    src: /opt/nginx_exporter/exporter
+    dest: /usr/local/bin/nginx-exporter
+    owner: nginx_exporter
+    group: nginx_exporter
+    mode: "0700"
+    remote_src: true
+  notify: Restart nginx-exporter.service
+  when: not nginx_exporter.stat.exists or nginx_exporter_force_install
+
+- name: Create systemd service file
+  ansible.builtin.copy:
+    src: nginx-exporter.service
+    dest: /etc/systemd/system/nginx-exporter.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Daemon-reload
+    - Enable nginx-exporter.service
+    - Restart nginx-exporter.service

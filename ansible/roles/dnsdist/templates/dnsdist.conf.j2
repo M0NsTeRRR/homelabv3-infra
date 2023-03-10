@@ -1,0 +1,31 @@
+addLocal('0.0.0.0')
+addLocal('::')
+
+addDOHLocal('0.0.0.0', '{{ dnsdist_cert_file_filename }}', '{{ dnsdist_key_file_filename }}')
+addDOHLocal('::', '{{ dnsdist_cert_file_filename }}', '{{ dnsdist_key_file_filename }}')
+
+addTLSLocal('0.0.0.0', '{{ dnsdist_cert_file_filename }}', '{{ dnsdist_key_file_filename }}')
+addTLSLocal('::', '{{ dnsdist_cert_file_filename }}', '{{ dnsdist_key_file_filename }}')
+
+setACL({'0.0.0.0/0', '::/0'})
+
+-- https://www.dnsdist.org/advanced/axfr.html
+{% if inventory_hostname == play_hosts[0] %}
+-- to be removed in 1.8
+addAction(OrRule({QTypeRule(DNSQType.AXFR), QTypeRule(DNSQType.IXFR)}), SetSkipCacheAction())
+-- this rule will route SOA, AXFR and IXFR queries to a specific pool of servers
+addAction(OrRule({QTypeRule(DNSQType.SOA), QTypeRule(DNSQType.AXFR), QTypeRule(DNSQType.IXFR)}), PoolAction("auth"))
+{% else %}
+-- to be removed in 1.8
+addAction(OpcodeRule(DNSOpcode.Notify), SetSkipCacheAction())
+-- this rule will route Notify queries to a specific pool of servers
+addAction(OrRule({QTypeRule(DNSOpcode.Notify)}), PoolAction("auth"))
+{% endif %}
+
+newServer({address='127.0.0.1:5300', useProxyProtocol=true, pool='auth'})
+newServer({address='[::]:5300', useProxyProtocol=true, pool='auth'})
+newServer({address='127.0.0.1:5301', useProxyProtocol=true, pool='recursor'})
+newServer({address='[::]:5301', useProxyProtocol=true, pool='recursor'})
+
+addAction(AllRule(), PoolAction('recursor'))
+addAction(AllRule(), PoolAction('auth'))

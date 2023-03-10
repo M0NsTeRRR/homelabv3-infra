@@ -1,0 +1,5 @@
+---
+- name: Restart dnsdist
+  ansible.builtin.systemd:
+    name: dnsdist
+    state: restarted

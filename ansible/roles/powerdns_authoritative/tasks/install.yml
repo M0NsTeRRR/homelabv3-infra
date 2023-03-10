@@ -1,0 +1,138 @@
+---
+- name: Add pdns-authoritative group
+  ansible.builtin.group:
+    name: pdns-authoritative
+    system: true
+    state: present
+
+- name: Add pdns-authoritative user
+  ansible.builtin.user:
+    name: pdns-authoritative
+    system: true
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: pdns-authoritative
+
+- name: Install required packages by PowerDNS
+  ansible.builtin.apt:
+    pkg:
+      - apt-transport-https
+      - gnupg-agent
+      - sqlite3
+    state: present
+
+- name: Add PowerDNS Apt signing key
+  ansible.builtin.get_url:
+    url: "https://repo.powerdns.com/{{ powerdns_authoritative_repository_key }}-pub.asc"
+    dest: /usr/share/keyrings/powerdns_authoritative.asc
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Add PowerDNS Apt repository
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/powerdns_authoritative.asc] https://repo.powerdns.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }}-auth-{{ powerdns_authoritative_repo_version }} main"
+    state: present
+    filename: pdns-auth
+
+- name: Configure apt preferences
+  ansible.builtin.copy:
+    src: apt-preferences
+    dest: /etc/apt/preferences.d/pdns
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Disable and stop systemd-resolved
+  ansible.builtin.service:
+    name: systemd-resolved
+    state: stopped
+    enabled: false
+
+- name: Install pdns-server
+  ansible.builtin.apt:
+    name: "pdns-server{% if powerdns_authoritative_version is defined %}={{ powerdns_authoritative_version }}{% endif %}"
+    update_cache: true
+    state: "{{ powerdns_authoritative_package_state }}"
+
+- name: Install pdns-backend-sqlite3
+  ansible.builtin.apt:
+    name: "pdns-backend-sqlite3{% if powerdns_authoritative_backend_sqlite_version is defined %}={{ powerdns_authoritative_backend_sqlite_version }}{% endif %}"
+    update_cache: true
+    state: "{{ powerdns_authoritative_backend_sqlite_package_state }}"
+
+- name: Fix perms on PowerDNS configuration
+  ansible.builtin.file:
+    name: "/etc/powerdns/pdns.conf"
+    owner: "pdns-authoritative"
+    group: "pdns-authoritative"
+    mode: "0640"
+    state: file
+
+- name: Ensure that the directories containing the PowerDNS SQLite databases exist
+  ansible.builtin.file:
+    name: "/var/lib/powerdns"
+    owner: "pdns-authoritative"
+    group: "pdns-authoritative"
+    mode: "0755"
+    state: directory
+
+- name: Check if database exist
+  ansible.builtin.stat:
+    path: "/var/lib/powerdns/db.sqlite"
+  register: pdns_db
+
+- name: Create the PowerDNS SQLite databases
+  ansible.builtin.shell: "sqlite3 /var/lib/powerdns/db.sqlite < /usr/share/doc/pdns-backend-sqlite3/schema.sqlite3.sql"
+  changed_when: true
+  when: not pdns_db.stat.exists
+  notify: Restart pdns
+
+- name: Fix perms on PowerDNS SQLite databases
+  ansible.builtin.file:
+    name: "/var/lib/powerdns/db.sqlite"
+    owner: "pdns-authoritative"
+    group: "pdns-authoritative"
+    mode: "0640"
+    state: file
+
+- name: Configure PowerDNS
+  ansible.builtin.lineinfile:
+    dest: "/etc/powerdns/pdns.conf"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    state: "present"
+  with_items:
+    - {regexp: '^(# )?setgid=', line: 'setgid=pdns-authoritative'}
+    - {regexp: '^(# )?setuid=', line: 'setuid=pdns-authoritative'}
+    - {regexp: '^(# )?local-address=', line: 'local-address=127.0.0.1, ::1'}
+    - {regexp: '^(# )?local-port=', line: 'local-port=5300'}
+    - {regexp: '^(# )?launch=', line: 'launch=gsqlite3'}
+    - {regexp: '^(# )?gsqlite3-database=', line: 'gsqlite3-database=/var/lib/powerdns/db.sqlite'}
+    - {regexp: '^(# )?gsqlite3-dnssec=', line: 'gsqlite3-dnssec=yes'}
+    - {regexp: '^(# )?api=', line: 'api=yes'}
+    - {regexp: '^(# )?api-key=', line: 'api-key={{ powerdns_authoritative_api_key }}'}
+    - {regexp: '^(# )?webserver=', line: 'webserver=yes'}
+    - {regexp: '^(# )?webserver-address=', line: 'webserver-address=127.0.0.1'}
+    - {regexp: '^(# )?webserver-password=', line: 'webserver-password='}
+    - {regexp: '^(# )?webserver-port=', line: 'webserver-port=8081'}
+    - {regexp: '^(# )?webserver-allow-from=', line: 'webserver-allow-from=127.0.0.1'}
+    - {regexp: '^(# )?version-string=', line: 'version-string=anonymous'}
+    - {regexp: '^(# )?primary=', line: 'primary={% if inventory_hostname == play_hosts[0] %}yes{% else %}no{% endif %}'}
+    - {regexp: '^(# )?secondary=', line: 'secondary={% if inventory_hostname == play_hosts[0] %}no{% else %}yes{% endif %}'}
+    - {regexp: '^(# )?proxy-protocol-from=', line: 'proxy-protocol-from=127.0.0.1,::1'}
+    - {regexp: '^(# )?disable-axfr=', line: 'disable-axfr=no'}
+  notify: Restart pdns
+
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers
+
+- name: Wait pdns restart
+  ansible.builtin.uri:
+    url: "https://{{ ansible_fqdn }}/api/v1/servers/localhost/zones"
+    status_code: 401
+    validate_certs: false
+  register: result
+  until: result.status == 401
+  retries: 60
+  delay: 1

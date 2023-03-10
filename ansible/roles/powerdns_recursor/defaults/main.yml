@@ -1,0 +1,19 @@
+---
+powerdns_recursor_repo_version: 48
+# powerdns_recursor_version:
+powerdns_recursor_repository_key: FD380FBB
+powerdns_recursor_package_state: latest
+powerdns_recursor_api_key: api-key
+powerdns_recursor_dns_group: dns
+powerdns_recursor_domains: []
+powerdns_recursor_reverse_zones: []
+
+
+# powerdns_recursor_domains:
+#   - unicornafk.fr
+#   - adminafk.fr
+#   - as212510.net
+# powerdns_recursor_reverse_zones:
+#   - 4.168.192.in-addr.arpa
+#   - 5.168.192.in-addr.arpa
+#   - 10.168.192.in-addr.arpa

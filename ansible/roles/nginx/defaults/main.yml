@@ -1,0 +1,20 @@
+---
+# nginx_version:
+nginx_package_state: latest
+nginx_configuration: []
+
+
+# nginx_configuration:
+#   - server_name: "{{ inventory_hostname }}"
+#     # optional
+#     additional_server_name:
+#        - "192.168.0.1"
+#     - location: /
+#        proxy_pass: "http://127.0.0.1:8080"
+#        proxy_headers:
+#          X-Server-URL: https://$server_name/
+#      - location: /static/
+#        alias: /opt/app/static/
+#     enable_content_security: true
+#     http_redirection: true
+#     ssl_port: "443"

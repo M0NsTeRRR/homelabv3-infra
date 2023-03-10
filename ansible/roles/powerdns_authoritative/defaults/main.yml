@@ -1,0 +1,39 @@
+---
+powerdns_authoritative_repo_version: 47
+# powerdns_authoritative_version:
+powerdns_authoritative_repository_key: FD380FBB
+powerdns_authoritative_package_state: latest
+# powerdns_authoritative_backend_sqlite_version:
+powerdns_authoritative_backend_sqlite_package_state: latest
+powerdns_authoritative_tsig_keys: []
+powerdns_authoritative_domains: []
+powerdns_authoritative_subdomains: []
+powerdns_authoritative_reverse_zones: []
+powerdns_authoritative_api_key: api_key
+powerdns_authoritative_dns_group: dns
+powerdns_authoritative_records: []
+
+# powerdns_authoritative_tsig_keys:
+#   - name: mykey
+#     key: GQNyFy1QagMUarHmiSgsIJajghdTGJGVcN5TRVwgbclzxGyhQR1uYLCOyJ
+#     algorithm: hmac-sha512
+# powerdns_authoritative_domains:
+#   - unicornafk.fr
+#   - adminafk.fr
+#   - as212510.net
+# powerdns_authoritative_subdomains:
+#   - dmz.unicornafk.fr
+#   - lab.unicornafk.fr
+# powerdns_authoritative_reverse_zones:
+#   - 4.168.192.in-addr.arpa
+#   - 5.168.192.in-addr.arpa
+#   - 10.168.192.in-addr.arpa
+# powerdns_authoritative_records:
+#   - canonical_hostname: dns1.unicornafk.fr.
+#     a: 192.168.10.21
+#     aaaa: 2a0c:b641:02c0:110::21
+#    sshfp:
+#      - algorithm: 1
+#        type: 2
+#        fingerprint: F537A260E2626BFEC959303F0F786F3BC986152E48A0E26C68499C0E79C27797
+#     rdns: true

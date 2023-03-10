@@ -28,12 +28,12 @@
 
 - name: Detect machine architecture
   ansible.builtin.set_fact:
-    arch: "{% if ansible_architecture == 'aarch64' %}arm64{% else %}amd64{% endif %}"
+    node_exporter_arch: "{% if ansible_architecture == 'aarch64' %}arm64{% else %}amd64{% endif %}"
   when: not node_exporter.stat.exists or node_exporter_force_install
 
 - name: Download last version of node-exporter
   ansible.builtin.get_url:
-    url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.{{ ansible_system | lower }}-{{ arch }}.tar.gz"
+    url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.{{ ansible_system | lower }}-{{ node_exporter_arch }}.tar.gz"
     dest: /tmp/node-exporter.tar.gz
     owner: exporter-exporter
     group: exporter-exporter

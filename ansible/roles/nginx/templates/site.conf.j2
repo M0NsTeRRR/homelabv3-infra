@@ -1,0 +1,67 @@
+server {
+
+  listen {{ item.ssl_port }} ssl http2;
+  listen [::]:{{ item.ssl_port }} ssl http2;
+
+  server_name {{ item.server_name }}{% if item.additional_server_name is defined %}, {% for additional_server_name in item.additional_server_name %}{{ additional_server_name }}{% if not loop.last %}, {% endif %}{% endfor %}{% endif %};
+
+  ssl_certificate /etc/nginx/ssl/{{ item.server_name }}.crt;
+  ssl_certificate_key /etc/nginx/ssl/{{ item.server_name }}.pem;
+
+  add_header X-Frame-Options "SAMEORIGIN" always;
+  add_header X-XSS-Protection "1; mode=block" always;
+  add_header X-Content-Type-Options "nosniff" always;
+  add_header Referrer-Policy "no-referrer-when-downgrade" always;
+  {% if item.enable_content_security %}add_header Content-Security-Policy "default-src 'self' http: https: data: blob: 'unsafe-inline'" always;{% endif %}
+  add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+  add_header Permissions-Policy "geolocation=(), midi=(), sync-xhr=(), microphone=(), camera=(), magnetometer=(), gyroscope=(), fullscreen=(self), payment=()";
+  add_header X-Permitted-Cross-Domain-Policies "none" always;
+  add_header Cross-Origin-Embedder-Policy "same-origin" always;
+  add_header Cross-Origin-Opener-Policy "same-origin" always;
+  add_header Cross-Origin-Resource-Policy "same-origin" always;
+  add_header Expect-CT "enforce, max-age=604800";
+  add_header Set-Cookie "Path=/; HttpOnly; Secure";
+
+
+  access_log /var/log/nginx/{{ item.server_name }}.access.log;
+  error_log /var/log/nginx/{{ item.server_name }}.error.log warn;
+
+  {% for location in item.locations %}
+  location {{ location.location }} {
+
+    {% if location.proxy_pass is defined %}
+    proxy_set_header        Host $host;
+    proxy_set_header        X-Real-IP $remote_addr;
+    proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header        X-Forwarded-Proto $scheme;
+
+    proxy_pass              {{ location.proxy_pass }};
+    proxy_read_timeout      90;
+    {% endif %}
+
+    {% if location.alias is defined %}
+    alias {{ location.alias }};
+    autoindex off;
+    {% endif %}
+
+    {% if location.proxy_headers is defined %}
+    {% for headerName, headerValue in location.proxy_headers.items() %}
+    proxy_set_header        {{ headerName }} {{ headerValue }};
+    {% endfor %}
+    {% endif %}
+  }
+  {% endfor %}
+}
+
+{% if item.http_redirection %}
+server {
+  listen 80;
+  listen [::]:80;
+
+  server_name {{ item.server_name }};
+
+  location / {
+    return 301 https://$server_name$request_uri;
+  }
+}
+{% endif %}

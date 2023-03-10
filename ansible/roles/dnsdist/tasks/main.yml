@@ -1,0 +1,85 @@
+---
+- name: "Open required ports"
+  community.general.ufw:
+    rule: allow
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+    comment: "{{ item.comment }}"
+  when: item.to_open
+  with_items:
+    - {port: "53", proto: tcp, to_open: true, comment: "Dnsdist DNS"}
+    - {port: "53", proto: udp, to_open: true, comment: "Dnsdist DNS"}
+    - {port: "443", proto: tcp, to_open: true, comment: "Dnsdist DoH"}
+    - {port: "853", proto: tcp, to_open: true, comment: "Dnsdist DoT"}
+
+- name: Add dnsdist group
+  ansible.builtin.group:
+    name: dnsdist
+    system: true
+    state: present
+
+- name: Add dnsdist user
+  ansible.builtin.user:
+    name: dnsdist
+    system: true
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: dnsdist
+
+- name: Install required packages by PowerDNS
+  ansible.builtin.apt:
+    pkg:
+      - apt-transport-https
+      - gnupg-agent
+    state: present
+
+- name: Add PowerDNS Apt signing key
+  ansible.builtin.get_url:
+    url: "https://repo.powerdns.com/{{ dnsdist_repository_key }}-pub.asc"
+    dest: /usr/share/keyrings/dnsdist.asc
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Add PowerDNS Apt repository
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/dnsdist.asc] https://repo.powerdns.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }}-dnsdist-{{ dnsdist_repo_version }} main"
+    state: present
+    filename: dnsdist
+
+- name: Configure apt preferences
+  ansible.builtin.copy:
+    src: apt-preferences
+    dest: /etc/apt/preferences.d/dnsdist
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Disable and stop systemd-resolved
+  ansible.builtin.service:
+    name: systemd-resolved
+    state: stopped
+    enabled: false
+
+- name: Install dnsdist
+  ansible.builtin.apt:
+    name: "dnsdist{% if dnsdist_version is defined %}={{ dnsdist_version }}{% endif %}"
+    update_cache: true
+    state: "{{ dnsdist_package_state }}"
+
+- name: Fix perms on dnsdist configuration
+  ansible.builtin.file:
+    name: "/etc/dnsdist/dnsdist.conf"
+    owner: "dnsdist"
+    group: "dnsdist"
+    mode: "0640"
+    state: file
+
+- name: Configure dnsdist
+  ansible.builtin.template:
+    src: dnsdist.conf.j2
+    dest: /etc/dnsdist/dnsdist.conf
+    owner: dnsdist
+    group: dnsdist
+    mode: "0640"
+  notify: Restart dnsdist.service

@@ -1,0 +1,43 @@
+---
+- name: Install pip3
+  ansible.builtin.apt:
+    name: python3-pip
+    state: present
+
+- name: Install required python package
+  ansible.builtin.pip:
+    name: cryptography
+
+- name: Install Nginx
+  ansible.builtin.apt:
+    name: "nginx{% if nginx_version is defined %}={{ nginx_version }}{% endif %}"
+    update_cache: true
+    state: "{{ nginx_package_state }}"
+
+- name: Generate Diffie-Hellman parameters
+  community.crypto.openssl_dhparam:
+    path: /etc/nginx/dhparam.pem
+
+- name: Remove default Nginx configuration
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  with_items:
+    - /etc/nginx/sites-available/default
+    - /etc/nginx/sites-enabled/default
+    - /var/www/html
+  notify: Restart nginx
+
+- name: Configure default Nginx configuration
+  ansible.builtin.copy:
+    src: nginx.conf
+    dest: /etc/nginx/nginx.conf
+    owner: root
+    group: root
+    mode: "0640"
+  notify:
+    - Restart nginx
+
+- name: Setup configurations
+  ansible.builtin.include_tasks: configure.yml
+  with_items: "{{ nginx_configuration }}"

@@ -1,0 +1,28 @@
+---
+- name: "Check if tsig key exist {{ item.name }}"
+  ansible.builtin.uri:
+    url: "https://{{ ansible_fqdn }}/api/v1/servers/localhost/tsigkeys/{{ item.name }}."
+    method: GET
+    return_content: true
+    validate_certs: false
+    status_code:
+      - 200
+      - 404
+    headers:
+      X-Api-Key: "{{ powerdns_authoritative_api_key }}"
+  register: key
+
+- name: "POST tsig key {{ item.name }}."
+  ansible.builtin.uri:
+    url: "https://{{ ansible_fqdn }}/api/v1/servers/localhost/tsigkeys"
+    method: POST
+    return_content: true
+    body_format: json
+    validate_certs: false
+    body: "{{ lookup('template', 'post_tsig_key.json.j2') }}"
+    status_code: 201
+    headers:
+      Content-Type: application/json
+      X-Api-Key: "{{ powerdns_authoritative_api_key }}"
+  when: key.status == 404
+  changed_when: response.status == 201
