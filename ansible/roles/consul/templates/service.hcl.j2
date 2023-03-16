@@ -11,8 +11,12 @@ service {
         {% endfor %}
     }
 
+    token = "{{ item.token }}"
+
     connect {
-        sidecar_service {}
+        sidecar_service {
+            port = "{{ item.sidecar_proxy.port }}"
+        }
     }
 
     {% if 'checks' in item %}{% for check in item.checks %}check {

@@ -3,13 +3,6 @@ server = true
 bootstrap_expect = 3
 {% endif %}
 
-protocol = 3
-raft_protocol = 3
-
-addresses = {
-  https = "{{ lookup('community.general.dig', inventory_hostname) }} {{ lookup('community.general.dig', inventory_hostname, 'qtype=AAAA') }}"
-}
-
 ports = {
   http = -1
   https = 8501
@@ -17,7 +10,7 @@ ports = {
 
 log_level = "INFO"
 
-client_addr = "{{ lookup('community.general.dig', inventory_hostname) }} {{ lookup('community.general.dig', inventory_hostname, 'qtype=AAAA') }}"
+client_addr = "0.0.0.0 [::]"
 server_name = "{{ inventory_hostname }}"
 
 datacenter = "{{ consul_datacenter }}"
@@ -32,13 +25,17 @@ encrypt_verify_incoming = true
 encrypt_verify_outgoing = true
 
 ca_file = "{{ consul_ca_filename }}"
-cert_file = "{{ consul_cert_file_filename }}"
-key_file = "{{ consul_key_file_filename }}"
+cert_file = "{{ consul_cert_filename }}"
+key_file = "{{ consul_key_filename }}"
 verify_incoming = true
 verify_outgoing = true
 verify_server_hostname = true
 
-retry_join = {{ consul_retry_join|to_json }}
+retry_join = [
+  {% for consul in groups[consul_server_group] | difference([inventory_hostname]) %}
+  "{{ hostvars[consul].hostname }}"{% if not loop.last %},{% endif %}
+  {% endfor %}
+]
 
 telemetry = {
   prometheus_retention_time = "120s"
@@ -47,8 +44,16 @@ telemetry = {
 
 acl = {
   enabled = true
-  default_policy = "allow"
+  default_policy = "deny"
   enable_token_persistence = true
+
+  tokens = {
+    {% if consul_server %}
+    initial_management = "{{ consul_token_initial_management }}"
+    {% else %}
+    agent = "{{ consul_agent_token }}"
+    {% endif %}
+  }
 }
 
 performance {

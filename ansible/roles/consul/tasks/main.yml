@@ -1,5 +1,5 @@
 ---
-- name: "Open required ports"
+- name: Open required ports
   community.general.ufw:
     rule: allow
     port: "{{ item.port }}"
@@ -15,6 +15,16 @@
     - {port: "8302", proto: tcp, to_open: "{{ consul_server }}", comment: "Consul WAN Serf"}
     - {port: "8302", proto: udp, to_open: "{{ consul_server }}", comment: "Consul WAN Serf"}
     - {port: "8300", proto: tcp, to_open: "{{ consul_server }}", comment: "Consul RPC server"}
+
+- name: Open sidecar-proxy required ports
+  community.general.ufw:
+    rule: allow
+    port: "{{ item.1.port }}"
+    proto: "{{ item.1.proto }}"
+    comment: "{{ item.1.comment }}"
+  with_subelements:
+    - "{{ consul_services }}"
+    - sidecar_proxy
 
 - name: Add consul group
   ansible.builtin.group:
@@ -70,7 +80,7 @@
 - name: Add CA cert
   ansible.builtin.copy:
     src: "{{ consul_local_path_ca_certificate }}"
-    dest: /etc/consul.d/ssl/ca.crt
+    dest: "{{ consul_ca_filename }}"
     owner: consul
     group: consul
     mode: "0640"

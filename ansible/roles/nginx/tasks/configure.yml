@@ -18,6 +18,9 @@
   ansible.builtin.template:
     src: site.conf.j2
     dest: "/etc/nginx/sites-available/{{ item.server_name }}"
+    owner: root
+    group: root
+    mode: "0640"
   notify:
     - restart nginx
 
