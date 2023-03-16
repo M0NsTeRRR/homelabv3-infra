@@ -1,7 +1,7 @@
 {
 	"name": "{{ item }}.",
 	"kind": "{% if inventory_hostname == play_hosts[0] %}Master{% else %}Slave{% endif %}",
-	"masters": ["{{ ansible_default_ipv4.address }}"],
+	"masters": ["{{ ansible_default_ipv4.address }}", "{{ ansible_default_ipv6.address }}"],
 	"dnssec": true,
 	"presigned": true,
 	"soa-edit": "INCEPTION-INCREMENT"
