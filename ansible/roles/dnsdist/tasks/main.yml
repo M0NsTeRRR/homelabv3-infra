@@ -75,6 +75,23 @@
     mode: "0640"
     state: file
 
+- name: Create dnsdist configuration directory
+  ansible.builtin.file:
+    name: /etc/dnsdist/ssl
+    state: directory
+    owner: dnsdist
+    group: dnsdist
+    mode: "0640"
+
+- name: Add CA cert
+  ansible.builtin.copy:
+    src: "{{ dnsdist_local_path_ca_certificate }}"
+    dest: "{{ dnsdist_ca_filename }}"
+    owner: dnsdist
+    group: dnsdist
+    mode: "0640"
+  notify: Restart dnsdist.service
+
 - name: Configure dnsdist
   ansible.builtin.template:
     src: dnsdist.conf.j2

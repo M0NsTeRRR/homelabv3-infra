@@ -1,11 +1,11 @@
 addLocal('0.0.0.0')
 addLocal('::')
 
-addDOHLocal('0.0.0.0', '{{ dnsdist_cert_file_filename }}', '{{ dnsdist_key_file_filename }}')
-addDOHLocal('::', '{{ dnsdist_cert_file_filename }}', '{{ dnsdist_key_file_filename }}')
+addDOHLocal('0.0.0.0', '{{ dnsdist_cert_filename }}', '{{ dnsdist_ca_filename }}', '{{ dnsdist_key_filename }}')
+addDOHLocal('::', '{{ dnsdist_cert_filename }}', '{{ dnsdist_ca_filename }}', '{{ dnsdist_key_filename }}')
 
-addTLSLocal('0.0.0.0', '{{ dnsdist_cert_file_filename }}', '{{ dnsdist_key_file_filename }}')
-addTLSLocal('::', '{{ dnsdist_cert_file_filename }}', '{{ dnsdist_key_file_filename }}')
+addTLSLocal('0.0.0.0', '{{ dnsdist_cert_filename }}', '{{ dnsdist_ca_filename }}', '{{ dnsdist_key_filename }}')
+addTLSLocal('::', '{{ dnsdist_cert_filename }}', '{{ dnsdist_ca_filename }}', '{{ dnsdist_key_filename }}')
 
 setACL({'0.0.0.0/0', '::/0'})
 
