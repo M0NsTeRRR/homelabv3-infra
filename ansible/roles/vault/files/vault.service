@@ -1,17 +1,18 @@
 [Unit]
 Description=vault
 After=network-online.target
-ConditionFileNotEmpty=/etc/vault.d/consul.hcl
+ConditionFileNotEmpty=/etc/vault.d/vault.hcl
 
 [Service]
 Type=notify
 User=vault
 Group=vault
-ExecStart=/usr/bin/vault agent -config-dir=/etc/consul.d/
+ExecStart=/usr/bin/vault agent -config-dir=/etc/vault.d/
 ExecReload=/bin/kill --signal HUP $MAINPID
 KillMode=process
 KillSignal=SIGTERM
 LimitNOFILE=65536
+LimitMEMLOCK=infinity
 RestartSec=10
 Restart=always
 

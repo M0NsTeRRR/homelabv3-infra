@@ -7,7 +7,19 @@
     comment: "{{ item.comment }}"
   when: item.to_open
   with_items:
-    - {port: "8600", proto: tcp, to_open: true, comment: "Consul DNS"}
+    - {port: "8200", proto: tcp, to_open: true, comment: "Vault cluster bootstrapping, vault API"}
+    - {port: "8201", proto: tcp, to_open: true, comment: "Vault raft replication, request forwarding"}
+
+- name: Disable SWAP
+  ansible.builtin.command: swapoff -a
+  register: vault_swap
+  changed_when: "vault_swap.stdout | length > 0"
+
+- name: Disable SWAP in fstab
+  ansible.builtin.replace:
+    path: /etc/fstab
+    regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
+    replace: '# \1'
 
 - name: Add vault group
   ansible.builtin.group:
@@ -50,4 +62,50 @@
     update_cache: true
     state: "{{ vault_package_state }}"
   notify:
+    - Restart vault.service
+
+- name: Create vault raft data directory
+  ansible.builtin.file:
+    name: /var/vault/raft
+    state: directory
+    owner: vault
+    group: vault
+    mode: "0640"
+
+- name: Create vault configuration directory
+  ansible.builtin.file:
+    name: /etc/vault.d/ssl
+    state: directory
+    owner: vault
+    group: vault
+    mode: "0640"
+
+- name: Add CA cert
+  ansible.builtin.copy:
+    src: "{{ vault_local_path_ca_certificate }}"
+    dest: "{{ vault_ca_filename }}"
+    owner: vault
+    group: vault
+    mode: "0640"
+  notify: Restart vault.service
+
+- name: Configure vault
+  ansible.builtin.template:
+    src: config.hcl.j2
+    dest: /etc/vault.d/vault.hcl
+    owner: vault
+    group: vault
+    mode: "0640"
+  notify: Restart vault.service
+
+- name: Create systemd service file
+  ansible.builtin.copy:
+    src: vault.service
+    dest: /etc/systemd/system/vault.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Daemon-reload
+    - Enable vault.service
     - Restart vault.service

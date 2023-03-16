@@ -1,3 +1,9 @@
 ---
 vault_package_state: latest
 # vault_version:
+vault_cluster_name: "cluster"
+vault_local_path_ca_certificate: "/etc/ssl/ca.crt"
+vault_ca_filename: "/etc/ssl/ca.crt"
+vault_cert_filename: "/etc/ssl/cert.crt"
+vault_key_filename: "/etc/ssl/cert.key"
+vault_group: vault
