@@ -2,4 +2,4 @@
 - name: Enable vault auth methods
   ansible.builtin.command: vault auth enable {{ item }}
   changed_when: true
-  with_items: vault_auth_methods
+  with_items: "{{ vault_auth_methods }}"
