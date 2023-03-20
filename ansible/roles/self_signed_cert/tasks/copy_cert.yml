@@ -1,4 +1,18 @@
 ---
+- name: Create group if does not exist
+  ansible.builtin.group:
+    name: "{{ folder.group }}"
+    system: true
+    state: present
+
+- name: Create user if does not exist
+  ansible.builtin.user:
+    name: "{{ folder.owner }}"
+    system: true
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: "{{ folder.group }}"
+
 - name: Create remote folder for certificates
   ansible.builtin.file:
     path: "{{ folder.path }}"

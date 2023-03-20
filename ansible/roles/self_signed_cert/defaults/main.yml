@@ -11,7 +11,7 @@ self_signed_cert_pdns: {}
 #     ca_cert_local_path: "./certs/ca.crt"
 #     ca_private_local_path: "./certs/ca.pem"
 #     cert_remote_folder:
-#      - { path: /etc/nginx/ssl, owner: root, group: root }
+#      - {path: /etc/nginx/ssl, owner: root, group: root}
 #     ownca_not_after: "+90d"
 #     pkcs12_friendly_name: example
 #     pkcs12_passphrase: password
@@ -19,8 +19,8 @@ self_signed_cert_pdns: {}
 #     generate_pkcs12: true
 #     subject_alt_name:
 #       - NS:example.com
-#     restart_systemd_services:
-#       - app
+#     systemd_services:
+#       - {name: app, state: restarted}
 #     force_renew: true
 #     tlsa:
 #       proto: tcp

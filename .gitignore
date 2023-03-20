@@ -7,8 +7,9 @@ packer_cache/
 terraform/account.hcl
 *.tfstate
 *.tfstate.backup
-secrets.yml
-secrets.env
+*secrets.yml
+*secrets.env
+*secrets.json
 account.hcl
 *.crt*
 *.csr*

@@ -1,8 +1,9 @@
 ---
 - name: Restart services that use SSL cert
   ansible.builtin.systemd:
-    name: "{{ service }}"
-    state: restarted
+    name: "{{ service.name }}"
+    state: "{{ service.state }}"
+  when: item.systemd_services + ".service" in ansible_facts.services or item.systemd_services in ansible_facts.services
   with_items: "{{ item.systemd_services }}"
   loop_control:
     loop_var: service
