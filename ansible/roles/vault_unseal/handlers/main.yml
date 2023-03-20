@@ -1,0 +1,14 @@
+---
+- name: Daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Restart vault-unseal.service
+  ansible.builtin.systemd:
+    name: vault-unseal.service
+    state: restarted
+
+- name: Enable vault-unseal.service
+  ansible.builtin.systemd:
+    name: vault-unseal.service
+    enabled: true

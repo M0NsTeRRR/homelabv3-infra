@@ -1,0 +1,14 @@
+---
+vault_unseal_version: 0.3.0
+vault_unseal_force_install: false
+vault_unseal_cluster_name: "cluster"
+vault_unseal_nodes_group: "vault"
+vault_unseal_seal_keys: []
+vault_unseal_smtp_hostname: smtp.example.com
+vault_unseal_smtp_port: 587
+vault_unseal_smtp_username: username
+vault_unseal_smtp_password: password
+vault_unseal_smtp_from: email@example.com
+vault_unseal_smtp_to: email@example.com
+vault_unseal_smtp_tls_skip_verify: false
+vault_unseal_smtp_mandatory_tls: false

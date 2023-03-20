@@ -1,0 +1,19 @@
+[Unit]
+Description=Vault unsealing utility
+Documentation=https://github.com/lrstanley/vault-unseal
+After=network-online.target
+
+[Service]
+Type=simple
+User=vault-unseal
+Group=vault-unseal
+ExecStart=/usr/bin/vault-unseal --config /etc/vault-unseal/config.yaml
+RestartSec=10
+Restart=always
+StartLimitInterval=0
+TimeoutStopSec=10s
+KillMode=mixed
+KillSignal=SIGQUIT
+
+[Install]
+WantedBy=multi-user.target
