@@ -9,7 +9,7 @@ storage "raft" {
     retry_join = [
         {% for vault in groups[vault_group] | difference([inventory_hostname]) %}
         {
-            leader_api_addr = "https://"{{ hostvars[vault].hostname }}":8200"
+            leader_api_addr = "https://{{ hostvars[vault].hostname }}:8200"
             leader_ca_cert_file = "{{ vault_ca_filename }}"
             leader_client_cert_file = "{{ vault_cert_filename }}"
             leader_client_key_file = "{{ vault_key_filename }}"
@@ -19,15 +19,6 @@ storage "raft" {
 }
 
 disable_mlock = true
-
-listener "tcp" {
-    address     = "0.0.0.0:8200"
-    cluster_address     = "0.0.0.0:8201"
-    tls_client_ca_file = "{{ vault_ca_filename }}"
-    tls_cert_file = "{{ vault_cert_filename }}"
-    tls_key_file = "{{ vault_key_filename }}"
-    tls_require_and_verify_client_cert = "true"
-}
 
 listener "tcp" {
     address     = "[::]:8200"

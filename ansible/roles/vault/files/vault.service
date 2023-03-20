@@ -1,13 +1,12 @@
 [Unit]
 Description=vault
 After=network-online.target
-ConditionFileNotEmpty=/etc/vault.d/vault.hcl
 
 [Service]
 Type=notify
 User=vault
 Group=vault
-ExecStart=/usr/bin/vault agent -config-dir=/etc/vault.d/
+ExecStart=/usr/bin/vault server -config=/etc/vault.d/
 ExecReload=/bin/kill --signal HUP $MAINPID
 KillMode=process
 KillSignal=SIGTERM

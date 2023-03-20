@@ -109,3 +109,38 @@
     - Daemon-reload
     - Enable vault.service
     - Restart vault.service
+
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers
+
+# https://developer.hashicorp.com/vault/api-docs/system/health
+- name: Wait vault restart
+  ansible.builtin.uri:
+    url: "https://{{ inventory_hostname }}:8200/v1/sys/health"
+    status_code:
+      - 200 # if initialized, unsealed, and active
+      - 429 # if unsealed and standby
+      - 472 # if disaster recovery mode replication secondary and active
+      - 473 # if performance standby
+      - 501 # if not initialized
+      - 503 # if sealed
+  register: vault_status
+  when: inventory_hostname == play_hosts[0]
+
+- name: Init vault
+  ansible.builtin.include_tasks: init.yml
+  when:
+    - vault_status.status == 501
+    - inventory_hostname == play_hosts[0]
+
+- name: Update vault auth methods
+  ansible.builtin.include_tasks: auth_methods.yml
+  when:
+    - vault_status.status == 501
+    - inventory_hostname == play_hosts[0]
+
+- name: Update vault secrets engine
+  ansible.builtin.include_tasks: secrets_engine.yml
+  when:
+    - vault_status.status == 501
+    - inventory_hostname == play_hosts[0]
