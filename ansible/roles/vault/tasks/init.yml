@@ -19,3 +19,7 @@
   ansible.builtin.command: "vault operator unseal {{ item }}"
   changed_when: true
   with_items: "{{ vault_init_parsed.unseal_keys_hex }}"
+
+- name: Set root token
+  ansible.builtin.set_fact:
+    vault_token: "{{ vault_init_parsed.root_token }}"

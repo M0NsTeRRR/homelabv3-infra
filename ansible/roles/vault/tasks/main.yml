@@ -133,14 +133,16 @@
     - vault_status.status == 501
     - inventory_hostname == play_hosts[0]
 
-- name: Update vault auth methods
-  ansible.builtin.include_tasks: auth_methods.yml
+- name: Update vault auth method
+  ansible.builtin.include_tasks: auth_method.yml
+  with_items: "{{ vault_auth_methods }}"
   when:
     - vault_status.status == 501
     - inventory_hostname == play_hosts[0]
 
-- name: Update vault secrets engine
-  ansible.builtin.include_tasks: secrets_engine.yml
+- name: Update vault secret engine
+  ansible.builtin.include_tasks: secret_engine.yml
+  with_items: "{{ vault_secrets_engine }}"
   when:
     - vault_status.status == 501
     - inventory_hostname == play_hosts[0]

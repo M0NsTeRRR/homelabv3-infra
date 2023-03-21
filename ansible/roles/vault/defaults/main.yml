@@ -11,5 +11,14 @@ vault_key_shares: 5
 vault_key_treshold: 3
 vault_seal_keys: []
 vault_token: ""
-vault_auth_methods: []
-vault_secrets_engine: []
+vault_auth_methods: {}
+vault_secrets_engine: {}
+
+# Same schema for vault_secrets_engine
+# vault_auth_methods:
+#   - name: pki
+#     vault_data:
+#       path: cubbyhole/mysecret
+#       data:
+#         key1: val1
+#         key2: val2

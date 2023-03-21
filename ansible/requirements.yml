@@ -3,3 +3,4 @@ collections:
   - ansible.posix
   - community.general
   - community.crypto
+  - community.hashi_vault
