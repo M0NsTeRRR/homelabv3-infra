@@ -38,3 +38,4 @@
       ansible.builtin.reboot:
     - name: Netplan apply
       ansible.builtin.shell: netplan apply
+      changed_when: true

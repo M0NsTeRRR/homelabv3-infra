@@ -1,4 +1,8 @@
 ---
+- name: Set consul_server_group
+  ansible.builtin.set_fact:
+    consul_server: "'{{ consul_server_group }}' not in group_names"
+
 - name: Open required ports
   community.general.ufw:
     rule: allow

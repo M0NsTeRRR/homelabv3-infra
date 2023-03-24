@@ -5,3 +5,4 @@
   delay: 3
   register: result
   until: result.rc == 0
+  changed_when: true
