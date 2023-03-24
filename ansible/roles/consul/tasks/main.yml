@@ -40,6 +40,11 @@
     shell: /usr/sbin/nologin
     group: consul
 
+- name: Check if consul is already installed
+  ansible.builtin.stat:
+    path: /usr/bin/consul
+  register: consul
+
 - name: Install required packages by Consul
   ansible.builtin.apt:
     pkg:
@@ -69,6 +74,14 @@
   notify:
     - Restart consul.service
 
+- name: Create consul data directory
+  ansible.builtin.file:
+    name: /var/consul
+    state: directory
+    owner: consul
+    group: consul
+    mode: "0640"
+
 - name: Create consul configuration directory
   ansible.builtin.file:
     name: /etc/consul.d/ssl
@@ -95,16 +108,6 @@
     mode: "0640"
   notify: Restart consul.service
 
-- name: Configure consul services
-  ansible.builtin.template:
-    src: service.hcl.j2
-    dest: "/etc/consul.d/{{ item.name }}.service.hcl"
-    owner: consul
-    group: consul
-    mode: "0640"
-  with_items: "{{ consul_services }}"
-  notify: Restart consul.service
-
 - name: Create systemd service file
   ansible.builtin.copy:
     src: consul.service
@@ -116,3 +119,30 @@
     - Daemon-reload
     - Enable consul.service
     - Restart consul.service
+
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers
+
+- name: Wait consul restart
+  ansible.builtin.uri:
+    url: "https://{{ groups[consul_server_group][0].hostname }}:8501/v1/health/node/{{ ansible_hostname }}"
+    status_code: 200
+    method: GET
+    headers:
+      Content-Type: application/json
+      X-Consul-Token: "{{ consul_token_initial_management }}"
+    client_cert: "{{ consul_client_cert }}"
+    client_key: "{{ consul_client_key }}"
+    return_content: true
+  register: result
+  until: result.json != []
+  retries: 60
+  delay: 1
+
+- name: Init agent ACL token
+  ansible.builtin.include_tasks: init_agent.yml
+  when: not consul.stat.exists
+
+- name: Provision consul services
+  ansible.builtin.include_tasks: services.yml
+  with_items: "{{ consul_services }}"

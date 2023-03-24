@@ -131,7 +131,6 @@
   ansible.builtin.uri:
     url: "https://{{ ansible_fqdn }}/api/v1/servers/localhost/zones"
     status_code: 401
-    validate_certs: false
   register: result
   until: result.status == 401
   retries: 60

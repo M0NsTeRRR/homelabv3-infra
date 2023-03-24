@@ -1,0 +1,7 @@
+{
+    "Description": "{{ ansible_hostname }} agent token",
+    "NodeIdentities": [{
+        "NodeName": "{{ ansible_hostname }}",
+        "Datacenter": "{{ consul_datacenter }}"
+    }]
+}

@@ -1,0 +1,69 @@
+---
+- name: Check if service token already exist for {{ item.name }}
+  ansible.builtin.stat:
+    path: "/etc/consul.d/{{ item.name }}.token"
+  register: service_token
+
+- name: Read service token for {{ item.name }}
+  ansible.builtin.slurp:
+    src: "/etc/consul.d/{{ item.name }}.token"
+  when: service_token.stat.exists
+  register: service_token_content
+
+- name: Set consul_service_token
+  ansible.builtin.set_fact:
+    consul_service_token: "{{ service_token_content | b64decode }}"
+  when: service_token.stat.exists
+
+- name: Create service token {{ item.name }}
+  ansible.builtin.uri:
+    url: "https://{{ groups[consul_server_group][0].hostname }}:8501/v1/acl/token"
+    status_code: 200
+    method: PUT
+    headers:
+      Content-Type: application/json
+      X-Consul-Token: "{{ consul_token_initial_management }}"
+    client_cert: "{{ consul_client_cert }}"
+    client_key: "{{ consul_client_key }}"
+    return_content: true
+    body_format: json
+    body: "{{ lookup('template', 'create_agent_token.json.json.j2') }}"
+  when: not service_token.stat.exists
+  register: service_token
+
+- name: Set consul_service_token
+  ansible.builtin.set_fact:
+    consul_service_token: "{{ service_token.SecretID }}"
+  when: not service_token.stat.exists
+
+- name: Configure consul service {{ item.name }}
+  ansible.builtin.template:
+    src: service.hcl.j2
+    dest: "/etc/consul.d/{{ item.name }}.service.hcl"
+    owner: consul
+    group: consul
+    mode: "0640"
+  notify:
+    - Restart consul.service
+    - Restart envoy.service
+
+- name: Create consul service token file {{ item.name }}
+  ansible.builtin.template:
+    src: token.j2
+    dest: "/etc/consul.d/{{ item.name }}.token"
+    owner: consul
+    group: consul
+    mode: "0640"
+  notify: Restart envoy.service
+
+- name: Configure envoy service {{ item.name }}
+  ansible.builtin.template:
+    src: envoy.service.j2
+    dest: "/etc/systemd/system/envoy-{{ item.name }}.service"
+    owner: consul
+    group: consul
+    mode: "0640"
+  notify:
+    - Daemon-reload
+    - Enable envoy.service
+    - Restart envoy.service

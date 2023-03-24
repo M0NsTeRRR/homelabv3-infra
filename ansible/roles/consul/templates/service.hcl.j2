@@ -11,7 +11,7 @@ service {
         {% endfor %}
     }
 
-    token = "{{ item.token }}"
+    token = "{{ consul_service_token }}"
 
     connect {
         sidecar_service {

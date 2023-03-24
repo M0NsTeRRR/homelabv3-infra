@@ -3,11 +3,13 @@ consul_package_state: latest
 # consul_version:
 consul_datacenter: "dc"
 consul_encrypt: "azertyuiop"
-consul_token_initial_management:
+consul_token_initial_management: "azertyuiop"
 consul_local_path_ca_certificate: "/etc/ssl/ca.crt"
 consul_ca_filename: "/etc/ssl/ca.crt"
 consul_cert_filename: "/etc/ssl/cert.crt"
 consul_key_filename: "/etc/ssl/cert.key"
+consul_client_cert: "/etc/ssl/cert.crt"
+consul_client_key: "/etc/ssl/cert.key"
 consul_server_group: consul
 consul_server: false
 consul_services: {}
@@ -21,6 +23,7 @@ consul_services: {}
 #       - port: 21000
 #         proto: tcp
 #         comment: node-exporter
+#         admin_bind: "localhost:19000"
 #     meta:
 #       prometheus_param_module: node-exporter
 #     checks:

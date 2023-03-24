@@ -8,7 +8,6 @@
     url: "https://{{ ansible_fqdn }}/api/v1/servers/localhost/zones/{{ item }}."
     method: GET
     return_content: true
-    validate_certs: false
     status_code:
       - 200
       - 404
@@ -22,7 +21,6 @@
     method: POST
     return_content: true
     body_format: json
-    validate_certs: false
     body: "{{ lookup('template', 'post_zone.json.j2') }}"
     status_code: 201
     headers:
@@ -38,7 +36,6 @@
     method: PATCH
     return_content: true
     body_format: json
-    validate_certs: false
     body: "{{ lookup('template', 'patch_zone.json.j2') }}"
     status_code: 204
     headers:

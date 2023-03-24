@@ -20,7 +20,6 @@
     method: PATCH
     return_content: true
     body_format: json
-    validate_certs: false
     body: "{{ lookup('template', 'pdns_tlsa.json.j2') }}"
     status_code: 204
     headers:

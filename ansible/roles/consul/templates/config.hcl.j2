@@ -1,6 +1,6 @@
 {% if consul_server %}
 server = true
-bootstrap_expect = 3
+bootstrap_expect = {{ groups[consul_server_group] | length }}
 {% endif %}
 
 ports = {
@@ -10,11 +10,11 @@ ports = {
 
 log_level = "INFO"
 
-client_addr = "0.0.0.0 [::]"
+client_addr = "[::]"
 server_name = "{{ inventory_hostname }}"
 
 datacenter = "{{ consul_datacenter }}"
-data_dir = "/opt/consul"
+data_dir = "/var/consul"
 
 enable_syslog = true
 
@@ -50,11 +50,15 @@ acl = {
   tokens = {
     {% if consul_server %}
     initial_management = "{{ consul_token_initial_management }}"
-    {% else %}
-    agent = "{{ consul_agent_token }}"
     {% endif %}
   }
 }
+
+{% if consul_server %}
+connect {
+  enabled = true
+}
+{% endif %}
 
 performance {
   raft_multiplier = 1

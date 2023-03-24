@@ -12,3 +12,15 @@
   ansible.builtin.systemd:
     name: consul.service
     enabled: true
+
+- name: Restart envoy.service
+  ansible.builtin.systemd:
+    name: envoy-{{ item.name }}.service
+    state: restarted
+  with_items: "{{ consul_services }}"
+
+- name: Enable envoy.service
+  ansible.builtin.systemd:
+    name: envoy-{{ item.name }}.service
+    enabled: true
+  with_items: "{{ consul_services }}"
