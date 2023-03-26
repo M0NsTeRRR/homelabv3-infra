@@ -16,7 +16,7 @@
 
 - name: Apply agent token
   ansible.builtin.uri:
-    url: "https://{{ inventory_hostname }}:8501/v1/agent/token/acl_token"
+    url: "https://{{ inventory_hostname }}:8501/v1/agent/token/agent"
     status_code: 200
     method: PUT
     headers:
