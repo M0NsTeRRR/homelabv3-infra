@@ -9,7 +9,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Setup Terragrunt
-      uses: autero1/action-terragrunt@v1.3.1
+      uses: autero1/action-terragrunt@v1.3.2
       with:
         terragrunt_version: latest
     - name: Check fmt
