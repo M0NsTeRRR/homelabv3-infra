@@ -18,6 +18,7 @@ terraform/account.hcl
 *secrets.yml
 *secrets.yaml
 *.csr*
+*.p12*
 *.key*
 *.pem*
 *.img
