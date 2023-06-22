@@ -1,0 +1,5 @@
+---
+k3s_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
+k3s_join_url: "https://master1.unicornafk.fr:6443"
+k3s_ha_controlplane_ip: "{{ kubernetes_vip_url }},{{ lookup('community.general.dig', kubernetes_vip_url) }},{{ lookup('community.general.dig', kubernetes_vip_url, 'qtype=AAAA') }}"
+k3s_nodename: "{{ inventory_hostname }}"

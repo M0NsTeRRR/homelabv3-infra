@@ -1,0 +1,14 @@
+---
+- name: Install Postgresql
+  ansible.builtin.apt:
+    name: "postgresql{% if postgresql_version is defined %}={{ postgresql_version }}{% endif %}"
+    update_cache: true
+    state: "{{ postgresql_package_state }}"
+  notify:
+    - Daemon-reload
+    - Enable postgresql
+    - Restart postgresql
+
+- name: Create database and user
+  ansible.builtin.include_tasks: create_db.yml
+  with_items: "{{ postgresql_dbs }}"

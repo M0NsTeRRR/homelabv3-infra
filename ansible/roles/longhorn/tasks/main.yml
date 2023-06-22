@@ -1,0 +1,39 @@
+---
+- name: Set user that run ansible playbook
+  ansible.builtin.set_fact:
+    longhorn_user: "{{ lookup('env', 'USER') }}"
+  delegate_to: localhost
+
+- name: Get longhorn service acccount
+  kubernetes.core.k8s_info:
+    kind: ServiceAccount
+    name: longhorn-service-account
+    namespace: longhorn-system
+    kubeconfig: "{{ longhorn_localhost_kubeconfig_path }}"
+    validate_certs: true
+  delegate_to: localhost
+  register: longhorn_service_account
+
+- name: Check if longhorn is already installed
+  ansible.builtin.set_fact:
+    longhorn_is_installed: "{% if longhorn_service_account.resources | length > 0 %}true{% else %}false{% endif %}"
+  delegate_to: localhost
+
+- name: Download longhorn manifest"
+  ansible.builtin.get_url:
+    url: "https://raw.githubusercontent.com/longhorn/longhorn/v{{ longhorn_version }}/deploy/longhorn.yaml"
+    dest: /tmp/longhorn.yaml
+    owner: "{{ longhorn_user }}"
+    group: "{{ longhorn_user }}"
+    mode: "0644"
+  when: not longhorn_is_installed or longhorn_force_install
+  delegate_to: localhost
+
+- name: Install longhorn manifest
+  kubernetes.core.k8s:
+    src: /tmp/longhorn.yaml
+    kubeconfig: "{{ longhorn_localhost_kubeconfig_path }}"
+    validate_certs: true
+    state: present
+  when: not longhorn_is_installed or longhorn_force_install
+  delegate_to: localhost

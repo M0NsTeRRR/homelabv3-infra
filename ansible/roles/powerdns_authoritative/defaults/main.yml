@@ -1,17 +1,26 @@
 ---
-powerdns_authoritative_repo_version: 47
+powerdns_authoritative_repo_version: 48
 # powerdns_authoritative_version:
 powerdns_authoritative_repository_key: FD380FBB
 powerdns_authoritative_package_state: latest
-# powerdns_authoritative_backend_sqlite_version:
-powerdns_authoritative_backend_sqlite_package_state: latest
+# powerdns_authoritative_pgsql_version:
+powerdns_authoritative_pgsql_package_state: latest
+# powerdns_authoritative_backend_pgsql_version:
+powerdns_authoritative_backend_pgsql_package_state: latest
+# powerdns_authoritative_psycopg2_binary_version:
+powerdns_authoritative_psycopg2_binary_package_state: latest
+powerdns_authoritative_venv: "/tmp/venv_powerdns"
+powerdns_authoritative_pgsql_user: user
+powerdns_authoritative_pgsql_password: password
+powerdns_authoritative_pgsql_db: pdns
 powerdns_authoritative_tsig_keys: []
 powerdns_authoritative_domains: []
 powerdns_authoritative_subdomains: []
 powerdns_authoritative_reverse_zones: []
 powerdns_authoritative_api_key: api_key
-powerdns_authoritative_dns_group: dns
+powerdns_authoritative_api_base_url: http://example.fr
 powerdns_authoritative_records: []
+powerdns_authoritative_rname: admin.example.fr
 
 # powerdns_authoritative_tsig_keys:
 #   - name: mykey

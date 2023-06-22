@@ -3,3 +3,8 @@
   ansible.builtin.systemd:
     name: systemd-timesyncd
     state: restarted
+
+- name: Enable systemd-timesyncd
+  ansible.builtin.systemd:
+    name: systemd-timesyncd
+    enabled: true

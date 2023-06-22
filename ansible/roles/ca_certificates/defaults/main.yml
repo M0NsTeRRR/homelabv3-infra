@@ -1,5 +1,5 @@
 ---
 # ca_certificates_version:
 ca_certificates_package_state: latest
-ca_certificates_organization_name: example
 ca_certificates_local_path_ca_certificate: "/etc/ssl/certs/ca.crt"
+ca_certificates_certs_dir: "/etc/ssl/certs/"

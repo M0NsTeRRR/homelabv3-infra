@@ -1,0 +1,31 @@
+---
+- name: Install psycopg2-binary
+  ansible.builtin.pip:
+    name: "psycopg2-binary{% if postgresql_psycopg2_binary_version is defined %}={{ postgresql_psycopg2_binary_version }}{% endif %}"
+    state: "{{ postgresql_psycopg2_binary_package_state }}"
+    virtualenv: "{{ postgresql_venv }}"
+
+- name: Chown venv to postgresql
+  ansible.builtin.file:
+    name: "{{ postgresql_venv }}"
+    owner: "postgres"
+    group: "postgres"
+    state: directory
+    recurse: true
+
+- name: "Create postgresql user {{ item.user }}"
+  community.postgresql.postgresql_user:
+    name: "{{ item.user }}"
+    password: "{{ item.password }}"
+  vars:
+    ansible_python_interpreter: "{{ postgresql_venv }}/bin/python"
+  become_user: postgres
+
+- name: "Create postgresql database {{ item.name }}"
+  community.postgresql.postgresql_db:
+    name: "{{ item.name }}"
+    owner: "{{ item.user }}"
+    encoding: UTF-8
+  vars:
+    ansible_python_interpreter: "{{ postgresql_venv }}/bin/python"
+  become_user: postgres

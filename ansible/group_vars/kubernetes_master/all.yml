@@ -1,0 +1,10 @@
+---
+cilium_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
+kube_vip_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
+kube_vip_address: "192.168.10.80"
+kube_vip_interface: ens192
+emissary_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
+longhorn_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
+metallb_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
+metallb_ip_address_pool:
+  - 192.168.10.100-110

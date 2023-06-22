@@ -1,0 +1,83 @@
+---
+- name: Set user that run ansible playbook
+  ansible.builtin.set_fact:
+    kube_vip_user: "{{ lookup('env', 'USER') }}"
+  delegate_to: localhost
+  run_once: true
+
+- name: Get kube-vip service acccount
+  kubernetes.core.k8s_info:
+    kind: ServiceAccount
+    name: kube-vip
+    namespace: kube-system
+    kubeconfig: "{{ kube_vip_localhost_kubeconfig_path }}"
+    validate_certs: true
+  register: kube_vip_service_account
+  delegate_to: localhost
+  run_once: true
+
+- name: Check if kube-vip is already installed
+  ansible.builtin.set_fact:
+    kube_vip_is_installed: "{% if kube_vip_service_account.resources | length > 0 %}true{% else %}false{% endif %}"
+  delegate_to: localhost
+  run_once: true
+
+- name: Download kube-vip rbac manifest"
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/kube-vip/kube-vip/v{{ kube_vip_version }}/docs/manifests/rbac.yaml
+    dest: /tmp/kube-vip-rbac.yaml
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0644"
+  when: not kube_vip_is_installed or kube_vip_force_install
+  delegate_to: localhost
+  run_once: true
+
+- name: Install kube-vip rbac manifest
+  kubernetes.core.k8s:
+    src: /tmp/kube-vip-rbac.yaml
+    kubeconfig: "{{ kube_vip_localhost_kubeconfig_path }}"
+    validate_certs: true
+    state: present
+  when: not kube_vip_is_installed or kube_vip_force_install
+  delegate_to: localhost
+  run_once: true
+
+- name: Create kube-vip container to generate daemonset manifest
+  community.docker.docker_container:
+    name: kube-vip-generate-manifest
+    image: "ghcr.io/kube-vip/kube-vip:v{{ kube_vip_version }}"
+    detach: false
+    command: >
+      manifest daemonset
+      --interface {{ kube_vip_interface }}
+      --address {{ kube_vip_address }}
+      --inCluster
+      --taint
+      --controlplane
+      --services
+      --arp
+      --leaderElection
+    recreate: true
+  register: kube_vip_container_output
+  when: not kube_vip_is_installed or kube_vip_force_install
+  delegate_to: localhost
+  run_once: true
+
+- name: Remove the kube-vip container
+  community.docker.docker_container:
+    name: kube-vip-generate-manifest
+    state: absent
+  when: not kube_vip_is_installed or kube_vip_force_install
+  delegate_to: localhost
+  run_once: true
+
+- name: Install kube-vip daemonset manifest
+  kubernetes.core.k8s:
+    definition: "{{ kube_vip_container_output.container.Output }}"
+    kubeconfig: "{{ kube_vip_localhost_kubeconfig_path }}"
+    validate_certs: true
+    state: present
+  when: not kube_vip_is_installed or kube_vip_force_install
+  delegate_to: localhost
+  run_once: true

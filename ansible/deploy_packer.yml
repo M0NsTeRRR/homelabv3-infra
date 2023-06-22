@@ -1,16 +1,7 @@
 ---
-- name: Provision Image
+- name: Provision packer
   hosts: default
   become: true
-  vars:
-    ca_certificates_organization_name: "{{ organization }}"
-    ca_certificates_local_path_ca_certificate: "{{ certs_dir }}ca.crt"
-    rsyslog_server: log.unicornafk.fr
-    rsyslog_port: 1514
-    rsyslog_local_path_ca_certificate: "{{ certs_dir }}rsyslog-server/client.crt"
-    rsyslog_local_path_certificate: "{{ certs_dir }}rsyslog-client/client.crt"
-    rsyslog_local_path_certificate_key: "{{ certs_dir }}rsyslog-client/client.pem"
-    systemd_timesyncd_ntp: "{{ ntp_servers.hosts }}"
   roles:
     - modprobe
     - grub
@@ -19,8 +10,8 @@
     - sysctl
     - ufw
     - motd
-    - node_exporter
     - systemd_timesyncd
+    - systemd_resolved
     - user
     - openssh_server
     - fail2ban
@@ -33,9 +24,69 @@
         autoclean: true
         autoremove: true
 
-    - name: Include utils
-      ansible.builtin.include_tasks: playbooks/utils.yml
-  tasks:
+    - name: Create /etc/apt/keyrings used by GPG key for apt
+      ansible.builtin.file:
+        name: /etc/apt/keyrings
+        state: directory
+        owner: root
+        group: root
+        mode: "0755"
+
+    - name: Install pip3
+      ansible.builtin.apt:
+        name: python3-pip
+        state: present
+
+    - name: Install virtualenv
+      ansible.builtin.apt:
+        name: python3-virtualenv
+        state: present
+
+    - name: Install apt-transport-https
+      ansible.builtin.apt:
+        name: apt-transport-https
+        state: present
+
+    - name: Install rng-tools
+      ansible.builtin.apt:
+        name: rng-tools
+        state: present
+
+    - name: Install sysstat
+      ansible.builtin.apt:
+        name: sysstat
+        state: present
+
+    - name: Install ncdu
+      ansible.builtin.apt:
+        name: ncdu
+        state: present
+
+    - name: Install apt-show-versions
+      ansible.builtin.apt:
+        name: apt-show-versions
+        state: present
+
+    - name: Install debsums
+      ansible.builtin.apt:
+        name: debsums
+        state: present
+
+    - name: Install curl
+      ansible.builtin.apt:
+        name: curl
+        state: present
+
+    - name: Install cloud-initramfs-growroot
+      ansible.builtin.apt:
+        name: cloud-initramfs-growroot
+        state: present
+
+  post_tasks:
+    - name: Clean cloud init configuration
+      ansible.builtin.command: cloud-init clean --seed --machine-id
+      changed_when: true
+
     - name: "Update password of {{ main_user }}"
       ansible.builtin.user:
         name: "{{ main_user }}"

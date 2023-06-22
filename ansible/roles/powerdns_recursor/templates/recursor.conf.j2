@@ -1,0 +1,11 @@
+setgid=pdns
+setuid=pdns
+query-local-address=0.0.0.0, ::
+local-address=127.0.0.1, ::1
+local-port=5301
+allow-from=0.0.0.0/0, ::/0
+forward-zones={{ powerdns_recursor_forward_zone }}{% if powerdns_recursor_domains | length > 0 %},{% endif %}{{ powerdns_recursor_forward_reverse_zone }}
+serve-rfc1918=no
+webserver=no
+version-string=anonymous
+proxy-protocol-from=127.0.0.1/8,::1/128

@@ -1,0 +1,12 @@
+---
+# postgresql_version:
+postgresql_package_state: latest
+# postgresql_psycopg2_binary_version:
+postgresql_psycopg2_binary_package_state: latest
+postgresql_venv: "/tmp/venv_postgresql"
+postgresql_dbs: []
+
+# postgresql_dbs:
+#   - name: application
+#     user: application
+#     password: application

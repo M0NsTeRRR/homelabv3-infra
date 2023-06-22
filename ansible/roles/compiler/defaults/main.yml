@@ -1,6 +1,3 @@
 ---
 compiler_binary_path:
   - /usr/bin/as
-  - /usr/bin/cc
-  - /usr/bin/g++
-  - /usr/bin/gcc

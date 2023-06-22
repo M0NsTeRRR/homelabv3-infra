@@ -1,8 +1,9 @@
 ---
-dnsdist_repo_version: 17
+dnsdist_repo_version: 18
 # dnsdist_version:
 dnsdist_repository_key: FD380FBB
 dnsdist_package_state: latest
-dnsdist_ca_filename: "/etc/dnsdist/ssl/ca.crt"
-dnsdist_cert_filename: "/etc/dnsdist/ssl/cert.crt"
-dnsdist_key_filename: "/etc/dnsdist/ssl/cert.crt"
+dnsdist_local_path_ca_certificate: "/etc/ssl/certs/ca.crt"
+dnsdist_ca_filename: "ca.crt"
+dnsdist_cert_filename: "example.fr.crt"
+dnsdist_key_filename: "example.fr.key"

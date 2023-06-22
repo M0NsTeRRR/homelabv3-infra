@@ -1,0 +1,4 @@
+---
+longhorn_version: "1.4.2"
+longhorn_force_install: false
+longhorn_localhost_kubeconfig_path: /home/user/.kube/kubeconfig

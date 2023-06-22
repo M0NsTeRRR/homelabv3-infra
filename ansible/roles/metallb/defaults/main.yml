@@ -1,0 +1,8 @@
+---
+metallb_version: "0.13.10"
+metallb_force_install: false
+metallb_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
+
+
+# metallb_ip_address_pool:
+#   - 192.168.0.0/24

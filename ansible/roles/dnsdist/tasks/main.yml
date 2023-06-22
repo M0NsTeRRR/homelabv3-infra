@@ -12,19 +12,19 @@
     - {port: "443", proto: tcp, to_open: true, comment: "Dnsdist DoH"}
     - {port: "853", proto: tcp, to_open: true, comment: "Dnsdist DoT"}
 
-- name: Add dnsdist group
+- name: Add _dnsdist group
   ansible.builtin.group:
-    name: dnsdist
+    name: _dnsdist
     system: true
     state: present
 
-- name: Add dnsdist user
+- name: Add _dnsdist user
   ansible.builtin.user:
-    name: dnsdist
+    name: _dnsdist
     system: true
     create_home: false
     shell: /usr/sbin/nologin
-    group: dnsdist
+    group: _dnsdist
 
 - name: Install required packages by PowerDNS
   ansible.builtin.apt:
@@ -36,14 +36,14 @@
 - name: Add PowerDNS Apt signing key
   ansible.builtin.get_url:
     url: "https://repo.powerdns.com/{{ dnsdist_repository_key }}-pub.asc"
-    dest: /usr/share/keyrings/dnsdist.asc
+    dest: /etc/apt/keyrings/dnsdist.asc
     owner: root
     group: root
     mode: "0644"
 
 - name: Add PowerDNS Apt repository
   ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/usr/share/keyrings/dnsdist.asc] https://repo.powerdns.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }}-dnsdist-{{ dnsdist_repo_version }} main"
+    repo: "deb [signed-by=/etc/apt/keyrings/dnsdist.asc] https://repo.powerdns.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }}-dnsdist-{{ dnsdist_repo_version }} main"
     state: present
     filename: dnsdist
 
@@ -55,48 +55,57 @@
     group: root
     mode: "0644"
 
-- name: Disable and stop systemd-resolved
-  ansible.builtin.service:
-    name: systemd-resolved
-    state: stopped
-    enabled: false
+- name: Configure systemd-resolved
+  ansible.builtin.copy:
+    src: systemd-resolved.conf
+    dest: /etc/systemd/resolved.conf.d/99-custom.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Enable systemd-resolved
+    - Restart systemd-resolved
 
 - name: Install dnsdist
   ansible.builtin.apt:
     name: "dnsdist{% if dnsdist_version is defined %}={{ dnsdist_version }}{% endif %}"
     update_cache: true
     state: "{{ dnsdist_package_state }}"
+  notify:
+    - Enable dnsdist
+    - Daemon-reload
+    - Restart dnsdist
 
-- name: Fix perms on dnsdist configuration
-  ansible.builtin.file:
-    name: "/etc/dnsdist/dnsdist.conf"
-    owner: "dnsdist"
-    group: "dnsdist"
-    mode: "0640"
-    state: file
-
-- name: Create dnsdist configuration directory
+- name: Create dnsdist ssl configuration directory
   ansible.builtin.file:
     name: /etc/dnsdist/ssl
     state: directory
-    owner: dnsdist
-    group: dnsdist
-    mode: "0640"
+    owner: _dnsdist
+    group: _dnsdist
+    mode: "0740"
 
 - name: Add CA cert
   ansible.builtin.copy:
     src: "{{ dnsdist_local_path_ca_certificate }}"
-    dest: "{{ dnsdist_ca_filename }}"
-    owner: dnsdist
-    group: dnsdist
+    dest: "/etc/dnsdist/ssl/ca.crt"
+    owner: _dnsdist
+    group: _dnsdist
     mode: "0640"
-  notify: Restart dnsdist.service
+  notify: Restart dnsdist
 
 - name: Configure dnsdist
   ansible.builtin.template:
     src: dnsdist.conf.j2
     dest: /etc/dnsdist/dnsdist.conf
-    owner: dnsdist
-    group: dnsdist
+    owner: _dnsdist
+    group: _dnsdist
     mode: "0640"
-  notify: Restart dnsdist.service
+  notify: Restart dnsdist
+
+- name: Fix perms on dnsdist folder
+  ansible.builtin.file:
+    name: "/etc/dnsdist"
+    owner: _dnsdist
+    group: _dnsdist
+    mode: "0740"
+    state: directory

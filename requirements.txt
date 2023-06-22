@@ -1,6 +1,15 @@
 # ansible
+wheel
+ansible
+ansible-lint
 dnspython
 netaddr
 cryptography
+passlib
+requests
+kubernetes
+PyYAML
+jsonpatch
+git+https://github.com/vmware/vsphere-automation-sdk-python.git
 # terraform
 paramiko

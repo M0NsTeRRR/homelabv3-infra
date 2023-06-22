@@ -1,0 +1,26 @@
+---
+- name: Open required ports
+  community.general.ufw:
+    rule: allow
+    port: "123"
+    proto: udp
+    comment: "NTP"
+
+- name: Install ntp
+  ansible.builtin.apt:
+    name: "ntp{% if ntp_version is defined %}={{ ntp_version }}{% endif %}"
+    update_cache: true
+    state: "{{ ntp_package_state }}"
+  notify:
+    - Enable ntp
+    - Daemon-reload
+    - Restart ntp
+
+- name: Configure ntp server
+  ansible.builtin.copy:
+    src: ntp.conf
+    dest: /etc/ntp.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart ntp

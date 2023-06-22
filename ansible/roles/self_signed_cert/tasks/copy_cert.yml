@@ -19,7 +19,17 @@
     state: directory
     owner: "{{ folder.owner }}"
     group: "{{ folder.group }}"
+    mode: "0750"
+
+- name: "Copy fullchain.crt certificate {{ item.common_name }}"
+  ansible.builtin.copy:
+    src: "/tmp/{{ item.common_name }}-fullchain.crt"
+    dest: "{{ folder.path }}"
     mode: "0640"
+    owner: "{{ folder.owner }}"
+    group: "{{ folder.group }}"
+  register: self_signed_cert_fullchain_copy
+  notify: Restart services that use SSL cert
 
 - name: "Copy .crt certificate {{ item.common_name }}"
   ansible.builtin.copy:
@@ -28,15 +38,19 @@
     mode: "0640"
     owner: "{{ folder.owner }}"
     group: "{{ folder.group }}"
+  register: self_signed_cert_cert_copy
+  notify: Restart services that use SSL cert
 
-- name: "Copy .pem certificate {{ item.common_name }}"
+- name: "Copy .key certificate {{ item.common_name }}"
   ansible.builtin.copy:
-    src: "/tmp/{{ item.common_name }}.pem"
+    src: "/tmp/{{ item.common_name }}.key"
     dest: "{{ folder.path }}"
     mode: "0600"
     owner: "{{ folder.owner }}"
     group: "{{ folder.group }}"
-  when: item.upload_pem
+  register: self_signed_cert_key_copy
+  when: item.upload_key
+  notify: Restart services that use SSL cert
 
 - name: "Copy .p12 certificate {{ item.common_name }}"
   ansible.builtin.copy:
@@ -45,4 +59,29 @@
     mode: "0600"
     owner: "{{ folder.owner }}"
     group: "{{ folder.group }}"
+  register: self_signed_cert_p12_copy
   when: item.generate_pkcs12
+  notify: Restart services that use SSL cert
+
+- name: Init self_signed_cert_common_name_notifies to []
+  ansible.builtin.set_fact:
+    self_signed_cert_common_name_notifies: "{{ self_signed_cert_common_name_notifies | default([]) }}"
+  run_once: true
+
+- name: "Set notify for {{ item.common_name }}"
+  ansible.builtin.set_fact:
+    self_signed_cert_common_name_notifies: "{{ self_signed_cert_common_name_notifies + [item.common_name] }}"
+  when: >
+    item.common_name not in self_signed_cert_common_name_notifies and
+    (self_signed_cert_fullchain_copy.changed or
+    self_signed_cert_cert_copy.changed or
+    self_signed_cert_key_copy.changed or
+    self_signed_cert_p12_copy.changed)
+
+- name: Populate service facts
+  ansible.builtin.service_facts:
+  when: >
+    self_signed_cert_fullchain_copy.changed or
+    self_signed_cert_cert_copy.changed or
+    self_signed_cert_key_copy.changed or
+    self_signed_cert_p12_copy.changed

@@ -3,3 +3,12 @@
   ansible.builtin.systemd:
     name: pdns-recursor
     state: restarted
+
+- name: Daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Enable pdns-recursor
+  ansible.builtin.systemd:
+    name: pdns-recursor
+    enabled: true

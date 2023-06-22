@@ -1,18 +1,25 @@
+# ide
 .idea
 .vscode
+# python
 venv
+# packer
 packer_cache/
-.terraform
+# terraform
+.terraform*
 .terragrunt-cache
+terragrunt-debug*
+terraform/build
 terraform/account.hcl
 *.tfstate
 *.tfstate.backup
+# ansible
+.vault_password.txt
 *secrets.yml
-*secrets.env
-*secrets.json
-account.hcl
-*.crt*
+*secrets.yaml
 *.csr*
+*.p12*
 *.key*
 *.pem*
 *.img
+inventory.vmware.yaml

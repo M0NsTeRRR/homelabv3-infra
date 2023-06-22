@@ -1,4 +1,10 @@
 ---
+- name: Install cryptography
+  ansible.builtin.pip:
+    name: "cryptography{% if self_signed_cert_cryptography_version is defined %}={{ self_signed_cert_cryptography_version }}{% endif %}"
+    state: "{{ self_signed_cert_cryptography_package_state }}"
+    virtualenv: "{{ self_signed_cert_venv }}"
+
 - name: "Generate cert {{ item }}"
   ansible.builtin.include_tasks: generate_cert.yml
   with_items: "{{ self_signed_certs }}"

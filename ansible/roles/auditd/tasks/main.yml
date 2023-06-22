@@ -5,6 +5,8 @@
     update_cache: true
     state: "{{ auditd_package_state }}"
   notify:
+    - Enable auditd
+    - Daemon-reload
     - Restart auditd
 
 - name: Configure auditd rules

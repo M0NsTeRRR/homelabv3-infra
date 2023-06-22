@@ -1,20 +1,18 @@
 ---
-- name: Install python3-pip
-  ansible.builtin.apt:
-    name: python3-pip
-    state: present
-
-- name: Install pexpect python package
+- name: Install pexpect
   ansible.builtin.pip:
-    name: pexpect
-    state: present
+    name: "pexpect{% if grub_pexpect_version is defined %}={{ grub_pexpect_version }}{% endif %}"
+    state: "{{ grub_pexpect_package_state }}"
+    virtualenv: "{{ grub_venv }}"
 
 - name: Generate GRUB password hash
   ansible.builtin.expect:
     command: grub-mkpasswd-pbkdf2
     responses:
-      Enter password: '{{ grub_password }}'
-      Reenter password: '{{ grub_password }}'
+      Enter password: "{{ grub_password }}"
+      Reenter password: "{{ grub_password }}"
+  vars:
+    ansible_python_interpreter: "{{ grub_venv }}/bin/python"
   no_log: true
   register: grub_password_hashed
 
@@ -37,8 +35,3 @@
     line: 'CLASS="--class gnu-linux --class gnu --class os --unrestricted"'
     state: "present"
   notify: Update grub
-
-- name: Uninstall pexpect python package
-  ansible.builtin.pip:
-    name: pexpect
-    state: absent

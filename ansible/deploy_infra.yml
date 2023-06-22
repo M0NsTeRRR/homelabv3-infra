@@ -1,0 +1,55 @@
+---
+- name: Configure DNS servers
+  hosts: dns
+  become: true
+  roles:
+    - self_signed_cert
+    - postgresql
+    - nginx
+    - dnsdist
+    - powerdns_recursor
+    - powerdns_authoritative
+    - ntp
+
+- name: Configure k3s
+  hosts: kubernetes
+  become: true
+  roles:
+    - k3s
+  pre_tasks:
+    - name: Disable SWAP
+      ansible.builtin.command: swapoff -a
+      changed_when: true
+
+    - name: Disable SWAP in fstab
+      ansible.builtin.replace:
+        path: /etc/fstab
+        regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
+        replace: '# \1'
+
+- name: Configure Longhorn dependencies
+  hosts: kubernetes_worker
+  become: true
+  pre_tasks:
+    - name: Install required packages by longhorn
+      ansible.builtin.apt:
+        pkg:
+          - open-iscsi
+          - nfs-common
+        state: present
+
+- name: Configure cilium & kubectl
+  hosts: kubernetes_master
+  become: true
+  roles:
+    - kubectl
+    - cilium
+
+- name: Deploy kubernetes base services
+  hosts: kubernetes_master[0]
+  become: true
+  roles:
+    - kube_vip
+    - emissary
+    - metallb
+    - longhorn

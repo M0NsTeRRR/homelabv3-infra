@@ -1,4 +1,7 @@
 ---
+# self_signed_cert_cryptography_version:
+self_signed_cert_cryptography_package_state: latest
+self_signed_cert_venv: "/tmp/venv_self_signed_cert"
 self_signed_certs: []
 self_signed_cert_pdns: {}
 
@@ -9,13 +12,15 @@ self_signed_cert_pdns: {}
 #     organization: "example"
 #     admin_email: "admin@example.com"
 #     ca_cert_local_path: "./certs/ca.crt"
-#     ca_private_local_path: "./certs/ca.pem"
+#     intermediate_cert_local_path: "./certs/ca.crt"
+#     intermediate_private_local_path: "./certs/ca.key"
+#     intermediate_private_passphrase: "pass"
 #     cert_remote_folder:
 #      - {path: /etc/nginx/ssl, owner: root, group: root}
 #     ownca_not_after: "+90d"
 #     pkcs12_friendly_name: example
 #     pkcs12_passphrase: password
-#     upload_pem: true
+#     upload_key: true
 #     generate_pkcs12: true
 #     subject_alt_name:
 #       - NS:example.com

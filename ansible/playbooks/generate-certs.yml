@@ -4,83 +4,151 @@
   connection: local
   vars:
     certs_dir: "../../ssl/"
-    orgnization:
   vars_prompt:
-    - name: "certificate_folder_path"
-      prompt: "Certificate folder path ? (eg. www/monsite.fr)"
+    - name: "signing_certificate"
+      prompt: "Signing intermediate certificate to use ? (eg. kubernetes)"
       private: false
     - name: "common_name"
-      prompt: "Common name ?"
-      default: "unicornafk.fr"
+      prompt: "Common name ? (eg. www.unicornafk.fr)"
       private: false
     - name: "ownca_not_after"
       prompt: "Expiration date ?"
-      default: "+90d"
+      default: "+365d"
       private: false
   tasks:
-    - name: Generate CertAuthority OpenSSL private key
+    - name: Generate cert authority OpenSSL private key
       community.crypto.openssl_privatekey:
-        path: "{{ certs_dir }}ca.pem"
+        path: "{{ certs_dir }}{{ organization }}.key"
+        passphrase: "{{ ca_private_passphrase }}"
+        cipher: "auto"
+        regenerate: "never"
 
-    - name: Generate CertAuthority OpenSSL Certificate Signing Request
+    - name: Generate cert authority OpenSSL Certificate Signing Request
       community.crypto.openssl_csr:
-        path: "{{ certs_dir }}ca.csr"
-        privatekey_path: "{{ certs_dir }}ca.pem"
+        path: "{{ certs_dir }}{{ organization }}.csr"
+        privatekey_path: "{{ certs_dir }}{{ organization }}.key"
+        privatekey_passphrase: "{{ ca_private_passphrase }}"
         country_name: "{{ country }}"
         organization_name: "{{ organization }}"
         email_address: "{{ admin_email }}"
         common_name: "{{ organization }}"
+        use_common_name_for_san: false
         basic_constraints:
           - CA:TRUE
-          - pathlen:1
         basic_constraints_critical: true
         key_usage:
           - keyCertSign
-          - digitalSignature
+        key_usage_critical: true
 
-    - name: Generate CertAuthority OpenSSL certificate
+    - name: Generate cert authority OpenSSL certificate
       community.crypto.x509_certificate:
-        path: "{{ certs_dir }}ca.crt"
-        privatekey_path: "{{ certs_dir }}ca.pem"
-        csr_path: "{{ certs_dir }}ca.csr"
+        path: "{{ certs_dir }}{{ organization }}.crt"
+        privatekey_path: "{{ certs_dir }}{{ organization }}.key"
+        privatekey_passphrase: "{{ ca_private_passphrase }}"
+        csr_path: "{{ certs_dir }}{{ organization }}.csr"
         provider: selfsigned
 
-    - name: "Create folder {{ certificate_folder_path }}"
+    - name: "Create folder intermediate/{{ signing_certificate }}"
       ansible.builtin.file:
         state: directory
-        name: "{{ certs_dir }}{{ certificate_folder_path }}"
+        name: "{{ certs_dir }}intermediate/{{ signing_certificate }}"
         owner: "{{ ansible_user }}"
         group: "{{ ansible_user }}"
         mode: '0740'
 
-    - name: Add .gitkeep file
-      ansible.builtin.copy:
-        content: ""
-        dest: "{{ certs_dir }}{{ certificate_folder_path }}/.gitkeep"
-        force: false
+    - name: Generate cert intermediate authority OpenSSL private key
+      community.crypto.openssl_privatekey:
+        path: "{{ certs_dir }}intermediate/{{ signing_certificate }}/{{ signing_certificate }}.key"
+        passphrase: "{{ ca_private_passphrase }}"
+        cipher: "auto"
+        regenerate: "never"
+
+    - name: Generate cert intermediate authority OpenSSL Certificate Signing Request
+      community.crypto.openssl_csr:
+        path: "{{ certs_dir }}intermediate/{{ signing_certificate }}/{{ signing_certificate }}.csr"
+        privatekey_path: "{{ certs_dir }}intermediate/{{ signing_certificate }}/{{ signing_certificate }}.key"
+        privatekey_passphrase: "{{ ca_private_passphrase }}"
+        country_name: "{{ country }}"
+        organization_name: "{{ signing_certificate }}.{{ organization }}"
+        email_address: "{{ admin_email }}"
+        common_name: "{{ signing_certificate }}.{{ organization }}"
+        use_common_name_for_san: false
+        basic_constraints:
+          - CA:TRUE
+        basic_constraints_critical: true
+        key_usage:
+          - digitalSignature
+          - cRLSign
+          - keyCertSign
+        key_usage_critical: true
+
+    - name: Generate cert intermediate authority OpenSSL certificate
+      community.crypto.x509_certificate:
+        path: "{{ certs_dir }}intermediate/{{ signing_certificate }}/{{ signing_certificate }}.crt"
+        ownca_path: "{{ certs_dir }}{{ organization }}.crt"
+        ownca_privatekey_path: "{{ certs_dir }}{{ organization }}.key"
+        ownca_privatekey_passphrase: "{{ ca_private_passphrase }}"
+        csr_path: "{{ certs_dir }}intermediate/{{ signing_certificate }}/{{ signing_certificate }}.csr"
+        ownca_not_after: "+3650d"
+        ownca_not_before: "-1d"
+        provider: ownca
+
+    - name: "Create folder in intermediate folder for {{ common_name }}"
+      ansible.builtin.file:
+        state: directory
+        name: "{{ certs_dir }}{{ signing_certificate }}/{{ common_name }}"
         owner: "{{ ansible_user }}"
         group: "{{ ansible_user }}"
-        mode: '0640'
+        mode: '0740'
 
     - name: Generate client OpenSSL private key
       community.crypto.openssl_privatekey:
-        path: "{{ certs_dir }}{{ certificate_folder_path }}/client.pem"
+        path: "{{ certs_dir }}{{ signing_certificate }}/{{ common_name }}/{{ common_name }}.key"
 
     - name: Generate client OpenSSL Certificate Signing Request
       community.crypto.openssl_csr:
-        path: "{{ certs_dir }}{{ certificate_folder_path }}/client.csr"
-        privatekey_path: "{{ certs_dir }}{{ certificate_folder_path }}/client.pem"
+        path: "{{ certs_dir }}{{ signing_certificate }}/{{ common_name }}/{{ common_name }}.csr"
+        privatekey_path: "{{ certs_dir }}{{ signing_certificate }}/{{ common_name }}/{{ common_name }}.key"
         country_name: "{{ country }}"
         organization_name: "{{ organization }}"
         email_address: "{{ admin_email }}"
         common_name: "{{ common_name }}"
-        subject_alt_name: "DNS:{{ common_name }},IP:{{ lookup('community.general.dig', common_name) }},IP:{{ lookup('community.general.dig', common_name, 'qtype=AAAA') }}"
+        subject_alt_name:
+          - "DNS:{{ common_name }}"
+          - "IP:{{ lookup('community.general.dig', common_name) }}"
+          - "IP:{{ lookup('community.general.dig', common_name, 'qtype=AAAA') }}"
 
     - name: Generate client OpenSSL certificate signed with our CA
       community.crypto.x509_certificate:
-        path: "{{ certs_dir }}{{ certificate_folder_path }}/client.crt"
-        ownca_path: "{{ certs_dir }}ca.crt"
-        ownca_privatekey_path: "{{ certs_dir }}ca.pem"
-        csr_path: "{{ certs_dir }}{{ certificate_folder_path }}/client.csr"
+        path: "{{ certs_dir }}{{ signing_certificate }}/{{ common_name }}/{{ common_name }}.crt"
+        ownca_path: "{{ certs_dir }}intermediate/{{ signing_certificate }}/{{ signing_certificate }}.crt"
+        ownca_privatekey_path: "{{ certs_dir }}intermediate/{{ signing_certificate }}/{{ signing_certificate }}.key"
+        ownca_privatekey_passphrase: "{{ ca_private_passphrase }}"
         ownca_not_after: "{{ ownca_not_after }}"
+        ownca_not_before: "-1d"
+        csr_path: "{{ certs_dir }}{{ signing_certificate }}/{{ common_name }}/{{ common_name }}.csr"
         provider: ownca
+
+    - name: Create fullchain cert
+      community.crypto.certificate_complete_chain:
+        input_chain: "{{ lookup('file', certs_dir + signing_certificate + '/' + common_name + '/' + common_name + '.crt') }}"
+        intermediate_certificates: "{{ certs_dir }}intermediate/{{ signing_certificate }}/{{ signing_certificate }}.crt"
+        root_certificates: "{{ certs_dir }}{{ organization }}.crt"
+      register: fullchain_cert
+
+    - name: Write root chain (intermediates and root) to disk
+      ansible.builtin.copy:
+        dest: "{{ certs_dir }}{{ signing_certificate }}/{{ common_name }}/{{ common_name }}-fullchain.crt"
+        content: "{{ ''.join(fullchain_cert.complete_chain) }}"
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+        mode: '0644'
+
+    - name: Generate PKCS#12 file
+      community.crypto.openssl_pkcs12:
+        action: export
+        path: "{{ certs_dir }}{{ signing_certificate }}/{{ common_name }}/{{ common_name }}.p12"
+        privatekey_path: "{{ certs_dir }}{{ signing_certificate }}/{{ common_name }}/{{ common_name }}.key"
+        certificate_path: "{{ certs_dir }}{{ signing_certificate }}/{{ common_name }}/{{ common_name }}-fullchain.crt"
+        friendly_name: "{{ common_name }}"
+        state: present
