@@ -10,6 +10,7 @@ jobs:
     - name: Lint Packer Template
       uses: hashicorp/packer-github-actions@master
       with:
+        version: latest
         command: validate
         arguments: -syntax-only
         target: packer/templates/ubuntu packer/templates/raspi
