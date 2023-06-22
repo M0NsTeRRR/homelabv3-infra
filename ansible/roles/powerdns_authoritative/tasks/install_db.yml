@@ -1,0 +1,38 @@
+---
+- name: Install psycopg2-binary
+  ansible.builtin.pip:
+    name: "psycopg2-binary{% if powerdns_authoritative_psycopg2_binary_version is defined %}={{ powerdns_authoritative_psycopg2_binary_version }}{% endif %}"
+    state: "{{ powerdns_authoritative_psycopg2_binary_package_state }}"
+    virtualenv: "{{ powerdns_authoritative_venv }}"
+
+- name: Chown venv to pdns
+  ansible.builtin.file:
+    name: "{{ powerdns_authoritative_venv }}"
+    owner: "pdns"
+    group: "pdns"
+    state: directory
+    recurse: true
+
+- name: Check if database is initialized
+  community.postgresql.postgresql_query:
+    db: "{{ powerdns_authoritative_pgsql_db }}"
+    login_user: "{{ powerdns_authoritative_pgsql_user }}"
+    login_password: "{{ powerdns_authoritative_pgsql_password }}"
+    query: "SELECT * FROM pg_tables t WHERE t.tableowner = current_user"
+  vars:
+    ansible_python_interpreter: "{{ powerdns_authoritative_venv }}/bin/python"
+    ansible_remote_tmp: /tmp
+  register: powerdns_authoritative_pgsql_tables
+  become_user: pdns
+
+- name: "Init database {{ powerdns_authoritative_pgsql_db }}"
+  community.postgresql.postgresql_script:
+    db: "{{ powerdns_authoritative_pgsql_db }}"
+    login_user: "{{ powerdns_authoritative_pgsql_user }}"
+    login_password: "{{ powerdns_authoritative_pgsql_password }}"
+    path: /usr/share/doc/pdns-backend-pgsql/schema.pgsql.sql
+  vars:
+    ansible_python_interpreter: "{{ powerdns_authoritative_venv }}/bin/python"
+    ansible_remote_tmp: /tmp
+  when: powerdns_authoritative_pgsql_tables.rowcount == 0
+  become_user: pdns

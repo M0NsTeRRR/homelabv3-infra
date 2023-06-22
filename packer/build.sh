@@ -6,6 +6,8 @@ set -e
 ssh_fullname="ludovic ortega"
 ssh_username=lortega
 ssh_password=ludovic
+host_ip="192.168.30.21"
+ssh_autorized_key=$(<../ssh_pub_keys/${ssh_username}.pub)
 
 echo -e "Please enter your choice: \n1) VM\n2) Raspberry Pi\n"
 while :
@@ -16,16 +18,8 @@ do
     vcenter_server='vcenter.unicornafk.fr'
     vcenter_username='administrator@unicornafk.fr'
 
-    read -p 'Host ip: ' host_ip
-    read -p 'Distribution: ' distribution
     read -sp 'Vcenter password: ' vcenter_password
     printf "\n"
-    read -sp 'VM new password: ' ssh_new_password
-    printf "\n"
-    read -sp 'Ansible vault password: ' ANSIBLE_VAULT_PASS
-    printf "\n"
-
-    export ANSIBLE_VAULT_PASS
 
     packer build \
       -var "host_ip=$host_ip" \
@@ -35,10 +29,10 @@ do
       -var "ssh_fullname=$ssh_fullname" \
       -var "ssh_username=$ssh_username" \
       -var "ssh_password=$ssh_password" \
-      -var "ssh_password_encrypted=$(mkpasswd -m md5 $ssh_password)" \
-      -var "ssh_new_password=$ssh_new_password" \
+      -var "ssh_password_encrypted=$(mkpasswd -m sha-512 --rounds=4096 $ssh_password)" \
+      -var "ssh_autorized_key=$ssh_autorized_key" \
       -timestamp-ui \
-      templates/"$distribution"
+      templates/ubuntu
 		break
 		;;
 	2)

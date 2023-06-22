@@ -3,3 +3,12 @@
   ansible.builtin.systemd:
     name: sshd
     state: restarted
+
+- name: Daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Enable sshd
+  ansible.builtin.systemd:
+    name: sshd
+    enabled: true

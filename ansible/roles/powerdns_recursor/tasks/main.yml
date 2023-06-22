@@ -1,38 +1,38 @@
 ---
 - name: Add pdns group
   ansible.builtin.group:
-    name: pdns-recursor
+    name: pdns
     system: true
     state: present
 
 - name: Add pdns user
   ansible.builtin.user:
-    name: pdns-recursor
+    name: pdns
     system: true
     create_home: false
     shell: /usr/sbin/nologin
-    group: pdns-recursor
+    group: pdns
 
-- name: Install required packages by PowerDNS
+- name: Install required packages by PowerDNS recursor
   ansible.builtin.apt:
     pkg:
       - apt-transport-https
       - gnupg-agent
     state: present
 
-- name: Add PowerDNS Apt signing key
+- name: Add PowerDNS recursor apt signing key
   ansible.builtin.get_url:
     url: "https://repo.powerdns.com/{{ powerdns_recursor_repository_key }}-pub.asc"
-    dest: /usr/share/keyrings/powerdns_authoritative.asc
+    dest: /etc/apt/keyrings/powerdns_recursor.asc
     owner: root
     group: root
     mode: "0644"
 
-- name: Add PowerDNS Apt repository
+- name: Add PowerDNS recursor apt repository
   ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/usr/share/keyrings/powerdns_authoritative.asc] https://repo.powerdns.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }}-rec-{{ powerdns_recursor_repo_version }} main"
+    repo: "deb [signed-by=/etc/apt/keyrings/powerdns_recursor.asc] https://repo.powerdns.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }}-rec-{{ powerdns_recursor_repo_version }} main"
     state: present
-    filename: pdns-rec
+    filename: powerdns_recursor
 
 - name: Configure apt preferences
   ansible.builtin.copy:
@@ -42,23 +42,21 @@
     group: root
     mode: "0644"
 
-- name: Disable and stop systemd-resolved
-  ansible.builtin.service:
-    name: systemd-resolved
-    state: stopped
-    enabled: false
-
 - name: Install pdns-recursor
   ansible.builtin.apt:
     name: "pdns-recursor{% if powerdns_recursor_version is defined %}={{ powerdns_recursor_version }}{% endif %}"
     update_cache: true
     state: "{{ powerdns_recursor_package_state }}"
+  notify:
+    - Enable pdns-recursor
+    - Daemon-reload
+    - Restart pdns-recursor
 
 - name: Fix perms on PowerDNS configuration
   ansible.builtin.file:
     name: "/etc/powerdns/recursor.conf"
-    owner: "pdns-recursor"
-    group: "pdns-recursor"
+    owner: "pdns"
+    group: "pdns"
     mode: "0640"
     state: file
 
@@ -67,26 +65,17 @@
     powerdns_recursor_forward_zone: "{{ powerdns_recursor_domains | product(['=127.0.0.1:5300;[::1]:5300']) | map('join') | join(',') }}"
     powerdns_recursor_forward_reverse_zone: "{{ powerdns_recursor_reverse_zones | product(['=127.0.0.1:5300;[::1]:5300']) | map('join') | join(',') }}"
 
-- name: Configure PowerDNS
-  ansible.builtin.lineinfile:
-    dest: "/etc/powerdns/recursor.conf"
-    regexp: "{{ item.regexp }}"
-    line: "{{ item.line }}"
-    state: "present"
-  with_items:
-    - {regexp: '^(# )?setgid=', line: 'setgid=pdns-recursor'}
-    - {regexp: '^(# )?setuid=', line: 'setuid=pdns-recursor'}
-    - {regexp: '^(# )?local-address=', line: 'local-address=127.0.0.1, ::1'}
-    - {regexp: '^(# )?local-port=', line: 'local-port=5301'}
-    - {regexp: '^(# )?allow-from=', line: 'allow-from=127.0.0.1, ::1'}
-    - {regexp: '^(# )?forward-zones=', line: 'forward-zones={{ powerdns_recursor_forward_zone }}{% if powerdns_recursor_domains | length > 0 %},{% endif %}{{ powerdns_recursor_forward_reverse_zone }}'}
-    - {regexp: '^(# )?serve-rfc1918=', line: 'serve-rfc1918=no'}
-    - {regexp: '^(# )?api-key=', line: 'api-key={{ powerdns_recursor_api_key }}'}
-    - {regexp: '^(# )?webserver=', line: 'webserver=yes'}
-    - {regexp: '^(# )?webserver-address=', line: 'webserver-address=127.0.0.1'}
-    - {regexp: '^(# )?webserver-password=', line: 'webserver-password='}
-    - {regexp: '^(# )?webserver-port=', line: 'webserver-port=8082'}
-    - {regexp: '^(# )?webserver-allow-from=', line: 'webserver-allow-from=127.0.0.1'}
-    - {regexp: '^(# )?version-string=', line: 'version-string=anonymous'}
-    - {regexp: '^(# )?proxy-protocol-from=', line: 'proxy-protocol-from=127.0.0.1,::1'}
+- name: Set net.ipv6.route.max_size for pdns recursor
+  ansible.posix.sysctl:
+    name: net.ipv6.route.max_size
+    value: "16384"
+    state: present
+
+- name: Configure PowerDNS authoritative
+  ansible.builtin.template:
+    src: recursor.conf.j2
+    dest: /etc/powerdns/recursor.conf
+    owner: "pdns"
+    group: "pdns"
+    mode: "0640"
   notify: Restart pdns-recursor

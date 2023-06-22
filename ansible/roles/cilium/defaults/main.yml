@@ -1,0 +1,4 @@
+---
+cilium_cli_version: "0.14.7"
+cilium_force_install: false
+cilium_localhost_kubeconfig_path: /home/user/.kube/kubeconfig

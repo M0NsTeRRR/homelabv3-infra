@@ -7,6 +7,7 @@
     group: root
     mode: "0644"
   notify:
+    - Enable systemd-timesyncd
     - Restart systemd-timesyncd
 
 - name: Enable ntp synchronization

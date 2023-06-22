@@ -1,31 +1,37 @@
 addLocal('0.0.0.0')
 addLocal('::')
 
-addDOHLocal('0.0.0.0', '{{ dnsdist_cert_filename }}', '{{ dnsdist_ca_filename }}', '{{ dnsdist_key_filename }}')
-addDOHLocal('::', '{{ dnsdist_cert_filename }}', '{{ dnsdist_ca_filename }}', '{{ dnsdist_key_filename }}')
+addDOHLocal('0.0.0.0', '/etc/dnsdist/ssl/{{ dnsdist_cert_filename }}', '/etc/dnsdist/ssl/{{ dnsdist_key_filename }}')
+addDOHLocal('::', '/etc/dnsdist/ssl/{{ dnsdist_cert_filename }}', '/etc/dnsdist/ssl/{{ dnsdist_key_filename }}')
 
-addTLSLocal('0.0.0.0', '{{ dnsdist_cert_filename }}', '{{ dnsdist_ca_filename }}', '{{ dnsdist_key_filename }}')
-addTLSLocal('::', '{{ dnsdist_cert_filename }}', '{{ dnsdist_ca_filename }}', '{{ dnsdist_key_filename }}')
+addTLSLocal('0.0.0.0', '/etc/dnsdist/ssl/{{ dnsdist_cert_filename }}', '/etc/dnsdist/ssl/{{ dnsdist_key_filename }}')
+addTLSLocal('::', '/etc/dnsdist/ssl/{{ dnsdist_cert_filename }}', '/etc/dnsdist/ssl/{{ dnsdist_key_filename }}')
 
 setACL({'0.0.0.0/0', '::/0'})
 
+newServer({address='127.0.0.1:5300', pool='primary'})
+newServer({address='[::1]:5300', pool='primary'})
+newServer({address='127.0.0.1:5301', useProxyProtocol=true, pool='recursor'})
+newServer({address='[::1]:5301', useProxyProtocol=true, pool='recursor'})
+
+
+
 -- https://www.dnsdist.org/advanced/axfr.html
-{% if inventory_hostname == play_hosts[0] %}
--- to be removed in 1.8
-addAction(OrRule({QTypeRule(DNSQType.AXFR), QTypeRule(DNSQType.IXFR)}), SetSkipCacheAction())
--- this rule will route SOA, AXFR and IXFR queries to a specific pool of servers
-addAction(OrRule({QTypeRule(DNSQType.SOA), QTypeRule(DNSQType.AXFR), QTypeRule(DNSQType.IXFR)}), PoolAction("auth"))
+{% if inventory_hostname == ansible_play_hosts_all[0] %}
+trustedSlave = newNMG()
+{% for dnsdist_pdns_slave in ansible_play_hosts_all[1:] %}
+trustedSlave:addMask("{{ hostvars[dnsdist_pdns_slave].ansible_default_ipv4.address }}/32")
+trustedSlave:addMask("{{ hostvars[dnsdist_pdns_slave].ansible_default_ipv6.address }}/128")
+{% endfor %}
+
+-- Block SOA, AXFR and IXFR from IPs not in defined range
+addAction(AndRule({OrRule({QTypeRule(DNSQType.SOA), QTypeRule(DNSQType.AXFR), QTypeRule(DNSQType.IXFR)}), NotRule(NetmaskGroupRule(trustedSlave))}), RCodeAction(DNSRCode.REFUSED))
+addAction(OrRule({QTypeRule(DNSQType.SOA), QTypeRule(DNSQType.SOA), QTypeRule(DNSQType.AXFR), QTypeRule(DNSQType.IXFR)}), PoolAction("primary"))
 {% else %}
--- to be removed in 1.8
+-- this rule will disable the caching of responses for NOTIFY queries
 addAction(OpcodeRule(DNSOpcode.Notify), SetSkipCacheAction())
--- this rule will route Notify queries to a specific pool of servers
-addAction(OrRule({QTypeRule(DNSOpcode.Notify)}), PoolAction("auth"))
+-- Block Notify from IPs not in defined range
+addAction(OrRule({OpcodeRule(DNSOpcode.Notify)}), PoolAction("primary"))
 {% endif %}
 
-newServer({address='127.0.0.1:5300', useProxyProtocol=true, pool='auth'})
-newServer({address='[::]:5300', useProxyProtocol=true, pool='auth'})
-newServer({address='127.0.0.1:5301', useProxyProtocol=true, pool='recursor'})
-newServer({address='[::]:5301', useProxyProtocol=true, pool='recursor'})
-
 addAction(AllRule(), PoolAction('recursor'))
-addAction(AllRule(), PoolAction('auth'))

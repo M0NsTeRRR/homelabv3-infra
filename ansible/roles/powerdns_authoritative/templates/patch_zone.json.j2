@@ -1,16 +1,16 @@
 {
   "name": "{{ item }}.",
-	"kind": "{% if inventory_hostname == play_hosts[0] %}Master{% else %}Slave{% endif %}",
-	{% if inventory_hostname != play_hosts[0] %}"masters": ["{{ ansible_default_ipv4.address }}"],{% endif %}
+	"kind": "{% if inventory_hostname == ansible_play_hosts_all[0] %}Master{% else %}Slave{% endif %}",
+	{% if inventory_hostname != ansible_play_hosts_all[0] %}"masters": ["{{ hostvars[ansible_play_hosts_all[0]].hostname }}"],{% endif %}
 	"dnssec": true,
 	"soa-edit": "INCEPTION-INCREMENT",
-  "{% if inventory_hostname == play_hosts[0] %}master_tsig_key_ids{% else %}slave_tsig_key_ids{% endif %}": [
+  "{% if inventory_hostname == ansible_play_hosts_all[0] %}master_tsig_key_ids{% else %}slave_tsig_key_ids{% endif %}": [
     {% for tsig_key in powerdns_authoritative_tsig_keys %}
-    {{ tsig_key.name }}{% if not loop.last %},{% endif %}
+    "{{ tsig_key.name }}"{% if not loop.last %},{% endif %}
     {% endfor %}
-  ]{% if inventory_hostname == play_hosts[0] %},
+  ]{% if inventory_hostname == ansible_play_hosts_all[0] %},
   "nameservers": [
-    {% for host in groups[powerdns_authoritative_dns_group] %}
+    {% for host in ansible_play_hosts_all %}
     "{{ hostvars[host].hostname }}"{% if not loop.last %},{% endif %}
     {% endfor %}
   ],
@@ -19,26 +19,18 @@
       "name": "{{ item }}.",
       "changetype": "REPLACE",
       "records": [
-        { "content": "{{ hostvars[groups[powerdns_authoritative_dns_group][0]].hostname }} admin.{{ hostvars[groups[powerdns_authoritative_dns_group][0]].hostname.split('.')[-3:]|join('.') }} {{ inception_date }} 10800 3600 604800 3600", "disabled": false }
-      ],
-      "ttl": "3600",
-      "type": "SOA"
-    },{
-      "name": "{{ item }}.",
-      "changetype": "REPLACE",
-      "records": [
-        {% for host in groups[powerdns_authoritative_dns_group] %}
+        {% for host in ansible_play_hosts_all %}
         { "content": "{{ hostvars[host].hostname }}", "disabled": false }{% if not loop.last %},{% endif %}
         {% endfor %}
       ],
       "ttl": "3600",
       "type": "NS"
-    }{% if powerdns_caa | length %},
+    }{% if powerdns_authoritative_caa | length %},
     {
       "name": "{{ item }}.",
       "changetype": "REPLACE",
       "records": [
-        {% for host in powerdns_caa %}
+        {% for host in powerdns_authoritative_caa %}
         { "content": "0 issuewild \"{{ host.caa }}\"", "disabled": false }{% if not loop.last %},{% endif %}
         {% endfor %}
       ],
@@ -80,18 +72,18 @@
         ],
         "ttl": 3600,
         "type": "CNAME"
-    }{% endif %}{% if host.rdns is defined and host.a is defined and item in host.a|ansible.netcommon.ipaddr("revdns") %},
+    }{% endif %}{% if host.rdns is defined and host.a is defined and item in host.a|ansible.utils.ipaddr("revdns") %},
     {
-      "name": "{{ host.a|ansible.netcommon.ipaddr('revdns') }}",
+      "name": "{{ host.a|ansible.utils.ipaddr('revdns') }}",
       "changetype": "REPLACE",
       "records": [
         { "content": "{{ host.hostname }}", "disabled": false }
       ],
       "ttl": "3600",
       "type": "PTR"
-    }{% endif %}{% if host.rdns is defined and host.aaaa is defined and item in host.aaaa|ansible.netcommon.ipaddr("revdns") %},
+    }{% endif %}{% if host.rdns is defined and host.aaaa is defined and item in host.aaaa|ansible.utils.ipaddr("revdns") %},
     {
-      "name": "{{ host.aaaa|ansible.netcommon.ipaddr('revdns') }}",
+      "name": "{{ host.aaaa|ansible.utils.ipaddr('revdns') }}",
       "changetype": "REPLACE",
       "records": [
         { "content": "{{ host.hostname }}", "disabled": false }

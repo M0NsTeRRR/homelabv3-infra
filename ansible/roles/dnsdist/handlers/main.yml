@@ -1,5 +1,24 @@
 ---
+- name: Daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Restart systemd-resolved
+  ansible.builtin.systemd:
+    name: systemd-resolved
+    state: restarted
+
+- name: Enable systemd-resolved
+  ansible.builtin.systemd:
+    name: systemd-resolved
+    enabled: true
+
 - name: Restart dnsdist
   ansible.builtin.systemd:
     name: dnsdist
     state: restarted
+
+- name: Enable dnsdist
+  ansible.builtin.systemd:
+    name: dnsdist
+    enabled: true

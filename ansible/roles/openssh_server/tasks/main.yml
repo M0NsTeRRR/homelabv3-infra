@@ -11,6 +11,10 @@
     name: "openssh-server{% if openssh_server_version is defined %}={{ openssh_server_version }}{% endif %}"
     update_cache: true
     state: "{{ openssh_server_package_state }}"
+  notify:
+    - Enable sshd
+    - Daemon-reload
+    - Restart sshd
 
 - name: Set sshd configuration
   ansible.builtin.lineinfile:

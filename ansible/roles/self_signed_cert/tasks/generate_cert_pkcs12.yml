@@ -1,34 +1,11 @@
 ---
-- name: Get certificate content
-  ansible.builtin.set_fact:
-    self_signed_cert_content: "{{ lookup('file', '/tmp/' ~ item.common_name ~  '.crt') }}"
-
-- name: Set absolute root ca cert path
-  ansible.builtin.set_fact:
-    self_signed_cert_root_cert_absolute: "{{ item.ca_cert_local_path }}"
-
-- name: Get fullchain cert
-  community.crypto.certificate_complete_chain:
-    input_chain: "{{ self_signed_cert_content }}"
-    root_certificates: "{{ self_signed_cert_root_cert_absolute }}"
-  delegate_to: localhost
-  register: self_signed_cert_fullchain
-
-- name: Save fullchain certificate
-  ansible.builtin.copy:
-    content: "{{ ''.join(self_signed_cert_fullchain.complete_chain) }}"
-    dest: "/tmp/fullchain_{{ item.common_name }}.crt"
-    mode: "0640"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
-  delegate_to: localhost
-
 - name: Generate PKCS#12 file
   community.crypto.openssl_pkcs12:
     action: export
     path: "/tmp/{{ item.common_name }}.p12"
-    privatekey_path: "/tmp/{{ item.common_name }}.pem"
-    certificate_path: "/tmp/fullchain_{{ item.common_name }}.crt"
+    privatekey_path: "/tmp/{{ item.common_name }}.key"
+    privatekey_passphrase: "{{ item.intermediate_private_passphrase }}"
+    certificate_path: "/tmp/{{ item.common_name }}-fullchain.crt"
     friendly_name: "{{ item.pkcs12_friendly_name }}"
     passphrase: "{{ item.pkcs12_passphrase }}"
     mode: "0600"

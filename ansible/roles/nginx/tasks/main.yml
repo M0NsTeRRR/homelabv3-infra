@@ -1,22 +1,25 @@
 ---
-- name: Install pip3
-  ansible.builtin.apt:
-    name: python3-pip
-    state: present
-
-- name: Install required python package
-  ansible.builtin.pip:
-    name: cryptography
-
 - name: Install Nginx
   ansible.builtin.apt:
     name: "nginx{% if nginx_version is defined %}={{ nginx_version }}{% endif %}"
     update_cache: true
     state: "{{ nginx_package_state }}"
+  notify:
+    - Enable nginx
+    - Daemon-reload
+    - Restart nginx
+
+- name: Install cryptography
+  ansible.builtin.pip:
+    name: "cryptography{% if nginx_cryptography_version is defined %}={{ nginx_cryptography_version }}{% endif %}"
+    state: "{{ nginx_cryptography_package_state }}"
+    virtualenv: "{{ nginx_venv }}"
 
 - name: Generate Diffie-Hellman parameters
   community.crypto.openssl_dhparam:
-    path: /etc/nginx/dhparam.pem
+    path: /etc/nginx/dhparam.key
+  vars:
+    ansible_python_interpreter: "{{ nginx_venv }}/bin/python"
 
 - name: Remove default Nginx configuration
   ansible.builtin.file:

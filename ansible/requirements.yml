@@ -3,4 +3,7 @@ collections:
   - ansible.posix
   - community.general
   - community.crypto
-  - community.hashi_vault
+  - community.vmware
+  - community.postgresql
+  - community.docker
+  - kubernetes.core

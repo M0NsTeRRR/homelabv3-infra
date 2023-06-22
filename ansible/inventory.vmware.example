@@ -1,0 +1,21 @@
+plugin: community.vmware.vmware_vm_inventory
+strict: true
+hostname: <hostname>
+username: <username_vault_encrypted>
+password: <password_vault_encrypted>
+validate_certs: true
+with_tags: true
+properties:
+  - config.name
+  - config.guestId
+  - guest.ipAddress
+  - runtime.powerState
+filters:
+  - "'ansible_managed' in tags"
+hostnames:
+  - "config.name + '.unicornafk.fr'"
+keyed_groups:
+  - key: config.guestId
+    separator: ''
+  - key: tags
+    separator: ''

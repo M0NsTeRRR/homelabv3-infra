@@ -1,11 +1,11 @@
 ---
 galaxy_info:
+  role_name: compiler
   author: Ludovic Ortega
   description: Install and configure Compiler
-  company: Ludovic Ortega
   license: CeCILL
   min_ansible_version: "2.14"
   platforms:
-    - name: Debian
+    - name: Ubuntu
       versions:
-        - bullseye
+        - jammy

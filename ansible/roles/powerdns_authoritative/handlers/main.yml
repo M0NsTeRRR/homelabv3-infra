@@ -1,4 +1,23 @@
 ---
+- name: Restart postgresql
+  ansible.builtin.systemd:
+    name: postgresql
+    state: restarted
+
+- name: Enable postgresql
+  ansible.builtin.systemd:
+    name: postgresql
+    enabled: true
+
+- name: Daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Enable pdns
+  ansible.builtin.systemd:
+    name: pdns
+    enabled: true
+
 - name: Restart pdns
   ansible.builtin.systemd:
     name: pdns

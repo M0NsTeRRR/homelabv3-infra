@@ -12,4 +12,4 @@ jobs:
       with:
         command: validate
         arguments: -syntax-only
-        target: packer/templates/debian packer/templates/raspi
+        target: packer/templates/ubuntu packer/templates/raspi

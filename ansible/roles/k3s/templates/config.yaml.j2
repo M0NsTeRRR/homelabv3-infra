@@ -1,0 +1,34 @@
+node-name: {{ k3s_nodename }}
+node-ip: {{ ansible_default_ipv4.address }},{{ ansible_default_ipv6.address }}
+
+data-dir: /var/lib/k3s
+
+{% if inventory_hostname != groups[k3s_master_group][0] %}token-file: /var/lib/k3s/server/node-token{% endif %}
+
+{% if inventory_hostname != groups[k3s_master_group][0] %}
+server: {{ k3s_join_url }}
+{% else %}
+cluster-init: true
+{% endif %}
+
+{% if inventory_hostname in groups[k3s_master_group] %}
+tls-san: {{ k3s_ha_controlplane_ip }}
+
+secrets-encryption: true
+
+flannel-backend: none
+disable-network-policy: true
+
+disable: traefik,servicelb,metrics-server
+
+cluster-cidr: {{ k3s_cluster_cidr_ipv4 }},{{ k3s_cluster_cidr_ipv6 }}
+service-cidr: {{ k3s_service_cidr_ipv4 }},{{ k3s_service_cidr_ipv6 }}
+cluster-dns: {{ k3s_cluster_dns }}
+
+# To proritize IPv4 traffic
+kubelet-arg: "node-ip=0.0.0.0"
+
+
+write-kubeconfig-mode: 600
+write-kubeconfig: /etc/k3s/kubeconfig
+{% endif %}

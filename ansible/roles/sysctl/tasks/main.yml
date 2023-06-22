@@ -12,7 +12,6 @@
     - {name: 'kernel.core_pattern', value: '|/bin/false'}
     - {name: 'kernel.dmesg_restrict', value: '1'}
     - {name: 'kernel.kptr_restrict', value: '2'}
-    - {name: 'kernel.sysrq', value: '0'}
     - {name: 'kernel.unprivileged_bpf_disabled', value: '1'}
     - {name: 'net.core.bpf_jit_harden', value: '2'}
     - {name: 'net.ipv4.conf.all.log_martians', value: '1'}

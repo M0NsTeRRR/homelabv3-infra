@@ -1,0 +1,142 @@
+---
+- name: Open required ports
+  community.general.ufw:
+    rule: allow
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+    comment: "{{ item.comment }}"
+  when: item.to_open
+  with_items:
+    - {port: "2379:2380", proto: tcp, to_open: "{{ inventory_hostname in groups[k3s_master_group] }}", comment: "HA embedded etcd"}
+    - {port: "6443", proto: tcp, to_open: "{{ inventory_hostname in groups[k3s_master_group] }}", comment: "K3s supervisor and Kubernetes API Server"}
+    - {port: "10250", proto: tcp, to_open: true, comment: "Kubelet metrics"}
+
+- name: Allow all access from pods/services
+  community.general.ufw:
+    rule: allow
+    src: "{{ item.src }}"
+    comment: "{{ item.comment }}"
+  with_items:
+    - {src: "{{ k3s_cluster_cidr_ipv4 }}", comment: "k3s cluster (pods) ipv4"}
+    - {src: "{{ k3s_cluster_cidr_ipv6 }}", comment: "k3s cluster (pods) ipv6"}
+    - {src: "{{ k3s_service_cidr_ipv4 }}", comment: "k3s service ipv4"}
+    - {src: "{{ k3s_service_cidr_ipv6 }}", comment: "k3s service ipv6"}
+
+- name: Check if k3s is already installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/k3s
+  register: k3s_install
+
+- name: Detect machine architecture
+  ansible.builtin.set_fact:
+    k3s_arch: "{% if ansible_architecture == 'x86_64' %}amd64{% else %}arm64{% endif %}"
+
+- name: "Download k3s binary version {{ k3s_version }}"
+  ansible.builtin.get_url:
+    url: "https://github.com/k3s-io/k3s/releases/download/v{{ k3s_version }}+k3s1/k3s{% if ansible_architecture != 'x86_64' %}-{{ k3s_arch }}{% endif %}"
+    checksum: "sha256:https://github.com/k3s-io/k3s/releases/download/v{{ k3s_version }}+k3s1/sha256sum-{{ k3s_arch }}.txt"
+    dest: /usr/local/bin/k3s
+    owner: root
+    group: root
+    mode: "0700"
+  notify: Restart k3s.service
+  when: not k3s_install.stat.exists or k3s_force_install
+
+- name: "Create folder {{ item }}"
+  ansible.builtin.file:
+    name: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0740"
+  with_items:
+    - /etc/k3s
+    - /var/lib/k3s/server/manifests
+
+- name: Configure k3s
+  ansible.builtin.template:
+    src: config.yaml.j2
+    dest: /etc/k3s/config.yaml
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart k3s.service
+
+- name: Create systemd service file
+  ansible.builtin.template:
+    src: k3s.service.j2
+    dest: /etc/systemd/system/k3s.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Daemon-reload
+    - Enable k3s.service
+    - Restart k3s.service
+
+- name: Flush handlers on first master only
+  ansible.builtin.meta: flush_handlers
+  run_once: true
+  when: groups[k3s_master_group][0] == inventory_hostname
+
+- name: Wait token file generation
+  ansible.builtin.stat:
+    path: /var/lib/k3s/server/node-token
+  register: k3s_token_file
+  until: k3s_token_file.stat.exists
+  retries: 60
+  delay: 1
+  run_once: true
+  when: groups[k3s_master_group][0] == inventory_hostname
+
+- name: Get k3s token file from first master
+  ansible.builtin.slurp:
+    src: /var/lib/k3s/server/node-token
+  register: k3s_token
+  delegate_to: "{{ groups[k3s_master_group][0] }}"
+  when: groups[k3s_master_group][0] != inventory_hostname
+
+- name: Create k3s token file on other nodes
+  ansible.builtin.copy:
+    content: "{{ k3s_token['content'] | b64decode }}"
+    dest: /var/lib/k3s/server/node-token
+    owner: root
+    group: root
+    mode: "0600"
+  when: groups[k3s_master_group][0] != inventory_hostname
+  notify: Restart k3s.service
+
+- name: Fetch kubeconfig file
+  ansible.builtin.fetch:
+    src: /etc/k3s/kubeconfig
+    dest: "{{ k3s_localhost_kubeconfig_path }}"
+    flat: true
+  run_once: true
+  when: groups[k3s_master_group][0] == inventory_hostname and (not k3s_install.stat.exists or k3s_force_install)
+
+- name: Fix perms on kubeconfig
+  ansible.builtin.file:
+    name: "{{ k3s_localhost_kubeconfig_path }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0600"
+    state: file
+  delegate_to: localhost
+  run_once: true
+  when: groups[k3s_master_group][0] == inventory_hostname and (not k3s_install.stat.exists or k3s_force_install)
+
+- name: Replace localhost url with remote server url
+  ansible.builtin.lineinfile:
+    path: "{{ k3s_localhost_kubeconfig_path }}"
+    search_string: "  server: https://127.0.0.1:6443"
+    line: "    server: https://{{ inventory_hostname }}:6443"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0600"
+  delegate_to: localhost
+  become: false
+  run_once: true
+  when: groups[k3s_master_group][0] == inventory_hostname and (not k3s_install.stat.exists or k3s_force_install)
+
+- name: Flush handlers
+  ansible.builtin.meta: flush_handlers

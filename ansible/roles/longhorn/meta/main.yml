@@ -1,0 +1,11 @@
+---
+galaxy_info:
+  role_name: longhorn
+  author: Ludovic Ortega
+  description: Install and configure longhorn
+  license: CeCILL
+  min_ansible_version: "2.14"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy

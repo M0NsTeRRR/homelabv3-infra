@@ -22,7 +22,7 @@
     group: root
     mode: "0640"
   notify:
-    - restart nginx
+    - Restart nginx
 
 - name: Create symlink sites-available to sites-enabled
   ansible.builtin.file:
@@ -30,4 +30,4 @@
     dest: "/etc/nginx/sites-enabled/{{ item.server_name }}"
     state: link
   notify:
-    - restart nginx
+    - Restart nginx

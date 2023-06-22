@@ -1,11 +1,11 @@
 ---
 - name: Set DNS CAA entries
   ansible.builtin.set_fact:
-    powerdns_caa: "{{ powerdns_authoritative_records | selectattr('caa', 'defined') | list }}"
+    powerdns_authoritative_caa: "{{ powerdns_authoritative_records | selectattr('caa', 'defined') | list }}"
 
 - name: "Check if zone exist {{ item }}."
   ansible.builtin.uri:
-    url: "https://{{ ansible_fqdn }}/api/v1/servers/localhost/zones/{{ item }}."
+    url: "{{ powerdns_authoritative_api_base_url }}/api/v1/servers/localhost/zones/{{ item }}."
     method: GET
     return_content: true
     status_code:
@@ -13,11 +13,21 @@
       - 404
     headers:
       X-Api-Key: "{{ powerdns_authoritative_api_key }}"
-  register: zone
+  register: powerdns_authoritative_zone
+
+- name: Configure PowerDNS authoritative
+  ansible.builtin.template:
+    src: post_zone.json.j2
+    dest: /etc/powerdns/test.json
+    owner: "pdns"
+    group: "pdns"
+    mode: "0640"
+  when: powerdns_authoritative_zone.status == 404
+  notify: Restart pdns
 
 - name: "POST zone {{ item }}."
   ansible.builtin.uri:
-    url: "https://{{ ansible_fqdn }}/api/v1/servers/localhost/zones"
+    url: "{{ powerdns_authoritative_api_base_url }}/api/v1/servers/localhost/zones"
     method: POST
     return_content: true
     body_format: json
@@ -26,13 +36,13 @@
     headers:
       Content-Type: application/json
       X-Api-Key: "{{ powerdns_authoritative_api_key }}"
-  when: zone.status == 404
-  register: response
-  changed_when: response.status == 201
+  when: powerdns_authoritative_zone.status == 404
+  register: powerdns_authoritative_response
+  changed_when: powerdns_authoritative_response.status == 201
 
 - name: "PATCH zone {{ item }}."
   ansible.builtin.uri:
-    url: "https://{{ ansible_fqdn }}/api/v1/servers/localhost/zones/{{ item }}."
+    url: "{{ powerdns_authoritative_api_base_url }}/api/v1/servers/localhost/zones/{{ item }}."
     method: PATCH
     return_content: true
     body_format: json
@@ -41,5 +51,6 @@
     headers:
       Content-Type: application/json
       X-Api-Key: "{{ powerdns_authoritative_api_key }}"
-  register: response
-  changed_when: response.status == 204
+  when: inventory_hostname == ansible_play_hosts_all[0]
+  register: powerdns_authoritative_response
+  changed_when: powerdns_authoritative_response.status == 204

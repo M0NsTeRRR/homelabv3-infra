@@ -3,3 +3,12 @@
   ansible.builtin.systemd:
     name: fail2ban
     state: restarted
+
+- name: Daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Enable fail2ban
+  ansible.builtin.systemd:
+    name: fail2ban
+    enabled: true

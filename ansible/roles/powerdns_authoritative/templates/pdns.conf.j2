@@ -1,0 +1,31 @@
+setgid=pdns
+setuid=pdns
+query-local-address={{ ansible_default_ipv4.address }}, {{ ansible_default_ipv6.address }}
+local-address=127.0.0.1, ::1
+local-port=5300
+launch=gpgsql
+gpgsql-host=/run/postgresql
+gpgsql-user={{ powerdns_authoritative_pgsql_user }}
+gpgsql-password={{ powerdns_authoritative_pgsql_password }}
+gpgsql-dbname={{ powerdns_authoritative_pgsql_db }}
+gpgsql-dnssec=yes
+api=yes
+api-key={{ powerdns_authoritative_api_key }}
+webserver=yes
+webserver-address=127.0.0.1
+webserver-password=
+webserver-port=8081
+webserver-allow-from=127.0.0.1
+version-string=anonymous
+{% if inventory_hostname == ansible_play_hosts_all[0] %}
+primary=yes
+{% else %}
+secondary=yes
+{% endif %}
+
+disable-axfr=no
+{% if inventory_hostname == ansible_play_hosts_all[0] %}
+allow-axfr-ips=127.0.0.0/8,::1/128
+only-notify=0.0.0.0/0, ::/0, !{{ ansible_default_ipv4.address }}/32, !{{ ansible_default_ipv6.address }}/128
+{% endif %}
+trusted-notification-proxy=127.0.0.0/8,::1/128

@@ -6,16 +6,16 @@ This is my Homelab v3 infrastructure.
 
 # Requirements
 
-- Ansible core (version >= 2.14)
-  - Python3 and Pip
-- Packer (version >= 1.8)
+- Python3 and Pip
+- Packer
   - Packer builder arm
-- Terraform (version >= 1.3)
-  - Terragrunt (version >= 0.43)
+- Terraform
+  - Terragrunt
+- Docker
 
+Create venv `python3 -m venv venv` 
+Source venv `source venv/bin/activate`
 Install python dependencies `pip3 install -r requirements.txt`
-
-Set environment variable `ANSIBLE_VAULT_PASS` like `export ANSIBLE_VAULT_PASS='password'`
 
 # Ansible
 
@@ -25,31 +25,29 @@ Fill certs folders
 
 Install ansible galaxy dependencies `ansible-galaxy install -r requirements.yml`
 
-fill all `secrets.yml` based on `secrets.example` in each subdirectory of `groups_vars`
-
-### Playbooks to add fingerprint on know_hosts
-
-`ansible-playbook -i hosts playbooks/add-ssh-keys.yml`
+fill all `.vault_password.txt` at root with ansible vault password used   
+fill all `secrets.yml` based on `secrets.example` in each subdirectory of `groups_vars`  
+fill `inventory.vmware.yml` and encrypt it with `vault` based on `inventory.vmware.example`
 
 ### Playbooks to create client certificate signed by a CA
 
-`ansible-playbook -i hosts playbooks/generate-certs.yml`
+`ansible-playbook playbooks/generate-certs.yml`
 
 ### Playbooks to deploy a zone
 
-`ansible-playbook -i hosts deploy_<zone>.yml`
-Replace `<zone>` by the appropriate zone name
+`ansible-playbook deploy_<zone>.yml`  
+Replace `<zone>` by the appropriate zone name  
 
 # Packer
 `cd packer`
 
 Init packer plugins
-`packer init packer/templates/debian`
+`packer init packer/templates/ubuntu`
 
-Port 8888 used for debian build
+Port 8888 used for ubuntu build
 
 Open both ports on windows firewall
-Start powershell prompt with admin right `netsh interface portproxy add v4tov4 listenaddress=<WINDOWS IP> connectaddress=<WSL IP> listenport=<WINDOWS PORT> connectport=<WSL PORT>`
+Start powershell prompt with admin right `netsh interface portproxy add v4tov4 listenaddress=<WINDOWS IP> connectaddress=$($(wsl hostname -I).Trim()) listenport=<WINDOWS PORT> connectport=<WSL PORT>`
 Replace <IP> with the LAN IP of your PC and <PORT> with [8888]
 To delete the rules `netsh interface portproxy del v4tov4 listenaddress=<IP> listenport=<PORT>`
 
@@ -57,13 +55,15 @@ Supported distributions :
 
 **VM**
 
-- Debian 11.6.0
+- Ubuntu
 
 **Raspberry Pi (v3/v4)**
 
-- Ubuntu 22.04.1
+- Ubuntu
 
 ### Create template
+
+To init packer plugin `packer init templates/ubuntu`  
 
 `./build.sh` (sudo permission required for Raspberry Pi choice only)
 
@@ -71,11 +71,9 @@ Supported distributions :
 
 `cd terraform`
 
-fill all `secrets.env` based on `secrets.example` and encrypt it with `ansible-vault`
+fill all `account.hcl` based on `account.example`  
 
-Export environment variables with `./vars.sh`
-
-**Command must be run in one of this directories (prod/vpn)**
+**Command must be run in this directory (prod)**
 
 ### Create an execution plan
 

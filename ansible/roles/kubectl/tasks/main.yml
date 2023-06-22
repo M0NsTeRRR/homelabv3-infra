@@ -1,0 +1,20 @@
+---
+- name: Add Kubernetes Apt signing key
+  ansible.builtin.get_url:
+    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    dest: /etc/apt/keyrings/kubernetes.asc
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Add Kubernetes Apt repository
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/etc/apt/keyrings/kubernetes.asc] https://apt.kubernetes.io/ kubernetes-xenial main"
+    state: present
+    filename: kubernetes
+
+- name: Install kubectl
+  ansible.builtin.apt:
+    name: "kubectl{% if kubectl_version is defined %}={{ kubectl_version }}{% endif %}"
+    update_cache: true
+    state: "{{ kubectl_package_state }}"

@@ -1,0 +1,22 @@
+---
+- name: Resize partition
+  hosts: all
+  become: true
+  vars:
+    device: /dev/sda
+  tasks:
+    - name: "Scan {{ device }}"
+      ansible.builtin.shell: "echo 1 > /sys/class/block/{{ device | basename }}/device/rescan"
+      changed_when: true
+
+    - name: Read device information
+      community.general.parted:
+        device: "{{ device }}"
+        unit: "MiB"
+      register: sd_info
+
+    - name: Resize last partition to fill all available space
+      community.general.filesystem:
+        fstype: "{{ sd_info.partitions[-1].fstype }}"
+        dev: "{{ device }}{{ sd_info.partitions | length }}"
+        resizefs: true

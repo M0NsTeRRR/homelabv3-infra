@@ -1,3 +1,7 @@
+packer {
+  required_version = ">=1.9"
+}
+
 source "arm" "ubuntu" {
   file_urls             = [var.file_url]
   file_checksum_url     = var.file_checksum_url

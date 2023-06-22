@@ -1,0 +1,52 @@
+---
+country: FR
+organization: unicornafk
+certs_dir: ../../../ssl/
+certs_dir_role_path: "{{ role_path }}/../../../ssl/"
+ca_certificates_local_path_ca_certificate: "{{ certs_dir_role_path }}unicornafk.crt"
+ca_certificates_certs_dir: "{{ certs_dir }}"
+
+kubernetes_localhost_kubeconfig_path: "{{ lookup('env', 'HOME') }}/.kube/homelab.yaml"
+kubernetes_vip_url: "kubernetes.unicornafk.fr"
+
+systemd_timesyncd_ntp:
+  - ntp1.unicornafk.fr
+  - ntp2.unicornafk.fr
+
+systemd_resolved_dnssec: false
+systemd_resolved_dns:
+  - 192.168.10.21
+  - 192.168.10.22
+  - 2a0c:b641:2c0:110::21
+  - 2a0c:b641:2c0:110::22
+systemd_resolved_fallback_dns:
+  - 9.9.9.9
+  - 149.112.112.112
+  - 2620:fe::fe
+  - 2620:fe::9
+systemd_resolved_domains: "{{ domains }}"
+
+domains:
+  - unicornafk.fr
+subdomains:
+  - dmz.unicornafk.fr
+  - lab.unicornafk.fr
+reverse_zones:
+  - 4.168.192.in-addr.arpa
+  - 5.168.192.in-addr.arpa
+  - 10.168.192.in-addr.arpa
+  - 20.168.192.in-addr.arpa
+  - 30.168.192.in-addr.arpa
+  - 40.168.192.in-addr.arpa
+  - 50.168.192.in-addr.arpa
+  - 60.168.192.in-addr.arpa
+  - 70.168.192.in-addr.arpa
+  - 4.0.1.0.0.c.2.0.1.4.6.b.c.0.a.2.ip6.arpa
+  - 5.0.1.0.0.c.2.0.1.4.6.b.c.0.a.2.ip6.arpa
+  - 0.1.1.0.0.c.2.0.1.4.6.b.c.0.a.2.ip6.arpa
+  - 0.2.1.0.0.c.2.0.1.4.6.b.c.0.a.2.ip6.arpa
+  - 0.3.1.0.0.c.2.0.1.4.6.b.c.0.a.2.ip6.arpa
+  - 0.4.1.0.0.c.2.0.1.4.6.b.c.0.a.2.ip6.arpa
+  - 0.5.1.0.0.c.2.0.1.4.6.b.c.0.a.2.ip6.arpa
+  - 0.6.1.0.0.c.2.0.1.4.6.b.c.0.a.2.ip6.arpa
+  - 0.7.1.0.0.c.2.0.1.4.6.b.c.0.a.2.ip6.arpa

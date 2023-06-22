@@ -3,3 +3,12 @@
   ansible.builtin.systemd:
     name: auditd
     state: restarted
+
+- name: Daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Enable auditd
+  ansible.builtin.systemd:
+    name: auditd
+    enabled: true

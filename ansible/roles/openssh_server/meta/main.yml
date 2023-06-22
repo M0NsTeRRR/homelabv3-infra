@@ -1,11 +1,11 @@
 ---
 galaxy_info:
+  role_name: openssh_server
   author: Ludovic Ortega
-  description: Configure openssh_server
-  company: Ludovic Ortega
+  description: Install and configure openssh_server
   license: CeCILL
   min_ansible_version: "2.14"
   platforms:
-    - name: Debian
+    - name: Ubuntu
       versions:
-        - bullseye
+        - jammy

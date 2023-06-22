@@ -1,9 +1,12 @@
 ---
 - name: Restart services that use SSL cert
   ansible.builtin.systemd:
-    name: "{{ service.name }}"
-    state: "{{ service.state }}"
-  when: item.systemd_services + ".service" in ansible_facts.services or item.systemd_services in ansible_facts.services
-  with_items: "{{ item.systemd_services }}"
-  loop_control:
-    loop_var: service
+    name: "{{ item.1.name }}"
+    state: "{{ item.1.state }}"
+  no_log: true
+  when: >
+    item.0.common_name in self_signed_cert_common_name_notifies and
+    item.1.name in ansible_facts.services
+  with_subelements:
+    - "{{ self_signed_certs }}"
+    - systemd_services

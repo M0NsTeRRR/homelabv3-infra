@@ -1,6 +1,9 @@
 ---
 # nginx_version:
 nginx_package_state: latest
+# nginx_cryptography_version:
+nginx_cryptography_package_state: latest
+nginx_venv: "/tmp/venv_nginx"
 nginx_configuration: []
 
 
