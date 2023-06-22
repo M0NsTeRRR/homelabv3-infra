@@ -7,13 +7,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Setup `packer`
+    - name: Setup packer
       uses: hashicorp/setup-packer@main
       id: setup
       with:
         version: latest
 
-    - name: Run `packer validate`
+    - name: Run packer validate
       id: validate
       run: |
         cd packer/templates
