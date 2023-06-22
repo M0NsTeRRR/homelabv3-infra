@@ -23,7 +23,7 @@ source "vsphere-iso" "ubuntu" {
     "<enter>"
   ]
   boot_wait            = "5s"
-  firmware            = "efi-secure"
+  firmware             = "efi-secure"
   cluster              = "HA"
   convert_to_template  = "true"
   cpu_cores            = 1

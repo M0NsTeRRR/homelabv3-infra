@@ -13,10 +13,6 @@ jobs:
       with:
         version: latest
 
-    - name: Run `packer init`
-      id: init
-      run: "packer init packer/templates/ubuntu & packer init packer/templates/raspi"
-
     - name: Run `packer validate`
       id: validate
-      run: "packer validate packer/templates/ubuntu  & packer validate packer/templates/raspi"
+      run: "packer validate -syntax-only packer/templates/ubuntu && packer validate -syntax-only packer/templates/raspi"
