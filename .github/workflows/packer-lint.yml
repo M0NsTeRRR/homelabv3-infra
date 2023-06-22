@@ -15,4 +15,7 @@ jobs:
 
     - name: Run `packer validate`
       id: validate
-      run: "packer validate -syntax-only packer/templates/ubuntu && packer validate -syntax-only packer/templates/raspi"
+      run: |
+        cd packer/templates
+        packer validate -syntax-only ubuntu
+        packer validate -syntax-only raspi"
