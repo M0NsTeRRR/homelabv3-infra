@@ -11,11 +11,11 @@ dependency "vm" {
 }
 
 inputs = {
-  vm_id = dependency.vm.outputs.vm_id,
+  vm_id       = dependency.vm.outputs.vm_id,
   vm_hostname = dependency.vm.outputs.vm_hostname,
-  domain = dependency.vm.outputs.domain,
-  vm_ip = dependency.vm.outputs.vm_ip,
-  vm_ip6 = dependency.vm.outputs.vm_ip6
+  domain      = dependency.vm.outputs.domain,
+  vm_ip       = dependency.vm.outputs.vm_ip,
+  vm_ip6      = dependency.vm.outputs.vm_ip6
 }
 
 dependencies {

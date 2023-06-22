@@ -18,8 +18,8 @@ locals {
 
 terraform {
   before_hook "before_cache" {
-    commands     = [get_terraform_command()]
-    execute      = ["mkdir", "-p", abspath("${get_parent_terragrunt_dir()}/build/terraform")]
+    commands = [get_terraform_command()]
+    execute  = ["mkdir", "-p", abspath("${get_parent_terragrunt_dir()}/build/terraform")]
   }
   extra_arguments "cache" {
     commands = [get_terraform_command()]
