@@ -14,6 +14,8 @@ jobs:
         cp ansible/ansible.cfg .
         cp ansible/requirements.yml .
         cp ansible/.ansible-lint .
+        sed -i 's,../.vault_password.txt,.vault_password.txt,' ansible.cfg
+        touch .vault_password.txt
     - name: Lint Ansible Playbook
       uses: ansible/ansible-lint-action@main
       with:
