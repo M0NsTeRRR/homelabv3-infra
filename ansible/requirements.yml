@@ -1,9 +1,16 @@
 ---
 collections:
-  - ansible.posix
-  - community.general
-  - community.crypto
-  - community.vmware
-  - community.postgresql
-  - community.docker
-  - kubernetes.core
+  - name: ansible.posix
+    version: "1.5.4"
+  - name: community.general
+    version: "7.1.0"
+  - name: community.crypto
+    version: "2.14.0"
+  - name: community.vmware
+    version: "3.7.0"
+  - name: community.postgresql
+    version: "3.0.0"
+  - name: community.docker
+    version: "3.4.8"
+  - name: kubernetes.core
+    version: "2.4.0"

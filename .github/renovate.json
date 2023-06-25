@@ -1,0 +1,45 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base",
+    "schedule:daily",
+    ":dependencyDashboard"
+  ],
+  "dependencyDashboardAutoclose": true,
+  "platformAutomerge": true,
+  "labels": ["dependencies"],
+  "vulnerabilityAlerts": {
+    "enabled": true,
+    "labels": [
+      "security"
+    ]
+  },
+  "lockFileMaintenance": {
+    "enabled": true
+  },
+  "patch": {
+    "automerge": true
+  },
+  "pin": {
+    "automerge": true
+  },
+  "separateMinorPatch": true,
+  "regexManagers": [
+    {
+      "fileMatch": ["\\.pkr\\.hcl"],
+      "matchStrings": [
+        "required_version[\\s]+=[\\s]+\"==(?<currentValue>\\S*)\""
+      ],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "hashicorp/packer",
+      "versioningTemplate": "semver"
+    },
+    {
+      "fileMatch": ["/terraform/terragrunt.hcl"],
+      "matchStrings": [
+        "source[\\s]+=[\\s]+\"(?<depName>\\S*)\"[\\s]+version[\\s]+=[\\s]+\"(?<currentValue>\\S*)\""
+      ],
+      "datasourceTemplate": "terraform-module"
+    }
+  ]
+}
