@@ -3,6 +3,7 @@ This is my Homelab v3 infrastructure.
 ![Ansible Lint](https://github.com/M0NsTeRRR/homelabv3-infra/workflows/Ansible%20Lint/badge.svg)
 ![Packer Lint](https://github.com/M0NsTeRRR/homelabv3-infra/workflows/Packer%20Lint/badge.svg)
 ![Terraform Lint](https://github.com/M0NsTeRRR/homelabv3-infra/workflows/Terraform%20Lint/badge.svg)
+![Octodns](https://github.com/M0NsTeRRR/homelabv3-infra/workflows/Octodns/badge.svg)
 
 # Requirements
 
