@@ -12,7 +12,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Setup packer
-      uses: hashicorp/setup-packer@main
+      uses: hashicorp/setup-packer@v2
       id: setup
       with:
         version: latest

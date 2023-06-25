@@ -16,9 +16,6 @@
       'security',
     ],
   },
-  lockFileMaintenance: {
-    enabled: true,
-  },
   patch: {
     automerge: true,
   },
@@ -57,7 +54,7 @@
         '(^|/)roles\\S+meta/\\S+\\.ya?ml',
       ],
       matchStrings: [
-        'min_ansible_version:\\s+"?(?<currentValue>\\S*)"?',
+        'min_ansible_version:\\s+"(?<currentValue>\\S*)"',
       ],
       depNameTemplate: 'ansible-core',
       datasourceTemplate: 'pypi',
@@ -81,16 +78,18 @@
       matchDepPatterns: [
         'ansible',
       ],
-      "groupName": 'ansible version',
+      groupName: 'ansible version',
     },
     // handle vmware package that follow pep440 but not semver
     {
-        "matchPackageNames": [
-          'https://github.com/vmware/vsphere-automation-sdk-python.git',
-        ],
-        "versioning": 'pep440',
-        "ignoreUnstable": false,
-        "groupName": 'vsphere-automation-sdk-python',
+      matchPackageNames: [
+        'python',
+      ],
+      matchDepNames: [
+        'vsphere-automation-sdk-python',
+      ],
+      versioning: 'pep440',
+      groupName: 'vsphere-automation-sdk-python',
      },
   ],
 }
