@@ -28,15 +28,24 @@
     {
       "fileMatch": ["\\.pkr\\.hcl"],
       "matchStrings": [
-        "required_version[\\s]+=[\\s]+\"==(?<currentValue>\\S*)\""
+        "required_version[\\s]+=[\\s]+\"=(?<currentValue>\\S*)\""
       ],
       "datasourceTemplate": "github-tags",
       "depNameTemplate": "hashicorp/packer"
     },
     {
-      "fileMatch": ["\/terraform\/terragrunt.hcl"],
+      "fileMatch": ["\\.pkr\\.hcl"],
       "matchStrings": [
-        "source[\\s]+=[\\s]+\"(?<depName>\\S*)\"[\\s]+version[\\s]+=[\\s]+\"(?<currentValue>\\S*)\""
+        "source[\\s]+=[\\s]+\"github.com\/(?<depName>\\S*)\"[\\s]+version[\\s]+=[\\s]+\"(?<currentValue>\\S*)\"",
+        "version[\\s]+=[\\s]+\"(?<currentValue>\\S*)[\\s]+source[\\s]+=[\\s]+\"github.com/(?<depName>\\S*)\""
+      ],
+      "datasourceTemplate": "github-tags"
+    },
+    {
+      "fileMatch": ["(^|/)terragrunt\\.hcl$"],
+      "matchStrings": [
+        "source[\\s]+=[\\s]+\"(?<depName>\\S*)\"[\\s]+version[\\s]+=[\\s]+\"=?(?<currentValue>\\S*)\"",
+        "version[\\s]+=[\\s]+\"=?(?<currentValue>\\S*)\"[\\s]+source[\\s]+=[\\s]+\"(?<depName>\\S*)\"[\\s]"
       ],
       "datasourceTemplate": "terraform-module"
     }
