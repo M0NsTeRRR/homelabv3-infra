@@ -16,7 +16,6 @@ jobs:
       id: setup
       with:
         version: latest
-
     - name: Run packer validate
       id: validate
       run: |

@@ -1,0 +1,96 @@
+{
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'config:base',
+    'schedule:daily',
+    ':dependencyDashboard',
+  ],
+  dependencyDashboardAutoclose: true,
+  platformAutomerge: true,
+  labels: [
+    'dependencies',
+  ],
+  vulnerabilityAlerts: {
+    enabled: true,
+    labels: [
+      'security',
+    ],
+  },
+  lockFileMaintenance: {
+    enabled: true,
+  },
+  patch: {
+    automerge: true,
+  },
+  pin: {
+    automerge: true,
+  },
+  separateMinorPatch: true,
+  regexManagers: [
+    // match packer and plugin version
+    {
+      fileMatch: [
+        '\\.pkr\\.hcl',
+      ],
+      matchStrings: [
+        'required_version[\\s]+=[\\s]+"=?(?<currentValue>\\S*)"',
+        'source[\\s]+=[\\s]+"github.com/(?<depName>\\S*)"[\\s]+version[\\s]+=[\\s]+"(?<currentValue>\\S*)"',
+        'version[\\s]+=[\\s]+"(?<currentValue>\\S*)[\\s]+source[\\s]+=[\\s]+"github.com/(?<depName>\\S*)"',
+      ],
+      datasourceTemplate: 'github-tags',
+      depNameTemplate: "{{#if depName}}{{#if (containsString depName 'hashicorp/')}}{{{replace 'hashicorp/' 'hashicorp/packer-plugin-' depName}}}{{else}}{{{depName}}}{{/if}}{{else}}hashicorp/packer{{/if}}",
+    },
+    // match terraform and plugin version
+    {
+      fileMatch: [
+        '(^|/)terragrunt\\.hcl$',
+      ],
+      matchStrings: [
+        'source[\\s]+=[\\s]+"(?<depName>\\S*)"[\\s]+version[\\s]+=[\\s]+"=?(?<currentValue>\\S*)"',
+        'version[\\s]+=[\\s]+"=?(?<currentValue>\\S*)"[\\s]+source[\\s]+=[\\s]+"(?<depName>\\S*)"[\\s]',
+      ],
+      datasourceTemplate: 'terraform-provider',
+    },
+    // match min_ansible_version in ansible role meta
+    {
+      fileMatch: [
+        '(^|/)roles\\S+meta/\\S+\\.ya?ml',
+      ],
+      matchStrings: [
+        'min_ansible_version:\\s+"?(?<currentValue>\\S*)"?',
+      ],
+      depNameTemplate: 'ansible-core',
+      datasourceTemplate: 'pypi',
+    },
+    // match program version in defaults 
+    {
+      fileMatch: [
+        '(^|/)roles\\S+defaults/\\S+\\.ya?ml',
+      ],
+      matchStrings: [
+        'datasource=(?<datasource>\\S*)[\\s]+depName=(?<depName>\\S*)[\\S\\s]+"(?<currentValue>\\S*)"',
+      ],
+    },
+  ],
+  packageRules: [
+    // group ansible version in one PR
+    {
+      matchDatasources: [
+        'pypi',
+      ],
+      matchDepPatterns: [
+        'ansible',
+      ],
+      "groupName": 'ansible version',
+    },
+    // handle vmware package that follow pep440 but not semver
+    {
+        "matchPackageNames": [
+          'https://github.com/vmware/vsphere-automation-sdk-python.git',
+        ],
+        "versioning": 'pep440',
+        "ignoreUnstable": false,
+        "groupName": 'vsphere-automation-sdk-python',
+     },
+  ],
+}
