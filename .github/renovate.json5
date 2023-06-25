@@ -22,7 +22,6 @@
   pin: {
     automerge: true,
   },
-  separateMinorPatch: true,
   regexManagers: [
     // match packer and plugin version
     {
