@@ -13,3 +13,6 @@ jsonpatch
 git+https://github.com/vmware/vsphere-automation-sdk-python.git
 # terraform
 paramiko
+# octodns
+octodns
+octodns_scaleway

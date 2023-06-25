@@ -8,14 +8,14 @@ This is my Homelab v3 infrastructure.
 
 - Python3 and Pip
 - Packer
-  - Packer builder arm
+  - Packer builder arm (needed for rpi build)
 - Terraform
   - Terragrunt
-- Docker
+- Docker (needed for kube-vip manifest generation)
 
-Create venv `python3 -m venv venv` 
-Source venv `source venv/bin/activate`
-Install python dependencies `pip3 install -r requirements.txt`
+Create venv `python3 -m venv venv`  
+Source venv `source venv/bin/activate`  
+Install python dependencies `pip3 install -r requirements.txt`  
 
 # Ansible
 
@@ -47,11 +47,11 @@ Init packer plugins
 Port 8888 used for ubuntu build
 
 Open both ports on windows firewall
-Start powershell prompt with admin right `netsh interface portproxy add v4tov4 listenaddress=<WINDOWS IP> connectaddress=$($(wsl hostname -I).Trim()) listenport=<WINDOWS PORT> connectport=<WSL PORT>`
+Start powershell prompt with admin right `netsh interface portproxy add v4tov4 listenaddress=<WINDOWS IP> connectaddress=$($(wsl hostname -I).Trim()) listenport=<WINDOWS PORT> connectport=<WSL PORT>`  
 Replace <IP> with the LAN IP of your PC and <PORT> with [8888]
 To delete the rules `netsh interface portproxy del v4tov4 listenaddress=<IP> listenport=<PORT>`
 
-Supported distributions :
+### Supported distributions :
 
 **VM**
 
@@ -82,6 +82,14 @@ fill all `account.hcl` based on `account.example`
 ### Deploy/update infrastructure
 
 `terragrunt run-all apply`
+
+# Octodns
+
+Export secret key `export SCALEWAY_SECRET_KEY=<secret key>`  
+
+### Apply change
+
+`octodns-sync --config-file=./octodns/config.yaml --doit`
 
 # Licence
 

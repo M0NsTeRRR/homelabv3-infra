@@ -1,0 +1,27 @@
+---
+manager:
+  include_meta: False
+  max_workers: 5
+
+providers:
+  config:
+    class: octodns.provider.yaml.YamlProvider
+    directory: ./octodns
+    default_ttl: 3600
+    enforce_order: True
+  scaleway:
+    class: octodns_scaleway.ScalewayProvider
+    token: env/SCALEWAY_SECRET_KEY
+    create_zone: False
+
+zones:
+  adminafk.fr.:
+    sources:
+      - config
+    targets:
+      - scaleway
+  unicornafk.fr.:
+    sources:
+      - config
+    targets:
+      - scaleway

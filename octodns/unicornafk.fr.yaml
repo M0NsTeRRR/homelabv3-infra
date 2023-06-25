@@ -1,0 +1,44 @@
+'':
+  - type: NS
+    values:
+      - 'ns0.dom.scw.cloud.'
+      - 'ns1.dom.scw.cloud.'
+  - type: CAA
+    values:
+      - flags: 0
+        tag: issue
+        value: sectigo.com
+      - flags: 0
+        tag: issue
+        value: letsencrypt.org
+'vpn.unicornafk.fr':
+  - type: A
+    values:
+      - '82.65.135.80'
+  - type: AAAA
+    values:
+      - '2a0c:b641:2c0:170::29'
+'vps1.unicornafk.fr':
+  - type: A
+    values:
+      - '116.203.39.236'
+  - type: AAAA
+    values:
+      - '2a01:4f8:c0c:e770::'
+  - type: SSHFP
+    values:
+      - algorithm: 4
+        fingerprint: 5fa48b5319751e1bca0e4807ef938a91b0bd8707c08419003c6182f5cb679035
+        fingerprint_type: 2
+'vps2.unicornafk.fr':
+  - type: A
+    values:
+      - '141.145.215.178'
+  - type: AAAA
+    values:
+      - '2603:c027:c000:c200::10'
+  - type: SSHFP
+    values:
+      - algorithm: 4
+        fingerprint: a9759105bf5a6bde1555cf2d30e2049b3e63dc81c899dc5c1dec28cd02a9e88f
+        fingerprint_type: 2
