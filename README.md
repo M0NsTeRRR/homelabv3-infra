@@ -83,14 +83,6 @@ fill all `account.hcl` based on `account.example`
 
 `terragrunt run-all apply`
 
-# Octodns
-
-Export secret key `export SCALEWAY_SECRET_KEY=<secret key>`  
-
-### Apply change
-
-`octodns-sync --config-file=./octodns/config.yaml --doit`
-
 # Licence
 
 The code is under CeCILL license.

@@ -11,34 +11,49 @@
       - flags: 0
         tag: issue
         value: letsencrypt.org
-'vpn.unicornafk.fr':
+  - type: MX
+    value:
+      exchange: mta-gw.infomaniak.ch.
+      preference: 5
+  - type: TXT
+    value: v=spf1 include:spf.infomaniak.ch -all
+20230625._domainkey:
+  - type: TXT
+    value: v=DKIM1\; t=s\; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoYPHLI14v9KekFCM+/b1JWIH/AWIOobF3rTtyhHcOdXNFoqNRL1Uy2YePznCdaWG0DCU0mbXeH8zGHbH7EIIfm4Bt1DK1Cy/gXn2sQqxrGNTItOn/b1F9SudW0eGQfEqKB1eCAtxZ4KF1gjt3ZlWr0LY/jIamCJ7YBdFlVTUgGTaG2nY3U4deU/089ueQZs2d5gSF29W8T/rxc8XUhrp2wLQi5m4DNC6lIY20Y08cflBw13NJdMvp41WtoK++W2e3sbcKp0JdZOqtUu7V8Qr3Btb5ZQdUj4FVhymmmqRl1DcTMH7sGYknsqxZ1J41ZBrKJEUsg7bSzlBlMJq4KC/SQIDAQAB
+_dmarc:
+  - type: TXT
+    value: v=DMARC1\; p=reject\; aspf=s\; adkim=s\; rua=mailto:dmarc@adminafk.fr\; ruf=mailto:dmarc@adminafk.fr\;
+autoconfig:
+  - type: CNAME
+    value: infomaniak.com.
+autodiscover:
+  - type: CNAME
+    value: infomaniak.com.
+status:
+  - type: CNAME
+    value: vps1.unicornafk.fr.
+vpn:
   - type: A
-    values:
-      - '82.65.135.80'
+    value: '82.65.135.80'
   - type: AAAA
-    values:
-      - '2a0c:b641:2c0:170::29'
-'vps1.unicornafk.fr':
+    value: '2a0c:b641:2c0:170::29'
+vps1:
   - type: A
-    values:
-      - '116.203.39.236'
+    value: '116.203.39.236'
   - type: AAAA
-    values:
-      - '2a01:4f8:c0c:e770::'
+    value: '2a01:4f8:c0c:e770::'
   - type: SSHFP
-    values:
-      - algorithm: 4
-        fingerprint: 5fa48b5319751e1bca0e4807ef938a91b0bd8707c08419003c6182f5cb679035
-        fingerprint_type: 2
-'vps2.unicornafk.fr':
+    value:
+      algorithm: 4
+      fingerprint: 5fa48b5319751e1bca0e4807ef938a91b0bd8707c08419003c6182f5cb679035
+      fingerprint_type: 2
+vps2:
   - type: A
-    values:
-      - '141.145.215.178'
+    value: '141.145.215.178'
   - type: AAAA
-    values:
-      - '2603:c027:c000:c200::10'
+    value: '2603:c027:c000:c200::10'
   - type: SSHFP
-    values:
-      - algorithm: 4
-        fingerprint: a9759105bf5a6bde1555cf2d30e2049b3e63dc81c899dc5c1dec28cd02a9e88f
-        fingerprint_type: 2
+    value:
+      algorithm: 4
+      fingerprint: a9759105bf5a6bde1555cf2d30e2049b3e63dc81c899dc5c1dec28cd02a9e88f
+      fingerprint_type: 2

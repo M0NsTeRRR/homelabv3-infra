@@ -1,7 +1,10 @@
 ---
 name: Packer Lint
 
-on: [push]
+on:
+  push:
+    paths:
+      - packer/**
 
 jobs:
   build:
