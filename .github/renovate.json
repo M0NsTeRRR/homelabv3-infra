@@ -33,7 +33,7 @@
         "version[\\s]+=[\\s]+\"(?<currentValue>\\S*)[\\s]+source[\\s]+=[\\s]+\"github.com/(?<depName>\\S*)\""
       ],
       "datasourceTemplate": "github-tags",
-      "depNameTemplate": "hashicorp/packer"
+      "depNameTemplate": "{{#if depName}}{{{depName}}}{{else}}hashicorp/packer{{/if}}"
     },
     {
       "fileMatch": ["(^|/)terragrunt\\.hcl$"],
