@@ -30,12 +30,11 @@
       "matchStrings": [
         "required_version[\\s]+=[\\s]+\"==(?<currentValue>\\S*)\""
       ],
-      "datasourceTemplate": "github-releases",
-      "depNameTemplate": "hashicorp/packer",
-      "versioningTemplate": "semver"
+      "datasourceTemplate": "github-tags",
+      "depNameTemplate": "hashicorp/packer"
     },
     {
-      "fileMatch": ["/terraform/terragrunt.hcl"],
+      "fileMatch": ["\/terraform\/terragrunt.hcl"],
       "matchStrings": [
         "source[\\s]+=[\\s]+\"(?<depName>\\S*)\"[\\s]+version[\\s]+=[\\s]+\"(?<currentValue>\\S*)\""
       ],
