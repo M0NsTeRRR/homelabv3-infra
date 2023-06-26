@@ -6,6 +6,7 @@
     ':dependencyDashboard',
   ],
   dependencyDashboardAutoclose: true,
+  automergeType: 'pr',
   platformAutomerge: true,
   labels: [
     'dependencies',
@@ -112,6 +113,6 @@
       ],
       versioning: 'regex:^v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)\\S*$',
       groupName: 'k3s',
-     },
+    },
   ],
 }
