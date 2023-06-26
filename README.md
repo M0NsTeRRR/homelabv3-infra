@@ -15,9 +15,9 @@ This is my Homelab v3 infrastructure.
 - Docker (needed for kube-vip manifest generation)
 
 Create venv `python3 -m venv venv`  
-Upgrade pip `python -m pip install --upgrade pip`  
 Source venv `source venv/bin/activate`  
-Install python dependencies `pip3 install -r requirements.txt`  
+Upgrade pip `python3 -m pip install --upgrade pip`  
+Install python dependencies `pip install '.[all]'`  
 
 # Ansible
 

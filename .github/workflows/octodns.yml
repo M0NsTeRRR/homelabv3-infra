@@ -23,7 +23,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install octodns octodns_scaleway      
+        pip install '.[octodns]'  
     - name: Validate octodns config
       run: |
         octodns-validate --config-file=./octodns/config.yaml
@@ -40,7 +40,7 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install octodns octodns_scaleway      
+        pip install '.[octodns]'     
     - name: Apply octodns config
       run: |
         octodns-sync --config-file=./octodns/config.yaml --doit
