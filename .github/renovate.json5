@@ -103,7 +103,7 @@
       matchDepNames: [
         'vsphere-automation-sdk',
       ],
-      versioning: 'pep440',
+      versioning: 'pep621',
     },
     // handle k3s github tag that don't follow semver
     {
