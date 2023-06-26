@@ -46,6 +46,7 @@
       ],
       datasourceTemplate: 'github-tags',
       depNameTemplate: '{{#if (containsString depName "terragrunt")}}gruntwork-io/terragrunt{{else}}hashicorp/terraform{{/if}}',
+      currentValueTemplate: 'v{{{currentValue}}}',
     },
     // match terraform plugin version
     {
@@ -75,7 +76,7 @@
         '(^|/)roles\\S+defaults/\\S+\\.ya?ml',
       ],
       matchStrings: [
-        'datasource=(?<datasource>\\S*)[\\s]+depName=(?<depName>\\*)[\\S\\s]+"(?<currentValue>v?\\d+\\.\\d+\\.\\d+)"',
+        'datasource=(?<datasource>\\S*)[\\s]+depName=(?<depName>\\S*)[\\S\\s]+"(?<currentValue>v?\\d+\\.\\d+\\.\\d+)"',
       ],
     },
   ],
