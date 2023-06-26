@@ -101,9 +101,9 @@
         'python',
       ],
       matchDepNames: [
-        'vsphere-automation-sdk-python',
+        'vsphere-automation-sdk',
       ],
-      versioning: 'pep621',
+      versioning: 'pep440',
     },
     // handle k3s github tag that don't follow semver
     {
