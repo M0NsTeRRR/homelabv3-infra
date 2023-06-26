@@ -17,7 +17,7 @@ This is my Homelab v3 infrastructure.
 Create venv `python3 -m venv venv`  
 Source venv `source venv/bin/activate`  
 Upgrade pip `python3 -m pip install --upgrade pip`  
-Install python dependencies `pip install '.[all]'`  
+Install python dependencies `pip install '.[ansible,terraform,octodns]'`  
 
 # Ansible
 
