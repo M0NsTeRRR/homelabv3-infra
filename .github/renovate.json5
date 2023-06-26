@@ -112,7 +112,8 @@
       matchDepNames: [
         'k3s-io/k3s',
       ],
-      versioning: 'regex:^v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)-?(?<prerelease>\\S+)?(\\+k3s1)',
+      ignore-unstable: false,
+      versioning: 'regex:^v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(\\+k3s1)',
     },
     // handle pdns auth github tag that don't follow semver
     {
