@@ -98,10 +98,10 @@
     // handle vmware package that don't follow semver
     {
       matchPackageNames: [
-        'python',
+        'vsphere-automation-sdk',
       ],
       matchDepNames: [
-        'vsphere-automation-sdk',
+        'ansible/vsphere-automation-sdk',
       ],
       versioning: 'pep621',
     },
