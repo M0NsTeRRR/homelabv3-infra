@@ -1,0 +1,149 @@
+{
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'config:base',
+    'schedule:daily',
+    ':dependencyDashboard',
+  ],
+  dependencyDashboardAutoclose: true,
+  automergeType: 'pr',
+  platformAutomerge: true,
+  labels: [
+    'dependencies',
+  ],
+  vulnerabilityAlerts: {
+    enabled: true,
+    labels: [
+      'security',
+    ],
+  },
+  patch: {
+    automerge: true,
+  },
+  pin: {
+    automerge: true,
+  },
+  regexManagers: [
+    // match packer and plugin version
+    {
+      fileMatch: [
+        '\\.pkr\\.hcl',
+      ],
+      matchStrings: [
+        'required_version[\\s]+=[\\s]+"=?(?<currentValue>\\S*)"',
+        'source[\\s]+=[\\s]+"github.com/(?<depName>\\S*)"[\\s]+version[\\s]+=[\\s]+"(?<currentValue>\\S*)"',
+        'version[\\s]+=[\\s]+"(?<currentValue>\\S*)[\\s]+source[\\s]+=[\\s]+"github.com/(?<depName>\\S*)"',
+      ],
+      datasourceTemplate: 'github-tags',
+      depNameTemplate: '{{#if depName}}{{#if (containsString depName "hashicorp/")}}{{{replace "hashicorp/" "hashicorp/packer-plugin-" depName}}}{{else}}{{{depName}}}{{/if}}{{else}}hashicorp/packer{{/if}}',
+    },
+    // match terraform and terragrunt version
+    {
+      fileMatch: [
+        '(^|/)terragrunt\\.hcl$',
+      ],
+      matchStrings: [
+        '(?<depName>\\S*)_version_constraint\\s+=\\s+"(?<currentValue>\\S*)"',
+      ],
+      datasourceTemplate: 'github-tags',
+      depNameTemplate: '{{#if (containsString depName "terragrunt")}}gruntwork-io/terragrunt{{else}}hashicorp/terraform{{/if}}',
+      currentValueTemplate: 'v{{{currentValue}}}',
+    },
+    // match terraform plugin version
+    {
+      fileMatch: [
+        '(^|/)terragrunt\\.hcl$',
+      ],
+      matchStrings: [
+        'source[\\s]+=[\\s]+"(?<depName>\\S*)"[\\s]+version[\\s]+=[\\s]+"=?(?<currentValue>\\S*)"',
+        'version[\\s]+=[\\s]+"=?(?<currentValue>\\S*)"[\\s]+source[\\s]+=[\\s]+"(?<depName>\\S*)"[\\s]',
+      ],
+      datasourceTemplate: 'terraform-provider',
+    },
+    // match min_ansible_version in ansible role meta
+    {
+      fileMatch: [
+        '(^|/)roles\\S+meta/\\S+\\.ya?ml',
+      ],
+      matchStrings: [
+        'min_ansible_version:\\s+"(?<currentValue>\\S*)"',
+      ],
+      depNameTemplate: 'ansible-core',
+      datasourceTemplate: 'pypi',
+    },
+    // match program version in defaults 
+    {
+      fileMatch: [
+        '(^|/)roles\\S+defaults/\\S+\\.ya?ml',
+      ],
+      matchStrings: [
+        'datasource=(?<datasource>\\S*)[\\s]+depName=(?<depName>\\S*)\r?\n[\\S]+\\s"(?<currentValue>\\S+)"',
+      ],
+    },
+  ],
+  packageRules: [
+    // group ansible version in one PR
+    {
+      matchDatasources: [
+        'pypi',
+      ],
+      matchDepPatterns: [
+        'ansible',
+      ],
+      groupName: 'ansible version',
+    },
+    // handle vmware package that follow pep440 but not semver
+    {
+      matchPackageNames: [
+        'python',
+      ],
+      matchDepNames: [
+        'vsphere-automation-sdk-python',
+      ],
+      versioning: 'pep440',
+    },
+    // handle k3s github tag that don't follow semver
+    {
+      matchPackageNames: [
+        'k3s-io/k3s',
+      ],  
+      matchDepNames: [
+        'k3s-io/k3s',
+      ],
+      versioning: 'regex:^v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(\\+k3s1)',
+    },
+    // handle pdns auth github tag that don't follow semver
+    {
+      matchPackageNames: [
+        'PowerDNS/pdns',
+      ],
+      matchDepNames: [
+        'PowerDNS/pdns',
+      ],
+      matchCurrentValue: '/^auth/',
+      versioning: 'regex:^auth-(?<major>\\d+)\\.(?<minor>\\d+)\\.?(\\d+)?-?$',
+    },
+    // handle pdns rec github tag that don't follow semver
+    {
+      matchPackageNames: [
+        'PowerDNS/pdns',
+      ],
+      matchDepNames: [
+        'PowerDNS/pdns',
+      ],
+      matchCurrentValue: '/^rec/',
+      versioning: 'regex:^rec-(?<major>\\d+)\\.(?<minor>\\d+)\\.?(\\d+)?-?$',
+    },
+    // handle pdns dnsdist github tag that don't follow semver
+    {
+      matchPackageNames: [
+        'PowerDNS/pdns',
+      ],
+      matchDepNames: [
+        'PowerDNS/pdns',
+      ],
+      matchCurrentValue: '/^dnsdist/',
+      versioning: 'regex:^dnsdist-(?<major>\\d+)\\.(?<minor>\\d+)\\.?(\\d+)?-?$',
+    },
+  ],
+}

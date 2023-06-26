@@ -1,0 +1,21 @@
+---
+name: Renovatebot check
+
+on:
+  push:
+    paths:
+      - .github/renovate.json5
+      - .github/workflows/renovatebot-check.yml
+
+env:
+  LOG_LEVEL: info
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    env:
+      RENOVATE_CONFIG_FILE: .github/renovate.json5
+    steps:
+      - uses: actions/checkout@v3
+      - name: Check renovate config
+        run: npx -p renovate renovate-config-validator

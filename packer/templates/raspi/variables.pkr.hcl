@@ -16,12 +16,12 @@ variable "username" {
 
 variable "version" {
   type    = string
-  default = "22.04.1"
+  default = "22.04.2"
 }
 
 variable "file_url" {
   type    = string
-  default = "https://cdimage.ubuntu.com/releases/22.04.1/release/ubuntu-22.04.2-preinstalled-desktop-arm64+raspi.img.xz"
+  default = "https://cdimage.ubuntu.com/releases/22.04.2/release/ubuntu-22.04.2-preinstalled-desktop-arm64+raspi.img.xz"
 }
 
 variable "file_checksum_url" {

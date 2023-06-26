@@ -5,12 +5,15 @@ on:
   push:
     paths:
       - octodns/**
+      - .github/workflows/octodns.yml
+
+env:
+  SCALEWAY_SECRET_KEY: ${{ secrets.SCALEWAY_SECRET_KEY }}
 
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
-    env:
-      SCALEWAY_SECRET_KEY: ${{ secrets.SCALEWAY_SECRET_KEY }}
+
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python
@@ -24,6 +27,20 @@ jobs:
     - name: Validate octodns config
       run: |
         octodns-validate --config-file=./octodns/config.yaml
+  deploy:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    needs: [lint]
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install octodns octodns_scaleway      
     - name: Apply octodns config
       run: |
         octodns-sync --config-file=./octodns/config.yaml --doit

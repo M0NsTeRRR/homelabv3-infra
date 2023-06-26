@@ -24,7 +24,7 @@
 
 - name: Download kube-vip rbac manifest"
   ansible.builtin.get_url:
-    url: https://raw.githubusercontent.com/kube-vip/kube-vip/v{{ kube_vip_version }}/docs/manifests/rbac.yaml
+    url: https://raw.githubusercontent.com/kube-vip/kube-vip/{{ kube_vip_version }}/docs/manifests/rbac.yaml
     dest: /tmp/kube-vip-rbac.yaml
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
@@ -46,7 +46,7 @@
 - name: Create kube-vip container to generate daemonset manifest
   community.docker.docker_container:
     name: kube-vip-generate-manifest
-    image: "ghcr.io/kube-vip/kube-vip:v{{ kube_vip_version }}"
+    image: "ghcr.io/kube-vip/kube-vip:{{ kube_vip_version }}"
     detach: false
     command: >
       manifest daemonset

@@ -21,7 +21,7 @@
 
 - name: Download metallb manifest"
   ansible.builtin.get_url:
-    url: "https://raw.githubusercontent.com/metallb/metallb/v{{ metallb_version }}/config/manifests/metallb-frr.yaml"
+    url: "https://raw.githubusercontent.com/metallb/metallb/{{ metallb_version }}/config/manifests/metallb-frr.yaml"
     dest: /tmp/metallb.yaml
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"

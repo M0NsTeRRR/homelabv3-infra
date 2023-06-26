@@ -32,7 +32,7 @@
 
 - name: Download emissary crds manifest"
   ansible.builtin.get_url:
-    url: "https://app.getambassador.io/yaml/emissary/{{ emissary_version }}/emissary-crds.yaml"
+    url: "https://app.getambassador.io/yaml/emissary/{{ emissary_version[1:] }}/emissary-crds.yaml"
     dest: /tmp/emissary-crds.yaml
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
