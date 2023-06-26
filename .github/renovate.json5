@@ -34,7 +34,7 @@
         'version[\\s]+=[\\s]+"(?<currentValue>\\S*)[\\s]+source[\\s]+=[\\s]+"github.com/(?<depName>\\S*)"',
       ],
       datasourceTemplate: 'github-tags',
-      depNameTemplate: "{{#if depName}}{{#if (containsString depName 'hashicorp/')}}{{{replace 'hashicorp/' 'hashicorp/packer-plugin-' depName}}}{{else}}{{{depName}}}{{/if}}{{else}}hashicorp/packer{{/if}}",
+      depNameTemplate: '{{#if depName}}{{#if (containsString depName "hashicorp/")}}{{{replace "hashicorp/" "hashicorp/packer-plugin-" depName}}}{{else}}{{{depName}}}{{/if}}{{else}}hashicorp/packer{{/if}}',
     },
     // match terraform and terragrunt version
     {
@@ -45,7 +45,7 @@
         '(?<depName>\\S*)_version_constraint\\s+=\\s+"(?<currentValue>\\S*)"',
       ],
       datasourceTemplate: 'github-tags',
-      depNameTemplate: '{{#if (containsString depName 'terragrunt')}}gruntwork-io/terragrunt{{else}}hashicorp/terraform{{/if}}',
+      depNameTemplate: '{{#if (containsString depName "terragrunt")}}gruntwork-io/terragrunt{{else}}hashicorp/terraform{{/if}}',
     },
     // match terraform plugin version
     {
