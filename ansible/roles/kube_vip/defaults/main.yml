@@ -1,5 +1,6 @@
 ---
-kube_vip_version: "0.6.0"
+# datasource=github-tags depName=kube-vip/kube-vip
+kube_vip_version: "v0.6.0"
 kube_vip_force_install: false
 kube_vip_address: example.fr
 kube_vip_interface: ens192

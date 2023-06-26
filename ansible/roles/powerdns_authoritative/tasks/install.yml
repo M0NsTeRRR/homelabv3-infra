@@ -31,7 +31,7 @@
 
 - name: Add PowerDNS Apt repository
   ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/etc/apt/keyrings/powerdns_authoritative.asc] https://repo.powerdns.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }}-auth-{{ powerdns_authoritative_repo_version }} main"
+    repo: "deb [signed-by=/etc/apt/keyrings/powerdns_authoritative.asc] https://repo.powerdns.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }}-{{ powerdns_authoritative_repo_version | replace('.', '') }} main"
     state: present
     filename: powerdns_authoritative
 

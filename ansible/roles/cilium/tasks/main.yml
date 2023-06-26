@@ -10,8 +10,8 @@
 
 - name: "Download cilium-cli binary version {{ cilium_cli_version }}"
   ansible.builtin.get_url:
-    url: "https://github.com/cilium/cilium-cli/releases/download/v{{ cilium_cli_version }}/cilium-linux-{{ cilium_arch }}.tar.gz"
-    checksum: "sha256:https://github.com/cilium/cilium-cli/releases/download/v{{ cilium_cli_version }}/cilium-linux-{{ cilium_arch }}.tar.gz.sha256sum"
+    url: "https://github.com/cilium/cilium-cli/releases/download/{{ cilium_cli_version }}/cilium-linux-{{ cilium_arch }}.tar.gz"
+    checksum: "sha256:https://github.com/cilium/cilium-cli/releases/download/{{ cilium_cli_version }}/cilium-linux-{{ cilium_arch }}.tar.gz.sha256sum"
     dest: /tmp/cilium-cli.tar.gz
     owner: root
     group: root

@@ -5,18 +5,18 @@ on:
   push:
     paths:
       - packer/**
+      - .github/workflows/packer-lint.yml
 
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - name: Setup packer
-      uses: hashicorp/setup-packer@main
+      uses: hashicorp/setup-packer@v2.0.0
       id: setup
       with:
         version: latest
-
     - name: Run packer validate
       id: validate
       run: |

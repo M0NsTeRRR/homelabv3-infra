@@ -5,9 +5,10 @@ on:
   push:
     paths:
       - ansible/**
+      - .github/workflows/ansible-lint.yml
 
 jobs:
-  build:
+  lint:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3

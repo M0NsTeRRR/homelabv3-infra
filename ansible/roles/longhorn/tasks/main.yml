@@ -21,7 +21,7 @@
 
 - name: Download longhorn manifest"
   ansible.builtin.get_url:
-    url: "https://raw.githubusercontent.com/longhorn/longhorn/v{{ longhorn_version }}/deploy/longhorn.yaml"
+    url: "https://raw.githubusercontent.com/longhorn/longhorn/{{ longhorn_version }}/deploy/longhorn.yaml"
     dest: /tmp/longhorn.yaml
     owner: "{{ longhorn_user }}"
     group: "{{ longhorn_user }}"

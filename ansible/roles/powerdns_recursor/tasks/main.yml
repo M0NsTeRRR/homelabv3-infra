@@ -30,7 +30,7 @@
 
 - name: Add PowerDNS recursor apt repository
   ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/etc/apt/keyrings/powerdns_recursor.asc] https://repo.powerdns.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }}-rec-{{ powerdns_recursor_repo_version }} main"
+    repo: "deb [signed-by=/etc/apt/keyrings/powerdns_recursor.asc] https://repo.powerdns.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }}-{{ powerdns_recursor_repo_version | replace('.', '') }} main"
     state: present
     filename: powerdns_recursor
 

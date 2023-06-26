@@ -3,6 +3,7 @@
 .vscode
 # python
 venv
+*.egg-info
 # packer
 packer_cache/
 # terraform

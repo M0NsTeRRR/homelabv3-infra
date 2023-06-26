@@ -33,8 +33,8 @@
 
 - name: "Download k3s binary version {{ k3s_version }}"
   ansible.builtin.get_url:
-    url: "https://github.com/k3s-io/k3s/releases/download/v{{ k3s_version }}+k3s1/k3s{% if ansible_architecture != 'x86_64' %}-{{ k3s_arch }}{% endif %}"
-    checksum: "sha256:https://github.com/k3s-io/k3s/releases/download/v{{ k3s_version }}+k3s1/sha256sum-{{ k3s_arch }}.txt"
+    url: "https://github.com/k3s-io/k3s/releases/download/{{ k3s_version }}/k3s{% if ansible_architecture != 'x86_64' %}-{{ k3s_arch }}{% endif %}"
+    checksum: "sha256:https://github.com/k3s-io/k3s/releases/download/{{ k3s_version }}/sha256sum-{{ k3s_arch }}.txt"
     dest: /usr/local/bin/k3s
     owner: root
     group: root

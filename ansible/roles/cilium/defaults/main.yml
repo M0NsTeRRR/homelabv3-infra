@@ -1,4 +1,5 @@
 ---
-cilium_cli_version: "0.14.7"
+# datasource=github-tags depName=cilium/cilium-cli
+cilium_cli_version: "v0.14.8"
 cilium_force_install: false
 cilium_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
