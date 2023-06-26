@@ -49,7 +49,6 @@
       ],
       datasourceTemplate: 'github-tags',
       depNameTemplate: '{{#if (containsString depName "terragrunt")}}gruntwork-io/terragrunt{{else}}hashicorp/terraform{{/if}}',
-      currentValueTemplate: 'v{{{currentValue}}}',
     },
     // match terraform plugin version
     {
@@ -93,6 +92,27 @@
         'ansible',
       ],
       groupName: 'ansible version',
+    },
+    // handle packer, packer plugin, terraform, terragrunt versions (not terraform modules) to add "v" char in front of semver
+    {
+      matchPackageNames: [
+        'gruntwork-io/terragrunt',
+        'hashicorp/terraform',
+        'hashicorp/packer',
+      ],
+      matchPackagePatterns: [
+        '^hashicorp/packer-plugin-'
+      ],
+      matchDepNames: [
+        'gruntwork-io/terragrunt',
+        'hashicorp/terraform',
+        'hashicorp/packer',
+      ],
+      matchDepPatterns: [
+        '^hashicorp/packer-plugin-'
+      ],
+      ignoreUnstable: false,
+      versioning: 'regex:^^v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)',
     },
     // handle vmware package that don't follow semver
     {
