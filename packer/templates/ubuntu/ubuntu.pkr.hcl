@@ -8,6 +8,11 @@ packer {
   }
 }
 
+locals {
+  iso_url      = "https://releases.ubuntu.com/${var.version}/ubuntu-${var.version}-live-server-amd64.iso"
+  iso_checksum = "file:https://releases.ubuntu.com/${var.version}/SHA256SUMS"
+}
+
 source "vsphere-iso" "ubuntu" {
   CPUs = 2
   RAM  = 2048
@@ -40,8 +45,8 @@ source "vsphere-iso" "ubuntu" {
     "/user-data" = templatefile("../../cloud-config/user-data.pkrtpl.hcl", { build_fullname = var.ssh_fullname, build_hostname = var.distribution, build_username = var.ssh_username, build_password_encrypted = var.ssh_password_encrypted, build_authorized_key = var.ssh_autorized_key })
   }
   insecure_connection = true
-  iso_checksum        = var.iso_checksum
-  iso_url             = var.iso_url
+  iso_checksum        = local.iso_checksum
+  iso_url             = local.iso_url
   remove_cdrom        = true
   network_adapters {
     network      = "LAB"

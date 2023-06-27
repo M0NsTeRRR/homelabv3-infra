@@ -2,14 +2,20 @@ packer {
   required_version = "1.9.1"
 }
 
+locals {
+  file_checksum_type = "sha256"
+  file_url           = "https://cdimage.ubuntu.com/releases/${var.version}/release/ubuntu-${var.version}-preinstalled-desktop-arm64+raspi.img.xz"
+  file_checksum_url  = "https://cdimage.ubuntu.com/releases/${var.version}/release/${upper(local.file_checksum_type)}SUMS"
+}
+
 source "arm" "ubuntu" {
-  file_urls             = [var.file_url]
-  file_checksum_url     = var.file_checksum_url
-  file_checksum_type    = "sha256"
+  file_urls             = [local.file_url]
+  file_checksum_url     = local.file_checksum_url
+  file_checksum_type    = local.file_checksum_type
   file_target_extension = "xz"
   file_unarchive_cmd    = ["xz", "--decompress", "$ARCHIVE_PATH"]
   image_build_method    = "reuse"
-  image_path            = "raspi-ubuntu-${var.version}.img"
+  image_path            = "raspi-${var.distribution}-${var.version}.img"
   image_size            = "3.1G"
   image_type            = "dos"
   image_partitions {

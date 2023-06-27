@@ -65,16 +65,6 @@ variable "version" {
   default = "22.04.2"
 }
 
-variable "iso_url" {
-  type    = string
-  default = "https://releases.ubuntu.com/22.04.2/ubuntu-22.04.2-live-server-amd64.iso"
-}
-
-variable "iso_checksum" {
-  type    = string
-  default = "file:https://releases.ubuntu.com/22.04.2/SHA256SUMS"
-}
-
 variable "vm_ip" {
   type    = string
   default = "192.168.20.80"
