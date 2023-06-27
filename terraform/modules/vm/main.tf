@@ -8,7 +8,7 @@ data "vsphere_compute_cluster" "cluster" {
 }
 
 data "vsphere_host" "host" {
-  name          = var.vsphere_host
+  name          = "${var.vsphere_host}.${var.vsphere_domain}"
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 
@@ -18,7 +18,7 @@ data "vsphere_virtual_machine" "template" {
 }
 
 data "vsphere_datastore" "datastore" {
-  name          = var.disk.datastore
+  name          = "${upper(var.vsphere_host)}-${var.disk.datastore}"
   datacenter_id = data.vsphere_datacenter.dc.id
 }
 

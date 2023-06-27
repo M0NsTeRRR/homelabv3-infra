@@ -1,5 +1,5 @@
 locals {
-  vsphere_host = "server1.unicornafk.fr"
+  vsphere_host = "server1"
   vm_hostname  = "worker1"
   vm_tags      = ["ansible_managed", "kubernetes", "kubernetes_worker"]
 
@@ -9,7 +9,7 @@ locals {
   }
 
   disk = {
-    datastore = "SERVER1-RAID1"
+    datastore = "RAID1"
     size      = 40
   }
 

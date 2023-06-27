@@ -24,6 +24,11 @@ variable "vsphere_host" {
   type        = string
 }
 
+variable "vsphere_domain" {
+  description = "vSphere domain"
+  type        = string
+}
+
 variable "vm_hostname" {
   description = "VM hostname"
   type        = string
