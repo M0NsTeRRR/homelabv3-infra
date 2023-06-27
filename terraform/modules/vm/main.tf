@@ -91,6 +91,6 @@ resource "vsphere_virtual_machine" "vm" {
 
   provisioner "local-exec" {
     working_dir = "${var.terraform_root_dir}/../ansible"
-    command = "ansible all -i ${var.vm_ip}, -m shell -a '/usr/bin/cloud-init status --wait' --extra-vars 'ansible_config=ansible.cfg' --ssh-common-args='-o StrictHostKeyChecking=no -o userknownhostsfile=/dev/null'"
+    command = "ansible all -i ${var.vm_ip}, -m shell -a '/usr/bin/cloud-init status --wait' --ssh-common-args='-o StrictHostKeyChecking=no -o userknownhostsfile=/dev/null'"
   }
 }
