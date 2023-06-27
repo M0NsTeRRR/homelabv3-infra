@@ -39,6 +39,17 @@
       datasourceTemplate: 'github-tags',
       depNameTemplate: '{{#if depName}}{{#if (containsString depName "hashicorp/")}}{{{replace "hashicorp/" "hashicorp/packer-plugin-" depName}}}{{else}}{{{depName}}}{{/if}}{{else}}hashicorp/packer{{/if}}',
     },
+    // match distribution version
+    {
+      fileMatch: [
+        '\\.pkr\\.hcl',
+      ],
+      matchStrings: [
+        '(distribution).+\r?\n.+\r?\n.+"(?<depName>\\S*)"[\\S\\s]+(version).+\r?\n.+\r?\n.+"(?<currentValue>\\S*)"',
+        '(version).+\r?\n.+\r?\n.+"(?<currentValue>\\S*)"[\\S\\s]+(distribution).+\r?\n.+\r?\n.+"(?<depName>\\S*)"'
+      ],
+      datasourceTemplate: 'docker',
+    },
     // match terraform and terragrunt version
     {
       fileMatch: [
