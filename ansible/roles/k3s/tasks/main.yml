@@ -48,7 +48,7 @@
     state: directory
     owner: root
     group: root
-    mode: "0740"
+    mode: "0750"
   with_items:
     - /etc/k3s
     - /var/lib/k3s/server/manifests

@@ -1,5 +1,19 @@
 ---
-- name: Install Nginx
+- name: Add nginx group
+  ansible.builtin.group:
+    name: nginx
+    system: true
+    state: present
+
+- name: Add nginx user
+  ansible.builtin.user:
+    name: nginx
+    system: true
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: nginx
+
+- name: Install nginx
   ansible.builtin.apt:
     name: "nginx{% if nginx_version is defined %}={{ nginx_version }}{% endif %}"
     update_cache: true
@@ -9,19 +23,26 @@
     - Daemon-reload
     - Restart nginx
 
+- name: Check if diffie-hellman parameters exists
+  ansible.builtin.stat:
+    path: /etc/nginx/dhparam.key
+  register: nginx_diffie_hellman
+
 - name: Install cryptography
   ansible.builtin.pip:
     name: "cryptography{% if nginx_cryptography_version is defined %}={{ nginx_cryptography_version }}{% endif %}"
     state: "{{ nginx_cryptography_package_state }}"
     virtualenv: "{{ nginx_venv }}"
+  when: not nginx_diffie_hellman.stat.exists
 
-- name: Generate Diffie-Hellman parameters
+- name: Generate diffie-hellman parameters
   community.crypto.openssl_dhparam:
     path: /etc/nginx/dhparam.key
   vars:
     ansible_python_interpreter: "{{ nginx_venv }}/bin/python"
+  when: not nginx_diffie_hellman.stat.exists
 
-- name: Remove default Nginx configuration
+- name: Remove default nginx configuration
   ansible.builtin.file:
     path: "{{ item }}"
     state: absent
@@ -31,14 +52,45 @@
     - /var/www/html
   notify: Restart nginx
 
-- name: Configure default Nginx configuration
+- name: Configure default nginx configuration
   ansible.builtin.copy:
     src: nginx.conf
     dest: /etc/nginx/nginx.conf
-    owner: root
-    group: root
+    owner: nginx
+    group: nginx
     mode: "0640"
   notify:
+    - Restart nginx
+
+- name: Fix perms on nginx configuration folder
+  ansible.builtin.file:
+    name: "{{ item }}"
+    owner: "nginx"
+    group: "nginx"
+    recurse: true
+    state: directory
+  with_items:
+    - /etc/nginx
+    - /var/log/nginx
+
+- name: Create systemd service config folder
+  ansible.builtin.file:
+    name: /etc/systemd/system/nginx.d/
+    owner: "root"
+    group: "root"
+    mode: "0755"
+    state: directory
+
+- name: Create systemd service config file
+  ansible.builtin.copy:
+    src: nginx.override.service
+    dest: /etc/systemd/system/nginx.d/nginx.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Daemon-reload
+    - Enable nginx
     - Restart nginx
 
 - name: Setup configurations

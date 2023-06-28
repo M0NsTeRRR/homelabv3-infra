@@ -54,7 +54,7 @@
         name: "{{ certs_dir }}intermediate/{{ signing_certificate }}"
         owner: "{{ ansible_user }}"
         group: "{{ ansible_user }}"
-        mode: '0740'
+        mode: '0750'
 
     - name: Generate cert intermediate authority OpenSSL private key
       community.crypto.openssl_privatekey:
@@ -99,7 +99,7 @@
         name: "{{ certs_dir }}{{ signing_certificate }}/{{ common_name }}"
         owner: "{{ ansible_user }}"
         group: "{{ ansible_user }}"
-        mode: '0740'
+        mode: '0750'
 
     - name: Generate client OpenSSL private key
       community.crypto.openssl_privatekey:

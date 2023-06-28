@@ -5,7 +5,7 @@ server {
 
   server_name {{ item.server_name }}{% if item.additional_server_name is defined %}, {% for additional_server_name in item.additional_server_name %}{{ additional_server_name }}{% if not loop.last %}, {% endif %}{% endfor %}{% endif %};
 
-  ssl_certificate /etc/nginx/ssl/{{ item.server_name }}.crt;
+  ssl_certificate /etc/nginx/ssl/{{ item.server_name }}-fullchain.crt;
   ssl_certificate_key /etc/nginx/ssl/{{ item.server_name }}.key;
 
   add_header X-Frame-Options "SAMEORIGIN" always;

@@ -82,7 +82,7 @@
     state: directory
     owner: _dnsdist
     group: _dnsdist
-    mode: "0740"
+    mode: "0750"
 
 - name: Add CA cert
   ansible.builtin.copy:
@@ -107,5 +107,5 @@
     name: "/etc/dnsdist"
     owner: _dnsdist
     group: _dnsdist
-    mode: "0740"
+    mode: "0750"
     state: directory
