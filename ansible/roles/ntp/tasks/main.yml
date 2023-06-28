@@ -4,7 +4,7 @@
     rule: allow
     port: "123"
     proto: udp
-    comment: "NTP"
+    comment: "NTP (ansible_managed)"
 
 - name: Install ntp
   ansible.builtin.apt:
@@ -24,3 +24,7 @@
     group: root
     mode: "0644"
   notify: Restart ntp
+
+- name: Disable timesyncd synchronization
+  ansible.builtin.command: timedatectl set-ntp false
+  changed_when: false

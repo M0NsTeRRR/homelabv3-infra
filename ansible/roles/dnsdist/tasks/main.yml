@@ -7,10 +7,10 @@
     comment: "{{ item.comment }}"
   when: item.to_open
   with_items:
-    - {port: "53", proto: tcp, to_open: true, comment: "Dnsdist DNS"}
-    - {port: "53", proto: udp, to_open: true, comment: "Dnsdist DNS"}
-    - {port: "443", proto: tcp, to_open: true, comment: "Dnsdist DoH"}
-    - {port: "853", proto: tcp, to_open: true, comment: "Dnsdist DoT"}
+    - {port: "53", proto: tcp, to_open: true, comment: "Dnsdist DNS (ansible_managed)"}
+    - {port: "53", proto: udp, to_open: true, comment: "Dnsdist DNS (ansible_managed)"}
+    - {port: "443", proto: tcp, to_open: true, comment: "Dnsdist DoH (ansible_managed)"}
+    - {port: "853", proto: tcp, to_open: true, comment: "Dnsdist DoT (ansible_managed)"}
 
 - name: Add _dnsdist group
   ansible.builtin.group:

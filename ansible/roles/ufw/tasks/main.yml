@@ -10,6 +10,7 @@
     rule: allow
     port: "22"
     proto: tcp
+    comment: "SSH (ansible_managed)"
 
 - name: Enable ufw
   community.general.ufw:
