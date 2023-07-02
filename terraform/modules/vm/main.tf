@@ -67,7 +67,7 @@ resource "vsphere_virtual_machine" "vm" {
   }
 
   extra_config = {
-    "guestinfo.metadata" = base64encode(
+    "guestinfo.metadata" = base64gzip(
       templatefile("${path.module}/cloud-init/metadata.tpl",
         {
           ip              = "${var.vm_ip}/${var.network.netmask}"
@@ -77,8 +77,8 @@ resource "vsphere_virtual_machine" "vm" {
         }
       )
     )
-    "guestinfo.metadata.encoding" = "base64"
-    "guestinfo.userdata" = base64encode(
+    "guestinfo.metadata.encoding" = "gzip+base64"
+    "guestinfo.userdata" = base64gzip(
       templatefile("${path.module}/cloud-init/userdata.tpl",
         {
           hostname        = var.vm_hostname
@@ -86,7 +86,7 @@ resource "vsphere_virtual_machine" "vm" {
         }
       )
     )
-    "guestinfo.userdata.encoding" = "base64"
+    "guestinfo.userdata.encoding" = "gzip+base64"
   }
 
   provisioner "local-exec" {
