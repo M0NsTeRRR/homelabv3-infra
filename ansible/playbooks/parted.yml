@@ -1,7 +1,7 @@
 ---
 - name: Resize partition
   hosts: all
-  gather_facts: no
+  gather_facts: false
   become: true
   vars:
     device: /dev/sda
