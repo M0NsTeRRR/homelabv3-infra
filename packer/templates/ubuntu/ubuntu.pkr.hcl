@@ -76,7 +76,8 @@ build {
 
   provisioner "ansible" {
     ansible_env_vars = ["ANSIBLE_CONFIG=../ansible/ansible.cfg", "ANSIBLE_HOST_KEY_CHECKING=False", "ANSIBLE_BECOME_PASS=${var.ssh_password}"]
-    extra_arguments  = ["--extra-vars", "main_user=${var.ssh_username}"]
+    extra_arguments  = ["--extra-vars", "ansible_password=${var.ssh_password} main_user=${var.ssh_username}", "--ssh-common-args='-o userknownhostsfile=/dev/null'"]
     playbook_file    = "../ansible/deploy_packer.yml"
+    use_proxy        = false
   }
 }

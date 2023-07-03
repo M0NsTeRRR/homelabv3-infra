@@ -6,6 +6,7 @@
 # source: https://gist.github.com/EntropyWorks/a768b3bc4444146d56be81af05d73fed
 - name: Store known hosts of 'all' the hosts in the inventory file
   hosts: localhost
+  gather_facts: no
   connection: local
   vars:
     ssh_known_hosts_command: "ssh-keyscan -T 10"

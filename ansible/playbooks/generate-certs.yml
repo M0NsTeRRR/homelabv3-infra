@@ -1,6 +1,7 @@
 ---
 - name: Generate client and server certificates
   hosts: localhost
+  gather_facts: no
   connection: local
   vars:
     certs_dir: "../../ssl/"

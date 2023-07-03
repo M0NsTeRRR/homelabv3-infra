@@ -1,6 +1,7 @@
 ---
-- name: "Open required ports"
+- name: Open required ports
   community.general.ufw:
+    direction: in
     rule: allow
     port: "{{ item.port }}"
     proto: "{{ item.proto }}"
@@ -10,6 +11,7 @@
     - {port: "53", proto: tcp, to_open: true, comment: "Dnsdist DNS (ansible_managed)"}
     - {port: "53", proto: udp, to_open: true, comment: "Dnsdist DNS (ansible_managed)"}
     - {port: "443", proto: tcp, to_open: true, comment: "Dnsdist DoH (ansible_managed)"}
+    - {port: "443", proto: udp, to_open: true, comment: "Dnsdist DoH (ansible_managed)"}
     - {port: "853", proto: tcp, to_open: true, comment: "Dnsdist DoT (ansible_managed)"}
 
 - name: Add _dnsdist group

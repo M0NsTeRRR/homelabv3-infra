@@ -1,6 +1,7 @@
 ---
 - name: Open port 80
   community.general.ufw:
+    direction: in
     rule: allow
     port: "80"
     proto: tcp
@@ -9,6 +10,7 @@
 
 - name: "Open port {{ item.ssl_port }}"
   community.general.ufw:
+    direction: in
     rule: allow
     port: "{{ item.ssl_port }}"
     proto: tcp

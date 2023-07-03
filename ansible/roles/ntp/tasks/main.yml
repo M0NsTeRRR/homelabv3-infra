@@ -1,6 +1,21 @@
 ---
+- name: Add ntp group
+  ansible.builtin.group:
+    name: ntp
+    system: true
+    state: present
+
+- name: Add ntp user
+  ansible.builtin.user:
+    name: ntp
+    system: true
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: ntp
+
 - name: Open required ports
   community.general.ufw:
+    direction: in
     rule: allow
     port: "123"
     proto: udp
@@ -20,10 +35,30 @@
   ansible.builtin.copy:
     src: ntp.conf
     dest: /etc/ntp.conf
+    owner: ntp
+    group: ntp
+    mode: "0644"
+  notify: Restart ntp
+
+- name: Create systemd service config folder
+  ansible.builtin.file:
+    name: /etc/systemd/system/ntp.d/
+    owner: "root"
+    group: "root"
+    mode: "0755"
+    state: directory
+
+- name: Create systemd service config file
+  ansible.builtin.copy:
+    src: ntp.override.service
+    dest: /etc/systemd/system/ntp.d/ntp.service
     owner: root
     group: root
     mode: "0644"
-  notify: Restart ntp
+  notify:
+    - Daemon-reload
+    - Enable ntp
+    - Restart ntp
 
 - name: Disable timesyncd synchronization
   ansible.builtin.command: timedatectl set-ntp false

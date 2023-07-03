@@ -5,13 +5,65 @@
     update_cache: true
     state: "{{ ufw_package_state }}"
 
-- name: Allow SSH
+- name: Allow required protocols
   community.general.ufw:
+    direction: "{{ item.direction }}"
     rule: allow
-    port: "22"
-    proto: tcp
-    comment: "SSH (ansible_managed)"
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+    comment: "{{ item.comment }} (ansible_managed)"
+  with_items:
+    - { port: "22", proto: "tcp", direction: "in", comment: "SSH" }
+    - { port: "53", proto: "tcp", direction: "out", comment: "DNS" }
+    - { port: "53", proto: "udp", direction: "out", comment: "DNS" }
+    - { port: "853", proto: "tcp", direction: "out", comment: "DoT" }
+    - { port: "22", proto: "tcp", direction: "out", comment: "NTP" }
+    - { port: "80", proto: "tcp", direction: "out", comment: "HTTP" }
+    - { port: "443", proto: "tcp", direction: "out", comment: "HTTPS/DoT" }
+    - { port: "443", proto: "udp", direction: "out", comment: "HTTPS/DoT" }
+
+- name: Allow outgoing ICMP request in before.rules
+  ansible.builtin.lineinfile:
+    dest: "/etc/ufw/before.rules"
+    regexp: "{{ item.regexp }}"
+    line: "{{ item.line }}"
+    insertbefore: "# don't delete the 'COMMIT' line or these rules won't be processed"
+    state: "present"
+  notify: Reload ufw
+  with_items:
+    - {regexp: '^#?-A ufw-before-output -p icmp --icmp-type destination-unreachable -j ACCEPT', line: '-A ufw-before-output -p icmp --icmp-type destination-unreachable -j ACCEPT'}
+    - {regexp: '^#?-A ufw-before-output -p icmp --icmp-type time-exceeded -j ACCEPT', line: '-A ufw-before-output -p icmp --icmp-type time-exceeded -j ACCEPT'}
+    - {regexp: '^#?-A ufw-before-output -p icmp --icmp-type parameter-problem -j ACCEPT', line: '-A ufw-before-output -p icmp --icmp-type parameter-problem -j ACCEPT'}
+    - {regexp: '^#?-A ufw-before-output -p icmp --icmp-type echo-request -j ACCEPT', line: '-A ufw-before-output -p icmp --icmp-type echo-request -j ACCEPT'}
+    - {regexp: '^#?-A ufw-before-output -p udp -m udp --dport 33434:33523 -j ACCEPT', line: '-A ufw-before-output -p udp -m udp --dport 33434:33523 -j ACCEPT'}
+
+- name: Deny incoming
+  community.general.ufw:
+    direction: incoming
+    policy: deny
+    log: true
+    logging: low
+    comment: "Deny incoming (ansible_managed)"
+
+- name: Deny forwarding
+  community.general.ufw:
+    direction: routed
+    policy: deny
+    route: true
+    log: true
+    logging: low
+    comment: "Deny forwarding (ansible_managed)"
+
+- name: Deny outgoing
+  community.general.ufw:
+    direction: outgoing
+    policy: deny
+    log: true
+    logging: low
+    comment: "Deny outgoing (ansible_managed)"
 
 - name: Enable ufw
   community.general.ufw:
     state: enabled
+  async: 60
+  poll: 10

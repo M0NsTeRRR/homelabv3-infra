@@ -59,8 +59,7 @@
     owner: nginx
     group: nginx
     mode: "0640"
-  notify:
-    - Restart nginx
+  notify: Restart nginx
 
 - name: Fix perms on nginx configuration folder
   ansible.builtin.file:

@@ -1,6 +1,6 @@
 ---
 - name: Provision packer
-  hosts: default
+  hosts: all
   become: true
   roles:
     - modprobe
@@ -55,11 +55,6 @@
     - name: Install sysstat
       ansible.builtin.apt:
         name: sysstat
-        state: present
-
-    - name: Install ncdu
-      ansible.builtin.apt:
-        name: ncdu
         state: present
 
     - name: Install apt-show-versions
