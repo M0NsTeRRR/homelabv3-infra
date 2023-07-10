@@ -6,6 +6,9 @@
   - type: CAA
     values:
       - flags: 0
+        tag: iodef
+        value: "mailto:security@adminafk.fr"
+      - flags: 0
         tag: issue
         value: sectigo.com
       - flags: 0
