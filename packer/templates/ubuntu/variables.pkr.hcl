@@ -39,18 +39,23 @@ variable "ssh_autorized_key" {
   default = ""
 }
 
-variable "vcenter_password" {
+variable "proxmox_password" {
   type      = string
   default   = ""
   sensitive = true
 }
 
-variable "vcenter_server" {
+variable "proxmox_url" {
   type    = string
   default = ""
 }
 
-variable "vcenter_username" {
+variable "proxmox_username" {
+  type    = string
+  default = ""
+}
+
+variable "proxmox_node" {
   type    = string
   default = ""
 }

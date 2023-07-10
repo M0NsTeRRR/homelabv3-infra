@@ -6,11 +6,9 @@ locals {
   env_vars     = read_terragrunt_config(find_in_parent_folders("env.hcl"))
   network_vars = read_terragrunt_config(find_in_parent_folders("network.hcl"))
 
-  vsphere_server     = local.account_vars.locals.vsphere_server
-  vsphere_user       = local.account_vars.locals.vsphere_user
-  vsphere_password   = local.account_vars.locals.vsphere_password
-  vsphere_datacenter = local.env_vars.locals.vsphere_datacenter
-  vsphere_cluster    = local.env_vars.locals.vsphere_cluster
+  pm_api_url  = local.account_vars.locals.pm_api_url
+  pm_user     = local.account_vars.locals.pm_user
+  pm_password = local.account_vars.locals.pm_password
 
   powerdns_api_key    = local.account_vars.locals.powerdns_api_key
   powerdns_server_url = local.account_vars.locals.powerdns_server_url
@@ -33,15 +31,16 @@ terraform {
 }
 download_dir = abspath("${get_parent_terragrunt_dir()}/.terragrunt-cache")
 
+# using for now local builded proxmox provider (waiting new release)
 generate "provider" {
   path      = "provider.tf"
   if_exists = "overwrite_terragrunt"
   contents  = <<EOF
 terraform {
   required_providers {
-    vsphere = {
-      source  = "hashicorp/vsphere"
-      version = "2.4.1"
+    proxmox = {
+      source  = "registry.example.com/Telmate/proxmox"
+      version = ">=2.9.14"
     }
     powerdns = {
       source  = "pan-net/powerdns"
@@ -50,10 +49,10 @@ terraform {
   }
 }
 
-provider "vsphere" {
-  vsphere_server = "${local.vsphere_server}"
-  user           = "${local.vsphere_user}"
-  password       = "${local.vsphere_password}"
+provider "proxmox" {
+  pm_api_url  = "${local.pm_api_url}"
+  pm_user     = "${local.pm_user}"
+  pm_password = "${local.pm_password}"
 }
 
 provider "powerdns" {

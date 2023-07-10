@@ -6,6 +6,7 @@ set -e
 ssh_fullname="ludovic ortega"
 ssh_username=lortega
 ssh_password=ludovic
+proxmox_node=server1
 host_ip="192.168.30.21"
 ssh_autorized_key=$(<../ssh_pub_keys/${ssh_username}.pub)
 
@@ -15,17 +16,18 @@ do
   read CHOICE
   case $CHOICE in
 	1)
-    vcenter_server='vcenter.unicornafk.fr'
-    vcenter_username='administrator@unicornafk.fr'
+    proxmox_url='https://192.168.40.11:8006/api2/json'
+    proxmox_username='root@pam'
 
-    read -sp 'Vcenter password: ' vcenter_password
+    read -sp 'Proxmox password: ' proxmox_password
     printf "\n"
 
     packer build \
       -var "host_ip=$host_ip" \
-      -var "vcenter_server=$vcenter_server" \
-      -var "vcenter_username=$vcenter_username" \
-      -var "vcenter_password=$vcenter_password" \
+      -var "proxmox_url=$proxmox_url" \
+      -var "proxmox_username=$proxmox_username" \
+      -var "proxmox_password=$proxmox_password" \
+      -var "proxmox_node=$proxmox_node" \
       -var "ssh_fullname=$ssh_fullname" \
       -var "ssh_username=$ssh_username" \
       -var "ssh_password=$ssh_password" \

@@ -18,9 +18,10 @@ terraform/account.hcl
 .vault_password.txt
 *secrets.yml
 *secrets.yaml
+*secrets
 *.csr*
 *.p12*
 *.key*
 *.pem*
 *.img
-inventory.vmware.yaml
+inventory.proxmox.yaml

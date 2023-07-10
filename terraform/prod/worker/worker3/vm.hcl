@@ -1,16 +1,14 @@
 locals {
-  vsphere_host = "server3"
-  vm_hostname  = "worker3"
-  vm_tags      = ["ansible_managed", "kubernetes", "kubernetes_worker"]
+  target_node = "server3"
+  vm_hostname = "worker3"
+  vm_tags     = ["ansible_managed", "kubernetes", "kubernetes_worker"]
 
-  hardware = {
-    num_cpus = 2
-    memory   = 32768
-  }
+  cores  = 8
+  memory = 32768
 
   disk = {
-    datastore = "RAID1"
-    size      = 40
+    storage = "SSD1"
+    size    = 40
   }
 
   vm_ip  = "192.168.10.93"

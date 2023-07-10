@@ -1,6 +1,6 @@
 locals {
   network = {
-    name     = "PROD"
+    tag      = "10"
     netmask  = "24"
     gateway  = "192.168.10.2"
     netmask6 = "64"

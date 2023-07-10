@@ -11,11 +11,6 @@ terraform {
 include {
   path = find_in_parent_folders()
 }
-
-dependencies {
-  paths = ["../../../tag"]
-}
-
 inputs = merge(
   local.vm_vars.locals,
   { "terraform_root_dir" = "${local.terraform_root_dir}" }

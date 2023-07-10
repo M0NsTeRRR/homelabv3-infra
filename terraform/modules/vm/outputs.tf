@@ -1,5 +1,5 @@
 output "vm_id" {
-  value       = vsphere_virtual_machine.vm.id
+  value       = proxmox_vm_qemu.vm.id
   description = "VM ressource id"
 }
 
@@ -9,12 +9,12 @@ output "vm_hostname" {
 }
 
 output "domain" {
-  value = var.domain
+  value       = var.domain
   description = "VM domain"
 }
 
 output "vm_tags" {
-  value = var.vm_tags
+  value       = var.vm_tags
   description = "VM tags"
 }
 
@@ -29,6 +29,6 @@ output "vm_ip6" {
 }
 
 output "server_used" {
-  value       = data.vsphere_host.host.name
+  value       = var.target_node
   description = "Server used to deploy the instance"
 }

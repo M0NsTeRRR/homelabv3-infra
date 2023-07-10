@@ -1,96 +1,81 @@
-data "vsphere_datacenter" "dc" {
-  name = var.vsphere_datacenter
+resource "proxmox_cloud_init_disk" "ci" {
+  name     = var.vm_hostname
+  pve_node = var.target_node
+  storage  = "local"
+
+  network_config = templatefile("${path.module}/cloud-init/network_config.tpl",
+    {
+      ip       = "${var.vm_ip}/${var.network.netmask}"
+      ipv6     = "${var.vm_ip6}/${var.network.netmask6}"
+      gateway4 = var.network.gateway
+      gateway6 = var.network.gateway6
+    }
+  )
+
+  meta_data = templatefile("${path.module}/cloud-init/meta_data.tpl",
+    {
+      instance_id    = sha1(var.vm_hostname)
+      local_hostname = var.vm_hostname
+    }
+  )
+
+  user_data = file("${path.module}/cloud-init/user_data")
 }
 
-data "vsphere_compute_cluster" "cluster" {
-  name          = var.vsphere_cluster
-  datacenter_id = data.vsphere_datacenter.dc.id
-}
+resource "proxmox_vm_qemu" "vm" {
+  name        = var.vm_hostname
+  target_node = var.target_node
 
-data "vsphere_host" "host" {
-  name          = "${var.vsphere_host}.${var.vsphere_domain}"
-  datacenter_id = data.vsphere_datacenter.dc.id
-}
+  agent = 1
 
-data "vsphere_virtual_machine" "template" {
-  name          = var.template
-  datacenter_id = data.vsphere_datacenter.dc.id
-}
+  tags = join(";", var.vm_tags)
 
-data "vsphere_datastore" "datastore" {
-  name          = "${upper(var.vsphere_host)}-${var.disk.datastore}"
-  datacenter_id = data.vsphere_datacenter.dc.id
-}
+  bios = "ovmf"
 
-data "vsphere_network" "network" {
-  name          = var.network.name
-  datacenter_id = data.vsphere_datacenter.dc.id
-}
+  sockets = var.sockets
+  cores   = var.cores
+  vcpus   = var.vcpus
+  memory  = var.memory
 
-data "vsphere_tag_category" "category" {
-  name        = "terraform"
-}
+  network {
+    bridge = "vmbr1"
+    model  = "virtio"
+    tag    = var.network.tag
+  }
 
-data "vsphere_tag" "tag" {
-  for_each      = toset(var.vm_tags)
-  name          = each.key
-  category_id   = data.vsphere_tag_category.category.id
-}
+  # Ignore changes to the network
+  ## MAC address is generated on every apply, causing
+  ## TF to think this needs to be rebuilt on every apply
+  lifecycle {
+    ignore_changes = [
+      network
+    ]
+  }
 
-resource "vsphere_virtual_machine" "vm" {
-  name             = var.vm_hostname
-  datastore_id     = data.vsphere_datastore.datastore.id
-  resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
-  host_system_id   = data.vsphere_host.host.id
+  boot   = "order=scsi0"
+  scsihw = "virtio-scsi-single"
 
-  guest_id = data.vsphere_virtual_machine.template.guest_id
-
-  tags = [for tag in var.vm_tags : data.vsphere_tag.tag[tag].id]
-
-  firmware = "efi"
-  efi_secure_boot_enabled = true
-
-  num_cpus = var.hardware.num_cpus
-  memory   = var.hardware.memory
-
-  network_interface {
-    network_id = data.vsphere_network.network.id
+  disk {
+    type     = "scsi"
+    iothread = 1
+    storage  = "${upper(var.target_node)}-${var.disk.storage}"
+    slot     = 0
+    size     = "${upper(var.disk.size)}G"
   }
 
   disk {
-    label = "disk0"
-    size  = var.disk.size
+    type    = "scsi"
+    media   = "cdrom"
+    storage = "local"
+    volume  = proxmox_cloud_init_disk.ci.id
+    slot    = 2
+    size    = proxmox_cloud_init_disk.ci.size
   }
 
-  clone {
-    template_uuid = data.vsphere_virtual_machine.template.id
-  }
-
-  extra_config = {
-    "guestinfo.metadata" = base64gzip(
-      templatefile("${path.module}/cloud-init/metadata.tpl",
-        {
-          ip              = "${var.vm_ip}/${var.network.netmask}"
-          ipv6            = "${var.vm_ip6}/${var.network.netmask6}"
-          gateway4        = var.network.gateway
-          gateway6        = var.network.gateway6
-        }
-      )
-    )
-    "guestinfo.metadata.encoding" = "gzip+base64"
-    "guestinfo.userdata" = base64gzip(
-      templatefile("${path.module}/cloud-init/userdata.tpl",
-        {
-          hostname        = var.vm_hostname
-          domain          = var.domain
-        }
-      )
-    )
-    "guestinfo.userdata.encoding" = "gzip+base64"
-  }
+  clone = var.template
 
   provisioner "local-exec" {
     working_dir = "${var.terraform_root_dir}/../ansible"
-    command = "ansible all -i ${var.vm_ip}, -m shell -a '/usr/bin/cloud-init status --wait' --ssh-common-args='-o StrictHostKeyChecking=no -o userknownhostsfile=/dev/null'"
+    command     = "ansible all -i ${var.vm_ip}, -m shell -a '/usr/bin/cloud-init status --wait' --ssh-common-args='-o StrictHostKeyChecking=no -o userknownhostsfile=/dev/null'"
   }
 }

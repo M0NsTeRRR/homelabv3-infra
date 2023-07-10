@@ -1,9 +1,9 @@
 packer {
   required_version = "v1.9.2"
   required_plugins {
-    vsphere = {
-      source  = "github.com/hashicorp/vsphere"
-      version = "v1.2.1"
+    proxmox = {
+      source  = "github.com/hashicorp/proxmox"
+      version = "1.1.3"
     }
   }
 }
@@ -13,62 +13,64 @@ locals {
   iso_checksum = "file:https://releases.ubuntu.com/${var.version}/SHA256SUMS"
 }
 
-source "vsphere-iso" "ubuntu" {
-  CPUs = 2
-  RAM  = 2048
+source "proxmox-iso" "ubuntu" {
+  cores  = 2
+  memory = 2048
   boot_command = [
     "c<wait>",
     "linux /casper/vmlinuz",
     " autoinstall ds=\"nocloud-net;seedfrom=http://${var.host_ip}:{{.HTTPPort}}/\"",
     " ip=${var.vm_ip}::${var.vm_gateway_ip}:${var.vm_netmask}::::${var.vm_dns_ip}",
     " --- <enter><wait>",
-    " initrd /casper/initrd",
+    "initrd /casper/initrd",
     "<enter><wait>",
     "boot",
     "<enter>"
   ]
-  boot_wait            = "5s"
-  firmware             = "efi-secure"
-  cluster              = "HA"
-  convert_to_template  = "true"
-  cpu_cores            = 1
-  datacenter           = "Homelab"
-  datastore            = "SERVER3-RAID1"
-  disk_controller_type = ["pvscsi"]
-  guest_os_type        = "ubuntu64Guest"
-  host                 = "server3.unicornafk.fr"
-  http_bind_address    = "0.0.0.0"
-  http_port_max        = var.http_port
-  http_port_min        = var.http_port
+  boot_wait = "10s"
+  bios      = "ovmf"
+  efi_config {
+    efi_storage_pool  = "${upper(var.proxmox_node)}-SSD1"
+    efi_type          = "4m"
+    pre_enrolled_keys = true
+  }
+  node              = "${var.proxmox_node}"
+  http_bind_address = "0.0.0.0"
+  http_port_max     = var.http_port
+  http_port_min     = var.http_port
   http_content = {
     "/meta-data" = file("../../cloud-config/meta-data")
     "/user-data" = templatefile("../../cloud-config/user-data.pkrtpl.hcl", { build_fullname = var.ssh_fullname, build_hostname = var.distribution, build_username = var.ssh_username, build_password_encrypted = var.ssh_password_encrypted, build_authorized_key = var.ssh_autorized_key })
   }
-  insecure_connection = true
-  iso_checksum        = local.iso_checksum
-  iso_url             = local.iso_url
-  remove_cdrom        = true
+  iso_checksum     = local.iso_checksum
+  iso_url          = local.iso_url
+  iso_storage_pool = "local"
+  unmount_iso      = true
+  machine          = "q35"
   network_adapters {
-    network      = "LAB"
-    network_card = "vmxnet3"
+    bridge   = "vmbr1"
+    model    = "virtio"
+    vlan_tag = "20"
   }
-  notes        = "${var.distribution}-${var.version}, generated on {{ timestamp }}"
-  password     = var.vcenter_password
-  ssh_username = var.ssh_username
-  ssh_password = var.ssh_password
-  ssh_timeout  = "45m"
-  storage {
-    disk_size             = 10000
-    disk_thin_provisioned = true
+  template_description = "${var.distribution}-${var.version}, generated on {{ timestamp }}"
+  ssh_username         = var.ssh_username
+  ssh_password         = var.ssh_password
+  ssh_timeout          = "30m"
+  scsi_controller      = "virtio-scsi-single"
+  disks {
+    type         = "scsi"
+    io_thread    = true
+    disk_size    = "10G"
+    storage_pool = "${upper(var.proxmox_node)}-SSD1"
   }
-  username       = var.vcenter_username
-  vcenter_server = var.vcenter_server
-  vm_name        = "packer-${var.distribution}-${var.version}"
-  vm_version     = 14
+  proxmox_url = var.proxmox_url
+  username    = var.proxmox_username
+  password    = var.proxmox_password
+  vm_name     = "packer-${var.distribution}-${var.version}"
 }
 
 build {
-  sources = ["source.vsphere-iso.ubuntu"]
+  sources = ["source.proxmox-iso.ubuntu"]
 
   provisioner "shell" {
     inline = ["/usr/bin/cloud-init status --wait"]

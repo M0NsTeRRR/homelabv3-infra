@@ -17,10 +17,10 @@ autoinstall:
     - qemu-guest-agent
     - cloud-init
   identity:
-    hostname: ${build_hostname}
-    realname: ${build_fullname}
-    username: ${build_username}
-    password: '${build_password_encrypted}'
+    hostname: ubuntu
+    realname: ludovic ortega
+    username: lortega
+    password: '$6$qPqRnzysYRQmzJag$.V5wcaxZDu4ODlz5XcyqC9YSXsQuR6k8lWAohnnP1tS6/oql8kJIo7y6tm.tV9PCgu0cGWSvaCngjXnYCYPAI.'
   ssh:
     install-server: yes
   storage:

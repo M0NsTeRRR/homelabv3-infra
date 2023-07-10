@@ -1,7 +1,7 @@
 network:
   version: 2
   ethernets:
-    ens192:
+    enp6s18:
       dhcp4: no
       dhcp6: no
       accept-ra: no

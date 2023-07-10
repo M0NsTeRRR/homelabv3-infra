@@ -3,29 +3,13 @@ variable "terraform_root_dir" {
   type        = string
 }
 
-variable "ignore_providers" {
-  description = "Providers to ignore"
-  type        = list(string)
-  default     = []
-}
-
-variable "vsphere_datacenter" {
-  description = "vSphere datacenter"
+variable "target_node" {
+  description = "Proxmox node"
   type        = string
 }
 
-variable "vsphere_cluster" {
-  description = "vSphere cluster"
-  type        = string
-}
-
-variable "vsphere_host" {
-  description = "vSphere host"
-  type        = string
-}
-
-variable "vsphere_domain" {
-  description = "vSphere domain"
+variable "target_node_domain" {
+  description = "Proxmox node domain"
   type        = string
 }
 
@@ -41,20 +25,36 @@ variable "domain" {
 
 variable "vm_tags" {
   description = "VM tags"
-  type = list(string)
+  type        = list(string)
 }
 
 variable "template" {
   description = "Template name"
-  type = string
+  type        = string
 }
 
-variable "hardware" {
-  description = "Hardware informations"
-  type = object({
-    num_cpus = number
-    memory   = number
-  })
+variable "sockets" {
+  description = "Number of sockets"
+  type        = number
+  default     = 1
+}
+
+variable "cores" {
+  description = "Number of cores"
+  type        = number
+  default     = 1
+}
+
+variable "vcpus" {
+  description = "Number of vcpus"
+  type        = number
+  default     = 1
+}
+
+variable "memory" {
+  description = "Number of memory in MB"
+  type        = number
+  default     = 1024
 }
 
 variable "vm_ip" {
@@ -76,15 +76,15 @@ variable "vm_user" {
 variable "disk" {
   description = "Disk size in Gb"
   type = object({
-    datastore = string
-    size      = number
+    storage = string
+    size    = number
   })
 }
 
 variable "network" {
   description = "Network config"
   type = object({
-    name     = string
+    tag      = string
     netmask  = string
     gateway  = string
     netmask6 = string
