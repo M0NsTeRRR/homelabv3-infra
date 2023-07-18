@@ -14,7 +14,7 @@ ansible = [
     "cryptography==41.0.2",
     "passlib==1.7.4",
     "requests==2.31.0",
-    "kubernetes==26.1.0",
+    "kubernetes==27.2.0",
     "PyYAML==6.0.1",
     "jsonpatch==1.33",
     "vsphere-automation-sdk @ git+https://github.com/vmware/vsphere-automation-sdk-python.git@v8.0.1.0"
