@@ -49,5 +49,5 @@
         - EXTERNAL_DNS_TLS_CA
       external_dns_tls_envs:
         - EXTERNAL_DNS_TLS_CA
-      external_dns_args: "--source=ingress --provider=pdns {% for domain in local_domains %}--domain-filter={{ domain }}{% if not loop.last %} {% endif %}{% endfor %} --registry=txt --txt-owner-id=homelab.kubernetes --ingress-class=traefik-internal --default-targets=192.168.10.102 --default-targets=2a0c:b641:2c0:110::102"
+      external_dns_args: "--source=ingress --provider=pdns {% for domain in local_domains %}--domain-filter={{ domain }}{% if not loop.last %} {% endif %}{% endfor %} --registry=txt --txt-owner-id=homelab.kubernetes --ingress-class=traefik-internal --default-targets=192.168.10.101 --default-targets=2a0c:b641:2c0:110::101"
     - argocd
