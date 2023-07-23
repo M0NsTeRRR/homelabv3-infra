@@ -57,7 +57,7 @@
 
 - name: Get fullchain cert
   community.crypto.certificate_complete_chain:
-    input_chain: "{{ lookup('file', '/tmp/' ~ item.common_name ~  '.crt') }}"
+    input_chain: "{{ lookup('ansible.builtin.file', '/tmp/' ~ item.common_name ~  '.crt') }}"
     intermediate_certificates: "{{ item.intermediate_cert_local_path }}"
     root_certificates: "{{ item.ca_cert_local_path }}"
   delegate_to: localhost
@@ -142,4 +142,4 @@
 
 - name: Update Pdns TLSA entry
   ansible.builtin.include_tasks: pdns_tlsa.yml
-  when: self_signed_cert_pdns and 'tlsa' in item
+  when: self_signed_cert_pdns and "tlsa" in item

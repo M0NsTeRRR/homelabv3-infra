@@ -1,0 +1,47 @@
+---
+- name: "Get namespace {{ traefik_namespace }}"
+  kubernetes.core.k8s_info:
+    kind: Namespace
+    name: "{{ traefik_namespace }}"
+    namespace: "{{ traefik_namespace }}"
+    kubeconfig: "{{ traefik_localhost_kubeconfig_path }}"
+    validate_certs: true
+  register: traefik_namespace_info
+  delegate_to: localhost
+
+- name: Check if traefik is already installed
+  ansible.builtin.set_fact:
+    traefik_is_installed: "{% if traefik_namespace_info.resources | length > 0 %}true{% else %}false{% endif %}"
+  delegate_to: localhost
+
+- name: Add traefik helm repo
+  kubernetes.core.helm_repository:
+    name: traefik
+    repo_url: https://traefik.github.io/charts
+    kubeconfig: "{{ traefik_localhost_kubeconfig_path }}"
+    validate_certs: true
+  delegate_to: localhost
+
+- name: Deploy traefik chart
+  kubernetes.core.helm:
+    name: "{{ traefik_namespace }}"
+    chart_ref: traefik/traefik
+    chart_version: "{{ traefik_chart_version }}"
+    release_values: "{{ lookup('ansible.builtin.template', 'helm-values.yml.j2') | from_yaml }}"
+    release_namespace: "{{ traefik_namespace }}"
+    create_namespace: true
+    update_repo_cache: true
+    wait: true
+    kubeconfig: "{{ traefik_localhost_kubeconfig_path }}"
+    validate_certs: true
+  delegate_to: localhost
+  when: not traefik_is_installed or traefik_force_install
+
+- name: Create traefik dashboard service
+  kubernetes.core.k8s:
+    definition: "{{ lookup('ansible.builtin.template', 'service.yml.j2') | from_yaml }}"
+    kubeconfig: "{{ traefik_localhost_kubeconfig_path }}"
+    validate_certs: true
+    state: present
+  delegate_to: localhost
+  when: not traefik_is_installed or traefik_force_install

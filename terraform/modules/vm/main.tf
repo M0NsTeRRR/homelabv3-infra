@@ -32,9 +32,10 @@ resource "proxmox_vm_qemu" "vm" {
 
   bios = "ovmf"
 
+  cpu     = "x86-64-v2-AES"
   sockets = var.sockets
   cores   = var.cores
-  vcpus   = var.vcpus
+
   memory  = var.memory
 
   network {

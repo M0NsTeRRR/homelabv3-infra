@@ -1,0 +1,11 @@
+---
+galaxy_info:
+  role_name: vault
+  author: Ludovic Ortega
+  description: Install and configure vault
+  license: CeCILL
+  min_ansible_version: "2.15.1"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy

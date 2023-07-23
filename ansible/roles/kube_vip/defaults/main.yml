@@ -2,6 +2,12 @@
 # datasource=github-tags depName=kube-vip/kube-vip
 kube_vip_version: "v0.6.0"
 kube_vip_force_install: false
-kube_vip_address: example.fr
+kube_vip_address: []
 kube_vip_interface: ens192
 kube_vip_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
+
+# kube_vip_address:
+#  - namespace: kube-vip-ds
+#    address: 192.168.0.1
+#    cidr: 32
+#    prometheus_server: ":2112"

@@ -9,14 +9,50 @@
     - name: "signing_certificate"
       prompt: "Signing intermediate certificate to use ? (eg. kubernetes)"
       private: false
-    - name: "common_name"
-      prompt: "Common name ? (eg. www.unicornafk.fr)"
+    - name: "subject_alt_name"
+      prompt: "Subject alt name ? (eg. DNS:www.unicornafk.fr,DNS:test.unicornafk.fr)"
       private: false
     - name: "ownca_not_after"
       prompt: "Expiration date ?"
       default: "+365d"
       private: false
+    - name: "reverse_ipv4"
+      prompt: "Add IPv4 reverse to subject alt name ?"
+      default: "false"
+      private: false
+    - name: "reverse_ipv6"
+      prompt: "Add IPv6 reverse to subject alt name ?"
+      default: "false"
+      private: false
+    - name: "client_key_usage"
+      prompt: "CSR client key usage ? (eg. nonRepudiation,digitalSignature,keyEncipherment,dataEncipherment)"
+      private: false
+    - name: "client_extended_key_usage"
+      prompt: "CSR client extended key usage ? (eg. serverAuth,clientAuth)"
+      private: false
   tasks:
+    - name: Set subject_alt_name and cast boolean variable
+      ansible.builtin.set_fact:
+        reverse_ipv4: "{{ ((reverse_ipv4 | lower) == 'true') | bool }}"
+        reverse_ipv6: "{{ ((reverse_ipv6 | lower) == 'true') | bool }}"
+        subject_alt_name: "{{ subject_alt_name | split(',') }}"
+        client_key_usage: "{% if client_key_usage | length > 0 %}{{ client_key_usage | split(',') }}{% else %}{{ [] }}{% endif %}"
+        client_extended_key_usage: "{% if client_extended_key_usage | length > 0 %}{{ client_extended_key_usage | split(',') }}{% else %}{{ [] }}{% endif %}"
+
+    - name: Set common_name
+      ansible.builtin.set_fact:
+        common_name: "{{ (subject_alt_name[0] | split(':'))[1] }}"
+
+    - name: Add reverse ipv4 to subject_alt_name
+      ansible.builtin.set_fact:
+        subject_alt_name: "{{ subject_alt_name + ['IP:' + lookup('community.general.dig', common_name)] }}"
+      when: reverse_ipv4
+
+    - name: Add reverse ipv6 to subject_alt_name
+      ansible.builtin.set_fact:
+        subject_alt_name: "{{ subject_alt_name + ['IP:' + lookup('community.general.dig', common_name, 'qtype=AAAA')] }}"
+      when: reverse_ipv6
+
     - name: Generate cert authority OpenSSL private key
       community.crypto.openssl_privatekey:
         path: "{{ certs_dir }}{{ organization }}.key"
@@ -114,10 +150,9 @@
         organization_name: "{{ organization }}"
         email_address: "{{ admin_email }}"
         common_name: "{{ common_name }}"
-        subject_alt_name:
-          - "DNS:{{ common_name }}"
-          - "IP:{{ lookup('community.general.dig', common_name) }}"
-          - "IP:{{ lookup('community.general.dig', common_name, 'qtype=AAAA') }}"
+        subject_alt_name: "{{ subject_alt_name }}"
+        key_usage: "{{ client_key_usage }}"
+        extended_key_usage: "{{ client_extended_key_usage }}"
 
     - name: Generate client OpenSSL certificate signed with our CA
       community.crypto.x509_certificate:
@@ -132,7 +167,7 @@
 
     - name: Create fullchain cert
       community.crypto.certificate_complete_chain:
-        input_chain: "{{ lookup('file', certs_dir + signing_certificate + '/' + common_name + '/' + common_name + '.crt') }}"
+        input_chain: "{{ lookup('ansible.builtin.file', certs_dir + signing_certificate + '/' + common_name + '/' + common_name + '.crt') }}"
         intermediate_certificates: "{{ certs_dir }}intermediate/{{ signing_certificate }}/{{ signing_certificate }}.crt"
         root_certificates: "{{ certs_dir }}{{ organization }}.crt"
       register: fullchain_cert

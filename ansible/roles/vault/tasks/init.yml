@@ -1,0 +1,33 @@
+---
+- name: Initialize vault
+  kubernetes.core.k8s_exec:
+    namespace: vault
+    pod: vault-0
+    command: vault operator init -format=json
+    kubeconfig: "{{ vault_localhost_kubeconfig_path }}"
+    validate_certs: true
+  delegate_to: localhost
+  register: vault_init_results
+
+- name: Parse output of vault init
+  ansible.builtin.set_fact:
+    vault_init_parsed: "{{ vault_init_results.stdout | from_json }}"
+  delegate_to: localhost
+
+- name: Set vault root token
+  ansible.builtin.set_fact:
+    vault_root_token: "{{ vault_init_parsed.root_token }}"
+  delegate_to: localhost
+
+- name: Save vault init output to local file
+  ansible.builtin.copy:
+    content: "{{ vault_init_parsed | to_nice_json }}"
+    dest: "{{ vault_init_output_file_path }}"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0600"
+  delegate_to: localhost
+
+- name: Unseal vault
+  ansible.builtin.include_tasks: unseal.yml
+  with_sequence: start=0 end="{{ vault_replicas - 1 }}"

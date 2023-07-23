@@ -1,14 +1,15 @@
 ---
-dnsdist_local_path_ca_certificate: "{{ certs_dir_role_path }}unicornafk.crt"
+dnsdist_local_path_ca_certificate: "{{ ca_certificates_local_path_ca_certificate }}"
 dnsdist_cert_filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}-fullchain.crt"
 dnsdist_key_filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}.key"
 
-powerdns_recursor_domains: '{{ domains }}'
+powerdns_recursor_domains: '{{ local_domains }}'
 powerdns_recursor_reverse_zones: '{{ reverse_zones }}'
 
 powerdns_authoritative_rname: "{{ admin_email | replace('@', '.') }}."
 powerdns_authoritative_api_base_url: "https://{{ ansible_default_ipv4.address }}:9443"
-powerdns_authoritative_domains: '{{ domains }}'
+powerdns_authoritative_ca_path: "{{ ca_certificates_local_path_ca_certificate }}"
+powerdns_authoritative_domains: '{{ local_domains }}'
 powerdns_authoritative_subdomains: '{{ subdomains }}'
 powerdns_authoritative_reverse_zones: '{{ reverse_zones }}'
 powerdns_authoritative_records:
@@ -54,9 +55,9 @@ powerdns_authoritative_records:
     a: 192.168.6.3
     aaaa: 2a0c:b641:02c0:106::3
     sshfp:
-      - algorithm: 3
+      - algorithm: 4
         type: 2
-        fingerprint: 5C4DACEB5E7F832D076BCF85831AF7BFA5064C7E06ED99003F513ABE84FB2204
+        fingerprint: 33a3f4d1970bfa6bd85305adf23c437d8fd2b2b2b30aaaf9653d303733148dce
     rdns: true
   - hostname: dns1.unicornafk.fr.
     a: 192.168.10.21
@@ -88,6 +89,9 @@ powerdns_authoritative_records:
   - hostname: kubernetes.unicornafk.fr.
     a: 192.168.10.80
     aaaa: 2a0c:b641:02c0:110::80
+  - hostname: vault.unicornafk.fr.
+    a: 192.168.10.101
+    rdns: true
   - hostname: ap1.unicornafk.fr.
     a: 192.168.20.51
     aaaa: 2a0c:b641:02c0:120::51
@@ -123,13 +127,6 @@ powerdns_authoritative_records:
       - algorithm: 1
         type: 2
         fingerprint: 942A283E7B7D4ED621A7570A6C2785E20904305BDA3199CBCAD7EA5091D88880
-    rdns: true
-  - hostname: vcenter.unicornafk.fr.
-    a: 192.168.40.10
-    sshfp:
-      - algorithm: 3
-        type: 2
-        fingerprint: 3395968F65F5B88C6048A423D3A8113B0EB6BB52DF027BAFBA3BBCC2D98B0EF3
     rdns: true
   - hostname: server1.unicornafk.fr.
     a: 192.168.40.11
@@ -271,7 +268,7 @@ self_signed_certs:
     country: "{{ country }}"
     organization: "{{ organization }}"
     admin_email: "{{ admin_email }}"
-    ca_cert_local_path: "{{ certs_dir_role_path }}unicornafk.crt"
+    ca_cert_local_path: "{{ ca_certificates_local_path_ca_certificate }}"
     intermediate_cert_local_path: "{{ certs_dir_role_path }}intermediate/homelab/homelab.crt"
     intermediate_private_local_path: "{{ certs_dir_role_path }}intermediate/homelab/homelab.key"
     intermediate_private_passphrase: "{{ ca_private_passphrase }}"

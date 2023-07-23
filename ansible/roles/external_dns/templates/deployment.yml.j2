@@ -1,0 +1,52 @@
+#jinja2: lstrip_blocks: "True"
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: external-dns
+  namespace: {{ external_dns_namespace }}
+spec:
+  replicas: {{ external_dns_replicas }}
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: external-dns
+  template:
+    metadata:
+      labels:
+        app: external-dns
+      annotations:
+        vault.hashicorp.com/tls-secret: "vault-ca"
+        vault.hashicorp.com/ca-cert: "/vault/tls/ca.crt"
+        vault.hashicorp.com/agent-inject: 'true'
+        vault.hashicorp.com/role: '{{ external_dns_vault_role }}'
+        vault.hashicorp.com/agent-inject-secret-config: '{{ external_dns_vault_inject_secret }}'
+        vault.hashicorp.com/agent-inject-template-config: |
+         {{ '{{- with secret "' + external_dns_vault_inject_secret + '" -}}' }}
+         {% for external_dns_env in external_dns_envs %}
+         {% if external_dns_env == "EXTERNAL_DNS_TLS_CA" %}
+         {{ ("export EXTERNAL_DNS_TLS_CA=\"/vault/secrets/tls-ca") | indent(2, true) }}"
+         {% else %}
+         {{ ("export " + external_dns_env + "=\"{{ .Data.data." + external_dns_env + " }}") | indent(2, true) }}"
+         {% endif %}
+         {% endfor %}
+         {{ "{{- end }}" }}
+        {% for external_dns_tls_env in external_dns_tls_envs %}
+        {% if external_dns_tls_env == "EXTERNAL_DNS_TLS_CA" %}
+        vault.hashicorp.com/agent-inject-secret-tls-ca: '{{ external_dns_vault_inject_secret }}'
+        vault.hashicorp.com/agent-inject-template-tls-ca: |
+         {{ '{{- with secret "' + external_dns_vault_inject_secret + '" -}}' }}
+         {{ ("{{ .Data.data.EXTERNAL_DNS_TLS_CA }}") | indent(2, true) }}
+         {{ "{{- end }}" }}
+         {% endif %}
+         {% endfor %}
+    spec:
+      serviceAccountName: external-dns
+      containers:
+        - name: external-dns
+          image: gcr.io/k8s-staging-external-dns/external-dns:v20230721-external-dns-helm-chart-1.13.0-159-gbc61d4de-amd64
+          command:
+            - sh
+            - -c
+          args:
+            - source /vault/secrets/config && /bin/external-dns {{ external_dns_args }}

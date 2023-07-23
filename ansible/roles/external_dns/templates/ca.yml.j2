@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+    name: vault-ca
+    namespace: {{ external_dns_namespace }}
+data:
+    ca.crt: "{{ lookup('ansible.builtin.file', external_dns_vault_ca_filename) | b64encode }}"

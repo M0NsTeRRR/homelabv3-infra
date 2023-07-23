@@ -1,0 +1,104 @@
+---
+- name: Get vault namespace
+  kubernetes.core.k8s_info:
+    kind: Namespace
+    name: vault
+    namespace: vault
+    kubeconfig: "{{ vault_localhost_kubeconfig_path }}"
+    validate_certs: true
+  register: vault_namespace_info
+  delegate_to: localhost
+
+- name: Check if vault is already installed
+  ansible.builtin.set_fact:
+    vault_is_installed: "{% if vault_namespace_info.resources | length > 0 %}true{% else %}false{% endif %}"
+  delegate_to: localhost
+
+- name: Create vault namespace
+  kubernetes.core.k8s:
+    definition: "{{ lookup('ansible.builtin.file', 'namespace.yml') | from_yaml }}"
+    kubeconfig: "{{ vault_localhost_kubeconfig_path }}"
+    validate_certs: true
+    state: present
+  delegate_to: localhost
+
+- name: Create kubernetes secrets with vault certificates
+  kubernetes.core.k8s:
+    definition: "{{ lookup('ansible.builtin.template', 'secret.yml.j2') | from_yaml }}"
+    wait: true
+    kubeconfig: "{{ vault_localhost_kubeconfig_path }}"
+    validate_certs: true
+    state: present
+  delegate_to: localhost
+
+- name: Add hashicorp helm repo
+  kubernetes.core.helm_repository:
+    name: hashicorp
+    repo_url: "https://helm.releases.hashicorp.com"
+    kubeconfig: "{{ vault_localhost_kubeconfig_path }}"
+    validate_certs: true
+  delegate_to: localhost
+
+- name: Deploy vault chart
+  kubernetes.core.helm:
+    name: vault
+    chart_ref: hashicorp/vault
+    chart_version: "{{ vault_helm_version[1:] }}"
+    release_namespace: vault
+    values: "{{ lookup('ansible.builtin.template', 'config.yml.j2') | from_yaml }}"
+    create_namespace: true
+    update_repo_cache: true
+    kubeconfig: "{{ vault_localhost_kubeconfig_path }}"
+    validate_certs: true
+  delegate_to: localhost
+  when: not vault_is_installed or vault_force_install
+
+- name: Enable IPv6 on vault UI
+  kubernetes.core.k8s_json_patch:
+    kind: Service
+    namespace: vault
+    name: vault-ui
+    patch:
+      - op: replace
+        path: /spec/ipFamilyPolicy
+        value: PreferDualStack
+      - op: replace
+        path: /spec/ipFamilies
+        value:
+          - IPv4
+          - IPv6
+    kubeconfig: "{{ vault_localhost_kubeconfig_path }}"
+    validate_certs: true
+  delegate_to: localhost
+
+- name: "Wait pod vault-{{ item }}"
+  kubernetes.core.k8s_info:
+    kind: Pod
+    name: "vault-{{ item }}"
+    namespace: vault
+    kubeconfig: "{{ vault_localhost_kubeconfig_path }}"
+    validate_certs: true
+  register: result
+  until: result.resources[0].status.phase == "Running"
+  retries: 5
+  delay: 10
+  delegate_to: localhost
+  with_sequence: start=0 end="{{ vault_replicas - 1 }}"
+
+- name: Init vault
+  ansible.builtin.include_tasks: init.yml
+  when: not vault_is_installed or vault_force_install
+
+- name: Set vault secret engine
+  ansible.builtin.include_tasks: secret_engine.yml
+
+- name: Set vault auth method
+  ansible.builtin.include_tasks: auth_method.yml
+
+- name: Set vault policy
+  ansible.builtin.include_tasks: policy.yml
+  with_items: "{{ vault_policies }}"
+
+- name: Set vault datas
+  ansible.builtin.include_tasks: data.yml
+  with_items: "{{ vault_datas }}"

@@ -1,0 +1,24 @@
+---
+ipv4:
+  enabled: true
+ipv6:
+  enabled: true
+ipam:
+  mode: cluster-pool
+  operator:
+    clusterPoolIPv4PodCIDRList: "{{ cilium_cluster_cidr_ipv4 }}"
+    clusterPoolIPv6PodCIDRList: "{{ cilium_cluster_cidr_ipv6 }}"
+    clusterPoolIPv4MaskSize: "{{ cilium_cluster_pool_ipv4_mask }}"
+    clusterPoolIPv6MaskSize: "{{ cilium_cluster_pool_ipv6_mask }}"
+hubble:
+  relay:
+    enabled: true
+  ui:
+    enabled: true
+  metrics:
+    enabled: true
+prometheus:
+  enabled: true
+operator:
+  prometheus:
+    enabled: true

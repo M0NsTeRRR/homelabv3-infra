@@ -1,10 +1,10 @@
 ---
 galaxy_info:
-  role_name: emissary
+  role_name: argocd
   author: Ludovic Ortega
-  description: Install and configure emissary
+  description: Install and configure external_dns
   license: CeCILL
-  min_ansible_version: "2.15.2"
+  min_ansible_version: "2.15.1"
   platforms:
     - name: Ubuntu
       versions:

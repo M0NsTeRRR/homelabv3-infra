@@ -12,7 +12,8 @@ This is my Homelab v3 infrastructure.
   - Packer builder arm (needed for rpi build)
 - Terraform
   - Terragrunt
-- Docker (needed for kube-vip manifest generation)
+- Kubectl
+- Helm
 
 Create venv `python3 -m venv venv`  
 Source venv `source venv/bin/activate`  
@@ -29,7 +30,6 @@ Install ansible galaxy dependencies `ansible-galaxy install -r requirements.yml`
 
 fill all `.vault_password.txt` at root with ansible vault password used   
 fill all `secrets.yml` based on `secrets.example` in each subdirectory of `groups_vars`  
-fill `inventory.vmware.yml` and encrypt it with `vault` based on `inventory.vmware.example`
 
 ### Playbooks to create client certificate signed by a CA
 

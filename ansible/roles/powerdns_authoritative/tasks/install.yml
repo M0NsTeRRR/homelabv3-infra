@@ -100,7 +100,7 @@
     headers:
       Content-Type: application/json
       X-Api-Key: "{{ powerdns_authoritative_api_key }}"
-    validate_certs: false
+    ca_path: "{{ powerdns_authoritative_ca_path }}"
   register: powerdns_authoritative_restart
   until: powerdns_authoritative_restart.status == 200
   retries: 60

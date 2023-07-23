@@ -1,40 +1,9 @@
 ---
-- name: Allow incoming
+- name: Disable ufw
   community.general.ufw:
-    direction: in
-    rule: allow
-    port: "{{ item.port }}"
-    proto: "{{ item.proto }}"
-    comment: "{{ item.comment }}"
-  when: item.to_open
-  with_items:
-    - {port: "2379:2380", proto: tcp, to_open: "{{ inventory_hostname in groups[k3s_master_group] }}", comment: "HA embedded etcd (ansible_managed)"}
-    - {port: "6443", proto: tcp, to_open: "{{ inventory_hostname in groups[k3s_master_group] }}", comment: "K3s supervisor/API Server (ansible_managed)"}
-    - {port: "10250", proto: tcp, to_open: true, comment: "Kubelet metrics"}
-
-- name: Allow outgoing
-  community.general.ufw:
-    direction: out
-    rule: allow
-    port: "{{ item.port }}"
-    proto: "{{ item.proto }}"
-    comment: "{{ item.comment }}"
-  when: item.to_open
-  with_items:
-    - {port: "2379:2380", proto: tcp, to_open: "{{ inventory_hostname in groups[k3s_master_group] }}", comment: "HA embedded etcd (ansible_managed)"}
-    - {port: "6443", proto: tcp, to_open: "{{ inventory_hostname not in groups[k3s_master_group] }}", comment: "K3s supervisor/API Server (ansible_managed)"}
-    - {port: "10250", proto: tcp, to_open: true, comment: "Kubelet metrics"}
-
-- name: Allow all access from pods/services
-  community.general.ufw:
-    rule: allow
-    src: "{{ item.src }}"
-    comment: "{{ item.comment }}"
-  with_items:
-    - {src: "{{ k3s_cluster_cidr_ipv4 }}", comment: "k3s pods ipv4 (ansible_managed)"}
-    - {src: "{{ k3s_cluster_cidr_ipv6 }}", comment: "k3s pods ipv6 (ansible_managed)"}
-    - {src: "{{ k3s_service_cidr_ipv4 }}", comment: "k3s service ipv4 (ansible_managed)"}
-    - {src: "{{ k3s_service_cidr_ipv6 }}", comment: "k3s service ipv6 (ansible_managed)"}
+    state: disabled
+  async: 60
+  poll: 10
 
 - name: Check if k3s is already installed
   ansible.builtin.stat:
@@ -101,7 +70,7 @@
   retries: 60
   delay: 1
   run_once: true
-  when: groups[k3s_master_group][0] == inventory_hostname
+  delegate_to: "{{ groups[k3s_master_group][0] }}"
 
 - name: Get k3s token file from first master
   ansible.builtin.slurp:

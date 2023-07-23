@@ -1,0 +1,10 @@
+---
+# datasource=github-tags depName=cert-manager/cert-manager
+cert_manager_version: "v1.12.2"
+cert_manager_force_install: false
+cert_manager_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
+cert_manager_email: "test@example.fr"
+cert_manager_vault_service_account: "vault-cert-manager"
+cert_manager_vault_sign: "example-dot-fr"
+cert_manager_vault_server: https://vault-active.vault.svc:8200
+cert_manager_vault_server_ca: "/tmp/ca.crt"

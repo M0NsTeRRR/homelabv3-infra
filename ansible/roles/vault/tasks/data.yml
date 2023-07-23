@@ -1,0 +1,17 @@
+---
+- name: "Create vault secret {{ item.path }}"
+  ansible.builtin.uri:
+    url: "{{ vault_url }}/v1/{{ item.path }}"
+    method: POST
+    return_content: true
+    body_format: json
+    body: "{{ lookup('ansible.builtin.template', 'data.json.j2') }}"
+    status_code:
+      - 200
+      - 204
+    headers:
+      Content-Type: application/json
+      X-Vault-Token: "{{ vault_root_token }}"
+    ca_path: "{{ vault_ca_path }}"
+#  no_log: true
+  delegate_to: localhost

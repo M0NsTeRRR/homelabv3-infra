@@ -1,0 +1,111 @@
+global:
+  enabled: true
+  tlsDisable: false
+
+injector:
+  enabled: true
+  image:
+    repository: "hashicorp/vault-k8s"
+    tag: "{{ vault_injector_version[1:] }}"
+  metrics:
+    enabled: true
+
+server:
+  extraEnvironmentVars:
+    VAULT_CACERT: /vault/userconfig/vault-server-tls/ca.crt
+
+  volumes:
+    - name: userconfig-vault-server-tls
+      secret:
+        defaultMode: 420
+        secretName: vault-server-tls
+
+  volumeMounts:
+    - mountPath: /vault/userconfig/vault-server-tls
+      name: userconfig-vault-server-tls
+      readOnly: true
+
+  dataStorage:
+    enabled: true
+    size: 20Gi
+    mountPath: "/vault/data"
+    storageClass: null
+    accessMode: ReadWriteOnce
+    annotations: {}
+
+  image:
+    repository: "hashicorp/vault"
+    tag: "{{ vault_version[1:] }}"
+
+  resources:
+    requests:
+      memory: 4Gi
+      cpu: 1000m
+    limits:
+      memory: 8Gi
+      cpu: 2000m
+
+  readinessProbe:
+    httpGet:
+      scheme: HTTPS
+      path: "/v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204"
+  livenessProbe:
+    httpGet:
+      scheme: HTTPS
+      path: "/v1/sys/health?standbyok=true"
+    initialDelaySeconds: 60
+
+  auditStorage:
+    enabled: true
+
+  standalone:
+    enabled: false
+
+  ha:
+    enabled: true
+    replicas: {{ vault_replicas }}
+    raft:
+      enabled: true
+
+      config: |
+        ui = true
+
+        listener "tcp" {
+          address = "[::]:8200"
+          cluster_address = "[::]:8201"
+          tls_cert_file = "/vault/userconfig/vault-server-tls/vault.crt"
+          tls_key_file  = "/vault/userconfig/vault-server-tls/vault.key"
+
+          telemetry {
+            unauthenticated_metrics_access = true
+          }
+        }
+
+        storage "raft" {
+          path = "/vault/data"
+
+          {% for vault_id in range(0, vault_replicas) %}
+          retry_join {
+            leader_api_addr = "https://vault-{{ vault_id }}.vault-internal:8200"
+            leader_ca_cert_file = "/vault/userconfig/vault-server-tls/ca.crt"
+            leader_client_cert_file = "/vault/userconfig/vault-server-tls/vault.crt"
+            leader_client_key_file  = "/vault/userconfig/vault-server-tls/vault.key"
+          }
+          {% endfor %}
+        }
+
+        disable_mlock = true
+
+        service_registration "kubernetes" {}
+
+        telemetry {
+          prometheus_retention_time = "30s"
+          disable_hostname = true
+        }
+
+ui:
+  enabled: true
+  serviceType: "LoadBalancer"
+  annotations:
+    metallb.universe.tf/loadBalancerIPs: {{ vault_loadbalancer_ips | join(",") }}
+  serviceNodePort: null

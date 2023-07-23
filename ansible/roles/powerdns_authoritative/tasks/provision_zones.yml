@@ -13,6 +13,7 @@
       - 404
     headers:
       X-Api-Key: "{{ powerdns_authoritative_api_key }}"
+    ca_path: "{{ powerdns_authoritative_ca_path }}"
   register: powerdns_authoritative_zone
 
 - name: Configure PowerDNS authoritative
@@ -31,11 +32,12 @@
     method: POST
     return_content: true
     body_format: json
-    body: "{{ lookup('template', 'post_zone.json.j2') }}"
+    body: "{{ lookup('ansible.builtin.template', 'post_zone.json.j2') }}"
     status_code: 201
     headers:
       Content-Type: application/json
       X-Api-Key: "{{ powerdns_authoritative_api_key }}"
+    ca_path: "{{ powerdns_authoritative_ca_path }}"
   when: powerdns_authoritative_zone.status == 404
   register: powerdns_authoritative_response
   changed_when: powerdns_authoritative_response.status == 201
@@ -46,11 +48,12 @@
     method: PATCH
     return_content: true
     body_format: json
-    body: "{{ lookup('template', 'patch_zone.json.j2') }}"
+    body: "{{ lookup('ansible.builtin.template', 'patch_zone.json.j2') }}"
     status_code: 204
     headers:
       Content-Type: application/json
       X-Api-Key: "{{ powerdns_authoritative_api_key }}"
+    ca_path: "{{ powerdns_authoritative_ca_path }}"
   when: inventory_hostname == ansible_play_hosts_all[0]
   register: powerdns_authoritative_response
   changed_when: powerdns_authoritative_response.status == 204

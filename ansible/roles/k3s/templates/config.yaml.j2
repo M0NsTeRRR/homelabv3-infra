@@ -1,5 +1,4 @@
 node-name: {{ k3s_nodename }}
-node-ip: {{ ansible_default_ipv4.address }},{{ ansible_default_ipv6.address }}
 
 data-dir: /var/lib/k3s
 
@@ -16,18 +15,16 @@ tls-san: {{ k3s_ha_controlplane_ip }}
 
 secrets-encryption: true
 
+node-taint: node-role.kubernetes.io/master=true:NoSchedule
+
+kube-controller-manager-arg: node-cidr-mask-size-ipv6={{ (k3s_service_cidr_ipv6 | split('/'))[1] }}
+cluster-cidr: {{ k3s_cluster_cidr_ipv4 }},{{ k3s_cluster_cidr_ipv6 }}
+service-cidr: {{ k3s_service_cidr_ipv4 }},{{ k3s_service_cidr_ipv6 }}
+
 flannel-backend: none
 disable-network-policy: true
 
 disable: traefik,servicelb,metrics-server
-
-cluster-cidr: {{ k3s_cluster_cidr_ipv4 }},{{ k3s_cluster_cidr_ipv6 }}
-service-cidr: {{ k3s_service_cidr_ipv4 }},{{ k3s_service_cidr_ipv6 }}
-cluster-dns: {{ k3s_cluster_dns }}
-
-# To proritize IPv4 traffic
-kubelet-arg: "node-ip=0.0.0.0"
-
 
 write-kubeconfig-mode: 600
 write-kubeconfig: /etc/k3s/kubeconfig

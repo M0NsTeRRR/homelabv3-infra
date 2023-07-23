@@ -34,7 +34,7 @@
   ansible.posix.authorized_key:
     user: "{{ item | basename | replace('.pub', '') }}"
     state: present
-    key: "{{ lookup('file', item) }}"
+    key: "{{ lookup('ansible.builtin.file', item) }}"
     exclusive: true
   with_items: "{{ user_ssh_pub_keys }}"
 

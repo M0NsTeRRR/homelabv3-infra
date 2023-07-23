@@ -11,45 +11,43 @@
     - powerdns_authoritative
     - ntp
 
-- name: Configure k3s
+- name: Configure kubernetes
   hosts: kubernetes
   become: true
   roles:
-    - k3s
-  pre_tasks:
-    - name: Disable SWAP
-      ansible.builtin.command: swapoff -a
-      changed_when: true
-
-    - name: Disable SWAP in fstab
-      ansible.builtin.replace:
-        path: /etc/fstab
-        regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
-        replace: '# \1'
-
-- name: Configure Longhorn dependencies
-  hosts: kubernetes_worker
-  become: true
-  pre_tasks:
-    - name: Install required packages by longhorn
-      ansible.builtin.apt:
-        pkg:
-          - open-iscsi
-          - nfs-common
-        state: present
-
-- name: Configure cilium & kubectl
-  hosts: kubernetes_master
-  become: true
-  roles:
     - kubectl
-    - cilium
+    - common_kubernetes
+    - k3s
 
 - name: Deploy kubernetes base services
   hosts: kubernetes_master[0]
   become: true
   roles:
+    - cilium
     - kube_vip
-    - emissary
     - metallb
+    - role: traefik
+    - role: traefik
+      traefik_external_ips:
+        - 192.168.10.101
+        - 2a0c:b641:2c0:110::101
+      traefik_namespace: traefik-internal
+      traefik_default_ingress_class: true
+      traefik_ingress_class_name: traefik-internal
     - longhorn
+    - vault
+    - cert_manager
+    - role: external_dns
+    - role: external_dns
+      external_dns_namespace: "external-dns-internal"
+      external_dns_vault_role: external-dns-internal
+      external_dns_vault_inject_secret: secret/data/homelab/prod/external_dns/internal
+      external_dns_envs:
+        - EXTERNAL_DNS_PDNS_SERVER
+        - EXTERNAL_DNS_PDNS_API_KEY
+        - EXTERNAL_DNS_PDNS_TLS_ENABLED
+        - EXTERNAL_DNS_TLS_CA
+      external_dns_tls_envs:
+        - EXTERNAL_DNS_TLS_CA
+      external_dns_args: "--source=ingress --provider=pdns {% for domain in local_domains %}--domain-filter={{ domain }}{% if not loop.last %} {% endif %}{% endfor %} --registry=txt --txt-owner-id=homelab.kubernetes --ingress-class=traefik-internal --default-targets=192.168.10.102 --default-targets=2a0c:b641:2c0:110::102"
+    - argocd

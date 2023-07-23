@@ -9,6 +9,7 @@
       - 404
     headers:
       X-Api-Key: "{{ powerdns_authoritative_api_key }}"
+    ca_path: "{{ powerdns_authoritative_ca_path }}"
   register: powerdns_authoritative_tsig_key_response
 
 - name: "POST tsig key {{ item.name }}."
@@ -17,11 +18,12 @@
     method: POST
     return_content: true
     body_format: json
-    body: "{{ lookup('template', 'post_tsig_key.json.j2') }}"
+    body: "{{ lookup('ansible.builtin.template', 'post_tsig_key.json.j2') }}"
     status_code: 201
     headers:
       Content-Type: application/json
       X-Api-Key: "{{ powerdns_authoritative_api_key }}"
+    ca_path: "{{ powerdns_authoritative_ca_path }}"
   register: powerdns_authoritative_tsig_key_response
   when: powerdns_authoritative_tsig_key_response.status == 404
   changed_when: powerdns_authoritative_tsig_key_response.status == 201

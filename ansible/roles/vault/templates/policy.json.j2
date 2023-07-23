@@ -1,0 +1,3 @@
+{
+    "policy": "{% for policy in item.rules %}path \"{{ policy.path }}\" { capabilities = [{% for capability in policy.capabilities %}\"{{ capability }}\"{% if not loop.last %}, {% endif %}{% endfor %}] }{% if not loop.last %} {% endif %}{% endfor %}"
+}

@@ -8,15 +8,16 @@
 
 - name: "PATCH TLSA entry {{ item.common_name }}."
   ansible.builtin.uri:
-    url: "https://{{ self_signed_cert_pdns.hostname }}/api/v1/servers/localhost/zones/{{ tlsa.pdns_zone }}."
+    url: "{{ self_signed_cert_pdns.url }}/api/v1/servers/localhost/zones/{{ tlsa.pdns_zone }}."
     method: PATCH
     return_content: true
     body_format: json
-    body: "{{ lookup('template', 'pdns_tlsa.json.j2') }}"
+    body: "{{ lookup('ansible.builtin.template', 'pdns_tlsa.json.j2') }}"
     status_code: 204
     headers:
       Content-Type: application/json
       X-Api-Key: "{{ self_signed_cert_pdns.api_key }}"
+    ca_path: "{{ self_signed_cert_pdns.ca_path }}"
   with_items: "{{ item.tlsa }}"
   loop_control:
     loop_var: tlsa

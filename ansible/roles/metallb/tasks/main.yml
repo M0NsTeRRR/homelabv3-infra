@@ -1,43 +1,41 @@
 ---
-- name: Set user that run ansible playbook
-  ansible.builtin.set_fact:
-    metallb_user: "{{ lookup('env', 'USER') }}"
-  delegate_to: localhost
-
-- name: Get metallb service acccount
+- name: Get metallb-system namespace
   kubernetes.core.k8s_info:
-    kind: ServiceAccount
-    name: controller
+    kind: Namespace
+    name: metallb-system
     namespace: metallb-system
     kubeconfig: "{{ metallb_localhost_kubeconfig_path }}"
     validate_certs: true
-  register: metallb_service_account
+  register: metallb_namespace_info
   delegate_to: localhost
 
 - name: Check if metallb is already installed
   ansible.builtin.set_fact:
-    metallb_is_installed: "{% if metallb_service_account.resources | length > 0 %}true{% else %}false{% endif %}"
+    metallb_is_installed: "{% if metallb_namespace_info.resources | length > 0 %}true{% else %}false{% endif %}"
   delegate_to: localhost
 
-- name: Download metallb manifest"
-  ansible.builtin.get_url:
-    url: "https://raw.githubusercontent.com/metallb/metallb/{{ metallb_version }}/config/manifests/metallb-frr.yaml"
-    dest: /tmp/metallb.yaml
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
-    mode: "0644"
-  when: not metallb_is_installed or metallb_force_install
-  delegate_to: localhost
-
-- name: Install metallb manifest
-  kubernetes.core.k8s:
-    src: /tmp/metallb.yaml
+- name: Add metallb helm repo
+  kubernetes.core.helm_repository:
+    name: metallb
+    repo_url: https://metallb.github.io/metallb
     kubeconfig: "{{ metallb_localhost_kubeconfig_path }}"
     validate_certs: true
-    state: present
-    wait: true
-  when: not metallb_is_installed or metallb_force_install
   delegate_to: localhost
+
+- name: Deploy metallb chart
+  kubernetes.core.helm:
+    name: metallb
+    chart_ref: metallb/metallb
+    chart_version: "{{ metallb_version[1:] }}"
+    release_namespace: metallb-system
+    create_namespace: true
+    release_values: "{{ lookup('ansible.builtin.file', 'helm-values.yml') | from_yaml }}"
+    update_repo_cache: true
+    wait: true
+    kubeconfig: "{{ metallb_localhost_kubeconfig_path }}"
+    validate_certs: true
+  delegate_to: localhost
+  when: not metallb_is_installed or metallb_force_install
 
 - name: Install metallb ip address pool manifest
   kubernetes.core.k8s:
@@ -45,8 +43,9 @@
     kubeconfig: "{{ metallb_localhost_kubeconfig_path }}"
     validate_certs: true
     state: present
-  when: not metallb_is_installed or metallb_force_install
   delegate_to: localhost
+  with_items: "{{ metallb_ip_address_pools }}"
+  when: not metallb_is_installed or metallb_force_install
 
 - name: Install metallb l2 mode manifest
   kubernetes.core.k8s:
@@ -54,5 +53,6 @@
     kubeconfig: "{{ metallb_localhost_kubeconfig_path }}"
     validate_certs: true
     state: present
-  when: not metallb_is_installed or metallb_force_install
   delegate_to: localhost
+  with_items: "{{ metallb_ip_address_pools }}"
+  when: not metallb_is_installed or metallb_force_install

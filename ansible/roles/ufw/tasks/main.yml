@@ -23,19 +23,16 @@
     - { port: "443", proto: "udp", direction: "out", comment: "HTTPS/DoT" }
 
 - name: Allow outgoing ICMP request in before.rules
-  ansible.builtin.lineinfile:
-    dest: "/etc/ufw/before.rules"
-    regexp: "{{ item.regexp }}"
-    line: "{{ item.line }}"
+  ansible.builtin.blockinfile:
+    path: /etc/ufw/before.rules
     insertbefore: "# don't delete the 'COMMIT' line or these rules won't be processed"
-    state: "present"
+    block: |
+      -A ufw-before-output -p icmp --icmp-type destination-unreachable -j ACCEPT
+      -A ufw-before-output -p icmp --icmp-type time-exceeded -j ACCEPT
+      -A ufw-before-output -p icmp --icmp-type parameter-problem -j ACCEPT
+      -A ufw-before-output -p icmp --icmp-type echo-request -j ACCEPT
+      -A ufw-before-output -p udp -m udp --dport 33434:33523 -j ACCEPT
   notify: Reload ufw
-  with_items:
-    - {regexp: '^#?-A ufw-before-output -p icmp --icmp-type destination-unreachable -j ACCEPT', line: '-A ufw-before-output -p icmp --icmp-type destination-unreachable -j ACCEPT'}
-    - {regexp: '^#?-A ufw-before-output -p icmp --icmp-type time-exceeded -j ACCEPT', line: '-A ufw-before-output -p icmp --icmp-type time-exceeded -j ACCEPT'}
-    - {regexp: '^#?-A ufw-before-output -p icmp --icmp-type parameter-problem -j ACCEPT', line: '-A ufw-before-output -p icmp --icmp-type parameter-problem -j ACCEPT'}
-    - {regexp: '^#?-A ufw-before-output -p icmp --icmp-type echo-request -j ACCEPT', line: '-A ufw-before-output -p icmp --icmp-type echo-request -j ACCEPT'}
-    - {regexp: '^#?-A ufw-before-output -p udp -m udp --dport 33434:33523 -j ACCEPT', line: '-A ufw-before-output -p udp -m udp --dport 33434:33523 -j ACCEPT'}
 
 - name: Deny incoming
   community.general.ufw:

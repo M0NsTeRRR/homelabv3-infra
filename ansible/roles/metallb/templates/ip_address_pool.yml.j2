@@ -1,8 +1,10 @@
+---
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
-  name: private
+  name: "{{ item.name }}"
   namespace: metallb-system
 spec:
   addresses:
-  {{ metallb_ip_address_pool | to_nice_yaml | indent(2) }}
+  {{ item.pools | to_nice_yaml | indent(2) }}
+  autoAssign: {{ item.auto_assign }}

@@ -1,0 +1,36 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ argocd_hostname }}
+  namespace: argocd
+spec:
+  secretName: {{ argocd_hostname }}
+  issuerRef:
+    name: vault
+    kind: ClusterIssuer
+  dnsNames:
+    - {{ argocd_hostname }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-server
+  namespace: argocd
+spec:
+  rules:
+    - host: {{ argocd_hostname }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: argocd-server
+                port:
+                  name: http
+  tls:
+    - hosts:
+        - {{ argocd_hostname }}
+      secretName: {{ argocd_hostname }}
+  ingressClassName: {{ argocd_ingress_class }}

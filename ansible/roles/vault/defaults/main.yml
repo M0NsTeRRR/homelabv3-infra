@@ -1,0 +1,53 @@
+---
+# datasource=github-tags depName=hashicorp/vault
+vault_version: "v1.14.0"
+# datasource=github-tags depName=hashicorp/vault-helm
+vault_helm_version: "v0.25.0"
+# datasource=github-tags depName=hashicorp/vault-k8s
+vault_injector_version: "v1.2.1"
+vault_force_install: false
+vault_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
+vault_url: "https://vault.example.fr:8200"
+vault_root_token: "token"
+vault_ca_path: /etc/ssl/certs/test.pem
+vault_init_output_file_path: "/tmp/vault_init.json"
+vault_replicas: 3
+vault_ca_filename: "/tmp/ca.crt"
+vault_loadbalancer_ips: []
+vault_auth_methods: []
+vault_secrets_engine: []
+vault_policies: []
+vault_datas: []
+
+# vault server certificate subject alt name
+# DNS.1 = <domain that match vault_loadbalancer_ip>
+# DNS.2 = *.vault-internal
+# DNS.3 = *.vault.svc
+# DNS.4 = *.vault.svc.cluster.local
+# IP.1 = 127.0.0.1
+
+# vault injector certificate subject alt name
+# DNS.1 = vault-agent-injector-svc
+# DNS.2 = vault-agent-injector-svc.vault
+# DNS.3 = vault-agent-injector-svc.vault.svc
+# DNS.4 = vault-agent-injector-svc.vault.svc.cluster.local
+
+# vault_secrets_engine:
+#   - name: pki
+#     path: pki
+#     tunes:
+#       max-lease-ttl: 8760h
+# vault_auth_methods:
+#   - name: kubernetes
+#     path: kubernetes
+# vault_policies:
+#   - path: "pki*"
+#     capabilities:
+#       - read
+#       - list
+# vault_datas:
+#   - path: test/mysecret
+#     data:
+#       key1: val1
+#     args:
+#       key1: val1

@@ -1,42 +1,27 @@
 ---
-- name: Check if cilium is already installed
-  ansible.builtin.stat:
-    path: /usr/local/bin/cilium
-  register: cilium_install
-
 - name: Detect machine architecture
   ansible.builtin.set_fact:
     cilium_arch: "{% if ansible_architecture == 'x86_64' %}amd64{% else %}arm64{% endif %}"
 
-- name: "Download cilium-cli binary version {{ cilium_cli_version }}"
-  ansible.builtin.get_url:
-    url: "https://github.com/cilium/cilium-cli/releases/download/{{ cilium_cli_version }}/cilium-linux-{{ cilium_arch }}.tar.gz"
-    checksum: "sha256:https://github.com/cilium/cilium-cli/releases/download/{{ cilium_cli_version }}/cilium-linux-{{ cilium_arch }}.tar.gz.sha256sum"
-    dest: /tmp/cilium-cli.tar.gz
-    owner: root
-    group: root
-    mode: "0700"
-  when: not cilium_install.stat.exists or cilium_force_install
-
-- name: Extract cilium binary
-  ansible.builtin.unarchive:
-    src: /tmp/cilium-cli.tar.gz
-    dest: /usr/local/bin
-    remote_src: true
-  when: not cilium_install.stat.exists or cilium_force_install
-
-- name: Install cilium
-  ansible.builtin.command: cilium install
-  environment:
-    KUBECONFIG: /etc/k3s/kubeconfig
-  changed_when: true
-  when: not cilium_install.stat.exists or cilium_force_install
+- name: Add cilium helm repo
+  kubernetes.core.helm_repository:
+    name: cilium
+    repo_url: https://helm.cilium.io/
+    kubeconfig: "{{ cilium_localhost_kubeconfig_path }}"
+    validate_certs: true
+  delegate_to: localhost
   run_once: true
 
-- name: Wait until cilium is installed
-  ansible.builtin.command: cilium status --wait
-  environment:
-    KUBECONFIG: /etc/k3s/kubeconfig
-  changed_when: false
-  when: not cilium_install.stat.exists or cilium_force_install
+- name: Deploy cilium chart
+  kubernetes.core.helm:
+    name: cilium
+    chart_ref: cilium/cilium
+    chart_version: "{{ cilium_version[1:] }}"
+    release_namespace: kube-system
+    release_values: "{{ lookup('ansible.builtin.template', 'helm-values.yml.j2') | from_yaml }}"
+    update_repo_cache: true
+    wait: true
+    kubeconfig: "{{ cilium_localhost_kubeconfig_path }}"
+    validate_certs: true
+  delegate_to: localhost
   run_once: true

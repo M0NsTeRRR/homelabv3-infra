@@ -1,0 +1,21 @@
+---
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: vault
+  namespace: cert-manager
+spec:
+  vault:
+    path: pki/sign/{{ cert_manager_vault_sign }}
+    server: {{ cert_manager_vault_server }}
+    caBundle: {{ lookup('ansible.builtin.file', cert_manager_vault_server_ca) | b64encode }}
+    auth:
+      kubernetes:
+        role: {{ cert_manager_vault_service_account }}
+        mountPath: /v1/auth/kubernetes
+        serviceAccountRef:
+          name: {{ cert_manager_vault_service_account }}
+    solvers:
+      - http01:
+          ingress:
+            ingressClassName: traefik

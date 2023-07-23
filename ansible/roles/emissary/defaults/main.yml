@@ -1,5 +1,0 @@
----
-# datasource=github-tags depName=emissary-ingress/emissary
-emissary_version: "v3.7.1"
-emissary_force_install: false
-emissary_localhost_kubeconfig_path: /home/user/.kube/kubeconfig

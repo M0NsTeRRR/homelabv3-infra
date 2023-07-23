@@ -32,6 +32,7 @@ self_signed_cert_pdns: {}
 #       port: 443
 #       pdns_zone: example.com
 
-# self_signed_cert_pdns
-#  hostname: dns1.example.com
+# self_signed_cert_pdns:
+#  url: https://dns1.example.com
 #  api_key: azertyuiop
+#  ca_path: /etc/ssl/certs/test.pem

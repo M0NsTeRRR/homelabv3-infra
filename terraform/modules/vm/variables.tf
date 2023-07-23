@@ -45,12 +45,6 @@ variable "cores" {
   default     = 1
 }
 
-variable "vcpus" {
-  description = "Number of vcpus"
-  type        = number
-  default     = 1
-}
-
 variable "memory" {
   description = "Number of memory in MB"
   type        = number
