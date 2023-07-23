@@ -30,7 +30,7 @@ jobs:
   octodns-deploy:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
-    needs: [lint]
+    needs: [octodns-lint]
     steps:
     - uses: actions/checkout@v3
     - name: Set up Python
