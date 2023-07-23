@@ -8,7 +8,7 @@ on:
       - .github/workflows/terraform-lint.yml
 
 jobs:
-  lint:
+  terraform-lint:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3

@@ -11,7 +11,7 @@ env:
   SCALEWAY_SECRET_KEY: ${{ secrets.SCALEWAY_SECRET_KEY }}
 
 jobs:
-  lint:
+  octodns-lint:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,7 +27,7 @@ jobs:
     - name: Validate octodns config
       run: |
         octodns-validate --config-file=./octodns/config.yaml
-  deploy:
+  octodns-deploy:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     needs: [lint]

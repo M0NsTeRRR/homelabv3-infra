@@ -8,7 +8,7 @@ on:
       - .github/workflows/packer-lint.yml
 
 jobs:
-  lint:
+  packer-lint:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
