@@ -132,25 +132,25 @@ powerdns_authoritative_records:
     a: 192.168.40.11
     aaaa: 2a0c:b641:02c0:140::11
     sshfp:
-      - algorithm: 1
+      - algorithm: 4
         type: 2
-        fingerprint: 87F405D9402C796BD079E92589011506060E05B980CD7A52B3708D4B36E1BC35
+        fingerprint: e5c919e2beb198de2f21437535bb18faeb30ff04cda3c343fadde8e5bf780cf6
     rdns: true
   - hostname: server2.unicornafk.fr.
     a: 192.168.40.12
     aaaa: 2a0c:b641:02c0:140::12
     sshfp:
-      - algorithm: 1
+      - algorithm: 4
         type: 2
-        fingerprint: 09981845F490922BA46E75A167EED56D5296B05B9CD6D3D217CAD9E0D6D690BE
+        fingerprint: 0d58c5881c9736d0789a42e1559ad9947ce0c6bf76b5ad8aba3f97442cddc614
     rdns: true
   - hostname: server3.unicornafk.fr.
     a: 192.168.40.13
     aaaa: 2a0c:b641:02c0:140::13
     sshfp:
-      - algorithm: 1
+      - algorithm: 4
         type: 2
-        fingerprint: DD4AAF72E9243FE5F2C5CC87498BE75AE880A0E6EA534A060308CE7213A4F286
+        fingerprint: 65993f30e1a204306160a66489e9a86e0f072f738cc8d193a10a8a8eb92d5036
     rdns: true
   - hostname: server4.unicornafk.fr.
     a: 192.168.40.14
