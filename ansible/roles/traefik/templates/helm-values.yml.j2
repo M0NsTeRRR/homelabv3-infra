@@ -13,3 +13,5 @@ providers:
       enabled: true
 ingressClass:
   enabled: {{ traefik_default_ingress_class }}
+additionalArguments:
+  - "--entrypoints.web.http.redirections.entryPoint.to=websecure"

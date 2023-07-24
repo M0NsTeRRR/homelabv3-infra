@@ -88,7 +88,7 @@ public_vault_datas:
     data:
       issuing_certificates: "{{ '{{' }}cluster_aia_path{{ '}}' }}/issuer/{{ '{{' }}issuer_id{{ '}}' }}/der"
       crl_distribution_points: "{{ '{{' }}cluster_aia_path{{ '}}' }}/issuer/{{ '{{' }}issuer_id{{ '}}' }}/crl/der"
-      ocsp_servers: "{{ '{{' }}cluster_path{{ '}}' }}/ocsp"
+      ocsp_servers: "{{ '{{' }}cluster_aia_path{{ '}}' }}/ocsp"
       enable_templating: true
   - path: pki/config/acme
     data:
@@ -142,6 +142,7 @@ external_dns_envs:
 external_dns_args: "--source=ingress --provider=scaleway {% for domain in domains %}--domain-filter={{ domain }}{% if not loop.last %} {% endif %}{% endfor %} --registry=txt --txt-owner-id=homelab.kubernetes --ingress-class=traefik-external --default-targets=82.65.135.80 --default-targets=2a0c:b641:2c0:110::100"
 argocd_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 argocd_hostname: argocd.unicornafk.fr
+argocd_ingress_cluster_issuer: vault
 argocd_ingress_class: traefik-internal
 argocd_repository_name: homelab
 argocd_repository_url: https://github.com/M0NsTeRRR/homelabv3-infra

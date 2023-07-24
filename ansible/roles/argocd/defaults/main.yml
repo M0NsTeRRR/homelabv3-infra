@@ -5,6 +5,7 @@ argocd_force_install: false
 argocd_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
 argocd_hostname: argocd.example.fr
 argocd_admin_password: test
+argocd_ingress_cluster_issuer: nginx
 argocd_ingress_class: nginx
 argocd_repository_name: test
 argocd_repository_url: https://git.example.fr/test
