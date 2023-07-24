@@ -82,7 +82,7 @@ public_vault_datas:
       pem_bundle: "{{ lookup('ansible.builtin.file', ca_certificates_local_path_ca_certificate) }}\n{{ lookup('ansible.builtin.file', certs_dir_role_path ~ 'intermediate/vault/vault.crt') }}\n{{ lookup('ansible.builtin.file', certs_dir_role_path ~ 'intermediate/vault/vault.key') }}"
   - path: pki/config/cluster
     data:
-      path: https://vault-active.vault.svc:8200/v1/pki
+      path: https://vault.unicornafk.fr:8200/v1/pki
       aia_path: https://vault.unicornafk.fr:8200/v1/pki
   - path: pki/config/urls
     data:
@@ -97,7 +97,7 @@ public_vault_datas:
     data:
       allowed_domains: unicornafk.fr
       allow_subdomains: true
-      ttl: 72h
+      ttl: 720h
       key_type: rsa
       key_bits: 4096
       signature_bits: 512
