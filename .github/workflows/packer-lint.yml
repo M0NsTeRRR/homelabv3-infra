@@ -6,6 +6,7 @@ on:
     paths:
       - packer/**
       - .github/workflows/packer-lint.yml
+  pull_request:
 
 jobs:
   packer-lint:

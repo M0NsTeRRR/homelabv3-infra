@@ -6,6 +6,7 @@ on:
     paths:
       - octodns/**
       - .github/workflows/octodns.yml
+  pull_request:
 
 env:
   SCALEWAY_SECRET_KEY: ${{ secrets.SCALEWAY_SECRET_KEY }}

@@ -6,6 +6,7 @@ on:
     paths:
       - .github/renovate.json5
       - .github/workflows/renovatebot-check.yml
+  pull_request:
 
 env:
   LOG_LEVEL: info

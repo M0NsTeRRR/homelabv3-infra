@@ -7,6 +7,10 @@
   dependencyDashboardAutoclose: true,
   automergeType: 'pr',
   platformAutomerge: true,
+  "timezone": "Europe/Paris",
+  "schedule": [
+    "before 9pm on friday"
+  ],
   terragrunt: {
     enabled: false
   },

@@ -6,6 +6,7 @@ on:
     paths:
       - ansible/**
       - .github/workflows/ansible-lint.yml
+  pull_request:
 
 jobs:
   ansible-lint:
