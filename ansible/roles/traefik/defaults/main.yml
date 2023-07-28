@@ -2,7 +2,7 @@
 # datasource=github-tags depName=traefik/traefik
 traefik_version: "v2.10.4"
 # datasource=github-tags depName=traefik/traefik-helm-chart
-traefik_chart_version: "v23.1.0"
+traefik_chart_version: "v23.2.0"
 traefik_force_install: false
 traefik_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
 traefik_external_ips: []
