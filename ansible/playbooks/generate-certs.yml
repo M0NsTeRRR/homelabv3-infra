@@ -53,6 +53,10 @@
         subject_alt_name: "{{ subject_alt_name + ['IP:' + lookup('community.general.dig', common_name, 'qtype=AAAA')] }}"
       when: reverse_ipv6
 
+    - name: Add email to subject_alt_name
+      ansible.builtin.set_fact:
+        subject_alt_name: "{{ subject_alt_name + ['email:' + admin_email] }}"
+
     - name: Generate cert authority OpenSSL private key
       community.crypto.openssl_privatekey:
         path: "{{ certs_dir }}{{ organization }}.key"
@@ -67,8 +71,9 @@
         privatekey_passphrase: "{{ ca_private_passphrase }}"
         country_name: "{{ country }}"
         organization_name: "{{ organization }}"
-        email_address: "{{ admin_email }}"
         common_name: "{{ organization }}"
+        subject_alt_name:
+          - "email:{{ admin_email }}"
         use_common_name_for_san: false
         basic_constraints:
           - CA:TRUE
@@ -107,8 +112,9 @@
         privatekey_passphrase: "{{ ca_private_passphrase }}"
         country_name: "{{ country }}"
         organization_name: "{{ signing_certificate }}.{{ organization }}"
-        email_address: "{{ admin_email }}"
         common_name: "{{ signing_certificate }}.{{ organization }}"
+        subject_alt_name:
+          - "email:{{ admin_email }}"
         use_common_name_for_san: false
         basic_constraints:
           - CA:TRUE
@@ -148,7 +154,6 @@
         privatekey_path: "{{ certs_dir }}{{ signing_certificate }}/{{ common_name }}/{{ common_name }}.key"
         country_name: "{{ country }}"
         organization_name: "{{ organization }}"
-        email_address: "{{ admin_email }}"
         common_name: "{{ common_name }}"
         subject_alt_name: "{{ subject_alt_name }}"
         key_usage: "{{ client_key_usage }}"

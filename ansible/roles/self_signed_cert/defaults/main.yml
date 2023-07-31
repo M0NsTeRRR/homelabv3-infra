@@ -10,7 +10,6 @@ self_signed_cert_pdns: {}
 #   - common_name: "host.example.com"
 #     country: "France"
 #     organization: "example"
-#     admin_email: "admin@example.com"
 #     ca_cert_local_path: "./certs/ca.crt"
 #     intermediate_cert_local_path: "./certs/ca.crt"
 #     intermediate_private_local_path: "./certs/ca.key"
@@ -24,6 +23,7 @@ self_signed_cert_pdns: {}
 #     generate_pkcs12: true
 #     subject_alt_name:
 #       - NS:example.com
+#       - email:admin@example.com
 #     systemd_services:
 #       - {name: app, state: restarted}
 #     force_renew: true
