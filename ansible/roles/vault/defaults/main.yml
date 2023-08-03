@@ -9,6 +9,7 @@ vault_force_install: false
 vault_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
 vault_url: "https://vault.example.fr:8200"
 vault_root_token: "token"
+vault_unseal_keys: []
 vault_ca_path: /etc/ssl/certs/test.pem
 vault_init_output_file_path: "/tmp/vault_init.json"
 vault_replicas: 3

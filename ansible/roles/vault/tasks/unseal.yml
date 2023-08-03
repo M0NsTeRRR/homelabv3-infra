@@ -1,4 +1,14 @@
 ---
+- name: "Check seal status of vault-{{ item }}"
+  kubernetes.core.k8s_exec:
+    namespace: vault
+    pod: "vault-{{ item }}"
+    command: vault status
+    kubeconfig: "{{ vault_localhost_kubeconfig_path }}"
+    validate_certs: true
+  register: vault_pod_unseal_status
+  delegate_to: localhost
+
 - name: "Unseal vault-{{ item }}"
   kubernetes.core.k8s_exec:
     namespace: vault
@@ -8,6 +18,7 @@
     validate_certs: true
   no_log: true
   delegate_to: localhost
-  with_items: "{{ vault_init_parsed.unseal_keys_hex[:3] }}"
+  when: vault_pod_unseal_status.result.rc == 2
+  with_items: "{{ vault_unseal_keys[:3] }}"
   loop_control:
     loop_var: unseal_key_hex

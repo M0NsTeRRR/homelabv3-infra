@@ -89,6 +89,10 @@
   ansible.builtin.include_tasks: init.yml
   when: not vault_is_installed or vault_force_install
 
+- name: Unseal vault
+  ansible.builtin.include_tasks: unseal.yml
+  with_sequence: start=0 end="{{ vault_replicas - 1 }}"
+
 - name: Set vault secret engine
   ansible.builtin.include_tasks: secret_engine.yml
 
