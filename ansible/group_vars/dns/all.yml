@@ -227,10 +227,10 @@ powerdns_authoritative_records:
     rdns: true
   # CNAME
   - hostname: ntp1.unicornafk.fr.
-    cname: dns1.unicornafk.fr.
+    cname: dhcp1.unicornafk.fr.
     rdns: false
   - hostname: ntp2.unicornafk.fr.
-    cname: dns2.unicornafk.fr.
+    cname: dhcp2.unicornafk.fr.
     rdns: false
   - hostname: status.unicornafk.fr.
     cname: vps1.unicornafk.fr.

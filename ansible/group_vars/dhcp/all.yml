@@ -169,8 +169,12 @@ kea_dhcp_ipv6_subnets:
       - hostname: serveur-thomas
         hw_address: 1c:83:41:28:95:c4
         ip_address: 2a0c:b641:02c0:160::201
-kea_dhcp_ipv4_ntp_servers: "{{ ntp_servers.ipv4 }}"
-kea_dhcp_ipv6_ntp_servers: "{{ ntp_servers.ipv6 }}"
+kea_dhcp_ipv4_ntp_servers:
+  - 192.168.10.23
+  - 192.168.10.24
+kea_dhcp_ipv6_ntp_servers:
+  - 2a0c:b641:02c0:110::23
+  - 2a0c:b641:02c0:110::24
 kea_dhcp_ipv4_unifi_controller: 192.168.20.50
 kea_dhcp_ipv6_unifi_controller: 2a0c:b641:02c0:120::50
 
