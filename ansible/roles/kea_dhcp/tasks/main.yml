@@ -9,7 +9,6 @@
   with_items:
     - { port: "67", proto: udp, direction: "in", comment: "Kea-dhcp DHCP (ansible_managed)" }
     - { port: "547", proto: udp, direction: "in", comment: "Kea-dhcp DHCPv6 (ansible_managed)" }
-    - { port: "8443", proto: tcp, direction: "in", comment: "Kea-dhcp ctrl-agent (ansible_managed)" }
     - { port: "8080", proto: tcp, direction: "in", comment: "Kea-dhcp HA (ansible_managed)" }
     - { port: "8080", proto: tcp, direction: "out", comment: "Kea-dhcp HA (ansible_managed)" }
 
@@ -50,12 +49,6 @@
     update_cache: true
     state: "{{ kea_dhcp_hooks_package_state }}"
 
-- name: Install isc-kea-ctrl-agent
-  ansible.builtin.apt:
-    name: "isc-kea-ctrl-agent{% if kea_dhcp_agent_version is defined %}={{ kea_dhcp_agent_version }}{% endif %}"
-    update_cache: true
-    state: "{{ kea_dhcp_agent_package_state }}"
-
 - name: Install isc-kea-dhcp4
   ansible.builtin.apt:
     name: "isc-kea-dhcp4{% if kea_dhcp_v4_version is defined %}={{ kea_dhcp_v4_version }}{% endif %}"
@@ -78,15 +71,6 @@
   with_items:
     - /etc/kea
     - /usr/lib/x86_64-linux-gnu/kea
-
-- name: Configure kea-ctrl-agent
-  ansible.builtin.template:
-    src: kea-ctrl-agent.conf.j2
-    dest: /etc/kea/kea-ctrl-agent.conf
-    owner: _kea
-    group: _kea
-    mode: "0640"
-  notify: Restart isc-kea-ctrl-agent
 
 - name: Configure kea-dhcp4-server
   ansible.builtin.template:

@@ -4,8 +4,6 @@ kea_dhcp_repo_version: "Kea-2.5"
 kea_dhcp_repo_gpg_key: D4FEAEAEFBD81FB9
 # kea_dhcp_hooks_version:
 kea_dhcp_hooks_package_state: latest
-# kea_dhcp_agent_version:
-kea_dhcp_agent_package_state: latest
 # kea_dhcp_v4_version:
 kea_dhcp_v4_package_state: latest
 # kea_dhcp_v6_version:
