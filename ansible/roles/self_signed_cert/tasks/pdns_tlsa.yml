@@ -1,7 +1,7 @@
 ---
 - name: Get certificate info
   community.crypto.x509_certificate_info:
-    path: "{{ item.cert_remote_folder[0].path }}/{{ item.common_name }}.crt"
+    path: "{{ tlsa.cert_path }}"
   vars:
     ansible_python_interpreter: "{{ self_signed_cert_venv }}/bin/python"
   register: self_signed_cert_tlsa_info
@@ -18,6 +18,4 @@
       Content-Type: application/json
       X-Api-Key: "{{ self_signed_cert_pdns.api_key }}"
     ca_path: "{{ self_signed_cert_pdns.ca_path }}"
-  with_items: "{{ item.tlsa }}"
-  loop_control:
-    loop_var: tlsa
+  delegate_to: localhost

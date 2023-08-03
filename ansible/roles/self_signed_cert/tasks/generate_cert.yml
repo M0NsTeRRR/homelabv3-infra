@@ -142,3 +142,6 @@
 - name: Update Pdns TLSA entry
   ansible.builtin.include_tasks: pdns_tlsa.yml
   when: self_signed_cert_pdns and "tlsa" in item
+  with_items: "{{ item.tlsa }}"
+  loop_control:
+    loop_var: tlsa

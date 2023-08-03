@@ -6,6 +6,10 @@ vps2.unicornafk.fr
 192.168.10.21 ipv6=2a0c:b641:02c0:110::21 hostname=dns1.unicornafk.fr.
 192.168.10.22 ipv6=2a0c:b641:02c0:110::22 hostname=dns2.unicornafk.fr.
 
+[dhcp]
+dhcp1.unicornafk.fr
+dhcp2.unicornafk.fr
+
 [kubernetes:children]
 kubernetes_master
 kubernetes_worker

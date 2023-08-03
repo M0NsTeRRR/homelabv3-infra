@@ -1,0 +1,34 @@
+---
+- name: Daemon-reload
+  ansible.builtin.systemd:
+    daemon_reload: true
+
+- name: Enable isc-kea-dhcp4-server
+  ansible.builtin.systemd:
+    name: isc-kea-dhcp4-server
+    enabled: true
+
+- name: Enable isc-kea-dhcp4-server
+  ansible.builtin.systemd:
+    name: isc-kea-dhcp4-server
+    enabled: true
+
+- name: Enable isc-kea-dhcp6-server
+  ansible.builtin.systemd:
+    name: isc-kea-dhcp6-server
+    enabled: true
+
+- name: Restart isc-kea-ctrl-agent
+  ansible.builtin.systemd:
+    name: isc-kea-ctrl-agent
+    state: restarted
+
+- name: Restart isc-kea-dhcp4-server
+  ansible.builtin.systemd:
+    name: isc-kea-dhcp4-server
+    state: restarted
+
+- name: Restart isc-kea-dhcp6-server
+  ansible.builtin.systemd:
+    name: isc-kea-dhcp6-server
+    state: restarted

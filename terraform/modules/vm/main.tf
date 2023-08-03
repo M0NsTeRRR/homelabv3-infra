@@ -23,7 +23,7 @@ resource "proxmox_cloud_init_disk" "ci" {
 }
 
 resource "proxmox_vm_qemu" "vm" {
-  name        = var.vm_hostname
+  name        = "${var.vm_hostname}.${var.domain}"
   target_node = var.target_node
 
   agent = 1

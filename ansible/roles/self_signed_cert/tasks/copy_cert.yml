@@ -24,7 +24,7 @@
 - name: "Copy fullchain.crt certificate {{ item.common_name }}"
   ansible.builtin.copy:
     src: "/tmp/{{ item.common_name }}-fullchain.crt"
-    dest: "{{ folder.path }}"
+    dest: "{{ folder.path }}/{{ folder.filename }}-fullchain.crt"
     mode: "0640"
     owner: "{{ folder.owner }}"
     group: "{{ folder.group }}"
@@ -34,7 +34,7 @@
 - name: "Copy .crt certificate {{ item.common_name }}"
   ansible.builtin.copy:
     src: "/tmp/{{ item.common_name }}.crt"
-    dest: "{{ folder.path }}"
+    dest: "{{ folder.path }}/{{ folder.filename }}.crt"
     mode: "0640"
     owner: "{{ folder.owner }}"
     group: "{{ folder.group }}"
@@ -44,7 +44,7 @@
 - name: "Copy .key certificate {{ item.common_name }}"
   ansible.builtin.copy:
     src: "/tmp/{{ item.common_name }}.key"
-    dest: "{{ folder.path }}"
+    dest: "{{ folder.path }}/{{ folder.filename }}.key"
     mode: "0600"
     owner: "{{ folder.owner }}"
     group: "{{ folder.group }}"

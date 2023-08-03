@@ -1,0 +1,55 @@
+---
+# datasource=gitlab-tags depName=isc-projects/kea
+kea_dhcp_repo_version: "Kea-2.5"
+kea_dhcp_repo_gpg_key: D4FEAEAEFBD81FB9
+# kea_dhcp_hooks_version:
+kea_dhcp_hooks_package_state: latest
+# kea_dhcp_agent_version:
+kea_dhcp_agent_package_state: latest
+# kea_dhcp_v4_version:
+kea_dhcp_v4_package_state: latest
+# kea_dhcp_v6_version:
+kea_dhcp_v6_package_state: latest
+# kea_dhcp_psycopg2_binary_version:
+kea_dhcp_psycopg2_binary_package_state: latest
+kea_dhcp_venv: "/tmp/venv_kea_dhcp"
+kea_dhcp_api_user: ""
+kea_dhcp_api_password: ""
+kea_dhcp_local_path_ca_certificate: "/tmp/ca.crt"
+kea_dhcp_group: dhcp
+kea_dhcp_dns_group: dns
+kea_dhcp_dns_domains: []
+kea_dhcp_ipv4_subnets: []
+kea_dhcp_ipv6_subnets: []
+kea_dhcp_ipv4_ntp_servers: []
+kea_dhcp_ipv6_ntp_servers: []
+kea_dhcp_ipv4_unifi_controller: ""
+kea_dhcp_ipv6_unifi_controller: ""
+
+# kea_dhcp_dns_domains:
+#   - example.com
+# kea_dhcp_ipv4_subnets:
+#   - subnet: 192.168.50.0/24
+#     pools:
+#       - start: 192.168.50.201
+#         end: 192.168.50.240
+#     router: 192.168.50.2
+#     reservations:
+#       - hostname: samsung-tv
+#         hw_address: 44:5c:e9:9d:8b:28
+#         ip_address: 192.168.50.91
+# kea_dhcp_ipv6_subnets:
+#   - subnet: 2a0c:b641:02c0:150::/64
+#     pools:
+#       - start: 2a0c:b641:02c0:150::201
+#         end: 2a0c:b641:02c0:150::240
+#     reservations:
+#       - hostname: samsung-tv
+#         hw_address: 44:5c:e9:9d:8b:28
+#         ip_address: 2a0c:b641:02c0:150::91
+# kea_dhcp_ipv4_ntp_servers:
+#   - 192.168.0.1
+# kea_dhcp_ipv6_ntp_servers:
+#   - 2a0c:b641:02c0::
+# kea_dhcp_ipv4_unifi_controller: 192.168.0.1
+# kea_dhcp_ipv6_unifi_controller: 2a0c:b641:02c0::

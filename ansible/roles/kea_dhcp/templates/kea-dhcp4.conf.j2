@@ -1,0 +1,127 @@
+{
+    "Dhcp4": {
+        "hooks-libraries": [
+            {
+                "library": "/usr/lib/{{ ansible_architecture }}-linux-gnu/kea/hooks/libdhcp_stat_cmds.so"
+            },
+            {
+                "library": "/usr/lib/{{ ansible_architecture }}-linux-gnu/kea/hooks/libdhcp_lease_cmds.so",
+                "parameters": { }
+            },
+            {
+                "library": "/usr/lib/{{ ansible_architecture }}-linux-gnu/kea/hooks/libdhcp_ha.so",
+                "parameters": {
+                    "high-availability": [{
+                        "this-server-name": "{{ inventory_hostname }}",
+                        "mode": "hot-standby",
+                        "heartbeat-delay": 10000,
+                        "max-response-delay": 10000,
+                        "max-ack-delay": 5000,
+                        "max-unacked-clients": 5,
+                        "trust-anchor": "/etc/kea/ssl/ca.crt",
+                        "cert-file": "/etc/kea/ssl/kea-fullchain.crt",
+                        "key-file": "/etc/kea/ssl/kea.key",
+                        "cert-required": true,
+                        "peers": [
+                            {% for host in ansible_play_hosts %}{
+                                "name": "{{ host }}",
+                                "url": "https://{{ lookup('dig', host) }}:8080/",
+                                "role": "{% if groups[kea_dhcp_group][0] == host %}primary{% else %}standby{% endif %}",
+                                "auto-failover": true
+                            }{% if not loop.last %},{% endif %}
+                            {% endfor %}
+                        ]
+                    }]
+                }
+            }
+        ],
+        "interfaces-config": {
+            "interfaces": ["{{ ansible_default_ipv4.interface }}"]
+        },
+        "control-socket": {
+            "socket-type": "unix",
+            "socket-name": "/opt/kea/kea-dhcp4-ctrl.sock"
+        },
+        "lease-database": {
+            "type": "memfile",
+            "lfc-interval": 3600
+        },
+        "expired-leases-processing": {
+            "reclaim-timer-wait-time": 10,
+            "flush-reclaimed-timer-wait-time": 25,
+            "hold-reclaimed-time": 3600,
+            "max-reclaim-leases": 100,
+            "max-reclaim-time": 250,
+            "unwarned-reclaim-cycles": 5
+        },
+        "renew-timer": 1000,
+        "rebind-timer": 2000,
+        "valid-lifetime": 4000,
+        "option-def": [
+            {
+                "name": "unifi-address",
+                "code": 1,
+                "space": "ubnt",
+                "type": "ipv4-address",
+                "encapsulate": ""
+            }
+        ],
+        "option-data": [
+            {
+                "name": "domain-name-servers",
+                "data": "{{ groups[kea_dhcp_dns_group]|join(',') }}"
+            },
+            {
+                "name": "domain-search",
+                "data": "{{ kea_dhcp_dns_domains|join(',') }}"
+            },
+            {
+                "name": "ntp-servers",
+                "data": "{{ kea_dhcp_ipv4_ntp_servers|join(',') }}"
+            },
+            {	"name": "unifi-address",
+                "space": "ubnt",
+                "code": 1,
+                "data": "{{ kea_dhcp_ipv4_unifi_controller }}"
+            }
+        ],
+        "subnet4": [
+            {% for subnet in kea_dhcp_ipv4_subnets %}{
+                "subnet": "{{ subnet.subnet }}",
+                "pools": [
+                    {% for pool in subnet.pools %}{ 
+                        "pool": "{{ pool.start }} - {{ pool.end }}" 
+                    }{% if not loop.last %},{% endif %}
+                    {% endfor %} 
+                ],
+                "option-data": [
+                    {
+                        "name": "routers",
+                        "data": "{{ subnet.router }}"
+                    }
+                ],
+                "reservations": [
+                    {% for reservation in subnet.reservations %}{
+                        "hw-address": "{{ reservation.hw_address }}",
+                        "ip-address": "{{ reservation.ip_address }}",
+                        "hostname": "{{ reservation.hostname }}"
+                    }{% if not loop.last %},{% endif %}
+                    {% endfor %}
+                ]
+            }{% if not loop.last %},{% endif %}
+            {% endfor %}
+        ],
+        "loggers": [
+        {
+            "name": "kea-dhcp4",
+            "output_options": [
+                {
+                    "output": "stdout",
+                }
+            ],
+            "severity": "INFO",
+            "debuglevel": 0
+        }
+      ]
+    }
+}

@@ -1,0 +1,241 @@
+---
+kea_dhcp_group: dhcp
+kea_dhcp_dns_group: dns
+kea_dhcp_dns_domains: "{{ local_domains }}"
+kea_dhcp_local_path_ca_certificate: "{{ ca_certificates_local_path_ca_certificate }}"
+kea_dhcp_ipv4_subnets:
+  - subnet: 192.168.20.0/24
+    pools:
+      - start: 192.168.20.201
+        end: 192.168.20.240
+    router: 192.168.20.2
+    reservations:
+      - hostname: ap1
+        hw_address: 18:E8:29:A3:24:10
+        ip_address: 192.168.20.51
+      - hostname: pi1
+        hw_address: b8:27:eb:e3:8c:53
+        ip_address: 192.168.20.52
+  - subnet: 192.168.30.0/24
+    pools:
+      - start: 192.168.30.201
+        end: 192.168.30.240
+    router: 192.168.30.2
+    reservations:
+      - hostname: desktop-ludo
+        hw_address: 00:02:C9:4E:83:8E
+        ip_address: 192.168.30.21
+      - hostname: laptop-ludo
+        hw_address: 30:9c:23:8f:c8:de
+        ip_address: 192.168.30.22
+  - subnet: 192.168.50.0/24
+    pools:
+      - start: 192.168.50.201
+        end: 192.168.50.240
+    router: 192.168.50.2
+    reservations:
+      - hostname: grandstream1
+        hw_address: c0:74:ad:36:a5:bb
+        ip_address: 192.168.50.81
+      - hostname: samsung-tv
+        hw_address: 44:5c:e9:9d:8b:28
+        ip_address: 192.168.50.91
+      - hostname: nvidia-shield
+        hw_address: 48:b0:2d:2c:15:69
+        ip_address: 192.168.50.92
+      - hostname: hs110-rack1
+        hw_address: 98:DA:C4:BE:E8:89
+        ip_address: 192.168.50.101
+      - hostname: hs110-rack2
+        hw_address: 98:DA:C4:BE:E8:96
+        ip_address: 192.168.50.102
+      - hostname: hs110-chambre1
+        hw_address: 98:DA:C4:BE:E9:EA
+        ip_address: 192.168.50.103
+      - hostname: xiaomi-bulb-chambre1
+        hw_address: 04:cf:8c:b5:1e:17
+        ip_address: 192.168.50.111
+      - hostname: xiaomi-vaccum
+        hw_address: 64:90:c1:6a:f0:98
+        ip_address: 192.168.50.112
+      - hostname: xiaomi-bulb-salon
+        hw_address: EC:4D:3E:28:C2:23
+        ip_address: 192.168.50.113
+      - hostname: xiaomi-light-bar
+        hw_address: b4:60:ed:45:50:00
+        ip_address: 192.168.50.114
+      - hostname: xiaomi-led-chambre1
+        hw_address: 58:b6:23:ed:62:ce
+        ip_address: 192.168.50.115
+      - hostname: xiaomi-led-bar
+        hw_address: 58:b6:23:ed:8a:df
+        ip_address: 192.168.50.116
+      - hostname: xiaomi-lamp-salon
+        hw_address: ec:4d:3e:56:b5:9d
+        ip_address: 192.168.50.117
+      - hostname: xiaomi-lamp-cuisine
+        hw_address: b4:60:ed:13:99:f9
+        ip_address: 192.168.50.118
+      - hostname: xiaomi-bulb-entree
+        hw_address: EC:4D:3E:2A:C7:18
+        ip_address: 192.168.50.119
+  - subnet: 192.168.60.0/24
+    pools:
+      - start: 192.168.60.201
+        end: 192.168.60.240
+    router: 192.168.60.2
+    reservations:
+      - hostname: serveur-thomas
+        hw_address: 1c:83:41:28:95:c4
+        ip_address: 192.168.60.201
+kea_dhcp_ipv6_subnets:
+  - subnet: 2a0c:b641:02c0:120::/64
+    pools:
+      - start: 2a0c:b641:02c0:120::201
+        end: 2a0c:b641:02c0:120::240
+    reservations:
+      - hostname: ap1
+        hw_address: 18:E8:29:A3:24:10
+        ip_address: 2a0c:b641:02c0:120::51
+      - hostname: pi1
+        hw_address: b8:27:eb:e3:8c:53
+        ip_address: 2a0c:b641:02c0:120::32
+  - subnet: 2a0c:b641:02c0:130::/64
+    pools:
+      - start: 2a0c:b641:02c0:130::201
+        end: 2a0c:b641:02c0:130::240
+    reservations:
+      - hostname: desktop-ludo
+        hw_address: 00:02:C9:4E:83:8E
+        ip_address: 2a0c:b641:02c0:130::21
+      - hostname: laptop-ludo
+        hw_address: 30:9c:23:8f:c8:de
+        ip_address: 2a0c:b641:02c0:130::22
+  - subnet: 2a0c:b641:02c0:150::/64
+    pools:
+      - start: 2a0c:b641:02c0:150::201
+        end: 2a0c:b641:02c0:150::240
+    reservations:
+      - hostname: grandstream1
+        hw_address: c0:74:ad:36:a5:bb
+        ip_address: 2a0c:b641:02c0:150::81
+      - hostname: samsung-tv
+        hw_address: 44:5c:e9:9d:8b:28
+        ip_address: 2a0c:b641:02c0:150::91
+      - hostname: nvidia-shield
+        hw_address: 48:b0:2d:2d:9c:09
+        ip_address: 2a0c:b641:02c0:150::92
+      - hostname: hs110-rack1
+        hw_address: 98:DA:C4:BE:E8:89
+        ip_address: 2a0c:b641:02c0:150::101
+      - hostname: hs110-rack2
+        hw_address: 98:DA:C4:BE:E8:96
+        ip_address: 2a0c:b641:02c0:150::102
+      - hostname: hs110-chambre1
+        hw_address: 98:DA:C4:BE:E9:EA
+        ip_address: 2a0c:b641:02c0:150::103
+      - hostname: xiaomi-bulb-chambre1
+        hw_address: 04:cf:8c:b5:1e:17
+        ip_address: 2a0c:b641:02c0:150::111
+      - hostname: xiaomi-vaccum
+        hw_address: 64:90:c1:6a:f0:98
+        ip_address: 2a0c:b641:02c0:150::112
+      - hostname: xiaomi-bulb-salon
+        hw_address: EC:4D:3E:28:C2:23
+        ip_address: 2a0c:b641:02c0:150::113
+      - hostname: xiaomi-light-bar
+        hw_address: b4:60:ed:45:50:00
+        ip_address: 2a0c:b641:02c0:150::114
+      - hostname: xiaomi-led-chambre1
+        hw_address: 58:b6:23:ed:62:ce
+        ip_address: 2a0c:b641:02c0:150::115
+      - hostname: xiaomi-led-bar
+        hw_address: 58:b6:23:ed:8a:df
+        ip_address: 2a0c:b641:02c0:150::116
+      - hostname: xiaomi-lamp-salon
+        hw_address: ec:4d:3e:56:b5:9d
+        ip_address: 2a0c:b641:02c0:150::117
+      - hostname: xiaomi-lamp-cuisine
+        hw_address: b4:60:ed:13:99:f9
+        ip_address: 2a0c:b641:02c0:150::118
+      - hostname: xiaomi-bulb-entree
+        hw_address: EC:4D:3E:2A:C7:18
+        ip_address: 2a0c:b641:02c0:150::119
+  - subnet: 2a0c:b641:02c0:160::/64
+    pools:
+      - start: 2a0c:b641:02c0:160::201
+        end: 2a0c:b641:02c0:160::240
+    reservations:
+      - hostname: serveur-thomas
+        hw_address: 1c:83:41:28:95:c4
+        ip_address: 2a0c:b641:02c0:160::201
+kea_dhcp_ipv4_ntp_servers: "{{ ntp_servers.ipv4 }}"
+kea_dhcp_ipv6_ntp_servers: "{{ ntp_servers.ipv6 }}"
+kea_dhcp_ipv4_unifi_controller: 192.168.20.50
+kea_dhcp_ipv6_unifi_controller: 2a0c:b641:02c0:120::50
+
+nginx_configuration:
+  - server_name: "{{ inventory_hostname }}"
+    additional_server_name:
+      - "{{ lookup('dig', inventory_hostname) }}"
+      - "{{ lookup('dig', inventory_hostname, 'qtype=AAAA') }}"
+    locations:
+      - location: /
+        proxy_pass: http://127.0.0.1:8000
+    enable_content_security: false
+    http_redirection: false
+    ssl_port: 443
+
+self_signed_certs:
+  - common_name: "{{ inventory_hostname }}"
+    country: "{{ country }}"
+    organization: "{{ organization }}"
+    ca_cert_local_path: "{{ ca_certificates_local_path_ca_certificate }}"
+    intermediate_cert_local_path: "{{ certs_dir_role_path }}intermediate/homelab/homelab.crt"
+    intermediate_private_local_path: "{{ certs_dir_role_path }}intermediate/homelab/homelab.key"
+    intermediate_private_passphrase: "{{ ca_private_passphrase }}"
+    cert_remote_folder:
+      - { path: /etc/kea/ssl, filename: kea, owner: _kea, group: _kea }
+    ownca_not_after: +365d
+    upload_key: true
+    generate_pkcs12: false
+    subject_alt_name:
+      - "DNS:{{ groups[kea_dhcp_group][0] }}"
+      - "IP:{{ lookup('dig', groups[kea_dhcp_group][0]) }}"
+      - "IP:{{ lookup('dig', groups[kea_dhcp_group][0], 'qtype=AAAA') }}"
+      - "DNS:{{ groups[kea_dhcp_group][1] }}"
+      - "IP:{{ lookup('dig', groups[kea_dhcp_group][1]) }}"
+      - "IP:{{ lookup('dig', groups[kea_dhcp_group][1], 'qtype=AAAA') }}"
+      - "email:{{ admin_email }}"
+    systemd_services:
+      - { name: isc-kea-dhcp4-server, state: restarted }
+      - { name: isc-kea-dhcp6-server, state: restarted }
+    force_renew: true
+    tlsa:
+      - proto: tcp
+        port: 8080
+        cert_path: /etc/kea/ssl/kea.crt
+        pdns_zone: "{{ inventory_hostname.split('.')[-2:] | join('.') }}"
+  - common_name: "{{ inventory_hostname }}"
+    country: "{{ country }}"
+    organization: "{{ organization }}"
+    ca_cert_local_path: "{{ ca_certificates_local_path_ca_certificate }}"
+    intermediate_cert_local_path: "{{ certs_dir_role_path }}intermediate/homelab/homelab.crt"
+    intermediate_private_local_path: "{{ certs_dir_role_path }}intermediate/homelab/homelab.key"
+    intermediate_private_passphrase: "{{ ca_private_passphrase }}"
+    cert_remote_folder:
+      - { path: /etc/kea/ssl, filename: kea_ctrl_agent, owner: _kea, group: _kea }
+    ownca_not_after: +365d
+    upload_key: true
+    generate_pkcs12: false
+    subject_alt_name:
+      - "DNS:localhost"
+      - "email:{{ admin_email }}"
+    systemd_services:
+      - { name: isc-kea-ctrl-agent, state: restarted }
+    force_renew: false
+    tlsa:
+      - proto: tcp
+        port: 8443
+        cert_path: /etc/kea/ssl/kea_ctrl_agent.crt
+        pdns_zone: "{{ inventory_hostname.split('.')[-2:] | join('.') }}"

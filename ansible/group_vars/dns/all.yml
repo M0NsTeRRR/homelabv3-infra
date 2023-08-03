@@ -67,25 +67,10 @@ powerdns_authoritative_records:
     a: 192.168.10.22
     aaaa: 2a0c:b641:02c0:110::22
     rdns: true
-  - hostname: dhcp1.unicornafk.fr.
-    a: 192.168.10.23
-    aaaa: 2a0c:b641:02c0:110::23
-    rdns: true
-  - hostname: dhcp2.unicornafk.fr.
-    a: 192.168.10.24
-    aaaa: 2a0c:b641:02c0:110::24
-    rdns: true
   - hostname: san.unicornafk.fr.
     a: 192.168.10.53
     aaaa: 2a0c:b641:02c0:110::53
     rdns: true
-  - hostname: htb.unicornafk.fr.
-    a: 192.168.10.70
-    aaaa: 2a0c:b641:02c0:110::70
-    sshfp:
-      - algorithm: 4
-        type: 2
-        fingerprint: bfdcb168b6ef56fb6057a1bf20b2c01755e6fc5c3aa2a71c4ecf7ea85fdd8462
   - hostname: kubernetes.unicornafk.fr.
     a: 192.168.10.80
     aaaa: 2a0c:b641:02c0:110::80
@@ -272,8 +257,8 @@ self_signed_certs:
     intermediate_private_local_path: "{{ certs_dir_role_path }}intermediate/homelab/homelab.key"
     intermediate_private_passphrase: "{{ ca_private_passphrase }}"
     cert_remote_folder:
-      - { path: /etc/nginx/ssl, owner: nginx, group: nginx }
-      - { path: /etc/dnsdist/ssl, owner: _dnsdist, group: _dnsdist }
+      - { path: /etc/nginx/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: nginx, group: nginx }
+      - { path: /etc/dnsdist/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: _dnsdist, group: _dnsdist }
     ownca_not_after: +365d
     upload_key: true
     generate_pkcs12: false
@@ -286,4 +271,5 @@ self_signed_certs:
     tlsa:
       - proto: tcp
         port: 9443
+        cert_path: "/etc/nginx/ssl/{{ hostvars[inventory_hostname].hostname[:-1] }}.crt"
         pdns_zone: "{{ hostvars[inventory_hostname].hostname[:-1].split('.')[-2:] | join('.') }}"

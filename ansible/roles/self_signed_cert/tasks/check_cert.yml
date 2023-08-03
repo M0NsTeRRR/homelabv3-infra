@@ -1,7 +1,7 @@
 ---
 - name: Check that fullchain cert exist
   ansible.builtin.stat:
-    path: "{{ directory.path }}/{{ item.common_name }}-fullchain.crt"
+    path: "{{ directory.path }}/{{ directory.filename }}-fullchain.crt"
   with_items: "{{ item.cert_remote_folder }}"
   loop_control:
     loop_var: directory
@@ -9,7 +9,7 @@
 
 - name: Check that cert exist
   ansible.builtin.stat:
-    path: "{{ directory.path }}/{{ item.common_name }}.crt"
+    path: "{{ directory.path }}/{{ directory.filename }}.crt"
   with_items: "{{ item.cert_remote_folder }}"
   loop_control:
     loop_var: directory
@@ -17,7 +17,7 @@
 
 - name: Check that private key exist
   ansible.builtin.stat:
-    path: "{{ directory.path }}/{{ item.common_name }}.key"
+    path: "{{ directory.path }}/{{ directory.filename }}.key"
   with_items: "{{ item.cert_remote_folder }}"
   loop_control:
     loop_var: directory
@@ -25,7 +25,7 @@
 
 - name: Check that pkcs12 exist
   ansible.builtin.stat:
-    path: "{{ directory.path }}/{{ item.common_name }}.p12"
+    path: "{{ directory.path }}/{{ directory.filename }}.p12"
   with_items: "{{ item.cert_remote_folder }}"
   loop_control:
     loop_var: directory

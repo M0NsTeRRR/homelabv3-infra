@@ -15,7 +15,7 @@ self_signed_cert_pdns: {}
 #     intermediate_private_local_path: "./certs/ca.key"
 #     intermediate_private_passphrase: "pass"
 #     cert_remote_folder:
-#      - {path: /etc/nginx/ssl, owner: root, group: root}
+#      - {path: /etc/nginx/ssl, filename: host.example.com, owner: root, group: root}
 #     ownca_not_after: "+90d"
 #     pkcs12_friendly_name: example
 #     pkcs12_passphrase: password
@@ -30,6 +30,7 @@ self_signed_cert_pdns: {}
 #     tlsa:
 #       proto: tcp
 #       port: 443
+#       cert_path: /etc/nginx/ssl/host.example.com.crt
 #       pdns_zone: example.com
 
 # self_signed_cert_pdns:

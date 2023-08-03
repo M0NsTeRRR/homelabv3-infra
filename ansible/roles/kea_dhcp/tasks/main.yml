@@ -1,0 +1,132 @@
+---
+- name: Open required ports
+  community.general.ufw:
+    direction: "{{ item.direction }}"
+    rule: allow
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+    comment: "{{ item.comment }}"
+  with_items:
+    - { port: "67", proto: udp, direction: "in", comment: "Kea-dhcp DHCP (ansible_managed)" }
+    - { port: "547", proto: udp, direction: "in", comment: "Kea-dhcp DHCPv6 (ansible_managed)" }
+    - { port: "8443", proto: tcp, direction: "in", comment: "Kea-dhcp ctrl-agent (ansible_managed)" }
+    - { port: "8080", proto: tcp, direction: "in", comment: "Kea-dhcp HA (ansible_managed)" }
+    - { port: "8080", proto: tcp, direction: "out", comment: "Kea-dhcp HA (ansible_managed)" }
+
+- name: Add _kea group
+  ansible.builtin.group:
+    name: _kea
+    system: true
+    state: present
+
+- name: Add _kea user
+  ansible.builtin.user:
+    name: _kea
+    system: true
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: _kea
+
+- name: Add ISC cloudsmith Apt signing key
+  ansible.builtin.get_url:
+    url: https://dl.cloudsmith.io/public/isc/{{ kea_dhcp_repo_version | lower | replace('.', '-') }}/gpg.{{ kea_dhcp_repo_gpg_key }}.key
+    dest: /usr/share/keyrings/kea.asc
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Add cloudsmith Apt repository
+  ansible.builtin.apt_repository:
+    repo: "{{ item }}"
+    state: present
+    filename: isc-kea-dhcp
+  with_items:
+    - "deb [signed-by=/usr/share/keyrings/kea.asc] https://dl.cloudsmith.io/public/isc/{{ kea_dhcp_repo_version | lower | replace('.', '-') }}/deb/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
+    - "deb-src [signed-by=/usr/share/keyrings/kea.asc] https://dl.cloudsmith.io/public/isc/{{ kea_dhcp_repo_version | lower | replace('.', '-') }}/deb/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
+
+- name: Install isc-kea-hooks
+  ansible.builtin.apt:
+    name: "isc-kea-hooks{% if kea_dhcp_hooks_version is defined %}={{ kea_dhcp_hooks_version }}{% endif %}"
+    update_cache: true
+    state: "{{ kea_dhcp_hooks_package_state }}"
+
+- name: Install isc-kea-ctrl-agent
+  ansible.builtin.apt:
+    name: "isc-kea-ctrl-agent{% if kea_dhcp_agent_version is defined %}={{ kea_dhcp_agent_version }}{% endif %}"
+    update_cache: true
+    state: "{{ kea_dhcp_agent_package_state }}"
+
+- name: Install isc-kea-dhcp4
+  ansible.builtin.apt:
+    name: "isc-kea-dhcp4{% if kea_dhcp_v4_version is defined %}={{ kea_dhcp_v4_version }}{% endif %}"
+    update_cache: true
+    state: "{{ kea_dhcp_v4_package_state }}"
+
+- name: Install isc-kea-dhcp6
+  ansible.builtin.apt:
+    name: "isc-kea-dhcp6{% if kea_dhcp_v6_version is defined %}={{ kea_dhcp_v6_version }}{% endif %}"
+    update_cache: true
+    state: "{{ kea_dhcp_v6_package_state }}"
+
+- name: Fix perms on kea folder
+  ansible.builtin.file:
+    name: "{{ item }}"
+    owner: _kea
+    group: _kea
+    recurse: true
+    state: directory
+  with_items:
+    - /etc/kea
+    - /usr/lib/x86_64-linux-gnu/kea
+
+- name: Configure kea-ctrl-agent
+  ansible.builtin.template:
+    src: kea-ctrl-agent.conf.j2
+    dest: /etc/kea/kea-ctrl-agent.conf
+    owner: _kea
+    group: _kea
+    mode: "0640"
+  notify: Restart isc-kea-ctrl-agent
+
+- name: Configure kea-dhcp4-server
+  ansible.builtin.template:
+    src: kea-dhcp4.conf.j2
+    dest: /etc/kea/kea-dhcp4.conf
+    owner: _kea
+    group: _kea
+    mode: "0640"
+  notify: Restart isc-kea-dhcp4-server
+
+- name: Configure kea-dhcp6-server
+  ansible.builtin.template:
+    src: kea-dhcp6.conf.j2
+    dest: /etc/kea/kea-dhcp6.conf
+    owner: _kea
+    group: _kea
+    mode: "0640"
+  notify: Restart isc-kea-dhcp6-server
+
+- name: Create ssl folder
+  ansible.builtin.file:
+    name: /etc/kea/ssl
+    state: directory
+    owner: _kea
+    group: _kea
+    mode: "0750"
+
+- name: Create /opt/kea folder
+  ansible.builtin.file:
+    name: /opt/kea
+    state: directory
+    owner: _kea
+    group: _kea
+    mode: "0750"
+
+- name: Add CA cert
+  ansible.builtin.copy:
+    src: "{{ kea_dhcp_local_path_ca_certificate }}"
+    dest: /etc/kea/ssl/ca.crt
+    owner: _kea
+    group: _kea
+    mode: "0640"
+  notify: Restart isc-kea-ctrl-agent

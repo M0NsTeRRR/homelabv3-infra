@@ -11,6 +11,13 @@
     - powerdns_authoritative
     - ntp
 
+- name: Configure DHCP servers
+  hosts: dhcp
+  become: true
+  roles:
+    - self_signed_cert
+    - kea_dhcp
+
 - name: Configure kubernetes
   hosts: kubernetes
   become: true
