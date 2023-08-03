@@ -32,4 +32,3 @@
   ansible.builtin.set_fact:
     vault_unseal_keys: "{{ vault_init_parsed.unseal_keys_hex }}"
   delegate_to: localhost
-
