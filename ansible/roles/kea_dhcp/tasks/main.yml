@@ -5,12 +5,12 @@
     rule: allow
     port: "{{ item.port }}"
     proto: "{{ item.proto }}"
-    comment: "{{ item.comment }}"
+    comment: "{{ item.comment }} (ansible_managed)"
   with_items:
-    - { port: "67", proto: udp, direction: "in", comment: "Kea-dhcp DHCP (ansible_managed)" }
-    - { port: "547", proto: udp, direction: "in", comment: "Kea-dhcp DHCPv6 (ansible_managed)" }
-    - { port: "8080", proto: tcp, direction: "in", comment: "Kea-dhcp HA (ansible_managed)" }
-    - { port: "8080", proto: tcp, direction: "out", comment: "Kea-dhcp HA (ansible_managed)" }
+    - { port: "67", proto: udp, direction: in, comment: "Kea-dhcp DHCP" }
+    - { port: "547", proto: udp, direction: in, comment: "Kea-dhcp DHCPv6" }
+    - { port: "8080", proto: tcp, direction: in, comment: "Kea-dhcp HA" }
+    - { port: "8080", proto: tcp, direction: out, comment: "Kea-dhcp HA" }
 
 - name: Add _kea group
   ansible.builtin.group:

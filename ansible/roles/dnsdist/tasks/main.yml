@@ -5,14 +5,13 @@
     rule: allow
     port: "{{ item.port }}"
     proto: "{{ item.proto }}"
-    comment: "{{ item.comment }}"
-  when: item.to_open
+    comment: "{{ item.comment }} (ansible_managed)"
   with_items:
-    - {port: "53", proto: tcp, to_open: true, comment: "Dnsdist DNS (ansible_managed)"}
-    - {port: "53", proto: udp, to_open: true, comment: "Dnsdist DNS (ansible_managed)"}
-    - {port: "443", proto: tcp, to_open: true, comment: "Dnsdist DoH (ansible_managed)"}
-    - {port: "443", proto: udp, to_open: true, comment: "Dnsdist DoH (ansible_managed)"}
-    - {port: "853", proto: tcp, to_open: true, comment: "Dnsdist DoT (ansible_managed)"}
+    - {port: "53", proto: tcp, comment: "Dnsdist DNS"}
+    - {port: "53", proto: udp, comment: "Dnsdist DNS"}
+    - {port: "443", proto: tcp, comment: "Dnsdist DoH"}
+    - {port: "443", proto: udp, comment: "Dnsdist DoH"}
+    - {port: "853", proto: tcp, comment: "Dnsdist DoT"}
 
 - name: Add _dnsdist group
   ansible.builtin.group:

@@ -5,6 +5,24 @@
     update_cache: true
     state: "{{ ufw_package_state }}"
 
+- name: Get all ufw rules
+  become: true
+  ansible.builtin.shell: |
+    set -o pipefail
+    ufw show added | grep '^ufw' | grep -v "ansible_managed" | sed 's/ufw //g'
+  args:
+    executable: /bin/bash
+  failed_when: ufw_not_managed.rc > 1
+  changed_when: false
+  register: ufw_not_managed
+
+- name: Delete unmanaged ufw rules
+  ansible.builtin.command: ufw delete {{ item }}
+  changed_when: ufw_delete.rc != 0
+  failed_when: ufw_delete.rc != 0
+  when: ufw_not_managed.stdout_lines | length > 0
+  with_items: "{{ ufw_not_managed.stdout_lines }}"
+
 - name: Allow required protocols
   community.general.ufw:
     direction: "{{ item.direction }}"
