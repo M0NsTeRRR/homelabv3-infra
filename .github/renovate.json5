@@ -94,7 +94,7 @@
         '(^|/)roles\\S+defaults/\\S+\\.ya?ml',
       ],
       matchStrings: [
-        'datasource=(?<datasource>\\S*)[\\s]+depName=(?<depName>\\S*)\r?\n[\\S]+\\s"(?<currentValue>\\S+)"',
+        'datasource=(?<datasource>\\S*)[\\s]+depName=(?<depName>\\S*)([\\s]+registryUrl=(?<registryUrl>\\S*))?\r?\n[\\S]+\\s"(?<currentValue>\\S+)"',
       ],
     },
   ],
