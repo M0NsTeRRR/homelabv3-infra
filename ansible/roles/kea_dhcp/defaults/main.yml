@@ -1,5 +1,5 @@
 ---
-# datasource=gitlab-tags depName=isc-projects/kea
+# datasource=gitlab-tags depName=isc-projects/kea registryUrl=https://gitlab.isc.org
 kea_dhcp_repo_version: "Kea-2.5"
 kea_dhcp_repo_gpg_key: D4FEAEAEFBD81FB9
 # kea_dhcp_hooks_version:
