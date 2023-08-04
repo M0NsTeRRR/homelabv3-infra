@@ -1,4 +1,15 @@
 ---
-- name: "Deploy kubevip {{ item.namespace }}"
-  ansible.builtin.include_tasks: deploy_kube_vip.yml
+- name: "Create kubevip ressources {{ item.namespace }}"
+  ansible.builtin.include_tasks: kube_vip_ressources.yml
+  with_items: "{{ kube_vip_address }}"
+  run_once: true
+  when: groups[kube_vip_master_group][0] == inventory_hostname
+
+- name: Create kube-vip static pod
+  ansible.builtin.template:
+    src: static-pod.yml.j2
+    dest: "{{ [kube_vip_manifest_folder, item.namespace + '.yaml'] | path_join }}"
+    owner: root
+    group: root
+    mode: "0600"
   with_items: "{{ kube_vip_address }}"

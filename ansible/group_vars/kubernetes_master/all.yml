@@ -1,5 +1,8 @@
 ---
 kube_vip_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
+kube_vip_kubeconfig_path: /etc/k3s/kubeconfig
+kube_vip_manifest_folder: /var/lib/k3s/agent/pod-manifests
+kube_vip_master_group: kubernetes_master
 kube_vip_address:
   - namespace: kube-vip-ipv4
     address: 192.168.10.80
@@ -11,6 +14,7 @@ kube_vip_address:
     prometheus_server: ":2113"
 kube_vip_interface: enp6s18
 cilium_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
+cilium_service_host: "{{ kube_vip_address[0].address }}"
 traefik_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 traefik_external_ips:
   - 192.168.10.100

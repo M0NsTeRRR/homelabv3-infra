@@ -1,4 +1,19 @@
 ---
+kubeProxyReplacement: true
+routingMode: native
+tunnel: disabled
+autoDirectNodeRoutes: true
+ipv4NativeRoutingCIDR: "{{ cilium_cluster_cidr_ipv4 }}"
+ipv6NativeRoutingCIDR: "{{ cilium_cluster_cidr_ipv6 }}"
+loadBalancer:
+  mode: dsr
+  acceleration: native
+k8sServiceHost: "{{ cilium_service_host }}"
+k8sServicePort: 6443
+hostFirewall:
+  enabled: true
+extraConfig:
+  allow-localhost: policy
 ipv4:
   enabled: true
 ipv6:
@@ -16,9 +31,21 @@ hubble:
   ui:
     enabled: true
   metrics:
-    enabled: true
+    enableOpenMetrics: true
+    enabled:
+      - dns
+      - drop
+      - tcp
+      - flow
+      - port-distribution
+      - icmp
+      - http
 prometheus:
   enabled: true
+envoy:
+  enabled: true
+  prometheus:
+    enabled: true
 operator:
   prometheus:
     enabled: true

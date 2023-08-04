@@ -17,7 +17,8 @@
     name: cilium
     chart_ref: cilium/cilium
     chart_version: "{{ cilium_version[1:] }}"
-    release_namespace: kube-system
+    release_namespace: cilium
+    create_namespace: true
     release_values: "{{ lookup('ansible.builtin.template', 'helm-values.yml.j2') | from_yaml }}"
     update_repo_cache: true
     wait: true

@@ -23,6 +23,7 @@ service-cidr: {{ k3s_service_cidr_ipv4 }},{{ k3s_service_cidr_ipv6 }}
 
 flannel-backend: none
 disable-network-policy: true
+disable-kube-proxy: true
 
 disable: traefik,servicelb,metrics-server
 

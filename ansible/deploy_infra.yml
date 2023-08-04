@@ -26,12 +26,17 @@
     - common_kubernetes
     - k3s
 
-- name: Deploy kubernetes base services
+- name: Configure kube-vip
+  hosts: kubernetes_master
+  become: true
+  roles:
+    - kube_vip
+
+- name: Deploy kubernetes services
   hosts: kubernetes_master[0]
   become: true
   roles:
     - cilium
-    - kube_vip
     - metallb
     - role: traefik
     - role: traefik
