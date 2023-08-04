@@ -10,7 +10,7 @@
   connection: local
   vars:
     ssh_known_hosts_command: "ssh-keyscan -T 10"
-    ssh_known_hosts_file: "{{ lookup('env','HOME') + '/.ssh/known_hosts' }}"
+    ssh_known_hosts_file: "{{ [lookup('env','HOME'), '.ssh/known_hosts'] | path_join }}"
     ssh_known_hosts: "{{ groups['all'] }}"
   tasks:
     - name: For each host, scan for its ssh public key

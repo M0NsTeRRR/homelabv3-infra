@@ -172,7 +172,7 @@
 
     - name: Create fullchain cert
       community.crypto.certificate_complete_chain:
-        input_chain: "{{ lookup('ansible.builtin.file', certs_dir + signing_certificate + '/' + common_name + '/' + common_name + '.crt') }}"
+        input_chain: "{{ lookup('ansible.builtin.file', ([certs_dir, signing_certificate, common_name, common_name + '.crt'] | path_join)) }}"
         intermediate_certificates: "{{ certs_dir }}intermediate/{{ signing_certificate }}/{{ signing_certificate }}.crt"
         root_certificates: "{{ certs_dir }}{{ organization }}.crt"
       register: fullchain_cert
