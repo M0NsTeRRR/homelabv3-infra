@@ -1,6 +1,6 @@
 setgid=pdns
 setuid=pdns
-query-local-address={{ ansible_default_ipv4.address }}, {{ ansible_default_ipv6.address }}
+query-local-address={{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}, {{ ansible_default_ipv6.address | default(ansible_all_ipv6_addresses[0]) }}
 local-address=127.0.0.1, ::1
 local-port=5300
 launch=gpgsql
@@ -26,6 +26,6 @@ secondary=yes
 disable-axfr=no
 {% if inventory_hostname == ansible_play_hosts_all[0] %}
 allow-axfr-ips=127.0.0.0/8,::1/128
-only-notify=0.0.0.0/0, ::/0, !{{ ansible_default_ipv4.address }}/32, !{{ ansible_default_ipv6.address }}/128
+only-notify=0.0.0.0/0, ::/0, !{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}/32, !{{ ansible_default_ipv6.address | default(ansible_all_ipv6_addresses[0]) }}/128
 {% endif %}
 trusted-notification-proxy=127.0.0.0/8,::1/128

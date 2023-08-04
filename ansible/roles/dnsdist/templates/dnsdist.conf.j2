@@ -20,8 +20,8 @@ newServer({address='[::1]:5301', useProxyProtocol=true, pool='recursor'})
 {% if inventory_hostname == ansible_play_hosts_all[0] %}
 trustedSlave = newNMG()
 {% for dnsdist_pdns_slave in ansible_play_hosts_all[1:] %}
-trustedSlave:addMask("{{ hostvars[dnsdist_pdns_slave].ansible_default_ipv4.address }}/32")
-trustedSlave:addMask("{{ hostvars[dnsdist_pdns_slave].ansible_default_ipv6.address }}/128")
+trustedSlave:addMask("{{ hostvars[dnsdist_pdns_slave].ansible_default_ipv4.address | default(hostvars[dnsdist_pdns_slave].ansible_all_ipv4_addresses[0]) }}/32")
+trustedSlave:addMask("{{ hostvars[dnsdist_pdns_slave].ansible_default_ipv6.address | default(hostvars[dnsdist_pdns_slave].ansible_all_ipv6_addresses[0]) }}/128")
 {% endfor %}
 
 -- Block SOA, AXFR and IXFR from IPs not in defined range
