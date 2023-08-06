@@ -16,14 +16,11 @@
 
 - name: Open required ports
   community.general.ufw:
-    direction: "{{ item.direction }}"
+    direction: in
     rule: allow
-    port: "{{ item.port }}"
-    proto: "{{ item.proto }}"
-    comment: "{{ item.comment }} (ansible_managed)"
-  with_items:
-    - { port: "123", proto: "udp", direction: "in", comment: "NTP" }
-    - { port: "123", proto: "udp", direction: "out", comment: "NTP" }
+    port: "123"
+    proto: udp
+    comment: "NTP (ansible_managed)"
 
 - name: Install ntp
   ansible.builtin.apt:
