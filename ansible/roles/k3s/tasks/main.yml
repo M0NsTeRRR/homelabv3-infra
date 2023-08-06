@@ -33,13 +33,13 @@
     group: root
     mode: "0750"
   with_items:
-    - /etc/k3s
-    - /var/lib/k3s/server/manifests
+    - /etc/rancher/k3s
+    - /var/lib/rancher/k3s/server/manifests
 
 - name: Configure k3s
   ansible.builtin.template:
     src: config.yaml.j2
-    dest: /etc/k3s/config.yaml
+    dest: /etc/rancher/k3s/config.yaml
     owner: root
     group: root
     mode: "0644"
@@ -64,7 +64,7 @@
 
 - name: Wait token file generation
   ansible.builtin.stat:
-    path: /var/lib/k3s/server/node-token
+    path: /var/lib/rancher/k3s/server/node-token
   register: k3s_token_file
   until: k3s_token_file.stat.exists
   retries: 60
@@ -74,7 +74,7 @@
 
 - name: Get k3s token file from first master
   ansible.builtin.slurp:
-    src: /var/lib/k3s/server/node-token
+    src: /var/lib/rancher/k3s/server/node-token
   register: k3s_token
   delegate_to: "{{ groups[k3s_master_group][0] }}"
   when: groups[k3s_master_group][0] != inventory_hostname
@@ -82,7 +82,7 @@
 - name: Create k3s token file on other nodes
   ansible.builtin.copy:
     content: "{{ k3s_token['content'] | b64decode }}"
-    dest: /var/lib/k3s/server/node-token
+    dest: /var/lib/rancher/k3s/server/node-token
     owner: root
     group: root
     mode: "0600"
@@ -91,7 +91,7 @@
 
 - name: Fetch kubeconfig file
   ansible.builtin.fetch:
-    src: /etc/k3s/kubeconfig
+    src: /etc/rancher/k3s/kubeconfig
     dest: "{{ k3s_localhost_kubeconfig_path }}"
     flat: true
   run_once: true
