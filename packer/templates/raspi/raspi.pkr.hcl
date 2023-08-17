@@ -1,5 +1,5 @@
 packer {
-  required_version = "v1.9.2"
+  required_version = "v1.9.3"
 }
 
 locals {
