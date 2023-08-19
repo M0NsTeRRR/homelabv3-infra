@@ -28,7 +28,7 @@ Fill certs folders
 
 Install ansible galaxy dependencies `ansible-galaxy install -r requirements.yml`
 
-fill all `.vault_password.txt` at root with ansible vault password used   
+fill `.vault_password.txt` at root with ansible vault password used   
 fill all `secrets.yml` based on `secrets.example` in each subdirectory of `groups_vars`  
 
 ### Playbooks to create client certificate signed by a CA
