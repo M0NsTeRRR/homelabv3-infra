@@ -24,4 +24,5 @@
     owner: root
     group: root
     mode: "0600"
+    validate: /usr/sbin/sshd -t -c %s
   notify: Restart sshd

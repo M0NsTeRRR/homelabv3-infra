@@ -23,6 +23,7 @@
     owner: nginx
     group: nginx
     mode: "0640"
+    validate: /usr/sbin/nginx -t -c %s
   notify:
     - Restart nginx
 
