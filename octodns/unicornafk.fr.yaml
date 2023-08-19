@@ -42,16 +42,6 @@ vpn:
     value: '2a0c:b641:2c0:170::29'
 vps1:
   - type: A
-    value: '116.203.39.236'
-  - type: AAAA
-    value: '2a01:4f8:c0c:e770::'
-  - type: SSHFP
-    value:
-      algorithm: 4
-      fingerprint: 5fa48b5319751e1bca0e4807ef938a91b0bd8707c08419003c6182f5cb679035
-      fingerprint_type: 2
-vps2:
-  - type: A
     value: '141.145.215.178'
   - type: AAAA
     value: '2603:c027:c000:c200::10'

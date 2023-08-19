@@ -1,0 +1,6 @@
+---
+caddy_email: "{{ admin_email }}"
+caddy_domains:
+  - names:
+      - status.unicornafk.fr
+    backend_url: http://localhost:3001

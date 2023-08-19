@@ -1,4 +1,12 @@
 ---
+- name: Configure status infra
+  hosts: status
+  become: true
+  roles:
+    - nodejs
+    - uptime_kuma
+    - caddy
+
 - name: Configure DNS servers
   hosts: dns
   become: true
