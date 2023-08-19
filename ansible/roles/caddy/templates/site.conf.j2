@@ -1,0 +1,23 @@
+#jinja2: lstrip_blocks: "True"
+{% for domain in item.names %}{{ domain }}{% if not loop.last %}, {% endif %}{% endfor %} {
+    reverse_proxy {{ item.backend_url }} {
+      {% if item.backend_url.startswith('https') %}
+        transport http {
+          tls
+        }
+      {% endif %}
+
+      {% if item.proxy_headers is defined %}
+      {% for headerName, headerValue in item.proxy_headers.items() %}
+      header_up {{ headerName }} {{ headerValue }}
+      {% endfor %}
+      {% endif %}
+      header_up Set-Cookie {% for domain in item.names %}{{ domain }}{% if not loop.last %} {% endif %}{% endfor %}
+    }
+
+    header {
+        import defaultheaders
+    }
+
+    import webconf
+}

@@ -1,0 +1,82 @@
+---
+- name: "Open required ports"
+  community.general.ufw:
+    rule: allow
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+    comment: "{{ item.comment }} (ansible_managed)"
+  with_items:
+    - { port: "80", proto: tcp, comment: "HTTP Caddy" }
+    - { port: "443", proto: tcp, comment: "HTTPS Caddy" }
+    - { port: "443", proto: udp, comment: "HTTP3 Caddy" }
+
+- name: Add caddy group
+  ansible.builtin.group:
+    name: caddy
+    system: true
+    state: present
+
+- name: Add caddy user
+  ansible.builtin.user:
+    name: caddy
+    system: true
+    home: /var/lib/caddy
+    shell: /usr/sbin/nologin
+    group: caddy
+
+- name: Add Caddy Apt signing key
+  ansible.builtin.get_url:
+    url: https://dl.cloudsmith.io/public/caddy/stable/gpg.key
+    dest: /etc/apt/keyrings/caddy.asc
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Add Caddy Apt repository
+  ansible.builtin.apt_repository:
+    repo: "{{ item }}"
+    state: present
+    filename: caddy
+  with_items:
+    - "deb [signed-by=/etc/apt/keyrings/caddy.asc] https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main"
+    - "deb-src [signed-by=/etc/apt/keyrings/caddy.asc] https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main"
+
+- name: Install Caddy
+  ansible.builtin.apt:
+    name: "caddy{% if caddy_version is defined %}={{ caddy_version }}{% endif %}"
+    update_cache: true
+    state: "{{ caddy_package_state }}"
+  notify:
+    - Daemon-reload
+    - Enable caddy.service
+    - Restart caddy.service
+
+- name: "Create folder {{ item }}"
+  ansible.builtin.file:
+    state: directory
+    name: "{{ item }}"
+    owner: caddy
+    group: caddy
+    mode: "0750"
+  with_items:
+    - /etc/caddy/conf.d
+
+- name: Configure default Caddy config
+  ansible.builtin.template:
+    src: Caddyfile.j2
+    dest: /etc/caddy/Caddyfile
+    owner: caddy
+    group: caddy
+    mode: "0640"
+  notify: Restart caddy.service
+
+- name: Configure Caddy
+  ansible.builtin.template:
+    src: site.conf.j2
+    dest: "/etc/caddy/conf.d/{{ item.names[0] }}.conf"
+    owner: caddy
+    group: caddy
+    mode: "0640"
+    validate: /usr/bin/caddy validate --config %s
+  with_items: "{{ caddy_domains }}"
+  notify: Restart caddy.service

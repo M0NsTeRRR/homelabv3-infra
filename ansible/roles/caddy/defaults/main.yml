@@ -1,0 +1,15 @@
+---
+# caddy_version:
+caddy_package_state: latest
+caddy_email: email@example.com
+caddy_domains: []
+
+
+# caddy_domains:
+#   - names:
+#       - domain1.fr
+#       - domain2.fr
+#       ...
+#     backend_url: https://192.168.0.1
+#     proxy_headers:
+#       Host: example.fr
