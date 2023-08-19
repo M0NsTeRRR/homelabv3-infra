@@ -1,0 +1,79 @@
+---
+- name: Add uptime-kuma group
+  ansible.builtin.group:
+    name: uptime-kuma
+    system: true
+    state: present
+
+- name: Add uptime-kuma user
+  ansible.builtin.user:
+    name: uptime-kuma
+    system: true
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: uptime-kuma
+
+- name: Check if uptime-kuma is already install
+  ansible.builtin.stat:
+    path: /var/www/uptime-kuma/package.json
+  register: uptime_kuma
+
+- name: Create uptime-kuma directory
+  ansible.builtin.file:
+    path: /var/www/uptime-kuma
+    state: directory
+    owner: uptime-kuma
+    group: uptime-kuma
+    mode: '0775'
+
+- name: "Download Uptime kuma version {{ uptime_kuma_version }}"
+  ansible.builtin.get_url:
+    url: "https://github.com/louislam/uptime-kuma/archive/refs/tags/{{ uptime_kuma_version }}.tar.gz"
+    dest: /tmp/uptime-kuma.tar.gz
+  when: not uptime_kuma.stat.exists or uptime_kuma_force_install
+
+- name: "Download Uptime kuma dist version {{ uptime_kuma_version }}"
+  ansible.builtin.get_url:
+    url: "https://github.com/louislam/uptime-kuma/releases/download/{{ uptime_kuma_version }}/dist.tar.gz"
+    dest: /tmp/uptime-kuma-dist.tar.gz
+  when: not uptime_kuma.stat.exists or uptime_kuma_force_install
+
+- name: Extract uptime_kuma files
+  ansible.builtin.unarchive:
+    src: /tmp/uptime-kuma.tar.gz
+    dest: /var/www/uptime-kuma
+    extra_opts:
+      - "--strip-components=1"
+    remote_src: true
+  notify: Restart uptime-kuma.service
+  when: not uptime_kuma.stat.exists or uptime_kuma_force_install
+
+- name: Extract uptime-kuma files
+  ansible.builtin.unarchive:
+    src: /tmp/uptime-kuma-dist.tar.gz
+    dest: /var/www/uptime-kuma
+    remote_src: true
+  notify: Restart uptime-kuma.service
+  when: not uptime_kuma.stat.exists or uptime_kuma_force_install
+
+- name: Chown static folder
+  ansible.builtin.file:
+    dest: /var/www/uptime-kuma
+    recurse: yes
+    owner: uptime-kuma
+    group: uptime-kuma
+
+- name: Install uptime-kuma dependencies
+  community.general.npm:
+    path: /var/www/uptime-kuma
+    production: yes
+  notify: Restart uptime-kuma.service
+
+- name: Create systemd service file
+  ansible.builtin.copy:
+    src: uptime-kuma.service
+    dest: /etc/systemd/system/uptime-kuma.service
+  notify:
+    - Daemon-reload
+    - Enable uptime-kuma.service
+    - Restart uptime-kuma.service
