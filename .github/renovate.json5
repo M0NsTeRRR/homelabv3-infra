@@ -11,6 +11,7 @@
   "schedule": [
     "before 9pm on friday"
   ],
+  prConcurrentLimit: 0,
   prHourlyLimit: 0,
   terragrunt: {
     enabled: false
