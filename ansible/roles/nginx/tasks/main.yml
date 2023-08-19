@@ -86,7 +86,7 @@
     dest: /etc/systemd/system/nginx.d/nginx.service
     owner: root
     group: root
-    mode: "0644"
+    mode: "0640"
   notify:
     - Daemon-reload
     - Enable nginx

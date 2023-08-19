@@ -13,7 +13,7 @@
     dest: /etc/systemd/resolved.conf.d/01-custom.conf
     owner: root
     group: root
-    mode: "0644"
+    mode: "0640"
   notify:
     - Enable systemd-resolved
     - Restart systemd-resolved

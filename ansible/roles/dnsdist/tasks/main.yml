@@ -33,7 +33,7 @@
     dest: /etc/apt/keyrings/dnsdist.asc
     owner: root
     group: root
-    mode: "0644"
+    mode: "0640"
 
 - name: Add PowerDNS Apt repository
   ansible.builtin.apt_repository:
@@ -47,7 +47,7 @@
     dest: /etc/apt/preferences.d/dnsdist
     owner: root
     group: root
-    mode: "0644"
+    mode: "0640"
 
 - name: Configure systemd-resolved
   ansible.builtin.copy:
@@ -55,7 +55,7 @@
     dest: /etc/systemd/resolved.conf.d/99-custom.conf
     owner: root
     group: root
-    mode: "0644"
+    mode: "0640"
   notify:
     - Enable systemd-resolved
     - Restart systemd-resolved

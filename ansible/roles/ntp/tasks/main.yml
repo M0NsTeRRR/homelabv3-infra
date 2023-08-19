@@ -38,7 +38,7 @@
     dest: /etc/ntp.conf
     owner: ntp
     group: ntp
-    mode: "0644"
+    mode: "0640"
   notify: Restart ntp
 
 - name: Create systemd service config folder
@@ -55,7 +55,7 @@
     dest: /etc/systemd/system/ntp.d/ntp.service
     owner: root
     group: root
-    mode: "0644"
+    mode: "0640"
   notify:
     - Daemon-reload
     - Enable ntp
