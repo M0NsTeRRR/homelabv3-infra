@@ -29,7 +29,7 @@
 - name: Add ISC cloudsmith Apt signing key
   ansible.builtin.get_url:
     url: https://dl.cloudsmith.io/public/isc/{{ kea_dhcp_repo_version | lower | replace('.', '-') }}/gpg.{{ kea_dhcp_repo_gpg_key }}.key
-    dest: /usr/share/keyrings/kea.asc
+    dest: /etc/apt/keyrings/kea.asc
     owner: root
     group: root
     mode: "0644"
@@ -40,8 +40,8 @@
     state: present
     filename: isc-kea-dhcp
   with_items:
-    - "deb [signed-by=/usr/share/keyrings/kea.asc] https://dl.cloudsmith.io/public/isc/{{ kea_dhcp_repo_version | lower | replace('.', '-') }}/deb/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
-    - "deb-src [signed-by=/usr/share/keyrings/kea.asc] https://dl.cloudsmith.io/public/isc/{{ kea_dhcp_repo_version | lower | replace('.', '-') }}/deb/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
+    - "deb [signed-by=/etc/apt/keyrings/kea.asc] https://dl.cloudsmith.io/public/isc/{{ kea_dhcp_repo_version | lower | replace('.', '-') }}/deb/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
+    - "deb-src [signed-by=/etc/apt/keyrings/kea.asc] https://dl.cloudsmith.io/public/isc/{{ kea_dhcp_repo_version | lower | replace('.', '-') }}/deb/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
 
 - name: Install isc-kea-hooks
   ansible.builtin.apt:

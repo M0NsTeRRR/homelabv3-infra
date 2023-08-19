@@ -27,13 +27,6 @@
     shell: /usr/sbin/nologin
     group: _dnsdist
 
-- name: Install required packages by PowerDNS
-  ansible.builtin.apt:
-    pkg:
-      - apt-transport-https
-      - gnupg-agent
-    state: present
-
 - name: Add PowerDNS Apt signing key
   ansible.builtin.get_url:
     url: "https://repo.powerdns.com/{{ dnsdist_repository_key }}-pub.asc"

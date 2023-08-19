@@ -13,13 +13,6 @@
     shell: /usr/sbin/nologin
     group: pdns
 
-- name: Install required packages by PowerDNS recursor
-  ansible.builtin.apt:
-    pkg:
-      - apt-transport-https
-      - gnupg-agent
-    state: present
-
 - name: Add PowerDNS recursor apt signing key
   ansible.builtin.get_url:
     url: "https://repo.powerdns.com/{{ powerdns_recursor_repository_key }}-pub.asc"

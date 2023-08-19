@@ -47,6 +47,11 @@
         name: apt-transport-https
         state: present
 
+    - name: Install gnupg-agent
+      ansible.builtin.apt:
+        name: gnupg-agent
+        state: present
+
     - name: Install rng-tools
       ansible.builtin.apt:
         name: rng-tools

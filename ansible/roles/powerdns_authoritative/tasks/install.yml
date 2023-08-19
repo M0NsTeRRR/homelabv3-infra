@@ -13,12 +13,9 @@
     shell: /usr/sbin/nologin
     group: pdns
 
-- name: Install required packages by PowerDNS
+- name: Install sqlite3 packages required by PowerDNS
   ansible.builtin.apt:
-    pkg:
-      - apt-transport-https
-      - gnupg-agent
-      - sqlite3
+    name: sqlite3
     state: present
 
 - name: Add PowerDNS Apt signing key
