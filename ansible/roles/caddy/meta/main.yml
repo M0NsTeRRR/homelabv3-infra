@@ -1,5 +1,6 @@
 ---
 galaxy_info:
+  role_name: caddy
   author: Ludovic Ortega
   description: Install and configure Caddy
   company: Ludovic Ortega

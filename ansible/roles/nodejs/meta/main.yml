@@ -1,5 +1,6 @@
 ---
 galaxy_info:
+  role_name: nodejs
   author: Ludovic Ortega
   description: Install and configure nodejs
   company: Ludovic Ortega

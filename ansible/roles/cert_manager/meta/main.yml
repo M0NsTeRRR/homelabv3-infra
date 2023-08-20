@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: argocd
+  role_name: cert_manager
   author: Ludovic Ortega
   description: Install and configure cert_manager
   license: CeCILL

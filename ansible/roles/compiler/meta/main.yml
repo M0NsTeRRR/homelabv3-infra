@@ -2,7 +2,7 @@
 galaxy_info:
   role_name: compiler
   author: Ludovic Ortega
-  description: Install and configure Compiler
+  description: Install and configure compiler
   license: CeCILL
   min_ansible_version: "2.15.3"
   platforms:

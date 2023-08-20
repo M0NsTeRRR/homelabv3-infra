@@ -1,5 +1,6 @@
 ---
 galaxy_info:
+  role_name: uptime_kuma
   author: Ludovic Ortega
   description: Install and configure uptime_kuma
   company: Ludovic Ortega

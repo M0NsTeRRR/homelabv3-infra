@@ -16,13 +16,13 @@
       - nfs-common
     state: present
 
-- name: Enable and start iscsid required packages by longhorn
+- name: Enable and start iscsid required by longhorn
   ansible.builtin.systemd:
     name: iscsid
     enabled: true
     state: started
 
-- name: Disable and stop multipathd required packages by longhorn
+- name: Disable and stop multipathd required by longhorn
   ansible.builtin.systemd:
     name: multipathd
     enabled: false

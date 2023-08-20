@@ -1,6 +1,6 @@
 ---
 galaxy_info:
-  role_name: argocd
+  role_name: external_dns
   author: Ludovic Ortega
   description: Install and configure external_dns
   license: CeCILL
