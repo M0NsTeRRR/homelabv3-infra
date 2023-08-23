@@ -1,0 +1,204 @@
+---
+- name: Open required ports
+  community.general.ufw:
+    direction: "{{ item.direction }}"
+    rule: allow
+    port: "{{ item.port }}"
+    proto: "{{ item.proto }}"
+    comment: "{{ item.comment }} (ansible_managed)"
+  with_items: "{{ runrestic_outgoing_ports }}"
+
+- name: Install sshpass package required by for ssh-copy-id
+  ansible.builtin.apt:
+    name: sshpass
+    state: present
+
+- name: Add runrestic group
+  ansible.builtin.group:
+    name: runrestic
+    system: true
+    state: present
+
+- name: Add runrestic user
+  ansible.builtin.user:
+    name: runrestic
+    system: true
+    create_home: true
+    shell: /usr/sbin/nologin
+    group: runrestic
+    ssh_key_type: ed25519
+    ssh_key_file: .ssh/id_ed25519
+    ssh_key_comment: runrestic backup ssh key of {{ inventory_hostname }} (ansible managed)
+    generate_ssh_key: true
+    force: "{{ runrestic_regenerate_ssh_key }}"
+
+- name: Add/update the public key in known_hosts
+  ansible.builtin.known_hosts:
+    name: "[{{ item.host }}]:{{ item.port }}"
+    key: "{{ lookup('pipe', 'ssh-keyscan -p {{ item.port }} {{ item.host }}') }}"
+    path: /home/runrestic/.ssh/known_hosts
+    state: "present"
+  no_log: true
+  with_items: "{{ runrestic_ssh_key_hosts }}"
+
+- name: Chown known_hosts to runrestic
+  ansible.builtin.file:
+    name: /home/runrestic/.ssh/known_hosts
+    owner: runrestic
+    group: runrestic
+    state: file
+
+# Don't use authorized key modules because some shell has limited functionnality like hetzner storage box
+- name: Add runrestic SSH key to backup host
+  ansible.builtin.command: "sshpass -p '{{ item.password }}' ssh-copy-id -i /home/runrestic/.ssh/id_ed25519 -p {{ item.port }} -s {{ item.user }}@{{ item.host }}"
+  changed_when: true
+  no_log: true
+  with_items: "{{ runrestic_ssh_key_hosts }}"
+
+- name: "Create folder {{ item }}"
+  ansible.builtin.file:
+    state: directory
+    name: "{{ item }}"
+    owner: runrestic
+    group: runrestic
+    mode: "0750"
+  with_items:
+    - /etc/runrestic
+    - /opt/runrestic
+
+- name: Check if restic is already installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/restic
+  register: runrestic_restic_install
+
+- name: Detect machine architecture
+  ansible.builtin.set_fact:
+    runrestic_arch: "{% if ansible_architecture == 'x86_64' %}amd64{% else %}arm64{% endif %}"
+
+- name: "Download restic binary version {{ runrestic_restic_version }}"
+  ansible.builtin.get_url:
+    url: "https://github.com/restic/restic/releases/download/{{ runrestic_restic_version }}/restic_{{ runrestic_restic_version[1:] }}_linux_{{ runrestic_arch }}.bz2"
+    checksum: "sha256:https://github.com/restic/restic/releases/download/{{ runrestic_restic_version }}/SHA256SUMS"
+    dest: /tmp/restic.bz2
+    owner: root
+    group: root
+    mode: "0700"
+  when: not runrestic_restic_install.stat.exists or runrestic_force_install
+
+- name: Extract restic binary
+  ansible.builtin.command:
+    cmd: bzip2 -f -d /tmp/restic.bz2
+  changed_when: true
+  when: not runrestic_restic_install.stat.exists or runrestic_force_install
+
+- name: Copy restic binary to /usr/local/bin
+  ansible.builtin.copy:
+    src: /tmp/restic
+    dest: /usr/local/bin/restic
+    owner: runrestic
+    group: runrestic
+    mode: "0700"
+    remote_src: true
+  when: not runrestic_restic_install.stat.exists or runrestic_force_install
+
+- name: Install runrestic
+  ansible.builtin.pip:
+    name: "runrestic{% if runrestic_version is defined %}={{ runrestic_version }}{% endif %}"
+    state: "{{ runrestic_package_state }}"
+    virtualenv: /opt/runrestic/venv
+
+- name: Chown venv to runrestic
+  ansible.builtin.file:
+    name: /opt/runrestic/venv
+    owner: runrestic
+    group: runrestic
+    state: directory
+    recurse: true
+
+- name: "Configure runrestic"
+  ansible.builtin.template:
+    src: config.toml.j2
+    dest: "/etc/runrestic/{{ item.config_name }}.toml"
+    owner: runrestic
+    group: runrestic
+    mode: "0640"
+  no_log: true
+  with_items: "{{ runrestic_backup }}"
+
+- name: Create repository password file
+  ansible.builtin.copy:
+    content: "{{ item.password }}"
+    dest: "/etc/runrestic/{{ item.config_name }}.pass"
+    owner: runrestic
+    group: runrestic
+    mode: "0600"
+  no_log: true
+  with_items: "{{ runrestic_backup }}"
+
+- name: Configure runrestic sudoers command
+  ansible.builtin.template:
+    src: sudoers.j2
+    dest: /etc/sudoers.d/runrestic
+    owner: root
+    group: root
+    mode: "0640"
+    validate: visudo -cf %s
+
+- name: Copy init repo script
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "/opt/runrestic/{{ item | basename }}"
+    owner: runrestic
+    group: runrestic
+    mode: "0740"
+  with_fileglob: scripts/*
+
+- name: Install specified python requirements
+  ansible.builtin.pip:
+    requirements: /opt/runrestic/requirements.txt
+    virtualenv: /opt/runrestic/venv
+
+- name: Configure runrestic@.service
+  ansible.builtin.copy:
+    src: runrestic@.service
+    dest: /etc/systemd/system/runrestic@.service
+    owner: root
+    group: root
+    mode: "0640"
+  notify:
+    - Daemon-reload
+
+- name: Configure runrestic@.timer
+  ansible.builtin.template:
+    src: runrestic@.timer.j2
+    dest: /etc/systemd/system/runrestic@.timer
+    owner: root
+    group: root
+    mode: "0640"
+  notify:
+    - Daemon-reload
+    - Restart runrestic@.timer
+
+- name: Set runrestic acl to access backup folders
+  ansible.posix.acl:
+    path: "{{ item }}"
+    entity: runrestic
+    etype: user
+    permissions: rX
+    recursive: true
+    state: present
+  no_log: true
+  with_items: "{{ runrestic_acl_files }}"
+
+- name: Chown runrestic repository
+  ansible.builtin.file:
+    name: "{{ item.1 }}"
+    owner: runrestic
+    group: runrestic
+    state: directory
+    recurse: true
+  no_log: true
+  when: item.1.startswith('/')
+  with_subelements:
+    - "{{ runrestic_backup }}"
+    - repositories

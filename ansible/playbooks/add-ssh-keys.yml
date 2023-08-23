@@ -34,9 +34,3 @@
         state: "present"
         path: "{{ ssh_known_hosts_file }}"
       with_items: "{{ ssh_known_host_results.results }}"
-
-    - name: For each host, ssh-copy-id my ssh public keys to the host
-      ansible.builtin.command: "sshpass -p {{ ansible_ssh_pass }} ssh-copy-id {{ item }}"
-      with_items: "{{ ssh_known_hosts }}"
-      when: not ((ansible_ssh_pass is undefined) or (ansible_ssh_pass is none) or (not (ansible_ssh_pass | trim)))
-      changed_when: false

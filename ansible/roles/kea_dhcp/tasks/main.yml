@@ -32,7 +32,7 @@
     dest: /etc/apt/keyrings/kea.asc
     owner: root
     group: root
-    mode: "0644"
+    mode: "0640"
 
 - name: Add cloudsmith Apt repository
   ansible.builtin.apt_repository:

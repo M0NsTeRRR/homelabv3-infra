@@ -1,0 +1,12 @@
+---
+galaxy_info:
+  role_name: runrestic
+  author: Ludovic Ortega
+  description: Install and configure runrestic
+  company: Ludovic Ortega
+  license: CeCILL
+  min_ansible_version: "2.15.2"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy

@@ -13,6 +13,11 @@
     shell: /usr/sbin/nologin
     group: uptime-kuma
 
+- name: Install sqlite3 to backup database
+  ansible.builtin.apt:
+    name: sqlite3
+    state: present
+
 - name: Check if uptime-kuma is already install
   ansible.builtin.stat:
     path: /var/www/uptime-kuma/package.json

@@ -24,7 +24,7 @@
     dest: /etc/apt/keyrings/powerdns_authoritative.asc
     owner: root
     group: root
-    mode: "0644"
+    mode: "0640"
 
 - name: Add PowerDNS Apt repository
   ansible.builtin.apt_repository:
@@ -38,7 +38,7 @@
     dest: /etc/apt/preferences.d/pdns
     owner: root
     group: root
-    mode: "0644"
+    mode: "0640"
 
 - name: Install pdns-server
   ansible.builtin.apt:

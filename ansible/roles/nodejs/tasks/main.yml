@@ -5,7 +5,7 @@
     dest: /etc/apt/keyrings/nodejs.asc
     owner: root
     group: root
-    mode: "0644"
+    mode: "0640"
 
 - name: Add NodeSource repositories for Node.js
   ansible.builtin.apt_repository:

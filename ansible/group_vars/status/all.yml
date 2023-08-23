@@ -4,3 +4,11 @@ caddy_domains:
   - names:
       - status.unicornafk.fr
     backend_url: http://localhost:3001
+runrestic_allowed_command: []
+runrestic_acl_files:
+  - /var/www/uptime-kuma/data
+runrestic_outgoing_ports:
+  - port: "23"
+    proto: tcp
+    direction: out
+    comment: "Runrestic sftp"

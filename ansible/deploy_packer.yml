@@ -82,6 +82,11 @@
         name: cloud-initramfs-growroot
         state: present
 
+    - name: Install acl
+      ansible.builtin.apt:
+        name: acl
+        state: present
+
   post_tasks:
     - name: Clean cloud init configuration
       ansible.builtin.command: cloud-init clean --seed --machine-id

@@ -19,7 +19,7 @@
     dest: /etc/apt/keyrings/powerdns_recursor.asc
     owner: root
     group: root
-    mode: "0644"
+    mode: "0640"
 
 - name: Add PowerDNS recursor apt repository
   ansible.builtin.apt_repository:
@@ -33,7 +33,7 @@
     dest: /etc/apt/preferences.d/pdns
     owner: root
     group: root
-    mode: "0644"
+    mode: "0640"
 
 - name: Install pdns-recursor
   ansible.builtin.apt:

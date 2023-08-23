@@ -1,0 +1,8 @@
+[Unit]
+Description=Run runrestic
+
+[Timer]
+OnCalendar={{ runrestic_systemd_calendar }}
+
+[Install]
+WantedBy=timers.target

@@ -6,6 +6,7 @@
     - nodejs
     - uptime_kuma
     - caddy
+    - runrestic
 
 - name: Configure DNS servers
   hosts: dns
