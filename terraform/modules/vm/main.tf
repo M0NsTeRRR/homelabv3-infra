@@ -26,6 +26,8 @@ resource "proxmox_vm_qemu" "vm" {
   name        = "${var.vm_hostname}.${var.domain}"
   target_node = var.target_node
 
+  onboot = var.onboot
+
   agent = 1
 
   tags = join(";", var.vm_tags)

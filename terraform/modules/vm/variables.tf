@@ -8,6 +8,12 @@ variable "target_node" {
   type        = string
 }
 
+variable "onboot" {
+  description = "Auto start VM when node is start"
+  type        = bool
+  default     = true
+}
+
 variable "target_node_domain" {
   description = "Proxmox node domain"
   type        = string
