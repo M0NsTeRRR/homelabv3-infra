@@ -17,6 +17,6 @@ jobs:
     env:
       RENOVATE_CONFIG_FILE: .github/renovate.json5
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Check renovate config
         run: npx -p renovate renovate-config-validator
