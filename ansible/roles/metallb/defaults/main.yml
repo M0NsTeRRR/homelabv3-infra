@@ -1,6 +1,6 @@
 ---
 # datasource=github-tags depName=metallb/metallb
-metallb_version: "v0.13.10"
+metallb_version: "v0.13.11"
 metallb_force_install: false
 metallb_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
 
