@@ -1,6 +1,6 @@
 ---
 # datasource=github-tags depName=cert-manager/cert-manager
-cert_manager_version: "v1.12.3"
+cert_manager_version: "v1.12.4"
 cert_manager_force_install: false
 cert_manager_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
 cert_manager_email: "test@example.fr"
