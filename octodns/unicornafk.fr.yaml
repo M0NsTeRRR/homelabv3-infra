@@ -7,7 +7,7 @@
     values:
       - flags: 0
         tag: iodef
-        value: "mailto:security@adminafk.fr"
+        value: "mailto:security@unicornafk.fr"
       - flags: 0
         tag: issue
         value: sectigo.com
@@ -25,7 +25,7 @@
     value: v=DKIM1\; t=s\; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoYPHLI14v9KekFCM+/b1JWIH/AWIOobF3rTtyhHcOdXNFoqNRL1Uy2YePznCdaWG0DCU0mbXeH8zGHbH7EIIfm4Bt1DK1Cy/gXn2sQqxrGNTItOn/b1F9SudW0eGQfEqKB1eCAtxZ4KF1gjt3ZlWr0LY/jIamCJ7YBdFlVTUgGTaG2nY3U4deU/089ueQZs2d5gSF29W8T/rxc8XUhrp2wLQi5m4DNC6lIY20Y08cflBw13NJdMvp41WtoK++W2e3sbcKp0JdZOqtUu7V8Qr3Btb5ZQdUj4FVhymmmqRl1DcTMH7sGYknsqxZ1J41ZBrKJEUsg7bSzlBlMJq4KC/SQIDAQAB
 _dmarc:
   - type: TXT
-    value: v=DMARC1\; p=reject\; aspf=s\; adkim=s\; rua=mailto:dmarc@adminafk.fr\; ruf=mailto:dmarc@adminafk.fr\;
+    value: v=DMARC1\; p=reject\; aspf=s\; adkim=s\; rua=mailto:dmarc@unicornafk.fr\; ruf=mailto:dmarc@unicornafk.fr\;
 autoconfig:
   - type: CNAME
     value: infomaniak.com.
