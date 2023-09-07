@@ -40,16 +40,16 @@
     - { port: "443", proto: "tcp", direction: "out", comment: "HTTPS/DoT" }
     - { port: "443", proto: "udp", direction: "out", comment: "HTTPS/DoT" }
 
-- name: Allow outgoing ICMP request in before.rules
+- name: Allow outgoing ICMP/Traceroute request in before.rules
   ansible.builtin.blockinfile:
     path: /etc/ufw/before.rules
     insertbefore: "# don't delete the 'COMMIT' line or these rules won't be processed"
     block: |
-      -A ufw-before-output -p icmp --icmp-type destination-unreachable -j ACCEPT
-      -A ufw-before-output -p icmp --icmp-type time-exceeded -j ACCEPT
-      -A ufw-before-output -p icmp --icmp-type parameter-problem -j ACCEPT
-      -A ufw-before-output -p icmp --icmp-type echo-request -j ACCEPT
-      -A ufw-before-output -p udp -m udp --dport 33434:33523 -j ACCEPT
+      -A ufw-before-output -p icmp --icmp-type destination-unreachable -j ACCEPT --comment "ICMP (ansible_managed)"
+      -A ufw-before-output -p icmp --icmp-type time-exceeded -j ACCEPT --comment "ICMP (ansible_managed)"
+      -A ufw-before-output -p icmp --icmp-type parameter-problem -j ACCEPT --comment "ICMP (ansible_managed)"
+      -A ufw-before-output -p icmp --icmp-type echo-request -j ACCEPT --comment "ICMP (ansible_managed)"
+      -A ufw-before-output -p udp -m udp --dport 33434:33523 -j ACCEPT --comment "Traceroute (ansible_managed)"
   notify: Reload ufw
 
 - name: Deny incoming
