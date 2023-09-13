@@ -45,7 +45,6 @@
     state: present
   delegate_to: localhost
   with_items: "{{ metallb_ip_address_pools }}"
-  when: not metallb_is_installed or metallb_force_install
 
 - name: Install metallb l2 mode manifest
   kubernetes.core.k8s:
@@ -55,4 +54,3 @@
     state: present
   delegate_to: localhost
   with_items: "{{ metallb_ip_address_pools }}"
-  when: not metallb_is_installed or metallb_force_install
