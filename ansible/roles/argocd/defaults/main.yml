@@ -1,6 +1,6 @@
 ---
 # datasource=github-tags depName=argoproj/argo-cd
-argocd_version: "v2.8.3"
+argocd_version: "v2.8.4"
 argocd_force_install: false
 argocd_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
 argocd_hostname: argocd.example.fr
