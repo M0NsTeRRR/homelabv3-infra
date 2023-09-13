@@ -1,8 +1,4 @@
 ---
-- name: Detect machine architecture
-  ansible.builtin.set_fact:
-    cilium_arch: "{% if ansible_architecture == 'x86_64' %}amd64{% else %}arm64{% endif %}"
-
 - name: Add cilium helm repo
   kubernetes.core.helm_repository:
     name: cilium
