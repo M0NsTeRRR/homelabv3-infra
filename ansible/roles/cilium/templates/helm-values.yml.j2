@@ -5,11 +5,15 @@ tunnel: disabled
 autoDirectNodeRoutes: true
 ipv4NativeRoutingCIDR: "{{ cilium_cluster_cidr_ipv4 }}"
 ipv6NativeRoutingCIDR: "{{ cilium_cluster_cidr_ipv6 }}"
+enableIPv4Masquerade: false
+enableIPv6Masquerade: false
 loadBalancer:
   mode: dsr
   acceleration: native
 k8sServiceHost: "{{ cilium_service_host }}"
 k8sServicePort: 6443
+policyEnforcementMode: default
+policyAuditMode: false
 hostFirewall:
   enabled: true
 extraConfig:
