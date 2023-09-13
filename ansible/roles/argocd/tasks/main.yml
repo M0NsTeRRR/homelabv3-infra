@@ -28,7 +28,7 @@
     dest: /tmp/argocd.yaml
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
-    mode: "0644"
+    mode: "0640"
   when: not argocd_is_installed or argocd_force_install
   delegate_to: localhost
 

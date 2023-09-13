@@ -19,7 +19,7 @@
     dest: /tmp/cert_manager_crds.yaml
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"
-    mode: "0644"
+    mode: "0640"
   delegate_to: localhost
   when: not cert_manager_is_installed or cert_manager_force_install
 
