@@ -7,6 +7,7 @@
     kubeconfig: "{{ vault_localhost_kubeconfig_path }}"
     validate_certs: true
   register: vault_pod_unseal_status
+  failed_when: vault_pod_unseal_status.rc != 0 and vault_pod_unseal_status.rc != 2
   delegate_to: localhost
 
 - name: "Unseal vault-{{ item }}"
