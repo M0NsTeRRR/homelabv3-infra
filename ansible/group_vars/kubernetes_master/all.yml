@@ -12,7 +12,9 @@ kube_vip_address:
     prometheus_server: ":2113"
 kube_vip_interface: enp6s18
 cilium_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
-cilium_service_host: "{{ kube_vip_address[0].address }}"
+cilium_service_hosts:
+  - "{{ kube_vip_address[0].address }}/{{ kube_vip_address[0].cidr }}"
+  - "{{ kube_vip_address[1].address }}/{{ kube_vip_address[1].cidr }}"
 traefik_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 traefik_external_ips:
   - 192.168.10.100
