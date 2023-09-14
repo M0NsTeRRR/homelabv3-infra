@@ -19,7 +19,7 @@
     validate_certs: true
   no_log: true
   delegate_to: localhost
-  when: vault_pod_unseal_status.result.rc == 2
+  when: vault_pod_unseal_status.rc == 2
   with_items: "{{ vault_unseal_keys[:3] }}"
   loop_control:
     loop_var: unseal_key_hex
