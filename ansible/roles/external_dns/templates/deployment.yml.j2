@@ -1,4 +1,5 @@
 #jinja2: lstrip_blocks: "True"
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -44,7 +45,7 @@ spec:
       serviceAccountName: external-dns
       containers:
         - name: external-dns
-          image: gcr.io/k8s-staging-external-dns/external-dns:v20230721-external-dns-helm-chart-1.13.0-159-gbc61d4de-amd64
+          image: registry.k8s.io/external-dns/external-dns:{{ external_dns_version }}
           command:
             - sh
             - -c
