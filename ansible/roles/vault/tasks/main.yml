@@ -45,8 +45,8 @@
     chart_ref: hashicorp/vault
     chart_version: "{{ vault_helm_version[1:] }}"
     release_namespace: vault
-    values: "{{ lookup('ansible.builtin.template', 'config.yml.j2') | from_yaml }}"
     create_namespace: true
+    release_values: "{{ lookup('ansible.builtin.template', 'helm-values.yml.j2') | from_yaml }}"
     update_repo_cache: true
     kubeconfig: "{{ vault_localhost_kubeconfig_path }}"
     validate_certs: true
