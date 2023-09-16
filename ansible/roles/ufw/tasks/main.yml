@@ -45,11 +45,11 @@
     path: /etc/ufw/before.rules
     insertbefore: "# don't delete the 'COMMIT' line or these rules won't be processed"
     block: |
-      -A ufw-before-output -p icmp --icmp-type destination-unreachable -j ACCEPT --comment "ICMP (ansible_managed)"
-      -A ufw-before-output -p icmp --icmp-type time-exceeded -j ACCEPT --comment "ICMP (ansible_managed)"
-      -A ufw-before-output -p icmp --icmp-type parameter-problem -j ACCEPT --comment "ICMP (ansible_managed)"
-      -A ufw-before-output -p icmp --icmp-type echo-request -j ACCEPT --comment "ICMP (ansible_managed)"
-      -A ufw-before-output -p udp -m udp --dport 33434:33523 -j ACCEPT --comment "Traceroute (ansible_managed)"
+      -A ufw-before-output -p icmp --icmp-type destination-unreachable -j ACCEPT -m comment --comment "ICMP (ansible_managed)"
+      -A ufw-before-output -p icmp --icmp-type time-exceeded -j ACCEPT -m comment --comment "ICMP (ansible_managed)"
+      -A ufw-before-output -p icmp --icmp-type parameter-problem -j ACCEPT -m comment --comment "ICMP (ansible_managed)"
+      -A ufw-before-output -p icmp --icmp-type echo-request -j ACCEPT -m comment --comment "ICMP (ansible_managed)"
+      -A ufw-before-output -p udp -m udp --dport 33434:33523 -j ACCEPT -m comment --comment "Traceroute (ansible_managed)"
   notify: Reload ufw
 
 - name: Deny incoming
