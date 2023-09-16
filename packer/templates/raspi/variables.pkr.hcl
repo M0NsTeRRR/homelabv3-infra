@@ -21,5 +21,5 @@ variable "distribution" {
 
 variable "version" {
   type    = string
-  default = "22.04.2"
+  default = "22.04.3"
 }
