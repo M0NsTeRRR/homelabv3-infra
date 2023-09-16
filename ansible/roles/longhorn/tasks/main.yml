@@ -29,6 +29,7 @@
     chart_version: "{{ longhorn_version[1:] }}"
     release_namespace: longhorn-system
     create_namespace: true
+    release_values: "{{ lookup('ansible.builtin.file', 'helm-values.yml') | from_yaml }}"
     update_repo_cache: true
     wait: true
     kubeconfig: "{{ longhorn_localhost_kubeconfig_path }}"
