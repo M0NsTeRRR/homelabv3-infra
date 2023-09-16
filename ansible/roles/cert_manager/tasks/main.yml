@@ -47,6 +47,7 @@
     chart_version: "{{ cert_manager_version }}"
     release_namespace: cert-manager
     create_namespace: true
+    release_values: "{{ lookup('ansible.builtin.file', 'helm-values.yml') | from_yaml }}"
     update_repo_cache: true
     wait: true
     kubeconfig: "{{ cert_manager_localhost_kubeconfig_path }}"
