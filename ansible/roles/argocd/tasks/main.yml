@@ -14,74 +14,25 @@
     argocd_is_installed: "{% if argocd_namespace_info.resources | length > 0 %}true{% else %}false{% endif %}"
   delegate_to: localhost
 
-- name: Create argocd namespace
-  kubernetes.core.k8s:
-    definition: "{{ lookup('ansible.builtin.file', 'namespace.yml') | from_yaml }}"
+- name: Add argo helm repo
+  kubernetes.core.helm_repository:
+    name: argo
+    repo_url: https://argoproj.github.io/argo-helm
     kubeconfig: "{{ argocd_localhost_kubeconfig_path }}"
     validate_certs: true
-    state: present
   delegate_to: localhost
 
-- name: Download argocd HA manifest"
-  ansible.builtin.get_url:
-    url: "https://raw.githubusercontent.com/argoproj/argo-cd/{{ argocd_version }}/manifests/ha/install.yaml"
-    dest: /tmp/argocd.yaml
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
-    mode: "0640"
+- name: Deploy argocd chart
+  kubernetes.core.helm:
+    name: argocd
+    chart_ref: argo/argo-cd
+    chart_version: "{{ argocd_helm_version }}"
+    release_namespace: argocd
+    create_namespace: true
+    release_values: "{{ lookup('ansible.builtin.file', 'helm-values.yml') | from_yaml }}"
+    update_repo_cache: true
+    wait: true
+    kubeconfig: "{{ argocd_localhost_kubeconfig_path }}"
+    validate_certs: true
+  delegate_to: localhost
   when: not argocd_is_installed or argocd_force_install
-  delegate_to: localhost
-
-- name: Install argocd HA manifest
-  kubernetes.core.k8s:
-    src: /tmp/argocd.yaml
-    namespace: argocd
-    kubeconfig: "{{ argocd_localhost_kubeconfig_path }}"
-    validate_certs: true
-    state: present
-  when: not argocd_is_installed or argocd_force_install
-  delegate_to: localhost
-
-- name: Disable argocd tls
-  kubernetes.core.k8s_json_patch:
-    kind: Deployment
-    namespace: argocd
-    name: argocd-server
-    patch:
-      - op: replace
-        path: /spec/template/spec/containers/0/args
-        value:
-          - /usr/local/bin/argocd-server
-          - --insecure
-    kubeconfig: "{{ argocd_localhost_kubeconfig_path }}"
-    validate_certs: true
-  delegate_to: localhost
-
-- name: Update argocd password
-  kubernetes.core.k8s_json_patch:
-    kind: Secret
-    namespace: argocd
-    name: argocd-secret
-    patch:
-      - op: replace
-        path: /data/admin.password
-        value: "{{ argocd_admin_password | password_hash('bcrypt') | b64encode }}"
-    kubeconfig: "{{ argocd_localhost_kubeconfig_path }}"
-    validate_certs: true
-  delegate_to: localhost
-
-- name: Create argocd ingress config
-  kubernetes.core.k8s:
-    definition: "{{ lookup('ansible.builtin.template', 'ingress.yml.j2') | from_yaml_all }}"
-    kubeconfig: "{{ argocd_localhost_kubeconfig_path }}"
-    validate_certs: true
-    state: present
-  delegate_to: localhost
-
-- name: Create argocd repository config
-  kubernetes.core.k8s:
-    definition: "{{ lookup('ansible.builtin.template', 'repository.yml.j2') | from_yaml }}"
-    kubeconfig: "{{ argocd_localhost_kubeconfig_path }}"
-    validate_certs: true
-    state: present
-  delegate_to: localhost

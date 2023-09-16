@@ -1,11 +1,18 @@
 ---
 # datasource=github-tags depName=argoproj/argo-cd
 argocd_version: "v2.8.4"
+# datasource=github-tags depName=argoproj/argo-helm
+argocd_helm_version: "5.46.4"
 argocd_force_install: false
 argocd_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
 argocd_hostname: argocd.example.fr
 argocd_admin_password: test
 argocd_ingress_cluster_issuer: nginx
 argocd_ingress_class: nginx
-argocd_repository_name: test
-argocd_repository_url: https://git.example.fr/test
+argocd_repositories: {}
+
+# argocd_repositories:
+#   istio-helm-repo:
+#     url: https://storage.googleapis.com/istio-prerelease/daily-build/master-latest-daily/charts
+#     name: istio.io
+#     type: helm

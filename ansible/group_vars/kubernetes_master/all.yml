@@ -148,5 +148,6 @@ argocd_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 argocd_hostname: argocd.unicornafk.fr
 argocd_ingress_cluster_issuer: vault
 argocd_ingress_class: traefik-internal
-argocd_repository_name: homelab
-argocd_repository_url: https://github.com/M0NsTeRRR/homelabv3-infra
+argocd_repositories:
+  - name: homelab
+    url: https://github.com/M0NsTeRRR/homelabv3-infra
