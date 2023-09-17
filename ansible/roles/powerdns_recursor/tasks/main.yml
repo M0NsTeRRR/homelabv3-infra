@@ -19,7 +19,7 @@
     dest: /etc/apt/keyrings/powerdns_recursor.asc
     owner: root
     group: root
-    mode: "0640"
+    mode: "0644"
 
 - name: Add PowerDNS recursor apt repository
   ansible.builtin.apt_repository:

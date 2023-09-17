@@ -30,7 +30,7 @@
     dest: /etc/apt/keyrings/caddy.asc
     owner: root
     group: root
-    mode: "0640"
+    mode: "0644"
 
 - name: Add Caddy Apt repository
   ansible.builtin.apt_repository:
