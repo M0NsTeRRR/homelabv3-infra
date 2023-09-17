@@ -8,13 +8,11 @@
     validate_certs: true
   register: kube_vip_namespace_info
   delegate_to: localhost
-  run_once: true
 
 - name: Check if kube-vip is already installed
   ansible.builtin.set_fact:
     kube_vip_is_installed: "{% if kube_vip_namespace_info.resources | length > 0 %}true{% else %}false{% endif %}"
   delegate_to: localhost
-  run_once: true
 
 - name: Create kube vip ressources
   kubernetes.core.k8s:
@@ -24,4 +22,3 @@
     state: present
   when: not kube_vip_is_installed or kube_vip_force_install
   delegate_to: localhost
-  run_once: true
