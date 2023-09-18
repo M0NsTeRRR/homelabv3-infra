@@ -69,11 +69,24 @@
     validate_certs: true
   delegate_to: localhost
 
+- name: Get a list of all cilium pods
+  kubernetes.core.k8s_info:
+    kind: Pod
+    namespace: cilium
+    label_selectors:
+      - k8s-app=cilium
+    kubeconfig: "{{ cilium_localhost_kubeconfig_path }}"
+    validate_certs: true
+  register: cilium_pod_list
+  delegate_to: localhost
+
 - name: Disable policy audit mode in cluster
   kubernetes.core.k8s_exec:
     namespace: cilium
-    pod: 
+    pod: "{{ item.metadata.name }}"
     command: cilium config PolicyAuditMode=Disabled
     kubeconfig: "{{ cilium_localhost_kubeconfig_path }}"
     validate_certs: true
+  no_log: true
+  with_items: "{{ cilium_pod_list.resources }}"
   delegate_to: localhost
