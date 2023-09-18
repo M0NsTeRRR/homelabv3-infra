@@ -1,0 +1,29 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumClusterwideNetworkPolicy
+metadata:
+  name: kubelet
+specs:
+  - nodeSelector:
+      matchLabels: {}
+    ingress:
+      - fromEntities:
+          - kube-apiserver
+        toEntities:
+          - host
+        toPorts:
+          - ports:
+              - port: '10250'
+                protocol: TCP
+  - nodeSelector:
+      matchLabels:
+        node-role.kubernetes.io/control-plane: 'true'
+    egress:
+      - fromEntities:
+          - kube-apiserver
+        toEntities:
+          - host
+        toPorts:
+          - ports:
+              - port: '10250'
+                protocol: TCP

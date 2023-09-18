@@ -12,6 +12,11 @@ loadBalancer:
   acceleration: native
 k8sServiceHost: "{{ (cilium_service_hosts[0] | split('/'))[0] }}"
 k8sServicePort: 6443
+# Regression in DSR
+# https://github.com/cilium/cilium/issues/28187
+# waiting fix before enabling it back
+# policyEnforcementMode: always
+# policyAuditMode: true
 policyEnforcementMode: default
 policyAuditMode: false
 hostFirewall:

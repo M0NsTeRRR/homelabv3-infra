@@ -37,3 +37,43 @@
   delegate_to: localhost
   run_once: true
   when: not cilium_is_installed or cilium_force_install
+
+- name: Install cilium network policies file
+  kubernetes.core.k8s:
+    template: "{{ item }}"
+    kubeconfig: "{{ cilium_localhost_kubeconfig_path }}"
+    validate_certs: true
+    state: present
+  delegate_to: localhost
+  with_fileglob: network-policies/*
+
+- name: Install cilium network policies template
+  kubernetes.core.k8s:
+    template: "{{ item }}"
+    kubeconfig: "{{ cilium_localhost_kubeconfig_path }}"
+    validate_certs: true
+    state: present
+  delegate_to: localhost
+  with_fileglob: ../templates/network-policies/*
+
+- name: Disable policy audit mode in configMap
+  kubernetes.core.k8s_json_patch:
+    kind: ConfigMap
+    namespace: cilium
+    name: cilium-config
+    patch:
+      - op: replace
+        path: /data/policy-audit-mode
+        value: 'false'
+    kubeconfig: "{{ cilium_localhost_kubeconfig_path }}"
+    validate_certs: true
+  delegate_to: localhost
+
+- name: Disable policy audit mode in cluster
+  kubernetes.core.k8s_exec:
+    namespace: cilium
+    pod: 
+    command: cilium config PolicyAuditMode=Disabled
+    kubeconfig: "{{ cilium_localhost_kubeconfig_path }}"
+    validate_certs: true
+  delegate_to: localhost

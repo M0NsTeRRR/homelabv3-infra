@@ -1,0 +1,43 @@
+---
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: hubble-relay
+  namespace: cilium
+specs:
+  - nodeSelector:
+      matchLabels: {}
+    ingress:
+      - fromEndpoints:
+          - matchLabels:
+              io.cilium.k8s.policy.serviceaccount: hubble-relay
+        toPorts:
+          - ports:
+              - port: '4244'
+                protocol: TCP
+    egress:
+      - toEndpoints:
+          - matchLabels:
+              io.cilium.k8s.policy.serviceaccount: hubble-relay
+        toPorts:
+          - ports:
+              - port: '4245'
+                protocol: TCP
+  - endpointSelector:
+      matchLabels:
+        io.cilium.k8s.policy.serviceaccount: hubble-relay
+    ingress:
+      - fromEntities:
+          - host
+        toPorts:
+          - ports:
+              - port: '4245'
+                protocol: TCP
+    egress:
+      - toEntities:
+          - host
+          - remote-node
+        toPorts:
+          - ports:
+              - port: '4244'
+                protocol: TCP

@@ -22,7 +22,7 @@
     validate_certs: true
   delegate_to: localhost
 
-- name: Deploy longhorn chart (it takes a bit of time)
+- name: Deploy longhorn chart
   kubernetes.core.helm:
     name: longhorn
     chart_ref: longhorn/longhorn

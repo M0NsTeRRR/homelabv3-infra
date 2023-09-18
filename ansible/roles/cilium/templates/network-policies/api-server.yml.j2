@@ -1,0 +1,48 @@
+#jinja2: lstrip_blocks: "True"
+---
+apiVersion: cilium.io/v2
+kind: CiliumClusterwideNetworkPolicy  
+metadata:
+  name: api-server
+specs:
+  - nodeSelector:
+      matchLabels:
+        node-role.kubernetes.io/control-plane: 'true'
+    ingress:
+      - fromEntities:
+          - all
+        toEntities:
+          - kube-apiserver
+        toPorts:
+          - ports:
+              - port: '6443'
+                protocol: TCP
+      - fromEntities:
+          - all
+        toCIDR:
+        {% for cilium_service_host in cilium_service_hosts %}
+          - {{ cilium_service_host }}
+        {% endfor %}
+        toPorts:
+          - ports:
+              - port: '6443'
+                protocol: TCP
+    egress:
+      - fromEntities:
+          - all
+        toEntities:
+          - kube-apiserver
+        toPorts:
+          - ports:
+              - port: '6443'
+                protocol: TCP
+      - fromEntities:
+          - host
+        toCIDR:
+        {% for cilium_service_host in cilium_service_hosts %}
+          - {{ cilium_service_host }}
+        {% endfor %}
+        toPorts:
+          - ports:
+              - port: '6443'
+                protocol: TCP
