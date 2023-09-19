@@ -16,9 +16,8 @@ k8sServicePort: 6443
 # https://github.com/cilium/cilium/issues/28187
 # waiting fix before enabling it back
 # policyEnforcementMode: always
-# policyAuditMode: true
-policyEnforcementMode: default
-policyAuditMode: false
+policyEnforcementMode: never
+policyAuditMode: true
 hostFirewall:
   enabled: true
 extraConfig:
