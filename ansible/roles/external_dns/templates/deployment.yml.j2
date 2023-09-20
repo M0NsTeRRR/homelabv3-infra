@@ -43,11 +43,24 @@ spec:
          {% endfor %}
     spec:
       serviceAccountName: external-dns
+      initContainers:
+        - name: copy-shell
+          image: busybox:uclibc
+          command: ["cp", "/bin/sh", "/shell/sh"]
+          volumeMounts:
+            - name: shell
+              mountPath: /shell
       containers:
         - name: external-dns
           image: registry.k8s.io/external-dns/external-dns:{{ external_dns_version }}
           command:
-            - sh
+            - /shell/sh
             - -c
           args:
-            - source /vault/secrets/config && /bin/external-dns {{ external_dns_args }}
+            - source /vault/secrets/config && /ko-app/external-dns {{ external_dns_args }}
+          volumeMounts:
+            - name: shell
+              mountPath: /shell
+      volumes:
+        - name: shell
+          emptyDir: {}
