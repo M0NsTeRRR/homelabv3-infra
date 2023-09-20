@@ -8,6 +8,19 @@ server:
   autoscaling:
     enabled: true
     minReplicas: 2
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: "{{ argocd_ingress_cluster_issuer }}"
+      cert-manager.io/private-key-algorithm: "RSA"
+      cert-manager.io/private-key-size: "4096"
+    hosts:
+      - {{ argocd_hostname }}
+    ingressClassName: {{ argocd_ingress_class }}
+    tls:
+      - secretName: {{ argocd_hostname }}
+        hosts:
+          - {{ argocd_hostname }}
 
 repoServer:
   autoscaling:
@@ -18,30 +31,15 @@ applicationSet:
   replicas: 2
 
 global:
-    image:
-        tag: "{{ argocd_version }}"
-    networkPolicy:
-        create: true
+  image:
+    tag: "{{ argocd_version }}"
+  networkPolicy:
+    create: false
 
 configs:
-    params:
-        server.insecure: true
-    secret:
-        argocdServerAdminPassword: "{{ argocd_admin_password | password_hash('bcrypt') }}"
-    repositories:
-        {{ argocd_repositories | to_nice_yaml | indent(8) }}
-
-server:
-    ingress:
-        enabled: true
-        annotations:
-            cert-manager.io/cluster-issuer: "{{ argocd_ingress_cluster_issuer }}"
-            cert-manager.io/private-key-algorithm: "RSA"
-            cert-manager.io/private-key-size: "4096"
-        hosts:
-            - {{ argocd_hostname }}
-        ingressClassName: {{ argocd_ingress_class }}
-        tls:
-            - hosts:
-                - {{ argocd_hostname }}
-            secretName: {{ argocd_hostname }}
+  params:
+    server.insecure: true
+  secret:
+    argocdServerAdminPassword: "{{ argocd_admin_password | password_hash('bcrypt') }}"
+  repositories:
+    {{ argocd_repositories | to_nice_yaml | indent(4) }}

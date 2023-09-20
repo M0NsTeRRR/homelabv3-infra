@@ -5,18 +5,14 @@ tunnel: disabled
 autoDirectNodeRoutes: true
 ipv4NativeRoutingCIDR: "{{ cilium_cluster_cidr_ipv4 }}"
 ipv6NativeRoutingCIDR: "{{ cilium_cluster_cidr_ipv6 }}"
-enableIPv4Masquerade: false
-enableIPv6Masquerade: false
+enableIPv4Masquerade: true
+enableIPv6Masquerade: true
 loadBalancer:
   mode: dsr
   acceleration: native
 k8sServiceHost: "{{ (cilium_service_hosts[0] | split('/'))[0] }}"
 k8sServicePort: 6443
-# Regression in DSR
-# https://github.com/cilium/cilium/issues/28187
-# waiting fix before enabling it back
-# policyEnforcementMode: always
-policyEnforcementMode: never
+policyEnforcementMode: default
 policyAuditMode: true
 hostFirewall:
   enabled: true

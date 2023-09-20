@@ -45,7 +45,7 @@
     validate_certs: true
     state: present
   delegate_to: localhost
-  with_fileglob: network-policies/*
+  with_fileglob: network-policies/*.yml
 
 - name: Install cilium network policies template
   kubernetes.core.k8s:
@@ -54,7 +54,7 @@
     validate_certs: true
     state: present
   delegate_to: localhost
-  with_fileglob: ../templates/network-policies/*
+  with_fileglob: ../templates/network-policies/*.j2
 
 - name: Disable policy audit mode in configMap
   kubernetes.core.k8s_json_patch:

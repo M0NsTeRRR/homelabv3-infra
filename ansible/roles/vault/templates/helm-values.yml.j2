@@ -10,10 +10,11 @@ injector:
   metrics:
     enabled: true
 
-networkPolicy:
-  enabled: true
 
 server:
+  networkPolicy:
+    enabled: false
+
   extraEnvironmentVars:
     VAULT_CACERT: /vault/userconfig/vault-server-tls/ca.crt
 

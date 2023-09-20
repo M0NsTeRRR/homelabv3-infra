@@ -81,7 +81,7 @@
   register: result
   until: result.resources[0].status.phase == "Running"
   retries: 5
-  delay: 10
+  delay: 30
   delegate_to: localhost
   with_sequence: start=0 end="{{ vault_replicas - 1 }}"
 
