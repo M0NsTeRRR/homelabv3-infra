@@ -42,4 +42,14 @@ configs:
   secret:
     argocdServerAdminPassword: "{{ argocd_admin_password | password_hash('bcrypt') }}"
   repositories:
-    {{ argocd_repositories | to_nice_yaml | indent(4) }}
+    {{ argocd_repositories | to_yaml | indent(4) }}
+
+notifications:
+  notifiers:
+    {{ argocd_notifiers | to_yaml | indent(4) }}
+  subscriptions:
+    {{ argocd_subscriptions | to_yaml | indent(4) }}
+  templates:
+    {{ argocd_templates | to_yaml | indent(4) }}
+
+

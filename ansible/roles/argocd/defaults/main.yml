@@ -10,6 +10,9 @@ argocd_admin_password: test
 argocd_ingress_cluster_issuer: nginx
 argocd_ingress_class: nginx
 argocd_repositories: {}
+argocd_notifiers: {}
+argocd_subscriptions: []
+argocd_templates: {}
 
 # argocd_repositories:
 #   istio-helm-repo:
