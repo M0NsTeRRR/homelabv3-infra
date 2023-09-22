@@ -248,7 +248,7 @@ nginx_configuration:
     http_redirection: false
     ssl_port: 9443
 
-self_signed_certs:
+self_signed_cert_list:
   - common_name: "{{ hostvars[inventory_hostname].hostname[:-1] }}"
     country: "{{ country }}"
     organization: "{{ organization }}"

@@ -20,6 +20,7 @@
   vars:
     ansible_python_interpreter: "{{ postgresql_venv }}/bin/python"
   become_user: postgres
+  become: true
 
 - name: "Create postgresql database {{ item.name }}"
   community.postgresql.postgresql_db:
@@ -29,3 +30,4 @@
   vars:
     ansible_python_interpreter: "{{ postgresql_venv }}/bin/python"
   become_user: postgres
+  become: true

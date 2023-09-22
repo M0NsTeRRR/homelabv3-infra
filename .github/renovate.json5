@@ -106,7 +106,9 @@
         'pypi',
       ],
       matchDepPatterns: [
-        'ansible',
+        'ansible/ansible',
+        'ansible-core',
+        'ansible/ansible-lint'
       ],
       groupName: 'ansible version',
     },

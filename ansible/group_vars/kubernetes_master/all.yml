@@ -151,3 +151,19 @@ argocd_ingress_class: traefik-internal
 argocd_repositories:
   - name: homelab
     url: https://github.com/M0NsTeRRR/homelabv3-infra
+argocd_notifiers:
+  service.webhook.discord: |
+      headers:
+        - name: Content-Type
+          value: application/json
+      url: "https://discord.com"
+argocd_subscriptions:
+  - recipients:
+      - discord
+    triggers:
+      - on-deployed
+      - on-health-degraded
+      - on-sync-failed
+      - on-sync-running
+      - on-sync-status-unknown
+      - on-sync-succeeded
