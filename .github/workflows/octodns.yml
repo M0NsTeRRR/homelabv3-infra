@@ -27,7 +27,7 @@ jobs:
         pip install '.[octodns]'  
     - name: Validate octodns config
       run: |
-        octodns-validate --config-file=./octodns/config.yaml
+        octodns-validate --config-file=./octodns/config.yaml --all
   octodns-deploy:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
