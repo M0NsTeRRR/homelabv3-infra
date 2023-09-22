@@ -190,7 +190,7 @@ nginx_configuration:
     http_redirection: false
     ssl_port: 443
 
-self_signed_certs:
+self_signed_cert_list:
   - common_name: "{{ inventory_hostname }}"
     country: "{{ country }}"
     organization: "{{ organization }}"

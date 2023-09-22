@@ -2,11 +2,11 @@
 # self_signed_cert_cryptography_version:
 self_signed_cert_cryptography_package_state: latest
 self_signed_cert_venv: "/tmp/venv_self_signed_cert"
-self_signed_certs: []
+self_signed_cert_list: []
 self_signed_cert_pdns: {}
 
 
-# self_signed_certs:
+# self_signed_cert_list:
 #   - common_name: "host.example.com"
 #     country: "France"
 #     organization: "example"

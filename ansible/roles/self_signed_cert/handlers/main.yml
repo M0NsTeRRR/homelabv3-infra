@@ -8,5 +8,5 @@
     item.0.common_name in self_signed_cert_common_name_notifies and
     item.1.name in ansible_facts.services
   with_subelements:
-    - "{{ self_signed_certs }}"
+    - "{{ self_signed_cert_list }}"
     - systemd_services

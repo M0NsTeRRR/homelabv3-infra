@@ -24,6 +24,7 @@
     ansible_remote_tmp: /tmp
   register: powerdns_authoritative_pgsql_tables
   become_user: pdns
+  become: true
 
 - name: "Init database {{ powerdns_authoritative_pgsql_db }}"
   community.postgresql.postgresql_script:
@@ -36,3 +37,4 @@
     ansible_remote_tmp: /tmp
   when: powerdns_authoritative_pgsql_tables.rowcount == 0
   become_user: pdns
+  become: true
