@@ -39,6 +39,8 @@ global:
 configs:
   params:
     server.insecure: true
+  cm:
+    kustomize.buildOptions: --enable-helm
   secret:
     argocdServerAdminPassword: "{{ argocd_admin_password | password_hash('bcrypt') }}"
   repositories:
