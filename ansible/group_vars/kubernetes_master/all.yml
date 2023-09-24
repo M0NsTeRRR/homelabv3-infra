@@ -170,4 +170,4 @@ argocd_subscriptions:
 argocd_applications:
   - name: homelab
     repo_url: https://github.com/M0NsTeRRR/homelabv3-infra
-    path: /argocd
+    path: argocd
