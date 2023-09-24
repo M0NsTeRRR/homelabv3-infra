@@ -167,3 +167,7 @@ argocd_subscriptions:
       - on-sync-running
       - on-sync-status-unknown
       - on-sync-succeeded
+argocd_applications:
+  - name: homelab
+    repo_url: https://github.com/M0NsTeRRR/homelabv3-infra
+    path: /argocd

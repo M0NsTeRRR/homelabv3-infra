@@ -13,9 +13,34 @@ argocd_repositories: {}
 argocd_notifiers: {}
 argocd_subscriptions: []
 argocd_templates: {}
+argocd_applications: []
 
 # argocd_repositories:
 #   istio-helm-repo:
 #     url: https://storage.googleapis.com/istio-prerelease/daily-build/master-latest-daily/charts
 #     name: istio.io
 #     type: helm
+# argocd_notifiers:
+#   service.webhook.discord: |
+#       headers:
+#         - name: Content-Type
+#           value: application/json
+#       url: "https://discord.com"
+# argocd_subscriptions:
+#   - recipients:
+#       - discord
+#     triggers:
+#       - on-deployed
+#       - on-health-degraded
+#       - on-sync-failed
+#       - on-sync-running
+#       - on-sync-status-unknown
+#       - on-sync-succeeded
+# argocd_templates:
+#   template.notify-discord: |
+#     {% raw %}
+#     your amazin template
+# argocd_applications:
+#   name: example
+#   repo_url: https://example.git
+#   path: apps
