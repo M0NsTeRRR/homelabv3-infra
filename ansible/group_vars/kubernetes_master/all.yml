@@ -167,6 +167,39 @@ argocd_subscriptions:
       - on-sync-running
       - on-sync-status-unknown
       - on-sync-succeeded
+argocd_triggers:
+  trigger.on-deployed: |
+    - description: Application is synced and healthy. Triggered once per commit.
+      oncePer: app.status.operationState.syncResult.revision
+      send:
+      - notify-discord
+      when: app.status.operationState.phase in ['Succeeded'] and app.status.health.status
+        == 'Healthy'
+  trigger.on-health-degraded: |
+    - description: Application has degraded
+      send:
+      - notify-discord
+      when: app.status.health.status == 'Degraded'
+  trigger.on-sync-failed: |
+    - description: Application syncing has failed
+      send:
+      - notify-discord
+      when: app.status.operationState.phase in ['Error', 'Failed']
+  trigger.on-sync-running: |
+    - description: Application is being synced
+      send:
+      - notify-discord
+      when: app.status.operationState.phase in ['Running']
+  trigger.on-sync-status-unknown: |
+    - description: Application status is 'Unknown'
+      send:
+      - notify-discord
+      when: app.status.sync.status == 'Unknown'
+  trigger.on-sync-succeeded: |
+    - description: Application syncing has succeeded
+      send:
+      - notify-discord
+      when: app.status.operationState.phase in ['Succeeded']
 argocd_applications:
   - name: homelab
     repo_url: https://github.com/M0NsTeRRR/homelabv3-infra

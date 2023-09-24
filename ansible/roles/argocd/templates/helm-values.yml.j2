@@ -40,7 +40,7 @@ configs:
   params:
     server.insecure: true
   cm:
-    kustomize.buildOptions: --enable-helm
+    kustomize.buildOptions: "--enable-helm"
   secret:
     argocdServerAdminPassword: "{{ argocd_admin_password | password_hash('bcrypt') }}"
   repositories:
@@ -53,5 +53,7 @@ notifications:
     {{ argocd_subscriptions | to_yaml | indent(4) }}
   templates:
     {{ argocd_templates | to_yaml | indent(4) }}
+  triggers:
+    {{ argocd_triggers | to_yaml | indent(4) }}
 
 
