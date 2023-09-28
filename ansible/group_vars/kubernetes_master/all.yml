@@ -80,6 +80,11 @@ vault_policies:
       - path: secret/data/homelab/prod/external_dns/external
         capabilities:
           - read
+  - name: argocd
+    rules:
+      - path: secret/data/homelab/prod/argocd
+        capabilities:
+          - read
 public_vault_datas:
   - path: pki/config/ca
     data:
@@ -130,6 +135,12 @@ public_vault_datas:
       bound_service_account_namespaces: external-dns-external
       policies: external-dns-external
       ttl: 72h
+  - path: auth/kubernetes/role/argocd
+    data:
+      bound_service_account_names: argocd-repo-server
+      bound_service_account_namespaces: argocd
+      policies: argocd
+      ttl: 1h
 vault_datas: "{{ public_vault_datas + secret_vault_datas }}"
 cert_manager_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 cert_manager_email: "{{ monitoring_email }}"
@@ -161,6 +172,8 @@ argocd_subscriptions:
   - recipients:
       - discord
     triggers:
+      - on-created
+      - on-deleted
       - on-deployed
       - on-health-degraded
       - on-sync-failed
@@ -168,38 +181,163 @@ argocd_subscriptions:
       - on-sync-status-unknown
       - on-sync-succeeded
 argocd_triggers:
+  trigger.on-created: |
+    - description: Application is created.
+      oncePer: app.metadata.name
+      send:
+      - notify-discord-success
+      when: "true"
+  trigger.on-deleted: |
+    - description: Application is deleted.
+      oncePer: app.metadata.name
+      send:
+      - notify-discord-success
+      when: app.metadata.deletionTimestamp != nil
   trigger.on-deployed: |
     - description: Application is synced and healthy. Triggered once per commit.
       oncePer: app.status.operationState.syncResult.revision
       send:
-      - notify-discord
+      - notify-discord-success
       when: app.status.operationState.phase in ['Succeeded'] and app.status.health.status
         == 'Healthy'
   trigger.on-health-degraded: |
     - description: Application has degraded
       send:
-      - notify-discord
+      - notify-discord-fail
       when: app.status.health.status == 'Degraded'
   trigger.on-sync-failed: |
     - description: Application syncing has failed
       send:
-      - notify-discord
+      - notify-discord-fail
       when: app.status.operationState.phase in ['Error', 'Failed']
   trigger.on-sync-running: |
     - description: Application is being synced
       send:
-      - notify-discord
+      - notify-discord-load
       when: app.status.operationState.phase in ['Running']
   trigger.on-sync-status-unknown: |
     - description: Application status is 'Unknown'
       send:
-      - notify-discord
+      - notify-discord-warning
       when: app.status.sync.status == 'Unknown'
   trigger.on-sync-succeeded: |
     - description: Application syncing has succeeded
       send:
-      - notify-discord
+      - notify-discord-success
       when: app.status.operationState.phase in ['Succeeded']
+argocd_templates:
+  template.notify-discord-success: |
+    webhook:
+      discord:
+        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
+        method: POST
+        {% raw %}
+        body: |
+          {
+            "embeds": [
+              {
+                "title": "{{ .app.metadata.name }}: {{ .app.status.sync.status }} ✅",
+                "description": "{{ (call .repo.GetCommitMetadata .app.status.sync.revision).Message }}",
+                "url": "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}",
+                "fields": [
+                  {
+                    "name": "Author",
+                    "value": "{{ (call .repo.GetCommitMetadata .app.status.sync.revision).Author }}"
+                  },
+                  {
+                    "name": "Revision",
+                    "value": "[{{ .app.status.sync.revision }}]({{ (trimAll ".git" .app.spec.source.repoURL) }}/-/commit/{{ .app.status.sync.revision }})"
+                  }
+                ]
+              }
+            ],
+            "color": 5763719
+          }
+        {% endraw %}
+  template.notify-discord-warning: |
+    webhook:
+      discord:
+        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
+        method: POST
+        {% raw %}
+        body: |
+          {
+            "embeds": [
+              {
+                "title": "{{ .app.metadata.name }}: {{ .app.status.sync.status }} ⚠️",
+                "description": "{{ (call .repo.GetCommitMetadata .app.status.sync.revision).Message }}",
+                "url": "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}",
+                "fields": [
+                  {
+                    "name": "Author",
+                    "value": "{{ (call .repo.GetCommitMetadata .app.status.sync.revision).Author }}"
+                  },
+                  {
+                    "name": "Revision",
+                    "value": "[{{ .app.status.sync.revision }}]({{ (trimAll ".git" .app.spec.source.repoURL) }}/-/commit/{{ .app.status.sync.revision }})"
+                  }
+                ]
+              }
+            ],
+            "color": 16776960
+          }
+        {% endraw %}
+  template.notify-discord-fail: |
+    webhook:
+      discord:
+        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
+        method: POST
+        {% raw %}
+        body: |
+          {
+            "embeds": [
+              {
+                "title": "{{ .app.metadata.name }}: {{ .app.status.sync.status }} ❌",
+                "description": "{{ (call .repo.GetCommitMetadata .app.status.sync.revision).Message }}",
+                "url": "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}",
+                "fields": [
+                  {
+                    "name": "Author",
+                    "value": "{{ (call .repo.GetCommitMetadata .app.status.sync.revision).Author }}"
+                  },
+                  {
+                    "name": "Revision",
+                    "value": "[{{ .app.status.sync.revision }}]({{ (trimAll ".git" .app.spec.source.repoURL) }}/-/commit/{{ .app.status.sync.revision }})"
+                  }
+                ]
+              }
+            ],
+            "color": 15548997
+          }
+        {% endraw %}
+  template.notify-discord-load: |
+    webhook:
+      discord:
+        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
+        method: POST
+        {% raw %}
+        body: |
+          {
+            "embeds": [
+              {
+                "title": "{{ .app.metadata.name }}: {{ .app.status.sync.status }} 🔄",
+                "description": "{{ (call .repo.GetCommitMetadata .app.status.sync.revision).Message }}",
+                "url": "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}",
+                "fields": [
+                  {
+                    "name": "Author",
+                    "value": "{{ (call .repo.GetCommitMetadata .app.status.sync.revision).Author }}"
+                  },
+                  {
+                    "name": "Revision",
+                    "value": "[{{ .app.status.sync.revision }}]({{ (trimAll ".git" .app.spec.source.repoURL) }}/-/commit/{{ .app.status.sync.revision }})"
+                  }
+                ]
+              }
+            ],
+            "color": 3447003
+          }
+        {% endraw %}
 argocd_applications:
   - name: homelab
     repo_url: https://github.com/M0NsTeRRR/homelabv3-infra

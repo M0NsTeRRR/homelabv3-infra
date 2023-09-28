@@ -26,13 +26,118 @@ repoServer:
   autoscaling:
     enabled: true
     minReplicas: 2
+  envFrom: 
+   - secretRef:
+      name: argocd-vault-plugin-credentials
+  rbac:
+    - verbs:
+        - get
+        - list
+        - watch
+      apiGroups:
+        - ''
+      resources:
+        - secrets
+        - configmaps
+  initContainers:
+    - name: download-tools
+      image: registry.access.redhat.com/ubi8
+      env:
+        - name: AVP_VERSION
+          value: {{ argocd_avp_version[1:] }}
+      command: [sh, -c]
+      args:
+        - >-
+          curl -L https://github.com/argoproj-labs/argocd-vault-plugin/releases/download/v$(AVP_VERSION)/argocd-vault-plugin_$(AVP_VERSION)_linux_amd64 -o argocd-vault-plugin &&
+          chmod +x argocd-vault-plugin &&
+          mv argocd-vault-plugin /custom-tools/
+      volumeMounts:
+        - mountPath: /custom-tools
+          name: custom-tools
+  extraContainers:
+    - name: avp
+      command: [/var/run/argocd/argocd-cmp-server]
+      image: quay.io/argoproj/argocd:{{ argocd_version }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 999
+      volumeMounts:
+        - mountPath: /var/run/argocd
+          name: var-files
+        - mountPath: /home/argocd/cmp-server/plugins
+          name: plugins
+        - mountPath: /tmp
+          name: tmp
+
+        # Register plugins into sidecar
+        - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+          subPath: avp.yaml
+          name: argocd-cmp-cm
+
+        # Important: Mount tools into $PATH
+        - name: custom-tools
+          subPath: argocd-vault-plugin
+          mountPath: /usr/local/bin/argocd-vault-plugin
+    - name: avp-kustomize
+      command: [/var/run/argocd/argocd-cmp-server]
+      image: quay.io/argoproj/argocd:{{ argocd_version }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 999
+      volumeMounts:
+        - mountPath: /var/run/argocd
+          name: var-files
+        - mountPath: /home/argocd/cmp-server/plugins
+          name: plugins
+        - mountPath: /tmp
+          name: tmp
+
+        # Register plugins into sidecar
+        - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+          subPath: avp-kustomize.yaml
+          name: argocd-cmp-cm
+
+        # Important: Mount tools into $PATH
+        - name: custom-tools
+          subPath: argocd-vault-plugin
+          mountPath: /usr/local/bin/argocd-vault-plugin
+    - name: avp-helm
+      command: [/var/run/argocd/argocd-cmp-server]
+      image: quay.io/argoproj/argocd:{{ argocd_version }}
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 999
+      volumeMounts:
+        - mountPath: /var/run/argocd
+          name: var-files
+        - mountPath: /home/argocd/cmp-server/plugins
+          name: plugins
+        - mountPath: /tmp
+          name: tmp
+
+        # Register plugins into sidecar
+        - mountPath: /home/argocd/cmp-server/config/plugin.yaml
+          subPath: avp-helm.yaml
+          name: argocd-cmp-cm
+
+        # Important: Mount tools into $PATH
+        - name: custom-tools
+          subPath: argocd-vault-plugin
+          mountPath: /usr/local/bin/argocd-vault-plugin
+  volumes:
+    - configMap:
+        name: argocd-cmp-cm
+      name: argocd-cmp-cm
+    - name: custom-tools
+      emptyDir: {}
+
 
 applicationSet:
   replicas: 2
 
 global:
   image:
-    tag: "{{ argocd_version }}"
+    tag: {{ argocd_version }}
   networkPolicy:
     create: false
 
@@ -41,10 +146,73 @@ configs:
     server.insecure: true
   cm:
     kustomize.buildOptions: "--enable-helm"
+  cmp:
+    create: true
+    plugins:
+      avp:
+        allowConcurrency: true
+        discover:
+          find:
+            command:
+              - sh
+              - "-c"
+              - "find . -name '*.yaml' | xargs -I {} grep \"<path\\|avp\\.kubernetes\\.io\" {} | grep ."
+        generate:
+          command:
+            - argocd-vault-plugin
+            - generate
+            - "."
+        lockRepo: false
+      avp-kustomize:
+        allowConcurrency: true
+        discover:
+          find:
+            command:
+              - find
+              - "."
+              - -name
+              - kustomization.yaml
+        generate:
+          command:
+            - sh
+            - "-c"
+            - "kustomize build --enable-helm . | argocd-vault-plugin generate -"
+        lockRepo: false
+      avp-helm:
+        allowConcurrency: true
+        discover:
+          find:
+            command:
+              - find
+              - "."
+              - -name
+              - Chart.yaml
+        generate:
+          command:
+            - sh
+            - "-c"
+            - |
+              helm template $ARGOCD_APP_NAME --include-crds . |
+              argocd-vault-plugin generate -
+        lockRepo: false
   secret:
     argocdServerAdminPassword: "{{ argocd_admin_password | password_hash('bcrypt') }}"
+  serviceAccount:
+    automountServiceAccountToken: true
   repositories:
     {{ argocd_repositories | to_yaml | indent(4) }}
+
+extraObjects:
+  - kind: Secret
+    apiVersion: v1
+    metadata:
+      name: argocd-vault-plugin-credentials
+    type: Opaque
+    stringData:
+      VAULT_ADDR: "https://vault-active.vault.svc:8200"
+      AVP_TYPE: "vault"
+      AVP_AUTH_TYPE: k8s
+      AVP_K8S_ROLE: "{{ argocd_vault_role }}"
 
 notifications:
   notifiers:
@@ -55,5 +223,3 @@ notifications:
     {{ argocd_templates | to_yaml | indent(4) }}
   triggers:
     {{ argocd_triggers | to_yaml | indent(4) }}
-
-
