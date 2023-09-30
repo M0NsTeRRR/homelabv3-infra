@@ -15,6 +15,11 @@ providers:
     create_zone: False
 
 zones:
+  as212510.net.:
+    sources:
+      - config
+    targets:
+      - scaleway
   adminafk.fr.:
     sources:
       - config
