@@ -1,0 +1,34 @@
+'':
+#  - type: NS
+#    values:
+#      - 'ns0.dom.scw.cloud.'
+#      - 'ns1.dom.scw.cloud.'
+  - type: CAA
+    values:
+      - flags: 0
+        tag: iodef
+        value: "mailto:security@as212510.net"
+      - flags: 0
+        tag: issue
+        value: sectigo.com
+      - flags: 0
+        tag: issue
+        value: letsencrypt.org
+  - type: MX
+    value:
+      exchange: mta-gw.infomaniak.ch.
+      preference: 5
+  - type: TXT
+    value: v=spf1 include:spf.infomaniak.ch -all
+20230930._domainkey:
+  - type: TXT
+    value: v=DKIM1\; t=s\; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7iMHEWtuEk16QI6qASa+fARqEM73PVc/V+f1+Ry2nRg997Odimaox0uGutmbz8V5NSxHkRt0tpkueaDU0JPEp4u8DKhni4GX9hsG0y2vgfodXuqnWQe5jirKtIoqpUj1aD/2rFfeberVXvrZzzgYpVXhpIkUlzfOmU3Ua5+sOFXXzv8OHzXoQT60ENunYJkfNyOZxL0mSVWO/jyIq6rCbReKL6l/EQht7fKonMuTVTHdSr/Bj5Yqf3XXr9QdNQ3KvCCZbTdCL5ydiWIGLo0R7FFj+Jof4FPFLGlvQiY0OQzr4Kr1OvVqk2OX9mlSNIE5RwTZZ4wOH8c499g4y4SjewIDAQAB
+_dmarc:
+  - type: TXT
+    value: v=DMARC1\; p=reject\; aspf=s\; adkim=s\; rua=mailto:dmarc@as21250.net\; ruf=mailto:dmarc@as21250.net\;
+autoconfig:
+  - type: CNAME
+    value: infomaniak.com.
+autodiscover:
+  - type: CNAME
+    value: infomaniak.com.
