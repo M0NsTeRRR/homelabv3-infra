@@ -52,29 +52,6 @@ repoServer:
         - mountPath: /custom-tools
           name: custom-tools
   extraContainers:
-    - name: avp
-      command: [/var/run/argocd/argocd-cmp-server]
-      image: quay.io/argoproj/argocd:{{ argocd_version }}
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 999
-      volumeMounts:
-        - mountPath: /var/run/argocd
-          name: var-files
-        - mountPath: /home/argocd/cmp-server/plugins
-          name: plugins
-        - mountPath: /tmp
-          name: tmp
-        - mountPath: /home/argocd/cmp-server/config/plugin.yaml
-          subPath: avp.yaml
-          name: argocd-cmp-cm
-        - name: custom-tools
-          subPath: argocd-vault-plugin
-          mountPath: /usr/local/bin/argocd-vault-plugin
-        - name: vault-ca
-          subPath: ca.crt
-          mountPath: /vault/tls/ca.crt
-          readOnly: true
     - name: avp-kustomize
       command: [/var/run/argocd/argocd-cmp-server]
       image: quay.io/argoproj/argocd:{{ argocd_version }}
@@ -90,29 +67,6 @@ repoServer:
           name: tmp
         - mountPath: /home/argocd/cmp-server/config/plugin.yaml
           subPath: avp-kustomize.yaml
-          name: argocd-cmp-cm
-        - name: custom-tools
-          subPath: argocd-vault-plugin
-          mountPath: /usr/local/bin/argocd-vault-plugin
-        - name: vault-ca
-          subPath: ca.crt
-          mountPath: /vault/tls/ca.crt
-          readOnly: true
-    - name: avp-helm
-      command: [/var/run/argocd/argocd-cmp-server]
-      image: quay.io/argoproj/argocd:{{ argocd_version }}
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 999
-      volumeMounts:
-        - mountPath: /var/run/argocd
-          name: var-files
-        - mountPath: /home/argocd/cmp-server/plugins
-          name: plugins
-        - mountPath: /tmp
-          name: tmp
-        - mountPath: /home/argocd/cmp-server/config/plugin.yaml
-          subPath: avp-helm.yaml
           name: argocd-cmp-cm
         - name: custom-tools
           subPath: argocd-vault-plugin
@@ -149,22 +103,6 @@ configs:
   cmp:
     create: true
     plugins:
-      avp:
-        allowConcurrency: true
-        discover:
-          find:
-            command:
-              - sh
-              - "-c"
-              - "find . -name '*.yaml' | xargs -I {} grep \"<path\\|avp\\.kubernetes\\.io\" {} | grep ."
-        generate:
-          command:
-            - argocd-vault-plugin
-            - generate
-            - -s
-            - argocd:argocd-vault-plugin-credentials
-            - "."
-        lockRepo: false
       avp-kustomize:
         allowConcurrency: true
         discover:
@@ -179,23 +117,6 @@ configs:
             - sh
             - "-c"
             - "kustomize build --enable-helm . | argocd-vault-plugin generate -s argocd:argocd-vault-plugin-credentials -"
-        lockRepo: false
-      avp-helm:
-        allowConcurrency: true
-        discover:
-          find:
-            command:
-              - find
-              - "."
-              - -name
-              - Chart.yaml
-        generate:
-          command:
-            - sh
-            - "-c"
-            - |
-              helm template $ARGOCD_APP_NAME --include-crds . |
-              argocd-vault-plugin generate -s argocd:argocd-vault-plugin-credentials -
         lockRepo: false
   secret:
     argocdServerAdminPassword: "{{ argocd_admin_password | password_hash('bcrypt') }}"
