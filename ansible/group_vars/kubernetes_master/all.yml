@@ -459,6 +459,6 @@ argocd_templates:
           }
         {% endraw %}
 argocd_applications:
-  - name: homelab
+  - name: homelabv3-infra
     repo_url: https://github.com/M0NsTeRRR/homelabv3-infra
     path: argocd
