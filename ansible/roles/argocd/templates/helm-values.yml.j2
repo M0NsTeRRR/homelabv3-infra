@@ -227,6 +227,8 @@ extraObjects:
       VAULT_CACERT: /vault/tls/ca.crt
 
 notifications:
+  context:
+    argocdUrl: https://{{ argocd_hostname }}
   notifiers:
     {{ argocd_notifiers | to_yaml | indent(4) }}
   subscriptions:

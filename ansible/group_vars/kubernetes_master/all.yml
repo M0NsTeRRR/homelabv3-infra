@@ -186,48 +186,48 @@ argocd_triggers:
     - description: Application is created.
       oncePer: app.metadata.name
       send:
-      - notify-discord-success
+      - notify-discord-created
       when: "true"
   trigger.on-deleted: |
     - description: Application is deleted.
       oncePer: app.metadata.name
       send:
-      - notify-discord-success
+      - notify-discord-deleted
       when: app.metadata.deletionTimestamp != nil
   trigger.on-deployed: |
     - description: Application is synced and healthy. Triggered once per commit.
       oncePer: app.status.operationState.syncResult.revision
       send:
-      - notify-discord-success
+      - notify-discord-deployed
       when: app.status.operationState.phase in ['Succeeded'] and app.status.health.status
         == 'Healthy'
   trigger.on-health-degraded: |
     - description: Application has degraded
       send:
-      - notify-discord-fail
+      - notify-discord-degraded
       when: app.status.health.status == 'Degraded'
   trigger.on-sync-failed: |
     - description: Application syncing has failed
       send:
-      - notify-discord-fail
+      - notify-discord-failed
       when: app.status.operationState.phase in ['Error', 'Failed']
   trigger.on-sync-running: |
     - description: Application is being synced
       send:
-      - notify-discord-load
+      - notify-discord-running
       when: app.status.operationState.phase in ['Running']
   trigger.on-sync-status-unknown: |
     - description: Application status is 'Unknown'
       send:
-      - notify-discord-warning
+      - notify-discord-unknown
       when: app.status.sync.status == 'Unknown'
   trigger.on-sync-succeeded: |
     - description: Application syncing has succeeded
       send:
-      - notify-discord-success
+      - notify-discord-succeeded
       when: app.status.operationState.phase in ['Succeeded']
 argocd_templates:
-  template.notify-discord-success: |
+  template.notify-discord-created: |
     webhook:
       discord:
         path: "{{ argocd_discord_webhook_path_url }}?wait=true"
@@ -237,25 +237,15 @@ argocd_templates:
           {
             "embeds": [
               {
-                "title": "{{ .app.metadata.name }}: {{ .app.status.sync.status }} ✅",
-                "description": "{{ (call .repo.GetCommitMetadata .app.status.sync.revision).Message }}",
+                "title": "{{ .app.metadata.name }}: has been created 🆕",
+                "description": "Application has been created",
                 "url": "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}",
-                "fields": [
-                  {
-                    "name": "Author",
-                    "value": "{{ (call .repo.GetCommitMetadata .app.status.sync.revision).Author }}"
-                  },
-                  {
-                    "name": "Revision",
-                    "value": "[{{ .app.status.sync.revision }}]({{ (trimAll ".git" .app.spec.source.repoURL) }}/-/commit/{{ .app.status.sync.revision }})"
-                  }
-                ]
+                "color": 3447003
               }
-            ],
-            "color": 5763719
+            ]
           }
         {% endraw %}
-  template.notify-discord-warning: |
+  template.notify-discord-deleted: |
     webhook:
       discord:
         path: "{{ argocd_discord_webhook_path_url }}?wait=true"
@@ -265,25 +255,14 @@ argocd_templates:
           {
             "embeds": [
               {
-                "title": "{{ .app.metadata.name }}: {{ .app.status.sync.status }} ⚠️",
-                "description": "{{ (call .repo.GetCommitMetadata .app.status.sync.revision).Message }}",
-                "url": "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}",
-                "fields": [
-                  {
-                    "name": "Author",
-                    "value": "{{ (call .repo.GetCommitMetadata .app.status.sync.revision).Author }}"
-                  },
-                  {
-                    "name": "Revision",
-                    "value": "[{{ .app.status.sync.revision }}]({{ (trimAll ".git" .app.spec.source.repoURL) }}/-/commit/{{ .app.status.sync.revision }})"
-                  }
-                ]
+                "title": "{{ .app.metadata.name }}: has been deleted ❌",
+                "description": "Application has been deleted",
+                "color": 3447003
               }
-            ],
-            "color": 16776960
+            ]
           }
         {% endraw %}
-  template.notify-discord-fail: |
+  template.notify-discord-deployed: |
     webhook:
       discord:
         path: "{{ argocd_discord_webhook_path_url }}?wait=true"
@@ -293,25 +272,29 @@ argocd_templates:
           {
             "embeds": [
               {
-                "title": "{{ .app.metadata.name }}: {{ .app.status.sync.status }} ❌",
-                "description": "{{ (call .repo.GetCommitMetadata .app.status.sync.revision).Message }}",
+                "title": "New version of {{ .app.metadata.name }} is up and running ✅",
+                "description": "Application is now running new version of deployments manifests",
                 "url": "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}",
                 "fields": [
+                  {
+                    "name": "Sync Status",
+                    "value": "{{ .app.status.sync.status }}"
+                  },
                   {
                     "name": "Author",
                     "value": "{{ (call .repo.GetCommitMetadata .app.status.sync.revision).Author }}"
                   },
                   {
                     "name": "Revision",
-                    "value": "[{{ .app.status.sync.revision }}]({{ (trimAll ".git" .app.spec.source.repoURL) }}/-/commit/{{ .app.status.sync.revision }})"
+                    "value": "[{{ (call .repo.GetCommitMetadata .app.status.sync.revision).Message }}]({{ (trimAll ".git" .app.spec.source.repoURL) }}/commit/{{ .app.status.sync.revision }})"
                   }
-                ]
+                ],
+                "color": 5763719
               }
-            ],
-            "color": 15548997
+            ]
           }
         {% endraw %}
-  template.notify-discord-load: |
+  template.notify-discord-degraded: |
     webhook:
       discord:
         path: "{{ argocd_discord_webhook_path_url }}?wait=true"
@@ -321,22 +304,158 @@ argocd_templates:
           {
             "embeds": [
               {
-                "title": "{{ .app.metadata.name }}: {{ .app.status.sync.status }} 🔄",
-                "description": "{{ (call .repo.GetCommitMetadata .app.status.sync.revision).Message }}",
+                "title": "{{ .app.metadata.name }} has degraded ⚠️",
+                "description": "Application has degraded",
                 "url": "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}",
                 "fields": [
+                  {
+                    "name": "Sync Status",
+                    "value": "{{ .app.status.sync.status }}"
+                  },
                   {
                     "name": "Author",
                     "value": "{{ (call .repo.GetCommitMetadata .app.status.sync.revision).Author }}"
                   },
                   {
                     "name": "Revision",
-                    "value": "[{{ .app.status.sync.revision }}]({{ (trimAll ".git" .app.spec.source.repoURL) }}/-/commit/{{ .app.status.sync.revision }})"
+                    "value": "[{{ (call .repo.GetCommitMetadata .app.status.sync.revision).Message }}]({{ (trimAll ".git" .app.spec.source.repoURL) }}/commit/{{ .app.status.sync.revision }})"
                   }
-                ]
+                ],
+                "color": 16776960
               }
-            ],
-            "color": 3447003
+            ]
+          }
+        {% endraw %}
+  template.notify-discord-failed: |
+    webhook:
+      discord:
+        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
+        method: POST
+        {% raw %}
+        body: |
+          {
+            "embeds": [
+              {
+                "title": "{{ .app.metadata.name }} sync failed ❌",
+                "description": "The sync operation of application has failed",
+                "url": "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}",
+                "fields": [
+                  {
+                    "name": "Sync Status",
+                    "value": "{{ .app.status.sync.status }}"
+                  },
+                  {
+                    "name": "Error",
+                    "value": "{{ .app.status.operationState.message }}"
+                  },
+                  {
+                    "name": "Author",
+                    "value": "{{ (call .repo.GetCommitMetadata .app.status.sync.revision).Author }}"
+                  },
+                  {
+                    "name": "Revision",
+                    "value": "[{{ (call .repo.GetCommitMetadata .app.status.sync.revision).Message }}]({{ (trimAll ".git" .app.spec.source.repoURL) }}/commit/{{ .app.status.sync.revision }})"
+                  }
+                ],
+                "color": 15548997
+              }
+            ]
+          }
+        {% endraw %}
+  template.notify-discord-running: |
+    webhook:
+      discord:
+        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
+        method: POST
+        {% raw %}
+        body: |
+          {
+            "embeds": [
+              {
+                "title": "{{ .app.metadata.name }} start syncing 🔄",
+                "description": "Start syncing application",
+                "url": "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}",
+                "fields": [
+                  {
+                    "name": "Sync Status",
+                    "value": "{{ .app.status.sync.status }}"
+                  },
+                  {
+                    "name": "Author",
+                    "value": "{{ (call .repo.GetCommitMetadata .app.status.sync.revision).Author }}"
+                  },
+                  {
+                    "name": "Revision",
+                    "value": "[{{ (call .repo.GetCommitMetadata .app.status.sync.revision).Message }}]({{ (trimAll ".git" .app.spec.source.repoURL) }}/commit/{{ .app.status.sync.revision }})"
+                  }
+                ],
+                "color": 3447003
+              }
+            ]
+          }
+        {% endraw %}
+  template.notify-discord-unknown: |
+    webhook:
+      discord:
+        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
+        method: POST
+        {% raw %}
+        body: |
+          {
+            "embeds": [
+              {
+                "title": "{{ .app.metadata.name }} sync status is unknown ⚠️",
+                "description": "Application sync is Unknown",
+                "url": "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}",
+                "fields": [
+                  {
+                    "name": "Sync Status",
+                    "value": "{{ .app.status.sync.status }}"
+                  },
+                  {
+                    "name": "Author",
+                    "value": "{{ (call .repo.GetCommitMetadata .app.status.sync.revision).Author }}"
+                  },
+                  {
+                    "name": "Revision",
+                    "value": "[{{ (call .repo.GetCommitMetadata .app.status.sync.revision).Message }}]({{ (trimAll ".git" .app.spec.source.repoURL) }}/commit/{{ .app.status.sync.revision }})"
+                  }
+                ],
+                "color": 16776960
+              }
+            ]
+          }
+        {% endraw %}
+  template.notify-discord-succeeded: |
+    webhook:
+      discord:
+        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
+        method: POST
+        {% raw %}
+        body: |
+          {
+            "embeds": [
+              {
+                "title": "{{ .app.metadata.name }} has been successfully synced ✅",
+                "description": "Application has been successfully synced",
+                "url": "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}",
+                "fields": [
+                  {
+                    "name": "Sync Status",
+                    "value": "{{ .app.status.sync.status }}"
+                  },
+                  {
+                    "name": "Author",
+                    "value": "{{ (call .repo.GetCommitMetadata .app.status.sync.revision).Author }}"
+                  },
+                  {
+                    "name": "Revision",
+                    "value": "[{{ (call .repo.GetCommitMetadata .app.status.sync.revision).Message }}]({{ (trimAll ".git" .app.spec.source.repoURL) }}/commit/{{ .app.status.sync.revision }})"
+                  }
+                ],
+                "color": 5763719
+              }
+            ]
           }
         {% endraw %}
 argocd_applications:
