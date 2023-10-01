@@ -54,7 +54,7 @@
         '(distribution).+\r?\n.+\r?\n.+"(?<depName>\\S*)"[\\S\\s]+(version).+\r?\n.+\r?\n.+"(?<currentValue>\\S*)"',
         '(version).+\r?\n.+\r?\n.+"(?<currentValue>\\S*)"[\\S\\s]+(distribution).+\r?\n.+\r?\n.+"(?<depName>\\S*)"'
       ],
-      datasourceTemplate: '{{{depName}}}',
+      datasourceTemplate: '{{depName}}',
     },
     // match terraform and terragrunt version
     {
