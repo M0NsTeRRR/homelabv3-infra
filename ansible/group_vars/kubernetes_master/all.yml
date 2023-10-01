@@ -145,7 +145,7 @@ vault_datas: "{{ public_vault_datas + secret_vault_datas }}"
 cert_manager_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 cert_manager_email: "{{ monitoring_email }}"
 cert_manager_vault_sign: unicornafk-dot-fr
-cert_manager_vault_server_ca: "{{ vault_ca_filename }}"
+cert_manager_vault_ca_filename: "{{ vault_ca_filename }}"
 external_dns_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 external_dns_namespace: "external-dns-external"
 external_dns_vault_role: external-dns-external
@@ -158,6 +158,7 @@ external_dns_args: "--source=ingress --provider=scaleway {% for domain in domain
 argocd_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 argocd_hostname: argocd.unicornafk.fr
 argocd_ingress_cluster_issuer: vault
+argocd_vault_ca_filename: "{{ vault_ca_filename }}"
 argocd_ingress_class: traefik-internal
 argocd_repositories:
   - name: homelab

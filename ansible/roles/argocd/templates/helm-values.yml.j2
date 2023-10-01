@@ -26,9 +26,6 @@ repoServer:
   autoscaling:
     enabled: true
     minReplicas: 2
-  envFrom: 
-   - secretRef:
-      name: argocd-vault-plugin-credentials
   rbac:
     - verbs:
         - get
@@ -68,16 +65,16 @@ repoServer:
           name: plugins
         - mountPath: /tmp
           name: tmp
-
-        # Register plugins into sidecar
         - mountPath: /home/argocd/cmp-server/config/plugin.yaml
           subPath: avp.yaml
           name: argocd-cmp-cm
-
-        # Important: Mount tools into $PATH
         - name: custom-tools
           subPath: argocd-vault-plugin
           mountPath: /usr/local/bin/argocd-vault-plugin
+        - name: vault-ca
+          subPath: ca.crt
+          mountPath: /vault/tls/ca.crt
+          readOnly: true
     - name: avp-kustomize
       command: [/var/run/argocd/argocd-cmp-server]
       image: quay.io/argoproj/argocd:{{ argocd_version }}
@@ -91,16 +88,16 @@ repoServer:
           name: plugins
         - mountPath: /tmp
           name: tmp
-
-        # Register plugins into sidecar
         - mountPath: /home/argocd/cmp-server/config/plugin.yaml
           subPath: avp-kustomize.yaml
           name: argocd-cmp-cm
-
-        # Important: Mount tools into $PATH
         - name: custom-tools
           subPath: argocd-vault-plugin
           mountPath: /usr/local/bin/argocd-vault-plugin
+        - name: vault-ca
+          subPath: ca.crt
+          mountPath: /vault/tls/ca.crt
+          readOnly: true
     - name: avp-helm
       command: [/var/run/argocd/argocd-cmp-server]
       image: quay.io/argoproj/argocd:{{ argocd_version }}
@@ -114,22 +111,25 @@ repoServer:
           name: plugins
         - mountPath: /tmp
           name: tmp
-
-        # Register plugins into sidecar
         - mountPath: /home/argocd/cmp-server/config/plugin.yaml
           subPath: avp-helm.yaml
           name: argocd-cmp-cm
-
-        # Important: Mount tools into $PATH
         - name: custom-tools
           subPath: argocd-vault-plugin
           mountPath: /usr/local/bin/argocd-vault-plugin
+        - name: vault-ca
+          subPath: ca.crt
+          mountPath: /vault/tls/ca.crt
+          readOnly: true
   volumes:
     - configMap:
         name: argocd-cmp-cm
       name: argocd-cmp-cm
     - name: custom-tools
       emptyDir: {}
+    - name: vault-ca
+      secret:
+        secretName: vault-ca
 
 
 applicationSet:
@@ -161,6 +161,8 @@ configs:
           command:
             - argocd-vault-plugin
             - generate
+            - -s
+            - argocd:argocd-vault-plugin-credentials
             - "."
         lockRepo: false
       avp-kustomize:
@@ -176,7 +178,7 @@ configs:
           command:
             - sh
             - "-c"
-            - "kustomize build --enable-helm . | argocd-vault-plugin generate -"
+            - "kustomize build --enable-helm . | argocd-vault-plugin generate -s argocd:argocd-vault-plugin-credentials -"
         lockRepo: false
       avp-helm:
         allowConcurrency: true
@@ -193,7 +195,7 @@ configs:
             - "-c"
             - |
               helm template $ARGOCD_APP_NAME --include-crds . |
-              argocd-vault-plugin generate -
+              argocd-vault-plugin generate -s argocd:argocd-vault-plugin-credentials -
         lockRepo: false
   secret:
     argocdServerAdminPassword: "{{ argocd_admin_password | password_hash('bcrypt') }}"
@@ -203,16 +205,26 @@ configs:
     {{ argocd_repositories | to_yaml | indent(4) }}
 
 extraObjects:
-  - kind: Secret
-    apiVersion: v1
+  - apiVersion: v1
+    kind: Secret
+    type: Opaque
+    metadata:
+      name: vault-ca
+      namespace: argocd
+    data:
+      ca.crt: "{{ lookup('ansible.builtin.file', argocd_vault_ca_filename) | b64encode }}"
+  - apiVersion: v1
+    kind: Secret
+    type: Opaque
     metadata:
       name: argocd-vault-plugin-credentials
-    type: Opaque
+      namespace: argocd
     stringData:
       VAULT_ADDR: "https://vault-active.vault.svc:8200"
       AVP_TYPE: "vault"
       AVP_AUTH_TYPE: k8s
       AVP_K8S_ROLE: "{{ argocd_vault_role }}"
+      VAULT_CACERT: /vault/tls/ca.crt
 
 notifications:
   notifiers:

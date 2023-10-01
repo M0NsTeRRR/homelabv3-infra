@@ -8,7 +8,7 @@ spec:
   vault:
     path: pki/sign/{{ cert_manager_vault_sign }}
     server: {{ cert_manager_vault_server }}
-    caBundle: {{ lookup('ansible.builtin.file', cert_manager_vault_server_ca) | b64encode }}
+    caBundle: {{ lookup('ansible.builtin.file', cert_manager_vault_ca_filename) | b64encode }}
     auth:
       kubernetes:
         role: {{ cert_manager_vault_service_account }}

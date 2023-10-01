@@ -7,4 +7,4 @@ cert_manager_email: "test@example.fr"
 cert_manager_vault_service_account: "vault-cert-manager"
 cert_manager_vault_sign: "example-dot-fr"
 cert_manager_vault_server: https://vault-active.vault.svc:8200
-cert_manager_vault_server_ca: "/tmp/ca.crt"
+cert_manager_vault_ca_filename: "/tmp/ca.crt"

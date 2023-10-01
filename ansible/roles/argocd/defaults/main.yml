@@ -11,6 +11,7 @@ argocd_hostname: argocd.example.fr
 argocd_admin_password: test
 argocd_ingress_cluster_issuer: nginx
 argocd_ingress_class: nginx
+argocd_vault_ca_filename: "{{ vault_ca_filename }}"
 argocd_vault_role: "argocd"
 argocd_repositories: {}
 argocd_notifiers: {}
