@@ -8,7 +8,7 @@ version = "0.0.1"
 [project.optional-dependencies]
 ansible = [
     "ansible==8.4.0",
-    "ansible-lint==6.20.2",
+    "ansible-lint==6.20.3",
     "dnspython==2.4.2",
     "netaddr==0.9.0",
     "cryptography==41.0.4",
