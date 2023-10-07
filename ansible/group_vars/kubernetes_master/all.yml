@@ -161,7 +161,8 @@ argocd_ingress_cluster_issuer: vault
 argocd_vault_ca_filename: "{{ vault_ca_filename }}"
 argocd_ingress_class: traefik-internal
 argocd_repositories:
-  - name: homelab
+  homelab:
+    name: homelab
     url: https://github.com/M0NsTeRRR/homelabv3-infra
 argocd_notifiers:
   service.webhook.discord: |
