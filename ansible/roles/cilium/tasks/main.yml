@@ -68,7 +68,7 @@
 #     kubeconfig: "{{ cilium_localhost_kubeconfig_path }}"
 #     validate_certs: true
 #   delegate_to: localhost
-# 
+#
 # - name: Get a list of all cilium pods
 #   kubernetes.core.k8s_info:
 #     kind: Pod
@@ -79,7 +79,7 @@
 #     validate_certs: true
 #   register: cilium_pod_list
 #   delegate_to: localhost
-# 
+#
 # - name: Disable policy audit mode in cluster
 #   kubernetes.core.k8s_exec:
 #     namespace: cilium
