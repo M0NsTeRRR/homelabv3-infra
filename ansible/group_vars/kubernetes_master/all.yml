@@ -82,7 +82,7 @@ vault_policies:
           - read
   - name: argocd
     rules:
-      - path: secret/data/homelab/prod/argocd
+      - path: secret/data/homelab/prod/argocd/*
         capabilities:
           - read
 public_vault_datas:
