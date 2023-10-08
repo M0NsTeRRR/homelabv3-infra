@@ -13,7 +13,7 @@ loadBalancer:
 k8sServiceHost: "{{ (cilium_service_hosts[0] | split('/'))[0] }}"
 k8sServicePort: 6443
 policyEnforcementMode: default
-policyAuditMode: true
+policyAuditMode: false
 hostFirewall:
   enabled: true
 extraConfig:
