@@ -12,7 +12,8 @@ providers:
     publishedService:
       enabled: true
 ingressClass:
-  enabled: {{ traefik_default_ingress_class }}
+  enabled: true
+  isDefaultClass: {{ traefik_default_ingress_class }}
 additionalArguments:
   - "--providers.kubernetescrd.allowCrossNamespace=true"
   - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
