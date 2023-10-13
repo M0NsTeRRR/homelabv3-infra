@@ -25,8 +25,3 @@ zones:
       - config
     targets:
       - scaleway
-  unicornafk.fr.:
-    sources:
-      - config
-    targets:
-      - scaleway

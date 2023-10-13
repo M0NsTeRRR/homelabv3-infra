@@ -32,3 +32,21 @@ autoconfig:
 autodiscover:
   - type: CNAME
     value: infomaniak.com.
+status:
+  - type: CNAME
+    value: vps1.adminafk.fr.
+vpn:
+  - type: A
+    value: '82.65.135.80'
+  - type: AAAA
+    value: '2a0c:b641:2c0:170::29'
+vps1:
+  - type: A
+    value: '141.145.215.178'
+  - type: AAAA
+    value: '2603:c027:c000:c200::10'
+  - type: SSHFP
+    value:
+      algorithm: 4
+      fingerprint: a9759105bf5a6bde1555cf2d30e2049b3e63dc81c899dc5c1dec28cd02a9e88f
+      fingerprint_type: 2
