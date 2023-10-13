@@ -17,3 +17,4 @@ ingressClass:
 additionalArguments:
   - "--providers.kubernetescrd.allowCrossNamespace=true"
   - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
+  - "--providers.kubernetesingress.ingressclass={{ traefik_namespace }}"
