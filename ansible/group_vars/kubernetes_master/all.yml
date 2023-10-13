@@ -53,6 +53,10 @@ vault_secrets_engine:
         - Location
         - Replay-Nonce
         - Link
+      allowed_response_headers:
+        - Location
+        - Link
+        - Replay-Nonce
 vault_auth_methods:
   - name: kubernetes
     path: kubernetes
