@@ -2,7 +2,7 @@
 caddy_email: "{{ admin_email }}"
 caddy_domains:
   - names:
-      - status.unicornafk.fr
+      - status.adminafk.fr
     backend_url: http://localhost:3001
 runrestic_allowed_command: []
 runrestic_acl_files:

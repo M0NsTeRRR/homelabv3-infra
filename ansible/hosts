@@ -1,5 +1,5 @@
 [cloud]
-vps1.unicornafk.fr
+vps1.adminafk.fr
 
 [dns]
 192.168.10.21 ipv6=2a0c:b641:02c0:110::21 hostname=dns1.unicornafk.fr.
@@ -24,4 +24,4 @@ worker2.unicornafk.fr
 worker3.unicornafk.fr
 
 [status]
-vps1.unicornafk.fr
+vps1.adminafk.fr
