@@ -18,4 +18,4 @@ spec:
     solvers:
       - http01:
           ingress:
-            ingressClassName: traefik
+            ingressClassName: {{ cert_manager_vault_ingress_class }}

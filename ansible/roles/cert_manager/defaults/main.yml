@@ -4,7 +4,9 @@ cert_manager_version: "v1.13.1"
 cert_manager_force_install: false
 cert_manager_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
 cert_manager_email: "test@example.fr"
+cert_manager_letsencrypt_ingress_class: ingress-external
 cert_manager_vault_service_account: "vault-cert-manager"
 cert_manager_vault_sign: "example-dot-fr"
 cert_manager_vault_server: https://vault-active.vault.svc:8200
 cert_manager_vault_ca_filename: "/tmp/ca.crt"
+cert_manager_vault_ingress_class: ingress-internal
