@@ -19,9 +19,9 @@ traefik_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 traefik_external_ips:
   - 192.168.10.100
   - 2a0c:b641:2c0:110::100
-traefik_namespace: traefik-external
+traefik_namespace: ingress-external
 traefik_default_ingress_class: false
-traefik_ingress_class_name: traefik-external
+traefik_ingress_class_name: ingress-external
 longhorn_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 metallb_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 metallb_ip_address_pools:
@@ -158,12 +158,12 @@ external_dns_vault_ca_filename: "{{ vault_ca_filename }}"
 external_dns_envs:
   - SCW_ACCESS_KEY
   - SCW_SECRET_KEY
-external_dns_args: "--source=ingress --provider=scaleway {% for domain in domains %}--domain-filter={{ domain }}{% if not loop.last %} {% endif %}{% endfor %} --registry=txt --txt-owner-id=homelab.kubernetes --ingress-class=traefik-external --default-targets=82.65.135.80 --default-targets=2a0c:b641:2c0:110::100"
+external_dns_args: "--source=ingress --provider=scaleway {% for domain in domains %}--domain-filter={{ domain }}{% if not loop.last %} {% endif %}{% endfor %} --registry=txt --txt-owner-id=homelab.kubernetes --ingress-class=ingress-external --default-targets=82.65.135.80 --default-targets=2a0c:b641:2c0:110::100"
 argocd_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 argocd_hostname: argocd.unicornafk.fr
 argocd_ingress_cluster_issuer: vault
 argocd_vault_ca_filename: "{{ vault_ca_filename }}"
-argocd_ingress_class: traefik-internal
+argocd_ingress_class: ingress-internal
 argocd_repositories:
   homelab:
     name: homelab
