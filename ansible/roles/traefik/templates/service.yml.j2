@@ -14,5 +14,5 @@ spec:
       targetPort: traefik
       protocol: TCP
   selector:
-    app.kubernetes.io/instance: traefik-traefik
+    app.kubernetes.io/instance: {{ traefik_namespace }}-{{ traefik_namespace }}
     app.kubernetes.io/name: traefik
