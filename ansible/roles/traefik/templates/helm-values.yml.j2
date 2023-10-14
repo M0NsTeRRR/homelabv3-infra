@@ -3,6 +3,9 @@ image:
 deployment:
   kind: Deployment
   replicas: 3
+ports:
+  web:
+    redirectTo: websecure
 service:
   annotations:
     metallb.universe.tf/loadBalancerIPs: {{ traefik_external_ips | join(",") }}
@@ -17,5 +20,4 @@ ingressClass:
   name: {{ traefik_namespace }}
 additionalArguments:
   - "--providers.kubernetescrd.allowCrossNamespace=true"
-  - "--entrypoints.web.http.redirections.entryPoint.to=websecure"
   - "--providers.kubernetesingress.ingressclass={{ traefik_namespace }}"
