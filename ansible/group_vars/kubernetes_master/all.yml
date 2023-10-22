@@ -150,11 +150,20 @@ cert_manager_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path
 cert_manager_email: "{{ monitoring_email }}"
 cert_manager_vault_sign: unicornafk-dot-fr
 cert_manager_vault_ca_filename: "{{ vault_ca_filename }}"
+trust_manager_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
+trust_manager_certificates:
+  - name: "{{ kubernetes_homelab_ca_secret }}"
+    key: ca.crt
+    namespace_labels_selector: {}
+    sources:
+      - inLine: |
+          {{ lookup('ansible.builtin.file', vault_ca_filename) }}
 external_dns_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 external_dns_namespace: "external-dns-external"
+external_dns_ca: "{{ kubernetes_homelab_ca_secret }}"
+external_dns_vault_ca: "{{ kubernetes_homelab_ca_secret }}"
 external_dns_vault_role: external-dns-external
 external_dns_vault_inject_secret: secret/data/homelab/prod/external_dns/external
-external_dns_vault_ca_filename: "{{ vault_ca_filename }}"
 external_dns_envs:
   - SCW_ACCESS_KEY
   - SCW_SECRET_KEY

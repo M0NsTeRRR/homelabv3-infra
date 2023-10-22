@@ -1,0 +1,46 @@
+---
+- name: Gather information of trust-manager chart
+  kubernetes.core.helm_info:
+    name: trust-manager
+    release_namespace: cert-manager
+    kubeconfig: "{{ trust_manager_localhost_kubeconfig_path }}"
+    validate_certs: true
+  register: trust_manager_info
+  delegate_to: localhost
+
+- name: Check if trust_manager is already installed
+  ansible.builtin.set_fact:
+    trust_manager_is_installed: "{% if 'status' not in trust_manager_info %}true{% else %}false{% endif %}"
+  delegate_to: localhost
+
+- name: Add jetstack helm repo
+  kubernetes.core.helm_repository:
+    name: jetstack
+    repo_url: https://charts.jetstack.io
+    kubeconfig: "{{ trust_manager_localhost_kubeconfig_path }}"
+    validate_certs: true
+  delegate_to: localhost
+
+- name: Deploy trust-manager chart
+  kubernetes.core.helm:
+    name: trust-manager
+    chart_ref: jetstack/trust-manager
+    chart_version: "{{ trust_manager_version }}"
+    release_namespace: trust-manager
+    create_namespace: true
+    update_repo_cache: true
+    wait: true
+    kubeconfig: "{{ trust_manager_localhost_kubeconfig_path }}"
+    validate_certs: true
+  delegate_to: localhost
+  when: not trust_manager_is_installed or trust_manager_force_install
+
+- name: "Install trust-manager certificates {{ item }}"
+  kubernetes.core.k8s:
+    definition: "{{ lookup('ansible.builtin.template', 'certificate.yml.j2') | from_yaml }}"
+    kubeconfig: "{{ trust_manager_localhost_kubeconfig_path }}"
+    wait: true
+    validate_certs: true
+    state: present
+  with_items: "{{ trust_manager_certificates }}"
+  delegate_to: localhost

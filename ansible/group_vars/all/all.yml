@@ -9,6 +9,7 @@ ca_certificates_certs_dir: "{{ certs_dir_role_path }}"
 
 kubernetes_localhost_kubeconfig_path: "{{ lookup('env', 'HOME') }}/.kube/homelab"
 kubernetes_vip_url: "kubernetes.unicornafk.fr"
+kubernetes_homelab_ca_secret: "homelab-ca"
 
 systemd_timesyncd_ntp:
   - ntp1.unicornafk.fr

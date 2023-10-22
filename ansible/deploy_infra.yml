@@ -59,6 +59,7 @@
     - longhorn
     - vault
     - cert_manager
+    - trust_manager
     - role: external_dns
     - role: external_dns
       vars:

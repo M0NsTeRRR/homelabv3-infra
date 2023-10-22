@@ -17,7 +17,7 @@ spec:
       labels:
         app: external-dns
       annotations:
-        vault.hashicorp.com/tls-secret: "vault-ca"
+        vault.hashicorp.com/tls-secret: "{{ external_dns_vault_ca }}"
         vault.hashicorp.com/ca-cert: "/vault/tls/ca.crt"
         vault.hashicorp.com/agent-inject: 'true'
         vault.hashicorp.com/role: '{{ external_dns_vault_role }}'
@@ -26,21 +26,12 @@ spec:
          {{ '{{- with secret "' + external_dns_vault_inject_secret + '" -}}' }}
          {% for external_dns_env in external_dns_envs %}
          {% if external_dns_env == "EXTERNAL_DNS_TLS_CA" %}
-         {{ ("export EXTERNAL_DNS_TLS_CA=\"/vault/secrets/tls-ca") | indent(2, true) }}"
+         {{ ("export EXTERNAL_DNS_TLS_CA=\"/etc/external-dns/ssl/ca.crt") | indent(2, true) }}"
          {% else %}
          {{ ("export " + external_dns_env + "=\"{{ .Data.data." + external_dns_env + " }}") | indent(2, true) }}"
          {% endif %}
          {% endfor %}
          {{ "{{- end }}" }}
-        {% for external_dns_tls_env in external_dns_tls_envs %}
-        {% if external_dns_tls_env == "EXTERNAL_DNS_TLS_CA" %}
-        vault.hashicorp.com/agent-inject-secret-tls-ca: '{{ external_dns_vault_inject_secret }}'
-        vault.hashicorp.com/agent-inject-template-tls-ca: |
-         {{ '{{- with secret "' + external_dns_vault_inject_secret + '" -}}' }}
-         {{ ("{{ .Data.data.EXTERNAL_DNS_TLS_CA }}") | indent(2, true) }}
-         {{ "{{- end }}" }}
-         {% endif %}
-         {% endfor %}
     spec:
       serviceAccountName: external-dns
       initContainers:
@@ -61,6 +52,16 @@ spec:
           volumeMounts:
             - name: shell
               mountPath: /shell
+            {% if "EXTERNAL_DNS_TLS_CA" in external_dns_envs %}
+            - name: "{{ external_dns_ca }}"
+              mountPath: /etc/external-dns/ssl
+              readOnly: true
+            {% endif %}
       volumes:
         - name: shell
           emptyDir: {}
+        {% if "EXTERNAL_DNS_TLS_CA" in external_dns_envs %}
+        - name: "{{ external_dns_ca }}"
+          secret:
+            secretName: "{{ external_dns_ca }}"
+        {% endif %}

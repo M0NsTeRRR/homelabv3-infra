@@ -7,9 +7,10 @@ external_dns_replicas: 1
 external_dns_envs: []
 external_dns_tls_envs: []
 external_dns_args: ""
+external_dns_ca: ""
+external_dns_vault_ca: ""
 external_dns_vault_role: external-dns
 external_dns_vault_inject_secret: secret/external_dns
-external_dns_vault_ca_filename: "/tmp/ca.crt"
 
 # external_dns_envs:
 #   - SCW_ACCESS_KEY

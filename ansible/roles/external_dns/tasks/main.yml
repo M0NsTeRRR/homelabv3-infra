@@ -8,15 +8,6 @@
     state: present
   delegate_to: localhost
 
-- name: Create kubernetes secrets with vault CA
-  kubernetes.core.k8s:
-    definition: "{{ lookup('ansible.builtin.template', 'ca.yml.j2') | from_yaml }}"
-    wait: true
-    kubeconfig: "{{ external_dns_localhost_kubeconfig_path }}"
-    validate_certs: true
-    state: present
-  delegate_to: localhost
-
 - name: Install external-dns deployment
   kubernetes.core.k8s:
     definition: "{{ lookup('ansible.builtin.template', 'deployment.yml.j2') | from_yaml }}"

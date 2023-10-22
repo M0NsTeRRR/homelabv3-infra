@@ -1,0 +1,15 @@
+apiVersion: trust.cert-manager.io/v1alpha1
+kind: Bundle
+metadata:
+  name: {{ item.name }}
+  namespace: trust-manager
+spec:
+  sources:
+    {{ item.sources | to_yaml | indent(4) }}
+  target:
+    secret:
+      key: "{{ item.key }}"
+    {% if item.namespace_labels_selector.keys() | length > 0 %}
+    namespaceSelector:
+      matchLabels: "{{ item.namespace_labels_selector }}"
+    {% endif %}
