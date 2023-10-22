@@ -1,8 +1,8 @@
 ---
-- name: Get cilium namespace
-  kubernetes.core.k8s_info:
-    kind: Namespace
+- name: Gather information of cilium chart
+  kubernetes.core.helm_info:
     name: cilium
+    release_namespace: cilium
     kubeconfig: "{{ cilium_localhost_kubeconfig_path }}"
     validate_certs: true
   register: cilium_info
@@ -10,7 +10,7 @@
 
 - name: Check if cilium is already installed
   ansible.builtin.set_fact:
-    cilium_is_installed: "{% if cilium_info.resources | length > 0 %}true{% else %}false{% endif %}"
+    cilium_is_installed: "{% if 'status' not in cilium_info %}true{% else %}false{% endif %}"
   delegate_to: localhost
 
 - name: Add cilium helm repo

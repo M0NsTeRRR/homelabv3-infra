@@ -1,17 +1,16 @@
 ---
-- name: Get metallb-system namespace
-  kubernetes.core.k8s_info:
-    kind: Namespace
-    name: metallb-system
-    namespace: metallb-system
+- name: Gather information of metallb chart
+  kubernetes.core.helm_info:
+    name: metallb
+    release_namespace: metallb
     kubeconfig: "{{ metallb_localhost_kubeconfig_path }}"
     validate_certs: true
-  register: metallb_namespace_info
+  register: metallb_info
   delegate_to: localhost
 
 - name: Check if metallb is already installed
   ansible.builtin.set_fact:
-    metallb_is_installed: "{% if metallb_namespace_info.resources | length > 0 %}true{% else %}false{% endif %}"
+    metallb_is_installed: "{% if 'status' not in metallb_info %}true{% else %}false{% endif %}"
   delegate_to: localhost
 
 - name: Add metallb helm repo

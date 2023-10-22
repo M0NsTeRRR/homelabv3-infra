@@ -1,17 +1,16 @@
 ---
-- name: Get argocd namespace
-  kubernetes.core.k8s_info:
-    kind: Namespace
+- name: Gather information of argocd chart
+  kubernetes.core.helm_info:
     name: argocd
-    namespace: argocd
+    release_namespace: argocd
     kubeconfig: "{{ argocd_localhost_kubeconfig_path }}"
     validate_certs: true
-  register: argocd_namespace_info
+  register: argocd_info
   delegate_to: localhost
 
 - name: Check if argocd is already installed
   ansible.builtin.set_fact:
-    argocd_is_installed: "{% if argocd_namespace_info.resources | length > 0 %}true{% else %}false{% endif %}"
+    argocd_is_installed: "{% if 'status' not in argocd_info %}true{% else %}false{% endif %}"
   delegate_to: localhost
 
 - name: Add argo helm repo

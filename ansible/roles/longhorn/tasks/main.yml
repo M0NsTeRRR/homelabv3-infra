@@ -1,17 +1,16 @@
 ---
-- name: Get longhorn-system namespace
-  kubernetes.core.k8s_info:
-    kind: Namespace
-    name: longhorn-system
-    namespace: longhorn-system
+- name: Gather information of longhorn chart
+  kubernetes.core.helm_info:
+    name: longhorn
+    release_namespace: longhorn
     kubeconfig: "{{ longhorn_localhost_kubeconfig_path }}"
     validate_certs: true
-  register: longhorn_namespace_info
+  register: longhorn_info
   delegate_to: localhost
 
 - name: Check if longhorn is already installed
   ansible.builtin.set_fact:
-    longhorn_is_installed: "{% if longhorn_namespace_info.resources | length > 0 %}true{% else %}false{% endif %}"
+    longhorn_is_installed: "{% if 'status' not in longhorn_info %}true{% else %}false{% endif %}"
   delegate_to: localhost
 
 - name: Add longhorn helm repo

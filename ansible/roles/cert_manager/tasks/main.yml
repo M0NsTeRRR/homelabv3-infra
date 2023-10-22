@@ -1,8 +1,8 @@
 ---
-- name: Get cert-manager namespace
-  kubernetes.core.k8s_info:
-    kind: Namespace
+- name: Gather information of cert-manager chart
+  kubernetes.core.helm_info:
     name: cert-manager
+    release_namespace: cert-manager
     kubeconfig: "{{ cert_manager_localhost_kubeconfig_path }}"
     validate_certs: true
   register: cert_manager_info
@@ -10,7 +10,7 @@
 
 - name: Check if cert_manager is already installed
   ansible.builtin.set_fact:
-    cert_manager_is_installed: "{% if cert_manager_info.resources | length > 0 %}true{% else %}false{% endif %}"
+    cert_manager_is_installed: "{% if 'status' not in cert_manager_info %}true{% else %}false{% endif %}"
   delegate_to: localhost
 
 - name: Download cert-manager crds"

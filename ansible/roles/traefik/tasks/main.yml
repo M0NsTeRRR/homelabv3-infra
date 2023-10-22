@@ -1,17 +1,16 @@
 ---
-- name: "Get namespace {{ traefik_namespace }}"
-  kubernetes.core.k8s_info:
-    kind: Namespace
+- name: Gather information of traefik chart
+  kubernetes.core.helm_info:
     name: "{{ traefik_namespace }}"
-    namespace: "{{ traefik_namespace }}"
+    release_namespace: "{{ traefik_namespace }}"
     kubeconfig: "{{ traefik_localhost_kubeconfig_path }}"
     validate_certs: true
-  register: traefik_namespace_info
+  register: traefik_info
   delegate_to: localhost
 
 - name: Check if traefik is already installed
   ansible.builtin.set_fact:
-    traefik_is_installed: "{% if traefik_namespace_info.resources | length > 0 %}true{% else %}false{% endif %}"
+    traefik_is_installed: "{% if 'status' not in traefik_info %}true{% else %}false{% endif %}"
   delegate_to: localhost
 
 - name: Add traefik helm repo
