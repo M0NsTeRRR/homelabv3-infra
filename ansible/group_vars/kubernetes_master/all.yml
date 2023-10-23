@@ -84,9 +84,9 @@ vault_policies:
       - path: secret/data/homelab/prod/external_dns/external
         capabilities:
           - read
-  - name: argocd
+  - name: keycloak
     rules:
-      - path: secret/data/homelab/prod/argocd/*
+      - path: secret/data/homelab/prod/keycloak
         capabilities:
           - read
 public_vault_datas:
@@ -139,11 +139,11 @@ public_vault_datas:
       bound_service_account_namespaces: external-dns-external
       policies: external-dns-external
       ttl: 72h
-  - path: auth/kubernetes/role/argocd
+  - path: secret/data/homelab/prod/argocd/keycloak
     data:
-      bound_service_account_names: argocd-repo-server
-      bound_service_account_namespaces: argocd
-      policies: argocd
+      bound_service_account_names: keycloak
+      bound_service_account_namespaces: keycloak
+      policies: keycloak
       ttl: 1h
 vault_datas: "{{ public_vault_datas + secret_vault_datas }}"
 cert_manager_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
