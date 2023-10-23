@@ -5,7 +5,8 @@ deployment:
   replicas: 3
 ports:
   web:
-    redirectTo: websecure
+    redirectTo:
+      port: websecure
 service:
   annotations:
     metallb.universe.tf/loadBalancerIPs: {{ traefik_external_ips | join(",") }}
