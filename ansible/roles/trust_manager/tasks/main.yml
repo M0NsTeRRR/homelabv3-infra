@@ -42,5 +42,6 @@
     wait: true
     validate_certs: true
     state: present
+  no_log: true
   with_items: "{{ trust_manager_certificates }}"
   delegate_to: localhost

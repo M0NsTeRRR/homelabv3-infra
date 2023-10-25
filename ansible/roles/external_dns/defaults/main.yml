@@ -8,7 +8,6 @@ external_dns_envs: []
 external_dns_tls_envs: []
 external_dns_args: ""
 external_dns_ca: ""
-external_dns_vault_ca: ""
 external_dns_vault_role: external-dns
 external_dns_vault_inject_secret: secret/external_dns
 

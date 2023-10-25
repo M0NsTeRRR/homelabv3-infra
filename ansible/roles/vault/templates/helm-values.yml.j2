@@ -9,7 +9,9 @@ injector:
     tag: "{{ vault_injector_version[1:] }}"
   metrics:
     enabled: true
-
+  extraEnvironmentVars:
+    AGENT_INJECT_VAULT_CACERT_BYTES: {{ lookup('ansible.builtin.file', vault_ca_filename) | b64encode }}
+    AGENT_INJECT_VAULT_IMAGE: "hashicorp/vault:{{ vault_version[1:] }}"
 
 server:
   networkPolicy:

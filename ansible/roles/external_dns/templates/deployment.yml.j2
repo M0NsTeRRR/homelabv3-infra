@@ -17,8 +17,6 @@ spec:
       labels:
         app: external-dns
       annotations:
-        vault.hashicorp.com/tls-secret: "{{ external_dns_vault_ca }}"
-        vault.hashicorp.com/ca-cert: "/vault/tls/ca.crt"
         vault.hashicorp.com/agent-inject: 'true'
         vault.hashicorp.com/role: '{{ external_dns_vault_role }}'
         vault.hashicorp.com/agent-inject-secret-config: '{{ external_dns_vault_inject_secret }}'
@@ -62,6 +60,6 @@ spec:
           emptyDir: {}
         {% if "EXTERNAL_DNS_TLS_CA" in external_dns_envs %}
         - name: "{{ external_dns_ca }}"
-          secret:
-            secretName: "{{ external_dns_ca }}"
+          configMap:
+            name: "{{ external_dns_ca }}"
         {% endif %}

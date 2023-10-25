@@ -7,9 +7,5 @@ spec:
   sources:
     {{ item.sources | to_yaml | indent(4) }}
   target:
-    secret:
+    configMap:
       key: "{{ item.key }}"
-    {% if item.namespace_labels_selector.keys() | length > 0 %}
-    namespaceSelector:
-      matchLabels: "{{ item.namespace_labels_selector }}"
-    {% endif %}

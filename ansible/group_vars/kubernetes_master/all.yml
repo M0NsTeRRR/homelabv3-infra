@@ -132,14 +132,14 @@ public_vault_datas:
       bound_service_account_names: external-dns
       bound_service_account_namespaces: external-dns-internal
       policies: external-dns-internal
-      ttl: 72h
+      ttl: 1h
   - path: auth/kubernetes/role/external-dns-external
     data:
       bound_service_account_names: external-dns
       bound_service_account_namespaces: external-dns-external
       policies: external-dns-external
-      ttl: 72h
-  - path: secret/data/homelab/prod/argocd/keycloak
+      ttl: 1h
+  - path: auth/kubernetes/role/keycloak
     data:
       bound_service_account_names: keycloak
       bound_service_account_namespaces: keycloak
@@ -152,16 +152,14 @@ cert_manager_vault_sign: unicornafk-dot-fr
 cert_manager_vault_ca_filename: "{{ vault_ca_filename }}"
 trust_manager_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 trust_manager_certificates:
-  - name: "{{ kubernetes_homelab_ca_secret }}"
+  - name: "{{ kubernetes_homelab_ca_config_map }}"
     key: ca.crt
-    namespace_labels_selector: {}
     sources:
       - inLine: |
           {{ lookup('ansible.builtin.file', vault_ca_filename) }}
 external_dns_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 external_dns_namespace: "external-dns-external"
-external_dns_ca: "{{ kubernetes_homelab_ca_secret }}"
-external_dns_vault_ca: "{{ kubernetes_homelab_ca_secret }}"
+external_dns_ca: "{{ kubernetes_homelab_ca_config_map }}"
 external_dns_vault_role: external-dns-external
 external_dns_vault_inject_secret: secret/data/homelab/prod/external_dns/external
 external_dns_envs:
