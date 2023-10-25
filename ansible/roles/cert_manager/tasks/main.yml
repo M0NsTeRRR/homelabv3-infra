@@ -10,7 +10,7 @@
 
 - name: Check if cert_manager is already installed
   ansible.builtin.set_fact:
-    cert_manager_is_installed: "{% if 'status' not in cert_manager_info %}true{% else %}false{% endif %}"
+    cert_manager_is_installed: "{% if 'status' in cert_manager_info %}true{% else %}false{% endif %}"
   delegate_to: localhost
 
 - name: Download cert-manager crds"

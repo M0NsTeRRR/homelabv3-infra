@@ -10,7 +10,7 @@
 
 - name: Check if vault is already installed
   ansible.builtin.set_fact:
-    vault_is_installed: "{% if 'status' not in vault_info %}true{% else %}false{% endif %}"
+    vault_is_installed: "{% if 'status' in vault_info %}true{% else %}false{% endif %}"
   delegate_to: localhost
 
 - name: Create vault namespace

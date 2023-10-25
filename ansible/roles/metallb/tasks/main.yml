@@ -10,7 +10,7 @@
 
 - name: Check if metallb is already installed
   ansible.builtin.set_fact:
-    metallb_is_installed: "{% if 'status' not in metallb_info %}true{% else %}false{% endif %}"
+    metallb_is_installed: "{% if 'status' in metallb_info %}true{% else %}false{% endif %}"
   delegate_to: localhost
 
 - name: Add metallb helm repo

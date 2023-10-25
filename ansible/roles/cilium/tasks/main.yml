@@ -10,7 +10,7 @@
 
 - name: Check if cilium is already installed
   ansible.builtin.set_fact:
-    cilium_is_installed: "{% if 'status' not in cilium_info %}true{% else %}false{% endif %}"
+    cilium_is_installed: "{% if 'status' in cilium_info %}true{% else %}false{% endif %}"
   delegate_to: localhost
 
 - name: Add cilium helm repo

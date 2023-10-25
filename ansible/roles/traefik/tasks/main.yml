@@ -10,7 +10,7 @@
 
 - name: Check if traefik is already installed
   ansible.builtin.set_fact:
-    traefik_is_installed: "{% if 'status' not in traefik_info %}true{% else %}false{% endif %}"
+    traefik_is_installed: "{% if 'status' in traefik_info %}true{% else %}false{% endif %}"
   delegate_to: localhost
 
 - name: Add traefik helm repo

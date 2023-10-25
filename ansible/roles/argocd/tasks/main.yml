@@ -10,7 +10,7 @@
 
 - name: Check if argocd is already installed
   ansible.builtin.set_fact:
-    argocd_is_installed: "{% if 'status' not in argocd_info %}true{% else %}false{% endif %}"
+    argocd_is_installed: "{% if 'status' in argocd_info %}true{% else %}false{% endif %}"
   delegate_to: localhost
 
 - name: Add argo helm repo

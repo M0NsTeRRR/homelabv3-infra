@@ -10,7 +10,7 @@
 
 - name: Check if trust_manager is already installed
   ansible.builtin.set_fact:
-    trust_manager_is_installed: "{% if 'status' not in trust_manager_info %}true{% else %}false{% endif %}"
+    trust_manager_is_installed: "{% if 'status' in trust_manager_info %}true{% else %}false{% endif %}"
   delegate_to: localhost
 
 - name: Add jetstack helm repo

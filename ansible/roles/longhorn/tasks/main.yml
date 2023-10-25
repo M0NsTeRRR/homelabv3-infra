@@ -10,7 +10,7 @@
 
 - name: Check if longhorn is already installed
   ansible.builtin.set_fact:
-    longhorn_is_installed: "{% if 'status' not in longhorn_info %}true{% else %}false{% endif %}"
+    longhorn_is_installed: "{% if 'status' in longhorn_info %}true{% else %}false{% endif %}"
   delegate_to: localhost
 
 - name: Add longhorn helm repo
