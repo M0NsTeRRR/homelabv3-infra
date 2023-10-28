@@ -43,6 +43,9 @@ server:
     repository: "hashicorp/vault"
     tag: "{{ vault_version[1:] }}"
 
+  service:
+    ipFamilyPolicy: "PreferDualStack"
+
   resources:
     requests:
       memory: 4Gi

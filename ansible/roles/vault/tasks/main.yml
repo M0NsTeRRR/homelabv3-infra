@@ -52,24 +52,6 @@
   delegate_to: localhost
   when: not vault_is_installed or vault_force_install
 
-- name: Enable IPv6 on vault UI
-  kubernetes.core.k8s_json_patch:
-    kind: Service
-    namespace: vault
-    name: vault-ui
-    patch:
-      - op: replace
-        path: /spec/ipFamilyPolicy
-        value: PreferDualStack
-      - op: replace
-        path: /spec/ipFamilies
-        value:
-          - IPv4
-          - IPv6
-    kubeconfig: "{{ vault_localhost_kubeconfig_path }}"
-    validate_certs: true
-  delegate_to: localhost
-
 - name: "Wait pod vault-{{ item }}"
   kubernetes.core.k8s_info:
     kind: Pod
