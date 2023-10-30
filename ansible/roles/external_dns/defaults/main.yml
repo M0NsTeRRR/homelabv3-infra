@@ -4,16 +4,15 @@ external_dns_version: "v0.13.6"
 external_dns_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
 external_dns_namespace: "external-dns"
 external_dns_replicas: 1
-external_dns_envs: []
-external_dns_tls_envs: []
-external_dns_args: ""
+external_dns_envs: ""
 external_dns_ca: ""
+external_dns_vault_secrets: []
+external_dns_vault_ca: ""
 external_dns_vault_role: external-dns
-external_dns_vault_inject_secret: secret/external_dns
 
 # external_dns_envs:
-#   - SCW_ACCESS_KEY
-#   - SCW_SECRET_KEY
-# external_dns_tls_envs:
-#   - EXTERNAL_DNS_TLS_CA # support only CA validation (no mtls in jinja template)
-# external_dns_args: "--source=ingress --provider=scaleway"
+#   source: ingress
+#   provider: scaleway
+# external_dns_vault_secrets:
+#   - key: secret/external_dns
+#     property: API_KEY

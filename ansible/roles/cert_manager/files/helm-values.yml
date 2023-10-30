@@ -1,3 +1,5 @@
 webhook:
   networkPolicy:
     enabled: false
+deploymentAnnotations:
+  reloader.stakater.com/auto: "true"

@@ -146,6 +146,7 @@ public_vault_datas:
       policies: keycloak
       ttl: 1h
 vault_datas: "{{ public_vault_datas + secret_vault_datas }}"
+external_secrets_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 cert_manager_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 cert_manager_email: "{{ monitoring_email }}"
 cert_manager_vault_sign: unicornafk-dot-fr
@@ -159,17 +160,33 @@ trust_manager_certificates:
           {{ lookup('ansible.builtin.file', vault_ca_filename) }}
 external_dns_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 external_dns_namespace: "external-dns-external"
-external_dns_ca: "{{ kubernetes_homelab_ca_config_map }}"
-external_dns_vault_role: external-dns-external
-external_dns_vault_inject_secret: secret/data/homelab/prod/external_dns/external
 external_dns_envs:
-  - SCW_ACCESS_KEY
-  - SCW_SECRET_KEY
-external_dns_args: "--source=ingress --provider=scaleway {% for domain in domains %}--domain-filter={{ domain }}{% if not loop.last %} {% endif %}{% endfor %} --registry=txt --txt-owner-id=homelab.kubernetes --ingress-class=ingress-external --default-targets={{ public_ipv4 }} --default-targets=2a0c:b641:2c0:110::100"
+  EXTERNAL_DNS_SOURCE: |-
+    ingress
+  EXTERNAL_DNS_PROVIDER: scaleway
+  EXTERNAL_DNS_REGISTRY: txt
+  EXTERNAL_DNS_DOMAIN_FILTER: |-
+    |-
+    {% for domain in domains %}
+    {{ domain | indent(16, true) }}
+    {% endfor %}
+  EXTERNAL_DNS_TXT_OWNER_ID: homelab.kubernetes
+  EXTERNAL_DNS_INGRESS_CLASS: ingress-external
+  EXTERNAL_DNS_DEFAULT_TARGETS: |-
+    |-
+    {{ public_ipv4 | indent(16, true) }}
+    {{ "2a0c:b641:2c0:110::100" | indent(16, true) }}
+external_dns_ca: "{{ kubernetes_homelab_ca_config_map }}"
+external_dns_vault_secrets:
+  - key: secret/data/homelab/prod/external_dns/external
+    property: SCW_ACCESS_KEY
+  - key: secret/data/homelab/prod/external_dns/external
+    property: SCW_SECRET_KEY
+external_dns_vault_ca: "{{ kubernetes_homelab_ca_config_map }}"
+external_dns_vault_role: external-dns-external
 argocd_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 argocd_hostname: argocd.unicornafk.fr
 argocd_ingress_cluster_issuer: vault
-argocd_vault_ca_filename: "{{ vault_ca_filename }}"
 argocd_ingress_class: ingress-internal
 argocd_repositories:
   homelab:

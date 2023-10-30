@@ -1,0 +1,36 @@
+---
+- name: Gather information of external-secrets chart
+  kubernetes.core.helm_info:
+    name: external-secrets
+    release_namespace: external-secrets
+    kubeconfig: "{{ external_secrets_localhost_kubeconfig_path }}"
+    validate_certs: true
+  register: external_secrets_info
+  delegate_to: localhost
+
+- name: Check if external_secrets is already installed
+  ansible.builtin.set_fact:
+    external_secrets_is_installed: "{% if 'status' in external_secrets_info %}true{% else %}false{% endif %}"
+  delegate_to: localhost
+
+- name: Add external-secrets helm repo
+  kubernetes.core.helm_repository:
+    name: external-secrets
+    repo_url: https://charts.external-secrets.io
+    kubeconfig: "{{ external_secrets_localhost_kubeconfig_path }}"
+    validate_certs: true
+  delegate_to: localhost
+
+- name: Deploy external-secrets chart
+  kubernetes.core.helm:
+    name: external-secrets
+    chart_ref: external-secrets/external-secrets
+    chart_version: "{{ external_secrets_version }}"
+    release_namespace: external-secrets
+    create_namespace: true
+    update_repo_cache: true
+    wait: true
+    kubeconfig: "{{ external_secrets_localhost_kubeconfig_path }}"
+    validate_certs: true
+  delegate_to: localhost
+  when: not external_secrets_is_installed or external_secrets_force_install

@@ -2,7 +2,7 @@
 - name: Gather information of trust-manager chart
   kubernetes.core.helm_info:
     name: trust-manager
-    release_namespace: cert-manager
+    release_namespace: trust-manager
     kubeconfig: "{{ trust_manager_localhost_kubeconfig_path }}"
     validate_certs: true
   register: trust_manager_info

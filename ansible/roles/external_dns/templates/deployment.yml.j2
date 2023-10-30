@@ -5,6 +5,8 @@ kind: Deployment
 metadata:
   name: external-dns
   namespace: {{ external_dns_namespace }}
+  annotations:
+    reloader.stakater.com/auto: "true"
 spec:
   replicas: {{ external_dns_replicas }}
   strategy:
@@ -16,49 +18,36 @@ spec:
     metadata:
       labels:
         app: external-dns
-      annotations:
-        vault.hashicorp.com/agent-inject: 'true'
-        vault.hashicorp.com/role: '{{ external_dns_vault_role }}'
-        vault.hashicorp.com/agent-inject-secret-config: '{{ external_dns_vault_inject_secret }}'
-        vault.hashicorp.com/agent-inject-template-config: |
-         {{ '{{- with secret "' + external_dns_vault_inject_secret + '" -}}' }}
-         {% for external_dns_env in external_dns_envs %}
-         {% if external_dns_env == "EXTERNAL_DNS_TLS_CA" %}
-         {{ ("export EXTERNAL_DNS_TLS_CA=\"/etc/external-dns/ssl/ca.crt") | indent(2, true) }}"
-         {% else %}
-         {{ ("export " + external_dns_env + "=\"{{ .Data.data." + external_dns_env + " }}") | indent(2, true) }}"
-         {% endif %}
-         {% endfor %}
-         {{ "{{- end }}" }}
     spec:
       serviceAccountName: external-dns
-      initContainers:
-        - name: copy-shell
-          image: busybox:uclibc
-          command: ["cp", "/bin/sh", "/shell/sh"]
-          volumeMounts:
-            - name: shell
-              mountPath: /shell
       containers:
         - name: external-dns
           image: registry.k8s.io/external-dns/external-dns:{{ external_dns_version }}
-          command:
-            - /shell/sh
-            - -c
-          args:
-            - source /vault/secrets/config && /ko-app/external-dns {{ external_dns_args }}
           volumeMounts:
-            - name: shell
-              mountPath: /shell
-            {% if "EXTERNAL_DNS_TLS_CA" in external_dns_envs %}
+            {% if external_dns_ca | length %}
             - name: "{{ external_dns_ca }}"
               mountPath: /etc/external-dns/ssl
               readOnly: true
             {% endif %}
+          env:
+          {% for key, value in external_dns_envs.items() %}
+            - name: {{ key }}
+              value: {{ value }}
+          {% endfor %}
+          {% if external_dns_ca | length %}
+            - name: EXTERNAL_DNS_PDNS_TLS_ENABLED
+              value: "true"
+            - name: EXTERNAL_DNS_TLS_CA
+              value: /etc/external-dns/ssl/ca.crt
+          {% endif %}
+          envFrom:
+            - secretRef:
+                name: vault
       volumes:
-        - name: shell
-          emptyDir: {}
-        {% if "EXTERNAL_DNS_TLS_CA" in external_dns_envs %}
+        - name: vault
+          secret:
+            secretName: vault
+        {% if external_dns_ca | length %}
         - name: "{{ external_dns_ca }}"
           configMap:
             name: "{{ external_dns_ca }}"

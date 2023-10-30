@@ -64,14 +64,28 @@
     - role: external_dns
       vars:
         external_dns_namespace: "external-dns-internal"
-        external_dns_vault_role: external-dns-internal
-        external_dns_vault_inject_secret: secret/data/homelab/prod/external_dns/internal
         external_dns_envs:
-          - EXTERNAL_DNS_PDNS_SERVER
-          - EXTERNAL_DNS_PDNS_API_KEY
-          - EXTERNAL_DNS_PDNS_TLS_ENABLED
-          - EXTERNAL_DNS_TLS_CA
-        external_dns_tls_envs:
-          - EXTERNAL_DNS_TLS_CA
-        external_dns_args: "--source=ingress --provider=pdns {% for domain in local_domains %}--domain-filter={{ domain }}{% if not loop.last %} {% endif %}{% endfor %} --registry=txt --txt-owner-id=homelab.kubernetes --ingress-class=ingress-internal --default-targets=192.168.10.101 --default-targets=2a0c:b641:2c0:110::101"
+          EXTERNAL_DNS_SOURCE: |-
+            ingress
+          EXTERNAL_DNS_PROVIDER: pdns
+          EXTERNAL_DNS_REGISTRY: txt
+          EXTERNAL_DNS_DOMAIN_FILTER: |-
+            |-
+            {% for domain in local_domains %}
+            {{ domain | indent(16, true) }}
+            {% endfor %}
+          EXTERNAL_DNS_TXT_OWNER_ID: homelab.kubernetes
+          EXTERNAL_DNS_INGRESS_CLASS: ingress-internal
+          EXTERNAL_DNS_DEFAULT_TARGETS: |-
+            |-
+            {{ "192.168.10.101" | indent(16, true) }}
+            {{ "2a0c:b641:2c0:110::101" | indent(16, true) }}
+        external_dns_ca: "{{ kubernetes_homelab_ca_config_map }}"
+        external_dns_vault_secrets:
+          - key: secret/data/homelab/prod/external_dns/internal
+            property: EXTERNAL_DNS_PDNS_SERVER
+          - key: secret/data/homelab/prod/external_dns/internal
+            property: EXTERNAL_DNS_PDNS_API_KEY
+        external_dns_vault_ca: "{{ kubernetes_homelab_ca_config_map }}"
+        external_dns_vault_role: external-dns-internal
     - argocd

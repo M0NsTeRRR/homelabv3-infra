@@ -16,9 +16,9 @@ terraform/account.hcl
 *.tfstate.backup
 # ansible
 .vault_password.txt
+vault.json.secrets
 *secrets.yml
 *secrets.yaml
-*secrets
 *.csr*
 *.p12*
 *.key*

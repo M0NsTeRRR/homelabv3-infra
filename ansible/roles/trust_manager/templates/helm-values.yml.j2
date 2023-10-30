@@ -1,7 +1,0 @@
-# Temporary : https://github.com/hashicorp/vault-k8s/pull/507/files
-secretTargets:
-  enabled: true
-  authorizedSecrets:
-  {% for secret in trust_manager_certificates %}
-  - {{ secret.name }}
-  {% endfor %}

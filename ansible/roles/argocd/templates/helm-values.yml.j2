@@ -26,65 +26,6 @@ repoServer:
   autoscaling:
     enabled: true
     minReplicas: 2
-  rbac:
-    - verbs:
-        - get
-        - list
-        - watch
-      apiGroups:
-        - ''
-      resources:
-        - secrets
-        - configmaps
-  initContainers:
-    - name: download-tools
-      image: registry.access.redhat.com/ubi8
-      env:
-        - name: AVP_VERSION
-          value: {{ argocd_avp_version[1:] }}
-      command: [sh, -c]
-      args:
-        - >-
-          curl -L https://github.com/argoproj-labs/argocd-vault-plugin/releases/download/v$(AVP_VERSION)/argocd-vault-plugin_$(AVP_VERSION)_linux_amd64 -o argocd-vault-plugin &&
-          chmod +x argocd-vault-plugin &&
-          mv argocd-vault-plugin /custom-tools/
-      volumeMounts:
-        - mountPath: /custom-tools
-          name: custom-tools
-  extraContainers:
-    - name: avp-kustomize
-      command: [/var/run/argocd/argocd-cmp-server]
-      image: quay.io/argoproj/argocd:{{ argocd_version }}
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 999
-      volumeMounts:
-        - mountPath: /var/run/argocd
-          name: var-files
-        - mountPath: /home/argocd/cmp-server/plugins
-          name: plugins
-        - mountPath: /tmp
-          name: tmp
-        - mountPath: /home/argocd/cmp-server/config/plugin.yaml
-          subPath: avp-kustomize.yaml
-          name: argocd-cmp-cm
-        - name: custom-tools
-          subPath: argocd-vault-plugin
-          mountPath: /usr/local/bin/argocd-vault-plugin
-        - name: vault-ca
-          subPath: ca.crt
-          mountPath: /vault/tls/ca.crt
-          readOnly: true
-  volumes:
-    - configMap:
-        name: argocd-cmp-cm
-      name: argocd-cmp-cm
-    - name: custom-tools
-      emptyDir: {}
-    - name: vault-ca
-      secret:
-        secretName: vault-ca
-
 
 applicationSet:
   replicas: 2
@@ -100,52 +41,10 @@ configs:
     server.insecure: true
   cm:
     kustomize.buildOptions: "--enable-helm"
-  cmp:
-    create: true
-    plugins:
-      avp-kustomize:
-        allowConcurrency: true
-        discover:
-          find:
-            command:
-              - find
-              - "."
-              - -name
-              - kustomization.yaml
-        generate:
-          command:
-            - sh
-            - "-c"
-            - "kustomize build --enable-helm . | argocd-vault-plugin generate -s argocd:argocd-vault-plugin-credentials -"
-        lockRepo: false
   secret:
     argocdServerAdminPassword: "{{ argocd_admin_password | password_hash('bcrypt') }}"
-  serviceAccount:
-    automountServiceAccountToken: true
   repositories:
     {{ argocd_repositories | to_yaml | indent(4) }}
-
-extraObjects:
-  - apiVersion: v1
-    kind: Secret
-    type: Opaque
-    metadata:
-      name: vault-ca
-      namespace: argocd
-    data:
-      ca.crt: "{{ lookup('ansible.builtin.file', argocd_vault_ca_filename) | b64encode }}"
-  - apiVersion: v1
-    kind: Secret
-    type: Opaque
-    metadata:
-      name: argocd-vault-plugin-credentials
-      namespace: argocd
-    stringData:
-      VAULT_ADDR: "https://vault-active.vault.svc:8200"
-      AVP_TYPE: "vault"
-      AVP_AUTH_TYPE: k8s
-      AVP_K8S_ROLE: "{{ argocd_vault_role }}"
-      VAULT_CACERT: /vault/tls/ca.crt
 
 notifications:
   context:
