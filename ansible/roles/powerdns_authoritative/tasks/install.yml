@@ -98,6 +98,7 @@
       Content-Type: application/json
       X-Api-Key: "{{ powerdns_authoritative_api_key }}"
     ca_path: "{{ powerdns_authoritative_ca_path }}"
+  delegate_to: localhost
   register: powerdns_authoritative_restart
   until: powerdns_authoritative_restart.status == 200
   retries: 60

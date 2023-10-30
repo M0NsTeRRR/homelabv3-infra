@@ -14,6 +14,7 @@
     headers:
       X-Api-Key: "{{ powerdns_authoritative_api_key }}"
     ca_path: "{{ powerdns_authoritative_ca_path }}"
+  delegate_to: localhost
   register: powerdns_authoritative_zone
 
 - name: Configure PowerDNS authoritative
@@ -39,6 +40,7 @@
       X-Api-Key: "{{ powerdns_authoritative_api_key }}"
     ca_path: "{{ powerdns_authoritative_ca_path }}"
   when: powerdns_authoritative_zone.status == 404
+  delegate_to: localhost
   register: powerdns_authoritative_response
   changed_when: powerdns_authoritative_response.status == 201
 
@@ -55,5 +57,6 @@
       X-Api-Key: "{{ powerdns_authoritative_api_key }}"
     ca_path: "{{ powerdns_authoritative_ca_path }}"
   when: inventory_hostname == ansible_play_hosts_all[0]
+  delegate_to: localhost
   register: powerdns_authoritative_response
   changed_when: powerdns_authoritative_response.status == 204
