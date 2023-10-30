@@ -3,8 +3,6 @@
 vault_version: "v1.15.1"
 # datasource=github-tags depName=hashicorp/vault-helm
 vault_helm_version: "v0.25.0"
-# datasource=github-tags depName=hashicorp/vault-k8s
-vault_injector_version: "v1.3.1"
 vault_force_install: false
 vault_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
 vault_url: "https://vault.example.fr:8200"

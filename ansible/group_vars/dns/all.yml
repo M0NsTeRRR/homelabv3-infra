@@ -76,6 +76,7 @@ powerdns_authoritative_records:
     aaaa: 2a0c:b641:02c0:110::80
   - hostname: vault.unicornafk.fr.
     a: 192.168.10.101
+    aaaa: 2a0c:b641:02c0:110::101
     rdns: true
   - hostname: ap1.unicornafk.fr.
     a: 192.168.20.51
