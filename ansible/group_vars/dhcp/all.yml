@@ -79,6 +79,12 @@ kea_dhcp_ipv4_subnets:
       - hostname: xiaomi-bulb-entree
         hw_address: EC:4D:3E:2A:C7:18
         ip_address: 192.168.50.119
+      - hostname: monitor01
+        hw_address: c4:de:e2:fa:9b:04
+        ip_address: 192.168.50.120
+      - hostname: monitor02
+        hw_address: c8:f0:9e:da:12:bc
+        ip_address: 192.168.50.121
   - subnet: 192.168.60.0/24
     pools:
       - start: 192.168.60.201
@@ -161,6 +167,12 @@ kea_dhcp_ipv6_subnets:
       - hostname: xiaomi-bulb-entree
         hw_address: EC:4D:3E:2A:C7:18
         ip_address: 2a0c:b641:02c0:150::119
+      - hostname: monitor01
+        hw_address: c4:de:e2:fa:9b:04
+        ip_address: 2a0c:b641:02c0:150::120
+      - hostname: monitor02
+        hw_address: EC:4D:3E:2A:C7:18
+        ip_address: 2a0c:b641:02c0:150::121
   - subnet: 2a0c:b641:02c0:160::/64
     pools:
       - start: 2a0c:b641:02c0:160::201

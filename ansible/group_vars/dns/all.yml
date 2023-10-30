@@ -221,6 +221,14 @@ powerdns_authoritative_records:
     a: 192.168.50.119
     aaaa: 2a0c:b641:02c0:150::119
     rdns: true
+  - hostname: monitor01.unicornafk.fr.
+    a: 192.168.50.120
+    aaaa: 2a0c:b641:02c0:150::120
+    rdns: true
+  - hostname: monitor02.unicornafk.fr.
+    a: 192.168.50.121
+    aaaa: 2a0c:b641:02c0:150::121
+    rdns: true
   - hostname: thomas.unicornafk.fr.
     a: 192.168.60.201
     aaaa: 2a0c:b641:02c0:160::201
