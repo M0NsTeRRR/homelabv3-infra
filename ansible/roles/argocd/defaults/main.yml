@@ -10,6 +10,7 @@ argocd_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
 argocd_hostname: argocd.example.fr
 argocd_ingress_cluster_issuer: nginx
 argocd_ingress_class: nginx
+argocd_vault_ca: ""
 argocd_repositories: {}
 argocd_notifiers: {}
 argocd_subscriptions: []

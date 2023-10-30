@@ -84,6 +84,11 @@ vault_policies:
       - path: secret/data/homelab/prod/external_dns/external
         capabilities:
           - read
+  - name: argocd
+    rules:
+      - path: secret/data/homelab/prod/argocd
+        capabilities:
+          - read
   - name: keycloak
     rules:
       - path: secret/data/homelab/prod/keycloak
@@ -139,6 +144,12 @@ public_vault_datas:
       bound_service_account_namespaces: external-dns-external
       policies: external-dns-external
       ttl: 1h
+  - path: auth/kubernetes/role/argocd
+    data:
+      bound_service_account_names: argocd
+      bound_service_account_namespaces: argocd
+      policies: argocd
+      ttl: 1h
   - path: auth/kubernetes/role/keycloak
     data:
       bound_service_account_names: keycloak
@@ -188,10 +199,14 @@ argocd_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 argocd_hostname: argocd.unicornafk.fr
 argocd_ingress_cluster_issuer: vault
 argocd_ingress_class: ingress-internal
+argocd_vault_ca: "{{ kubernetes_homelab_ca_config_map }}"
 argocd_repositories:
   homelab:
     name: homelab
     url: https://github.com/M0NsTeRRR/homelabv3-infra
+  test:
+    name: test
+    url: https://github.com/M0NsTeRRR/test_argocd
 argocd_notifiers:
   service.webhook.discord: |
       headers:
