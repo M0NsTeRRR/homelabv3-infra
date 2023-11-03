@@ -13,24 +13,6 @@
     argocd_is_installed: "{% if 'status' in argocd_info %}true{% else %}false{% endif %}"
   delegate_to: localhost
 
-- name: Install vault SecretStore
-  kubernetes.core.k8s:
-    definition: "{{ lookup('ansible.builtin.template', 'secret_store.yml.j2') | from_yaml }}"
-    kubeconfig: "{{ argocd_localhost_kubeconfig_path }}"
-    wait: true
-    validate_certs: true
-    state: present
-  delegate_to: localhost
-
-- name: Install argocd ExternalSecret
-  kubernetes.core.k8s:
-    definition: "{{ lookup('ansible.builtin.template', 'external_secret.yml.j2') | from_yaml }}"
-    kubeconfig: "{{ argocd_localhost_kubeconfig_path }}"
-    wait: true
-    validate_certs: true
-    state: present
-  delegate_to: localhost
-
 - name: Add argo helm repo
   kubernetes.core.helm_repository:
     name: argo
@@ -53,6 +35,15 @@
     validate_certs: true
   delegate_to: localhost
   when: not argocd_is_installed or argocd_force_install
+
+- name: Setup external-secret
+  kubernetes.core.k8s:
+    definition: "{{ lookup('ansible.builtin.template', 'external_secret.yml.j2') | from_yaml_all }}"
+    kubeconfig: "{{ argocd_localhost_kubeconfig_path }}"
+    wait: true
+    validate_certs: true
+    state: present
+  delegate_to: localhost
 
 - name: Deploy applications
   kubernetes.core.k8s:

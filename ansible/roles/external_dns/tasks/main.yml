@@ -8,18 +8,9 @@
     state: present
   delegate_to: localhost
 
-- name: Install vault SecretStore
+- name: Setup external-secret
   kubernetes.core.k8s:
-    definition: "{{ lookup('ansible.builtin.template', 'secret_store.yml.j2') | from_yaml }}"
-    kubeconfig: "{{ external_dns_localhost_kubeconfig_path }}"
-    wait: true
-    validate_certs: true
-    state: present
-  delegate_to: localhost
-
-- name: Install external-dns ExternalSecret
-  kubernetes.core.k8s:
-    definition: "{{ lookup('ansible.builtin.template', 'external_secret.yml.j2') | from_yaml }}"
+    definition: "{{ lookup('ansible.builtin.template', 'external_secret.yml.j2') | from_yaml_all }}"
     kubeconfig: "{{ external_dns_localhost_kubeconfig_path }}"
     wait: true
     validate_certs: true

@@ -125,34 +125,34 @@ public_vault_datas:
   - path: auth/kubernetes/config
     data:
       kubernetes_host: "https://10.43.0.1:443"
-  - path: auth/kubernetes/role/vault-cert-manager
+  - path: auth/kubernetes/role/cert-manager
     data:
-      bound_service_account_names: vault-cert-manager
+      bound_service_account_names: cert-manager-vault
       bound_service_account_namespaces: cert-manager
       audience: "vault://vault"
       policies: pki
       ttl: 1m
   - path: auth/kubernetes/role/external-dns-internal
     data:
-      bound_service_account_names: external-dns
+      bound_service_account_names: external-dns-vault
       bound_service_account_namespaces: external-dns-internal
       policies: external-dns-internal
       ttl: 1h
   - path: auth/kubernetes/role/external-dns-external
     data:
-      bound_service_account_names: external-dns
+      bound_service_account_names: external-dns-vault
       bound_service_account_namespaces: external-dns-external
       policies: external-dns-external
       ttl: 1h
   - path: auth/kubernetes/role/argocd
     data:
-      bound_service_account_names: argocd
+      bound_service_account_names: argocd-vault
       bound_service_account_namespaces: argocd
       policies: argocd
       ttl: 1h
   - path: auth/kubernetes/role/keycloak
     data:
-      bound_service_account_names: keycloak
+      bound_service_account_names: keycloak-vault
       bound_service_account_namespaces: keycloak
       policies: keycloak
       ttl: 1h

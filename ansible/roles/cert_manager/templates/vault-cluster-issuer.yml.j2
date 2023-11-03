@@ -11,7 +11,7 @@ spec:
     caBundle: {{ lookup('ansible.builtin.file', cert_manager_vault_ca_filename) | b64encode }}
     auth:
       kubernetes:
-        role: {{ cert_manager_vault_service_account }}
+        role: {{ cert_manager_vault_role }}
         mountPath: /v1/auth/kubernetes
         serviceAccountRef:
           name: {{ cert_manager_vault_service_account }}
