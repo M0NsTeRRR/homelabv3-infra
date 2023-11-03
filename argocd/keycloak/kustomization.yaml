@@ -5,6 +5,7 @@ namespace: keycloak
 resources:
   - manifests/01_namespace.yaml
   - manifests/02_service_account.yaml
-  - manifests/03_postgres.yaml
-  - manifests/04_keycloak.yaml
-  - manifests/05_ingress.yaml
+  - manifests/03_external_secret_postgres_keycloak.yaml
+  - manifests/04_postgres.yaml
+  - manifests/05_keycloak.yaml
+  - manifests/06_ingress.yaml
