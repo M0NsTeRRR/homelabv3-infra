@@ -34,17 +34,19 @@ spec:
       containers:
         - name: postgres
           image: postgres:16.0
-          command:
-            - /bin/bash
-            - -c
-          args:
-            - source /vault/secrets/config && docker-entrypoint.sh postgres
           env:
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata
-          envFrom:
-            - secretRef:
-                name: vault
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: vault
+                  key: POSTGRES_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: vault
+                  key: POSTGRES_PASSWORD
           ports:
             - name: postgres
               containerPort: 5432
@@ -54,7 +56,7 @@ spec:
       volumes:
         - name: vault
           secret:
-            secretName: vault-postgres
+            secretName: vault
   volumeClaimTemplates:
     - metadata:
         name: postgres-pv-claim

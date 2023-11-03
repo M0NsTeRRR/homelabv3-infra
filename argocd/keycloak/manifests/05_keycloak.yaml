@@ -43,12 +43,27 @@ spec:
       containers:
         - name: keycloak
           image: quay.io/keycloak/keycloak:22.0.5
-          command:
-            - /bin/bash
-            - -c
-          args:
-            - source /vault/secrets/config && /opt/keycloak/bin/kc.sh start
           env:
+            - name: KC_DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: vault
+                  key: POSTGRES_USER
+            - name: KC_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: vault
+                  key: POSTGRES_PASSWORD
+            - name: KEYCLOAK_ADMIN
+              valueFrom:
+                secretKeyRef:
+                  name: vault
+                  key: ADMIN_USER
+            - name: KEYCLOAK_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: vault
+                  key: ADMIN_PASSWORD
             - name: KC_PROXY
               value: "edge"
             - name: KC_HEALTH_ENABLED
@@ -93,4 +108,4 @@ spec:
       volumes:
         - name: vault
           secret:
-            secretName: vault-keycloak
+            secretName: vault
