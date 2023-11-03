@@ -1,5 +1,5 @@
 ---
 # datasource=github-tags depName=longhorn/longhorn
-longhorn_version: "v1.5.1"
+longhorn_version: "v1.5.2"
 longhorn_force_install: false
 longhorn_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
