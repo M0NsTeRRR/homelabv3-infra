@@ -7,6 +7,7 @@
   dependencyDashboardAutoclose: true,
   automergeType: 'pr',
   platformAutomerge: true,
+  rebaseWhen: 'conflicted',
   "timezone": "Europe/Paris",
   "schedule": [
     "before 9pm on friday"
