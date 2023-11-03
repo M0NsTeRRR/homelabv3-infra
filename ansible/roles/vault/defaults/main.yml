@@ -2,7 +2,7 @@
 # datasource=github-tags depName=hashicorp/vault
 vault_version: "v1.15.1"
 # datasource=github-tags depName=hashicorp/vault-helm
-vault_helm_version: "v0.25.0"
+vault_helm_version: "v0.26.1"
 vault_force_install: false
 vault_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
 vault_url: "https://vault.example.fr:8200"
