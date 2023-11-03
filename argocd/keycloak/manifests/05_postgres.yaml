@@ -1,0 +1,66 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+  namespace: keycloak
+spec:
+  ports:
+  - port: 5432
+    name: postgres
+  selector:
+    app.kubernetes.io/name: keycloak-postgres
+    app.kubernetes.io/instance: keycloak-postgres
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+  namespace: keycloak
+spec:
+  serviceName: postgres
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: keycloak-postgres
+      app.kubernetes.io/instance: keycloak-postgres
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: keycloak-postgres
+        app.kubernetes.io/instance: keycloak-postgres
+    spec:
+      serviceAccountName: keycloak
+      containers:
+        - name: postgres
+          image: postgres:16.0
+          command:
+            - /bin/bash
+            - -c
+          args:
+            - source /vault/secrets/config && docker-entrypoint.sh postgres
+          env:
+            - name: PGDATA
+              value: /var/lib/postgresql/data/pgdata
+          envFrom:
+            - secretRef:
+                name: vault
+          ports:
+            - name: postgres
+              containerPort: 5432
+          volumeMounts:
+            - name: postgres-pv-claim
+              mountPath: /var/lib/postgresql/data
+      volumes:
+        - name: vault
+          secret:
+            secretName: vault-postgres
+  volumeClaimTemplates:
+    - metadata:
+        name: postgres-pv-claim
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi

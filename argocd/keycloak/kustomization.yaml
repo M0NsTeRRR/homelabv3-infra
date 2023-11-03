@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: keycloak
+
+resources:
+  - manifests/01_namespace.yaml
+  - manifests/02_service_account.yaml
+  - manifests/03_postgres.yaml
+  - manifests/04_keycloak.yaml
+  - manifests/05_ingress.yaml

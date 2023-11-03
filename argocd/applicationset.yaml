@@ -8,9 +8,18 @@ spec:
       elements:
       - appName: stakater
         namespace: stakater
+        syncWave: "-1"
+      - appName: keycloak
+        namespace: keycloak
+        syncWave: "-1"
+      - appName: keycloak-operator
+        namespace: keycloak-operator
+        syncWave: "0"
   template:
     metadata:
       name: '{{appName}}'
+      annotations:
+        argocd.argoproj.io/sync-wave: '{{syncWave}}'
     spec:
       project: default
       source:
