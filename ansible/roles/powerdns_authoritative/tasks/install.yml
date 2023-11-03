@@ -13,11 +13,6 @@
     shell: /usr/sbin/nologin
     group: pdns
 
-- name: Install sqlite3 packages required by PowerDNS
-  ansible.builtin.apt:
-    name: sqlite3
-    state: present
-
 - name: Add PowerDNS Apt signing key
   ansible.builtin.get_url:
     url: "https://repo.powerdns.com/{{ powerdns_authoritative_repository_key }}-pub.asc"
