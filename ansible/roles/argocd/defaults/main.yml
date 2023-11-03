@@ -1,6 +1,6 @@
 ---
 # datasource=github-tags depName=argoproj/argo-cd
-argocd_version: "v2.8.5"
+argocd_version: "v2.8.6"
 # datasource=github-tags depName=argoproj/argo-helm
 argocd_helm_version: "5.46.4"
 # datasource=github-tags depName=argoproj-labs/argocd-vault-plugin
