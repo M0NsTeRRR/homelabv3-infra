@@ -1,5 +1,5 @@
 ---
 # datasource=github-tags depName=external-secrets/external-secrets
-external_secrets_version: "v0.9.7"
+external_secrets_version: "v0.9.8"
 external_secrets_force_install: false
 external_secrets_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
