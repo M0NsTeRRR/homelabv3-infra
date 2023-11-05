@@ -50,7 +50,7 @@ spec:
       containers:
         - name: keycloak
           image: quay.io/keycloak/keycloak:22.0.5
-          command: ["start"]
+          args: ["start"]
           env:
             - name: KC_DB_USERNAME
               valueFrom:
