@@ -1,8 +1,9 @@
 image:
   tag: "{{ traefik_version }}"
 deployment:
-  kind: Deployment
   replicas: 3
+  annotations:
+    reloader.stakater.com/auto: "true"
 ports:
   web:
     redirectTo:

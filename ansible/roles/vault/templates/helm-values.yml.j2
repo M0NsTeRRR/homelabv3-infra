@@ -9,6 +9,10 @@ server:
   networkPolicy:
     enabled: false
 
+  statefulSet:
+    annotations:
+      reloader.stakater.com/auto: "true"
+
   extraEnvironmentVars:
     VAULT_CACERT: /vault/userconfig/vault-server-tls/ca.crt
 
