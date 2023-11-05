@@ -3,9 +3,7 @@ kind: Kustomization
 namespace: keycloak
 
 resources:
-  - manifests/01_namespace.yaml
-  - manifests/02_service_account.yaml
-  - manifests/03_external_secret.yaml
-  - manifests/04_postgres.yaml
-  - manifests/05_keycloak.yaml
-  - manifests/06_ingress.yaml
+  - manifests/01_external_secret.yaml
+  - manifests/02_postgres.yaml
+  - manifests/03_keycloak.yaml
+  - manifests/04_ingress.yaml

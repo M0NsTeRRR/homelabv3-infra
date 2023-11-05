@@ -12,9 +12,6 @@ spec:
       - appName: keycloak
         namespace: keycloak
         syncWave: "-1"
-      - appName: keycloak-operator
-        namespace: keycloak-operator
-        syncWave: "0"
   template:
     metadata:
       name: '{{appName}}'
