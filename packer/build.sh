@@ -16,7 +16,7 @@ do
   read CHOICE
   case $CHOICE in
 	1)
-    proxmox_url='https://192.168.40.11:8006/api2/json'
+    proxmox_url='https://server1.unicornafk.fr:8006/api2/json'
     proxmox_username='root@pam'
 
     read -sp 'Proxmox password: ' proxmox_password
