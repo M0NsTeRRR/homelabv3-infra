@@ -1,6 +1,6 @@
 ---
 # datasource=github-tags depName=argoproj/argo-cd
-argocd_version: "v2.8.6"
+argocd_version: "v2.9.0"
 # datasource=github-tags depName=argoproj/argo-helm
 argocd_helm_version: "5.46.4"
 argocd_force_install: false
