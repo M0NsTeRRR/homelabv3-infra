@@ -18,6 +18,7 @@ locals {
 }
 
 source "proxmox-iso" "ubuntu" {
+  tags   = "template;ubuntu"
   cores  = 2
   memory = 2048
   boot_command = [
