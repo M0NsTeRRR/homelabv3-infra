@@ -3,16 +3,16 @@
   ansible.builtin.file:
     state: directory
     name: /etc/systemd/resolved.conf.d
-    owner: root
-    group: root
+    owner: systemd-resolve
+    group: systemd-resolve
     mode: "0755"
 
 - name: Configure systemd-resolved
   ansible.builtin.template:
     src: resolved.conf.j2
     dest: /etc/systemd/resolved.conf.d/01-custom.conf
-    owner: root
-    group: root
+    owner: systemd-resolve
+    group: systemd-resolve
     mode: "0640"
   notify:
     - Enable systemd-resolved
