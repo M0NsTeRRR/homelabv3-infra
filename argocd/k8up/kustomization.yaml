@@ -20,5 +20,5 @@ patches:
       kind: CustomResourceDefinition
     patch: |
       - op: add
-        path: /spec/template/metadata/annotations/argocd.argoproj.io/hook
+        path: /metadata/annotations/argocd.argoproj.io\/hook
         value: PreSync
