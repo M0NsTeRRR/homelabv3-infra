@@ -105,9 +105,11 @@
         "(^|/)kustomization.ya?ml$"
       ],
       "matchStrings": [
-        "https:\/\/raw\\.githubusercontent\\.com\/(?<depName>[^\/]*\/[^\/]*)\/(?<currentValue>.*?)\/"
+        "https:\/\/raw\\.githubusercontent\\.com\/(?<depName>[^\/]*\/[^\/]*)\/(?<currentValue>.*?)\/",
+        "https:\/\/github\\.com\/(?<depName>[^\/]*\/[^\/]*)\/releases\/download\/.*(?<currentValue>\\d+.\\d+.\\d+)\/"
       ],
-      "datasourceTemplate": "github-tags",
+      datasourceTemplate: "github-tags",
+      versioning: 'regex:^v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)',
     },
   ],
   packageRules: [
