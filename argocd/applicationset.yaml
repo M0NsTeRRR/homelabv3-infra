@@ -8,7 +8,10 @@ spec:
       elements:
       - appName: stakater
         namespace: stakater
-        syncWave: "-1"
+        syncWave: "-2"
+      - appName: k8up
+        namespace: k8up
+        syncWave: "-2"
       - appName: keycloak
         namespace: keycloak
         syncWave: "-1"

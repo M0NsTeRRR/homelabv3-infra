@@ -1,0 +1,31 @@
+apiVersion: k8up.io/v1
+kind: Schedule
+metadata:
+  name: schedule-test
+spec:
+  backend:
+    repoPasswordSecretRef:
+      name: vault
+      key: RESTIC_PASSWORD
+    b2:
+      path: s3.eu-central-003.backblazeb2.com
+      bucket: unicornafk-homelab
+      accountIDSecretRef:
+        name: vault
+        key: B2_ACCESS_KEY
+      accountKeySecretRef:
+        name: vault
+        key: B2_SECRET_KEY
+  backup:
+    schedule: '0 2 * * *'
+    failedJobsHistoryLimit: 3
+    successfulJobsHistoryLimit: 2
+  check:
+    schedule: '0 1 * * 1'
+  prune:
+    schedule: '0 1 * * 0'
+    retention:
+      keepLast: 3
+      keepDaily: 7
+      keepWeekly: 4
+      keepMonthly: 6
