@@ -14,8 +14,3 @@ helmCharts:
   repo: https://k8up-io.github.io/k8up
   version: 4.4.3
   valuesFile: values.yaml
-
-patches:
-  - target:
-      kind: CustomResourceDefinition
-    patch: patches/pre-sync.yml
