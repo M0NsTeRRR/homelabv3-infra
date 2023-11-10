@@ -1,7 +1,7 @@
 ---
 - name: Add Kubernetes Apt signing key
   ansible.builtin.get_url:
-    url: https://pkgs.k8s.io/core:/stable:/{{ kubectl_repo_version }}/deb/Release.key
+    url: https://pkgs.k8s.io/core:/stable:/{{ (kubectl_repo_version | split('.'))[:-1] | join('.') }}/deb/Release.key
     dest: /etc/apt/keyrings/kubernetes.asc
     owner: root
     group: root
@@ -9,7 +9,7 @@
 
 - name: Add Kubernetes Apt repository
   ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/etc/apt/keyrings/kubernetes.asc] https://pkgs.k8s.io/core:/stable:/{{ kubectl_repo_version }}/deb/ /"
+    repo: "deb [signed-by=/etc/apt/keyrings/kubernetes.asc] https://pkgs.k8s.io/core:/stable:/{{ (kubectl_repo_version | split('.'))[:-1] | join('.') }}/deb/ /"
     state: present
     filename: kubernetes
 
