@@ -55,30 +55,11 @@
   delegate_to: localhost
   when: not cert_manager_is_installed or cert_manager_force_install
 
-- name: Create vault service account
+- name: Install cert-manager cluster issuer manifest vault
   kubernetes.core.k8s:
-    definition: "{{ lookup('ansible.builtin.template', 'vault-service-account.yml.j2') | from_yaml }}"
+    definition: "{{ lookup('ansible.builtin.template', 'vault-cluster-issuer.yml.j2') | from_yaml_all }}"
     kubeconfig: "{{ cert_manager_localhost_kubeconfig_path }}"
     wait: true
     validate_certs: true
     state: present
-  delegate_to: localhost
-
-- name: Create vault rbac
-  kubernetes.core.k8s:
-    definition: "{{ lookup('ansible.builtin.template', 'vault-rbac.yml.j2') | from_yaml_all }}"
-    kubeconfig: "{{ cert_manager_localhost_kubeconfig_path }}"
-    wait: true
-    validate_certs: true
-    state: present
-  delegate_to: localhost
-
-- name: "Install cert-manager cluster issuer manifest {{ item }}"
-  kubernetes.core.k8s:
-    definition: "{{ lookup('ansible.builtin.template', item) | from_yaml_all }}"
-    kubeconfig: "{{ cert_manager_localhost_kubeconfig_path }}"
-    wait: true
-    validate_certs: true
-    state: present
-  with_fileglob: "{{ role_path }}/templates/*-cluster-issuer.yml.j2"
   delegate_to: localhost

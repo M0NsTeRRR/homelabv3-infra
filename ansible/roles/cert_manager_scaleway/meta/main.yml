@@ -1,0 +1,11 @@
+---
+galaxy_info:
+  role_name: cert_manager_scaleway
+  author: Ludovic Ortega
+  description: Install and configure cert_manager_scaleway
+  license: CeCILL
+  min_ansible_version: "2.15.5"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy

@@ -74,6 +74,11 @@ vault_policies:
       - path: pki/issue/*
         capabilities:
           - create
+  - name: cert-manager-scaleway
+    rules:
+      - path: secret/data/homelab/prod/cert_manager_scaleway
+        capabilities:
+          - read
   - name: external-dns-internal
     rules:
       - path: secret/data/homelab/prod/external_dns/internal
@@ -132,6 +137,12 @@ public_vault_datas:
       audience: "vault://vault"
       policies: pki
       ttl: 1m
+  - path: auth/kubernetes/role/cert-manager-scaleway
+    data:
+      bound_service_account_names: cert-manager-scaleway-vault
+      bound_service_account_namespaces: cert-manager-scaleway
+      policies: cert-manager-scaleway
+      ttl: 1m
   - path: auth/kubernetes/role/external-dns-internal
     data:
       bound_service_account_names: external-dns-vault
@@ -159,9 +170,13 @@ public_vault_datas:
 vault_datas: "{{ public_vault_datas + secret_vault_datas }}"
 external_secrets_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 cert_manager_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
-cert_manager_email: "{{ monitoring_email }}"
+cert_manager_vault_ingress_class: ingress-internal
 cert_manager_vault_sign: unicornafk-dot-fr
-cert_manager_vault_ca_filename: "{{ vault_ca_filename }}"
+cert_manager_vault_ca_path: "{{ ca_certificates_local_path_ca_certificate }}"
+cert_manager_scaleway_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
+cert_manager_scaleway_email: "{{ monitoring_email }}"
+cert_manager_scaleway_vault_ca: "{{ kubernetes_homelab_ca_config_map }}"
+cert_manager_scaleway_vault_secret_key: "secret/data/homelab/prod/cert_manager_scaleway"
 trust_manager_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 trust_manager_certificates:
   - name: "{{ kubernetes_homelab_ca_config_map }}"
@@ -200,6 +215,7 @@ argocd_hostname: argocd.unicornafk.fr
 argocd_ingress_cluster_issuer: vault
 argocd_ingress_class: ingress-internal
 argocd_vault_ca: "{{ kubernetes_homelab_ca_config_map }}"
+argocd_vault_secret_key: "secret/data/homelab/prod/argocd"
 argocd_repositories:
   homelab:
     name: homelab
@@ -272,11 +288,11 @@ argocd_triggers:
       when: app.status.operationState.phase in ['Succeeded']
 argocd_templates:
   template.notify-discord-created: |
+    {% raw %}
     webhook:
       discord:
-        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
+        path: "{{ .secrets.DISCORD_WEBHOOK_URL }}"
         method: POST
-        {% raw %}
         body: |
           {
             "embeds": [
@@ -288,13 +304,13 @@ argocd_templates:
               }
             ]
           }
-        {% endraw %}
+    {% endraw %}
   template.notify-discord-deleted: |
+    {% raw %}
     webhook:
       discord:
-        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
+        path: "{{ .secrets.DISCORD_WEBHOOK_URL }}"
         method: POST
-        {% raw %}
         body: |
           {
             "embeds": [
@@ -305,13 +321,13 @@ argocd_templates:
               }
             ]
           }
-        {% endraw %}
+    {% endraw %}
   template.notify-discord-deployed: |
+    {% raw %}
     webhook:
       discord:
-        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
+        path: "{{ .secrets.DISCORD_WEBHOOK_URL }}"
         method: POST
-        {% raw %}
         body: |
           {
             "embeds": [
@@ -337,13 +353,13 @@ argocd_templates:
               }
             ]
           }
-        {% endraw %}
+    {% endraw %}
   template.notify-discord-degraded: |
+    {% raw %}
     webhook:
       discord:
-        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
+        path: "{{ .secrets.DISCORD_WEBHOOK_URL }}"
         method: POST
-        {% raw %}
         body: |
           {
             "embeds": [
@@ -369,13 +385,13 @@ argocd_templates:
               }
             ]
           }
-        {% endraw %}
+    {% endraw %}
   template.notify-discord-failed: |
+    {% raw %}
     webhook:
       discord:
-        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
+        path: "{{ .secrets.DISCORD_WEBHOOK_URL }}"
         method: POST
-        {% raw %}
         body: |
           {
             "embeds": [
@@ -405,13 +421,13 @@ argocd_templates:
               }
             ]
           }
-        {% endraw %}
+    {% endraw %}
   template.notify-discord-running: |
+    {% raw %}
     webhook:
       discord:
-        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
+        path: "{{ .secrets.DISCORD_WEBHOOK_URL }}"
         method: POST
-        {% raw %}
         body: |
           {
             "embeds": [
@@ -437,13 +453,13 @@ argocd_templates:
               }
             ]
           }
-        {% endraw %}
+    {% endraw %}
   template.notify-discord-unknown: |
+    {% raw %}
     webhook:
       discord:
-        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
+        path: "{{ .secrets.DISCORD_WEBHOOK_URL }}"
         method: POST
-        {% raw %}
         body: |
           {
             "embeds": [
@@ -469,13 +485,13 @@ argocd_templates:
               }
             ]
           }
-        {% endraw %}
+    {% endraw %}
   template.notify-discord-succeeded: |
+    {% raw %}
     webhook:
       discord:
-        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
+        path: "{{ .secrets.DISCORD_WEBHOOK_URL }}"
         method: POST
-        {% raw %}
         body: |
           {
             "embeds": [
@@ -501,7 +517,7 @@ argocd_templates:
               }
             ]
           }
-        {% endraw %}
+    {% endraw %}
 argocd_applications:
   - name: homelabv3-infra
     repo_url: https://github.com/M0NsTeRRR/homelabv3-infra

@@ -1,0 +1,8 @@
+---
+# datasource=github-tags depName=
+cert_manager_scaleway_version: "0.0.2"
+cert_manager_scaleway_force_install: false
+cert_manager_scaleway_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
+cert_manager_scaleway_vault_ca: ""
+cert_manager_scaleway_vault_secret_key: ""
+cert_manager_scaleway_email: "test@example.fr"

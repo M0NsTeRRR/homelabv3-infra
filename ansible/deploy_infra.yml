@@ -47,6 +47,7 @@
   roles:
     - cilium
     - metallb
+    - external_secrets
     - role: traefik
     - role: traefik
       vars:
@@ -59,6 +60,7 @@
     - longhorn
     - vault
     - cert_manager
+    - cert_manager_scaleway
     - trust_manager
     - role: external_dns
     - role: external_dns
