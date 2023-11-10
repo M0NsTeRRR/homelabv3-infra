@@ -7,8 +7,3 @@ caddy_domains:
 runrestic_allowed_command: []
 runrestic_acl_files:
   - /var/www/uptime-kuma/data
-runrestic_outgoing_ports:
-  - port: "23"
-    proto: tcp
-    direction: out
-    comment: "Runrestic sftp"

@@ -3,7 +3,10 @@ name = "{{ item.name }}"
 repositories = {{ item.repositories | to_nice_json }} 
 
 [environment]
-RESTIC_PASSWORD_FILE = "/etc/runrestic/{{ item.config_name }}.pass"
+RESTIC_PASSWORD = "{{ item.restic_password }}"
+{%for k, v in item.envs.items() %}
+{{ k }} = "{{v}}"
+{% endfor %}
 
 [execution]
 parallel = true

@@ -1,18 +1,4 @@
 ---
-- name: Open required ports
-  community.general.ufw:
-    direction: "{{ item.direction }}"
-    rule: allow
-    port: "{{ item.port }}"
-    proto: "{{ item.proto }}"
-    comment: "{{ item.comment }} (ansible_managed)"
-  with_items: "{{ runrestic_outgoing_ports }}"
-
-- name: Install sshpass package required by for ssh-copy-id
-  ansible.builtin.apt:
-    name: sshpass
-    state: present
-
 - name: Add runrestic group
   ansible.builtin.group:
     name: runrestic
@@ -26,34 +12,6 @@
     create_home: true
     shell: /usr/sbin/nologin
     group: runrestic
-    ssh_key_type: ed25519
-    ssh_key_file: .ssh/id_ed25519
-    ssh_key_comment: runrestic backup ssh key of {{ inventory_hostname }} (ansible managed)
-    generate_ssh_key: true
-    force: "{{ runrestic_regenerate_ssh_key }}"
-
-- name: Add/update the public key in known_hosts
-  ansible.builtin.known_hosts:
-    name: "[{{ item.host }}]:{{ item.port }}"
-    key: "{{ lookup('pipe', 'ssh-keyscan -p {{ item.port }} {{ item.host }}') }}"
-    path: /home/runrestic/.ssh/known_hosts
-    state: "present"
-  no_log: true
-  with_items: "{{ runrestic_ssh_key_hosts }}"
-
-- name: Chown known_hosts to runrestic
-  ansible.builtin.file:
-    name: /home/runrestic/.ssh/known_hosts
-    owner: runrestic
-    group: runrestic
-    state: file
-
-# Don't use authorized key modules because some shell has limited functionnality like hetzner storage box
-- name: Add runrestic SSH key to backup host
-  ansible.builtin.command: "sshpass -p '{{ item.password }}' ssh-copy-id -i /home/runrestic/.ssh/id_ed25519 -p {{ item.port }} -s {{ item.user }}@{{ item.host }}"
-  changed_when: true
-  no_log: true
-  with_items: "{{ runrestic_ssh_key_hosts }}"
 
 - name: "Create folder {{ item }}"
   ansible.builtin.file:
@@ -119,16 +77,6 @@
   ansible.builtin.template:
     src: config.toml.j2
     dest: "/etc/runrestic/{{ item.config_name }}.toml"
-    owner: runrestic
-    group: runrestic
-    mode: "0640"
-  no_log: true
-  with_items: "{{ runrestic_backup }}"
-
-- name: Create repository password file
-  ansible.builtin.copy:
-    content: "{{ item.password }}"
-    dest: "/etc/runrestic/{{ item.config_name }}.pass"
     owner: runrestic
     group: runrestic
     mode: "0600"

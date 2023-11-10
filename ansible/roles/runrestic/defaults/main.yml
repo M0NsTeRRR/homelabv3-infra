@@ -3,23 +3,19 @@
 runrestic_package_state: latest
 # datasource=github-tags depName=restic/restic
 runrestic_restic_version: v0.16.0
-runrestic_force_install: false
-runrestic_regenerate_ssh_key: false
+runrestic_force_install: true
 runrestic_systemd_calendar: "*-*-* 0:00:00"
-runrestic_outgoing_ports: []
 runrestic_backup: []
 runrestic_acl_files: []
-runrestic_ssh_key_hosts: []
 runrestic_allowed_command: []
 
-# runrestic_outgoing_ports:
-#   - port: "23"
-#     proto: tcp
-#     direction: out
-#     comment: "Runrestic sftp"
 # runrestic_backup:
 #   - name: Postgres backup
 #     config_name: postgres_backup
+#     restic_password: "password"
+#     envs:
+#       AWS_ACCESS_KEY_ID: "key"
+#       AWS_SECRET_ACCESS_KEY: "password"
 #     repositories:
 #       - /tmp/restic-repo1
 #     sources:
@@ -31,11 +27,6 @@ runrestic_allowed_command: []
 # runrestic_acl_files:
 #   - /etc/postgresql
 #   - /var/postgresql/db.sql
-# runrestic_ssh_key_hosts:
-#   - host: example.fr
-#     port: 22
-#     user: test
-#     password: test
 # runrestic_allowed_command:
 #   - /bin/systemctl stop postgresql
 #   - /bin/systemctl start postgresql
