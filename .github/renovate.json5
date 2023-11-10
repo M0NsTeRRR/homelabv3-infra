@@ -101,15 +101,14 @@
     },
     // match github yaml in kustomization file
     {
-      "fileMatch": [
+      fileMatch: [
         "(^|/)kustomization.ya?ml$"
       ],
-      "matchStrings": [
+      matchStrings: [
         "https:\/\/raw\\.githubusercontent\\.com\/(?<depName>[^\/]*\/[^\/]*)\/(?<currentValue>.*?)\/",
         "https:\/\/github\\.com\/(?<depName>[^\/]*\/[^\/]*)\/releases\/download\/.*(?<currentValue>\\d+.\\d+.\\d+)\/"
       ],
       datasourceTemplate: "github-tags",
-      versioning: 'regex:^v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)',
     },
   ],
   packageRules: [
@@ -124,6 +123,15 @@
         'ansible/ansible-lint'
       ],
       groupName: 'ansible version',
+    },
+    // match github yaml in kustomization file
+    {
+      matchFileNames: [
+        "**/kustomization.yaml",
+        "**/kustomization.yml",
+      ],
+      matchDatasources: ["github-tags"],
+      versioning: 'regex:^v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)',
     },
     // handle packer, packer plugin, terraform, terragrunt versions (not terraform modules) to add "v" char in front of semver
     {
