@@ -18,7 +18,4 @@ helmCharts:
 patches:
   - target:
       kind: CustomResourceDefinition
-    patch: |
-      - op: add
-        path: /metadata/annotations/argocd.argoproj.io\/hook
-        value: PreSync
+    patch: patches/pre-sync.yml

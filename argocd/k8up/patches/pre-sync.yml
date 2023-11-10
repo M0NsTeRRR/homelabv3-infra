@@ -1,0 +1,3 @@
+- op: add
+  path: /metadata/annotations/argocd.argoproj.io\/hook
+  value: PreSync
