@@ -299,11 +299,11 @@ argocd_triggers:
       when: app.status.operationState.phase in ['Succeeded']
 argocd_templates:
   template.notify-discord-created: |
-    {% raw %}
     webhook:
       discord:
-        path: "{{ .secrets.DISCORD_WEBHOOK_URL }}"
+        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
         method: POST
+        {% raw %}
         body: |
           {
             "embeds": [
@@ -315,13 +315,13 @@ argocd_templates:
               }
             ]
           }
-    {% endraw %}
+        {% endraw %}
   template.notify-discord-deleted: |
-    {% raw %}
     webhook:
       discord:
-        path: "{{ .secrets.DISCORD_WEBHOOK_URL }}"
+        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
         method: POST
+        {% raw %}
         body: |
           {
             "embeds": [
@@ -332,13 +332,13 @@ argocd_templates:
               }
             ]
           }
-    {% endraw %}
+        {% endraw %}
   template.notify-discord-deployed: |
-    {% raw %}
     webhook:
       discord:
-        path: "{{ .secrets.DISCORD_WEBHOOK_URL }}"
+        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
         method: POST
+        {% raw %}
         body: |
           {
             "embeds": [
@@ -364,13 +364,13 @@ argocd_templates:
               }
             ]
           }
-    {% endraw %}
+        {% endraw %}
   template.notify-discord-degraded: |
-    {% raw %}
     webhook:
       discord:
-        path: "{{ .secrets.DISCORD_WEBHOOK_URL }}"
+        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
         method: POST
+        {% raw %}
         body: |
           {
             "embeds": [
@@ -396,13 +396,13 @@ argocd_templates:
               }
             ]
           }
-    {% endraw %}
+        {% endraw %}
   template.notify-discord-failed: |
-    {% raw %}
     webhook:
       discord:
-        path: "{{ .secrets.DISCORD_WEBHOOK_URL }}"
+        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
         method: POST
+        {% raw %}
         body: |
           {
             "embeds": [
@@ -432,13 +432,13 @@ argocd_templates:
               }
             ]
           }
-    {% endraw %}
+        {% endraw %}
   template.notify-discord-running: |
-    {% raw %}
     webhook:
       discord:
-        path: "{{ .secrets.DISCORD_WEBHOOK_URL }}"
+        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
         method: POST
+        {% raw %}
         body: |
           {
             "embeds": [
@@ -464,13 +464,13 @@ argocd_templates:
               }
             ]
           }
-    {% endraw %}
+        {% endraw %}
   template.notify-discord-unknown: |
-    {% raw %}
     webhook:
       discord:
-        path: "{{ .secrets.DISCORD_WEBHOOK_URL }}"
+        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
         method: POST
+        {% raw %}
         body: |
           {
             "embeds": [
@@ -496,13 +496,13 @@ argocd_templates:
               }
             ]
           }
-    {% endraw %}
+        {% endraw %}
   template.notify-discord-succeeded: |
-    {% raw %}
     webhook:
       discord:
-        path: "{{ .secrets.DISCORD_WEBHOOK_URL }}"
+        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
         method: POST
+        {% raw %}
         body: |
           {
             "embeds": [
@@ -528,7 +528,7 @@ argocd_templates:
               }
             ]
           }
-    {% endraw %}
+        {% endraw %}
 argocd_applications:
   - name: homelabv3-infra
     repo_url: https://github.com/M0NsTeRRR/homelabv3-infra
