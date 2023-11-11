@@ -213,7 +213,7 @@ external_dns_envs:
     |-
     {{ public_ipv4 | indent(16, true) }}
     {{ "2a0c:b641:2c0:110::100" | indent(16, true) }}
-external_dns_ca: "{{ kubernetes_homelab_ca_config_map }}"
+external_dns_ca: ""
 external_dns_vault_secrets:
   - key: secret/data/homelab/prod/external_dns/external
     property: SCW_ACCESS_KEY
