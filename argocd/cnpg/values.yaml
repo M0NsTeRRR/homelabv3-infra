@@ -1,0 +1,3 @@
+image:
+  repository: ghcr.io/cloudnative-pg/cloudnative-pg
+  tag: 1.21.1

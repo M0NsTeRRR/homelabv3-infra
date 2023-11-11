@@ -12,6 +12,9 @@ spec:
       - appName: k8up
         namespace: k8up
         syncWave: "-2"
+      - appName: cnpg
+        namespace: cnpg
+        syncWave: "-2"
       - appName: keycloak
         namespace: keycloak
         syncWave: "-1"
