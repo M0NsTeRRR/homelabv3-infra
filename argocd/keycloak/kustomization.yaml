@@ -7,3 +7,4 @@ resources:
   - manifests/02_postgres.yaml
   - manifests/03_keycloak.yaml
   - manifests/04_ingress.yaml
+  - manifests/05_backup.yaml

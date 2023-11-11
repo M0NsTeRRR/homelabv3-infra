@@ -19,15 +19,3 @@ spec:
 
   storage:
     size: 1Gi
-
-  backup:
-    barmanObjectStore:
-      destinationPath: "s3://unicornafk-homelab/keycloak"
-      endpointURL: "https://s3.eu-central-003.backblazeb2.com"
-      s3Credentials:
-        accessKeyId:
-          name: backup-vault
-          key: S3_ACCESS_KEY
-        secretAccessKey:
-          name: backup-vault
-          key: S3_SECRET_KEY
