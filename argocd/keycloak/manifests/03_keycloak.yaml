@@ -55,22 +55,22 @@ spec:
             - name: KC_DB_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: vault
+                  name: keycloak-vault
                   key: POSTGRES_USER
             - name: KC_DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: vault
+                  name: keycloak-vault
                   key: POSTGRES_PASSWORD
             - name: KEYCLOAK_ADMIN
               valueFrom:
                 secretKeyRef:
-                  name: vault
+                  name: keycloak-vault
                   key: ADMIN_USER
             - name: KEYCLOAK_ADMIN_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: vault
+                  name: keycloak-vault
                   key: ADMIN_PASSWORD
             - name: KC_PROXY
               value: "edge"
@@ -87,7 +87,7 @@ spec:
             - name: KC_HOSTNAME
               value: sso.unicornafk.fr
             - name: KC_DB_URL
-              value: jdbc:postgresql://postgres/keycloak
+              value: jdbc:postgresql://keycloak-cluster-rw/keycloak
           envFrom:
             - secretRef:
                 name: vault
