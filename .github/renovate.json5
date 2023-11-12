@@ -34,7 +34,7 @@
   },
   helm-values: {
     fileMatch: [
-      "(^|\/)(helm-)?values\\.ya?ml(.j2)?$"
+      "(^|/)(helm-)?values\\.ya?ml(.j2)?$"
     ]
   },
   regexManagers: [
