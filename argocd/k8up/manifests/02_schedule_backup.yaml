@@ -8,7 +8,7 @@ spec:
       name: backup-vault
       key: RESTIC_PASSWORD
     b2:
-      path: s3.eu-central-003.backblazeb2.com
+      path: "backup"
       bucket: unicornafk-homelab
       accountIDSecretRef:
         name: backup-vault

@@ -94,11 +94,6 @@ vault_policies:
       - path: secret/data/homelab/prod/argocd
         capabilities:
           - read
-  - name: k8up
-    rules:
-      - path: secret/data/homelab/prod/k8up
-        capabilities:
-          - read
   - name: keycloak
     rules:
       - path: secret/data/homelab/prod/keycloak
@@ -165,12 +160,6 @@ public_vault_datas:
       bound_service_account_names: argocd-vault
       bound_service_account_namespaces: argocd
       policies: argocd
-      ttl: 1h
-  - path: auth/kubernetes/role/k8up
-    data:
-      bound_service_account_names: k8up-vault
-      bound_service_account_namespaces: k8up
-      policies: k8up
       ttl: 1h
   - path: auth/kubernetes/role/keycloak
     data:
