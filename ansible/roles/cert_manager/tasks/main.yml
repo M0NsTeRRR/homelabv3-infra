@@ -44,7 +44,7 @@
   kubernetes.core.helm:
     name: cert-manager
     chart_ref: jetstack/cert-manager
-    chart_version: "{{ cert_manager_version }}"
+    chart_version: "{{ cert_manager_chart_version }}"
     release_namespace: cert-manager
     create_namespace: true
     release_values: "{{ lookup('ansible.builtin.file', 'helm-values.yml') | from_yaml }}"

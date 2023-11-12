@@ -34,7 +34,7 @@
   kubernetes.core.helm:
     name: cert-manager-scaleway
     chart_ref: suda/scaleway-webhook
-    chart_version: "{{ cert_manager_scaleway_version }}"
+    chart_version: "{{ cert_manager_scaleway_chart_version }}"
     release_namespace: cert-manager-scaleway
     create_namespace: true
     release_values: "{{ lookup('ansible.builtin.template', 'helm-values.yml.j2') | from_yaml }}"

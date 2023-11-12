@@ -25,7 +25,7 @@
   kubernetes.core.helm:
     name: argocd
     chart_ref: argo/argo-cd
-    chart_version: "{{ argocd_helm_version }}"
+    chart_version: "{{ argocd_chart_version }}"
     release_namespace: argocd
     create_namespace: true
     release_values: "{{ lookup('ansible.builtin.template', 'helm-values.yml.j2') | from_yaml }}"

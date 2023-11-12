@@ -42,7 +42,7 @@
   kubernetes.core.helm:
     name: vault
     chart_ref: hashicorp/vault
-    chart_version: "{{ vault_helm_version[1:] }}"
+    chart_version: "{{ vault_chart_version[1:] }}"
     release_namespace: vault
     create_namespace: true
     release_values: "{{ lookup('ansible.builtin.template', 'helm-values.yml.j2') | from_yaml }}"
