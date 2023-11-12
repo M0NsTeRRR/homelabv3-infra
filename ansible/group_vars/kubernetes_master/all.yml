@@ -186,17 +186,10 @@ trust_manager_certificates:
           {{ lookup('ansible.builtin.file', vault_ca_filename) }}
 external_dns_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 external_dns_namespace: "external-dns-external"
+external_dns_provider: scaleway
+external_dns_txt_owner_id: homelab.kubernetes
+external_dns_domain_filters: "{{ domains }}"
 external_dns_envs:
-  EXTERNAL_DNS_SOURCE: |-
-    ingress
-  EXTERNAL_DNS_PROVIDER: scaleway
-  EXTERNAL_DNS_REGISTRY: txt
-  EXTERNAL_DNS_DOMAIN_FILTER: |-
-    |-
-    {% for domain in domains %}
-    {{ domain | indent(6, true) }}
-    {% endfor %}
-  EXTERNAL_DNS_TXT_OWNER_ID: homelab.kubernetes
   EXTERNAL_DNS_INGRESS_CLASS: ingress-external
   EXTERNAL_DNS_DEFAULT_TARGETS: |-
     |-

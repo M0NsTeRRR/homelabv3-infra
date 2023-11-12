@@ -1,9 +1,13 @@
+nameOverride: "{{ external_dns_namespace }}"
 image:
   repository: registry.k8s.io/external-dns/external-dns
   tag: v0.13.6
-namespaced: true
 deploymentAnnotations:
   reloader.stakater.com/auto: "true"
+registry: txt
+txtOwnerId: "{{ external_dns_txt_owner_id }}"
+provider: "{{ external_dns_provider }}"
+domainFilters: {{ external_dns_domain_filters | to_yaml }}
 env:
 {% for key, value in external_dns_envs.items() %}
   - name: {{ key }}

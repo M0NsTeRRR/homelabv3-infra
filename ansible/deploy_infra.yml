@@ -66,17 +66,10 @@
     - role: external_dns
       vars:
         external_dns_namespace: "external-dns-internal"
+        external_dns_provider: pdns
+        external_dns_txt_owner_id: homelab.kubernetes
+        external_dns_domain_filters: "{{ local_domains }}"
         external_dns_envs:
-          EXTERNAL_DNS_SOURCE: |-
-            ingress
-          EXTERNAL_DNS_PROVIDER: pdns
-          EXTERNAL_DNS_REGISTRY: txt
-          EXTERNAL_DNS_DOMAIN_FILTER: |-
-            |-
-            {% for domain in local_domains %}
-            {{ domain | indent(6, true) }}
-            {% endfor %}
-          EXTERNAL_DNS_TXT_OWNER_ID: homelab.kubernetes
           EXTERNAL_DNS_INGRESS_CLASS: ingress-internal
           EXTERNAL_DNS_DEFAULT_TARGETS: |-
             |-
