@@ -1,11 +1,16 @@
 ---
-- name: Create external-dns ressources
-  kubernetes.core.k8s:
-    definition: "{{ lookup('ansible.builtin.template', 'ressources.yml.j2') | from_yaml_all }}"
+- name: Gather information of external-dns chart
+  kubernetes.core.helm_info:
+    name: external-dns
+    release_namespace: "{{ external_dns_namespace }}"
     kubeconfig: "{{ external_dns_localhost_kubeconfig_path }}"
-    wait: true
     validate_certs: true
-    state: present
+  register: external_dns_info
+  delegate_to: localhost
+
+- name: Check if external_dns is already installed
+  ansible.builtin.set_fact:
+    external_dns_is_installed: "{% if 'status' in external_dns_info %}true{% else %}false{% endif %}"
   delegate_to: localhost
 
 - name: Setup external-secret
@@ -17,11 +22,25 @@
     state: present
   delegate_to: localhost
 
-- name: Install external-dns deployment
-  kubernetes.core.k8s:
-    definition: "{{ lookup('ansible.builtin.template', 'deployment.yml.j2') | from_yaml }}"
+- name: Add suda helm repo
+  kubernetes.core.helm_repository:
+    name: external-dns
+    repo_url: https://kubernetes-sigs.github.io/external-dns/
     kubeconfig: "{{ external_dns_localhost_kubeconfig_path }}"
-    wait: true
     validate_certs: true
-    state: present
   delegate_to: localhost
+
+- name: Deploy external-dns chart
+  kubernetes.core.helm:
+    name: external-dns
+    chart_ref: external-dns/external-dns
+    chart_version: "{{ external_dns_chart_version }}"
+    release_namespace: "{{ external_dns_namespace }}"
+    create_namespace: true
+    release_values: "{{ lookup('ansible.builtin.template', 'helm-values.yml.j2') | from_yaml }}"
+    update_repo_cache: true
+    wait: true
+    kubeconfig: "{{ external_dns_localhost_kubeconfig_path }}"
+    validate_certs: true
+  delegate_to: localhost
+  when: not external_dns_is_installed or external_dns_force_install

@@ -1,9 +1,8 @@
 ---
 # datasource=github-tags depName=kubernetes-sigs/external-dns
-external_dns_version: "v0.13.6"
+external_dns_chart_version: "1.13.1"
 external_dns_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
 external_dns_namespace: "external-dns"
-external_dns_replicas: 1
 external_dns_envs: ""
 external_dns_ca: ""
 external_dns_vault_secrets: []

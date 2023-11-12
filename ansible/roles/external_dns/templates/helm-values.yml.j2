@@ -1,0 +1,39 @@
+image:
+  repository: registry.k8s.io/external-dns/external-dns
+  tag: v0.13.6
+namespaced: true
+deploymentAnnotations:
+  reloader.stakater.com/auto: "true"
+env:
+{% for key, value in external_dns_envs.items() %}
+  - name: {{ key }}
+    value: {{ value }}
+{% endfor %}
+{% if external_dns_ca | length %}
+  - name: EXTERNAL_DNS_PDNS_TLS_ENABLED
+    value: "true"
+  - name: EXTERNAL_DNS_TLS_CA
+    value: /etc/external-dns/ssl/ca.crt
+{% endif %}
+{% for external_dns_vault_secret in external_dns_vault_secrets %}
+  - name: {{ external_dns_vault_secret.property }}
+    valueFrom:
+      secretKeyRef:
+        name: vault
+        key: {{ external_dns_vault_secret.property }}
+{% endfor %}
+extraVolumes:
+  - name: vault
+    secret:
+      secretName: vault
+{% if external_dns_ca | length %}
+  - name: "{{ external_dns_ca }}"
+      configMap:
+      name: "{{ external_dns_ca }}"
+{% endif %}
+{% if external_dns_ca | length %}
+extraVolumeMounts:
+  - name: "{{ external_dns_ca }}"
+      mountPath: /etc/external-dns/ssl
+      readOnly: true
+{% endif %}

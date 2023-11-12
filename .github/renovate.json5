@@ -165,6 +165,16 @@
       ignoreUnstable: false,
       versioning: 'regex:^v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(\\+k3s1)',
     },
+    // handle external-dns github tag that don't follow semver
+    {
+      matchPackageNames: [
+        'kubernetes-sigs/external-dns',
+      ],
+      matchDepNames: [
+        'kubernetes-sigs/external-dns',
+      ],
+      versioning: 'regex:^external-dns-helm-chart-(?<major>\\d+)\\.(?<minor>\\d+)\\.?(\\d+)?$',
+    },
     // handle argo-cd helm github tag that don't follow semver
     {
       matchPackageNames: [
