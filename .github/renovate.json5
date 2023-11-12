@@ -32,6 +32,11 @@
   pin: {
     automerge: true,
   },
+  helm-values: {
+    fileMatch: [
+      "(^|\/)(helm-)?values\\.ya?ml(.j2)?$"
+    ]
+  },
   regexManagers: [
     // match packer and plugin version
     {
