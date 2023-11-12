@@ -47,4 +47,4 @@ spec:
     - hosts:
         - sso.unicornafk.fr
       secretName: sso.unicornafk.fr-tls
-  ingressClassName: ingress-external
+  ingressClassName: ingress-internal
