@@ -32,7 +32,7 @@
   pin: {
     automerge: true,
   },
-  helm-values: {
+  "helm-values": {
     fileMatch: [
       "(^|/)(helm-)?values\\.ya?ml(.j2)?$"
     ]
