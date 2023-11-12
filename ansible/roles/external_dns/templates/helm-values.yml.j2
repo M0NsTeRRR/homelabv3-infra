@@ -28,12 +28,12 @@ extraVolumes:
       secretName: vault
 {% if external_dns_ca | length %}
   - name: "{{ external_dns_ca }}"
-      configMap:
+    configMap:
       name: "{{ external_dns_ca }}"
 {% endif %}
 {% if external_dns_ca | length %}
 extraVolumeMounts:
   - name: "{{ external_dns_ca }}"
-      mountPath: /etc/external-dns/ssl
-      readOnly: true
+    mountPath: /etc/external-dns/ssl
+    readOnly: true
 {% endif %}

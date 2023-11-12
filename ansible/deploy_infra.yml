@@ -74,14 +74,14 @@
           EXTERNAL_DNS_DOMAIN_FILTER: |-
             |-
             {% for domain in local_domains %}
-            {{ domain | indent(16, true) }}
+            {{ domain | indent(6, true) }}
             {% endfor %}
           EXTERNAL_DNS_TXT_OWNER_ID: homelab.kubernetes
           EXTERNAL_DNS_INGRESS_CLASS: ingress-internal
           EXTERNAL_DNS_DEFAULT_TARGETS: |-
             |-
-            {{ "192.168.10.101" | indent(16, true) }}
-            {{ "2a0c:b641:2c0:110::101" | indent(16, true) }}
+            {{ "192.168.10.101" | indent(6, true) }}
+            {{ "2a0c:b641:2c0:110::101" | indent(6, true) }}
         external_dns_ca: "{{ kubernetes_homelab_ca_config_map }}"
         external_dns_vault_secrets:
           - key: secret/data/homelab/prod/external_dns/internal
