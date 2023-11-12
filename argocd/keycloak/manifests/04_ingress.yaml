@@ -26,7 +26,7 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: keycloak
+  name: keycloak-admin
   annotations:
     cert-manager.io/cluster-issuer: vault
 spec:
