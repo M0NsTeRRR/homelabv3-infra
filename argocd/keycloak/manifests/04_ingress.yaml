@@ -22,3 +22,27 @@ spec:
         - sso.adminafk.fr
       secretName: sso.adminafk.fr-tls
   ingressClassName: ingress-external
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: keycloak
+  annotations:
+    cert-manager.io/cluster-issuer: vault
+spec:
+  rules:
+    - host: sso.unicornafk.fr
+      http:
+        paths:
+          - path: /
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: keycloak
+                port:
+                  name: http
+  tls:
+    - hosts:
+        - sso.unicornafk.fr
+      secretName: sso.unicornafk.fr-tls
+  ingressClassName: ingress-external

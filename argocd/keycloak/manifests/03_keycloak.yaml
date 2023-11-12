@@ -83,6 +83,8 @@ spec:
               value: postgres
             - name: KC_HOSTNAME
               value: sso.adminafk.fr
+            - name: KC_HOSTNAME_ADMIN
+              value: sso.unicornafk.fr
             - name: KC_DB_URL
               value: jdbc:postgresql://keycloak-cluster-rw/keycloak
           ports:
