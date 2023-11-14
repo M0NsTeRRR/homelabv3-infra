@@ -4,7 +4,6 @@ namespace: k8up
 
 resources:
   - https://github.com/k8up-io/k8up/releases/download/k8up-4.4.3/k8up-crd.yaml
-  - manifests/01_schedule_backup.yaml
 
 helmCharts:
 - name: k8up

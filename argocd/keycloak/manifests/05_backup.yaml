@@ -1,0 +1,36 @@
+---
+apiVersion: k8up.io/v1
+kind: Schedule
+metadata:
+  name: backup-schedule
+spec:
+  backend:
+    repoPasswordSecretRef:
+      name: backup-vault
+      key: RESTIC_PASSWORD
+    b2:
+      path: "keycloak"
+      bucket: unicornafk-homelab
+      accountIDSecretRef:
+        name: backup-vault
+        key: B2_ACCESS_KEY
+      accountKeySecretRef:
+        name: backup-vault
+        key: B2_SECRET_KEY
+  backup:
+    schedule: '0 2 * * *'
+    failedJobsHistoryLimit: 3
+    successfulJobsHistoryLimit: 2
+  check:
+    schedule: '0 1 * * 1'
+    failedJobsHistoryLimit: 3
+    successfulJobsHistoryLimit: 2
+  prune:
+    schedule: '0 1 * * 0'
+    failedJobsHistoryLimit: 3
+    successfulJobsHistoryLimit: 2
+    retention:
+      keepLast: 3
+      keepDaily: 7
+      keepWeekly: 4
+      keepMonthly: 6
