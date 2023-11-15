@@ -5,11 +5,6 @@ metadata:
   name: keycloak-cluster
 spec:
   inheritedMetadata:
-    annotations:
-      k8up.io/backup: "true"
-      k8up.io/backupcommand: sh -c 'pg_dump -Fc -d keycloak'
-      k8up.io/backupcommand-container: postgres
-      k8up.io/file-extension: .sql
 
   instances: 3
 
