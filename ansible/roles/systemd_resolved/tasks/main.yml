@@ -10,7 +10,7 @@
 - name: Configure systemd-resolved
   ansible.builtin.template:
     src: resolved.conf.j2
-    dest: /etc/systemd/resolved.conf.d/01-custom.conf
+    dest: /etc/systemd/resolved.conf.d/99-custom.conf
     owner: systemd-resolve
     group: systemd-resolve
     mode: "0640"
