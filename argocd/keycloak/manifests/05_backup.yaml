@@ -42,7 +42,7 @@ spec:
       key: RESTIC_PASSWORD
     s3:
       endpoint: https://s3.eu-central-003.backblazeb2.com
-      bucket: unicornafk-homelab
+      bucket: unicornafk-homelab/kubernetes-backup
       accessKeyIDSecretRef:
         name: backup-vault
         key: S3_ACCESS_KEY
