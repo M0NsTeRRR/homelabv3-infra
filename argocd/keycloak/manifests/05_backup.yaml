@@ -9,7 +9,7 @@ spec:
     spec:
       containers:
         - name: postgres-dump
-          image: postgres:16:0
+          image: postgres:16.0
           command:
             - 'sleep'
             - 'infinity'
@@ -40,15 +40,15 @@ spec:
     repoPasswordSecretRef:
       name: backup-vault
       key: RESTIC_PASSWORD
-    b2:
-      path: "keycloak"
+    s3:
+      endpoint: https://s3.eu-central-003.backblazeb2.com
       bucket: unicornafk-homelab
-      accountIDSecretRef:
+      accessKeyIDSecretRef:
         name: backup-vault
-        key: B2_ACCESS_KEY
-      accountKeySecretRef:
+        key: S3_ACCESS_KEY
+      secretAccessKeySecretRef:
         name: backup-vault
-        key: B2_SECRET_KEY
+        key: S3_SECRET_KEY
   backup:
     schedule: '0 2 * * *'
     failedJobsHistoryLimit: 3
