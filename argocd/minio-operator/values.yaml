@@ -1,0 +1,3 @@
+operator:
+  console:
+    enabled: false

@@ -15,6 +15,9 @@ spec:
       - appName: cnpg
         namespace: cnpg
         syncWave: "-2"
+      - appName: minio-operator
+        namespace: minio-operator
+        syncWave: "-2"
       - appName: keycloak
         namespace: keycloak
         syncWave: "-1"
