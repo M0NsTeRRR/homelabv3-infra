@@ -4,6 +4,7 @@ This is my Homelab v3 infrastructure.
 ![Packer Lint](https://github.com/M0NsTeRRR/homelabv3-infra/workflows/Packer%20Lint/badge.svg)
 ![Terraform Lint](https://github.com/M0NsTeRRR/homelabv3-infra/workflows/Terraform%20Lint/badge.svg)
 ![Octodns](https://github.com/M0NsTeRRR/homelabv3-infra/workflows/Octodns/badge.svg)
+![Kubernetes Lint](https://github.com/M0NsTeRRR/homelabv3-infra/workflows/Kubernetes%20Lint/badge.svg)
 
 # Requirements
 
