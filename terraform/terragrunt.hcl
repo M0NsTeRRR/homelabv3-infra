@@ -1,5 +1,5 @@
-terraform_version_constraint  = "v1.6.2"
-terragrunt_version_constraint = "v0.53.4"
+terraform_version_constraint  = "v1.6.4"
+terragrunt_version_constraint = "v0.53.5"
 
 locals {
   account_vars = read_terragrunt_config(find_in_parent_folders("account.hcl"))
@@ -39,20 +39,24 @@ generate "provider" {
 terraform {
   required_providers {
     proxmox = {
-      source  = "registry.example.com/Telmate/proxmox"
-      version = ">=2.9.14"
+      source  = "bpg/proxmox"
+      version = "=0.38.1"
     }
     powerdns = {
       source  = "pan-net/powerdns"
-      version = "1.5.0"
+      version = "=1.5.0"
     }
   }
 }
 
 provider "proxmox" {
-  pm_api_url  = "${local.pm_api_url}"
-  pm_user     = "${local.pm_user}"
-  pm_password = "${local.pm_password}"
+  endpoint = "${local.pm_api_url}"
+  username = "${local.pm_user}"
+  password = "${local.pm_password}"
+  ssh {
+    agent    = true
+    username = "root"
+  }
 }
 
 provider "powerdns" {

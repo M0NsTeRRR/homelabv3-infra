@@ -1,49 +1,85 @@
-resource "proxmox_cloud_init_disk" "ci" {
-  name     = var.vm_hostname
-  pve_node = var.target_node
-  storage  = "local"
-
-  network_config = templatefile("${path.module}/cloud-init/network_config.tpl",
-    {
-      ip       = "${var.vm_ip}/${var.network.netmask}"
-      ipv6     = "${var.vm_ip6}/${var.network.netmask6}"
-      gateway4 = var.network.gateway
-      gateway6 = var.network.gateway6
-    }
-  )
-
-  meta_data = templatefile("${path.module}/cloud-init/meta_data.tpl",
-    {
-      instance_id    = sha1(var.vm_hostname)
-      local_hostname = var.vm_hostname
-    }
-  )
-
-  user_data = file("${path.module}/cloud-init/user_data")
+data "proxmox_virtual_environment_vms" "template" {
+  node_name = var.target_node
+  tags      = ["template", var.template_tag]
 }
 
-resource "proxmox_vm_qemu" "vm" {
-  name        = "${var.vm_hostname}.${var.domain}"
-  target_node = var.target_node
+resource "proxmox_virtual_environment_file" "cloud_network_config" {
+  content_type = "snippets"
+  datastore_id = "local"
+  node_name    = var.target_node
 
-  onboot = var.onboot
+  source_raw {
+    data = templatefile("${path.module}/cloud-init/network_config.tpl",
+      {
+        ip       = "${var.vm_ip}/${var.network.netmask}"
+        ipv6     = "${var.vm_ip6}/${var.network.netmask6}"
+        gateway4 = var.network.gateway
+        gateway6 = var.network.gateway6
+      }
+    )
 
-  agent = 1
+    file_name = "${var.vm_hostname}.${var.domain}-ci-network.yml"
+  }
+}
 
-  tags = join(";", var.vm_tags)
+resource "proxmox_virtual_environment_file" "cloud_user_config" {
+  content_type = "snippets"
+  datastore_id = "local"
+  node_name    = var.target_node
+
+  source_raw {
+    data = file("${path.module}/cloud-init/user_data")
+
+    file_name = "${var.vm_hostname}.${var.domain}-ci-user.yml"
+  }
+}
+
+resource "proxmox_virtual_environment_file" "cloud_meta_config" {
+  content_type = "snippets"
+  datastore_id = "local"
+  node_name    = var.target_node
+
+  source_raw {
+    data = templatefile("${path.module}/cloud-init/meta_data.tpl",
+      {
+        instance_id    = sha1(var.vm_hostname)
+        local_hostname = var.vm_hostname
+      }
+    )
+
+    file_name = "${var.vm_hostname}.${var.domain}-ci-meta_data.yml"
+  }
+}
+
+resource "proxmox_virtual_environment_vm" "vm" {
+  name      = "${var.vm_hostname}.${var.domain}"
+  node_name = var.target_node
+
+  on_boot = var.onboot
+
+  agent {
+    enabled = true
+  }
+
+  tags = var.vm_tags
 
   bios = "ovmf"
 
-  cpu     = "x86-64-v2-AES"
-  sockets = var.sockets
-  cores   = var.cores
+  cpu {
+    type    = "x86-64-v2-AES"
+    cores   = var.cores
+    sockets = var.sockets
+    flags   = []
+  }
 
-  memory  = var.memory
+  memory {
+    dedicated = var.memory
+  }
 
-  network {
-    bridge = "vmbr1"
-    model  = "virtio"
-    tag    = var.network.tag
+  network_device {
+    bridge  = "vmbr1"
+    model   = "virtio"
+    vlan_id = var.network.tag
   }
 
   # Ignore changes to the network
@@ -51,31 +87,31 @@ resource "proxmox_vm_qemu" "vm" {
   ## TF to think this needs to be rebuilt on every apply
   lifecycle {
     ignore_changes = [
-      network
+      network_device,
     ]
   }
 
-  boot   = "order=scsi0"
-  scsihw = "virtio-scsi-single"
+  boot_order    = ["scsi0"]
+  scsi_hardware = "virtio-scsi-single"
 
   disk {
-    type     = "scsi"
-    iothread = 1
-    storage  = "${upper(var.target_node)}-${var.disk.storage}"
-    slot     = 0
-    size     = "${upper(var.disk.size)}G"
+    interface    = "scsi0"
+    iothread     = true
+    datastore_id = "${upper(var.target_node)}-${upper(var.disk.storage)}"
+    size         = var.disk.size
+    discard      = "ignore"
   }
 
-  disk {
-    type    = "scsi"
-    media   = "cdrom"
-    storage = "local"
-    volume  = proxmox_cloud_init_disk.ci.id
-    slot    = 2
-    size    = proxmox_cloud_init_disk.ci.size
+  clone {
+    vm_id = data.proxmox_virtual_environment_vms.template.vms[0].vm_id
   }
 
-  clone = var.template
+  initialization {
+    interface            = "ide2"
+    network_data_file_id = proxmox_virtual_environment_file.cloud_network_config.id
+    user_data_file_id    = proxmox_virtual_environment_file.cloud_user_config.id
+    meta_data_file_id    = proxmox_virtual_environment_file.cloud_meta_config.id
+  }
 
   provisioner "local-exec" {
     working_dir = "${var.terraform_root_dir}/../ansible"

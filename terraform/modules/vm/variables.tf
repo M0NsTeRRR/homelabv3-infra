@@ -34,8 +34,8 @@ variable "vm_tags" {
   type        = list(string)
 }
 
-variable "template" {
-  description = "Template name"
+variable "template_tag" {
+  description = "Template tag"
   type        = string
 }
 
