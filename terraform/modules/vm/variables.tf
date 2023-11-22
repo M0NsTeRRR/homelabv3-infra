@@ -74,11 +74,20 @@ variable "vm_user" {
 }
 
 variable "disk" {
-  description = "Disk size in Gb"
+  description = "Disk (size in Gb)"
   type = object({
     storage = string
     size    = number
   })
+}
+
+variable "additionnal_disks" {
+  description = "Additionnal disks"
+  type = list(object({
+    storage = string
+    size    = number
+  }))
+  default = []
 }
 
 variable "network" {

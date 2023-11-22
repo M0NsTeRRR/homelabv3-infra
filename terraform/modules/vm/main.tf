@@ -102,6 +102,18 @@ resource "proxmox_virtual_environment_vm" "vm" {
     discard      = "ignore"
   }
 
+  dynamic "disk" {
+    for_each = var.additionnal_disks
+    content {
+      interface    = "scsi${1 + disk.key}"
+      iothread     = true
+      datastore_id = "${upper(var.target_node)}-${upper(disk.value.storage)}"
+      size         = disk.value.size
+      discard      = "ignore"
+      file_format  = "raw"
+    }
+  }
+
   clone {
     vm_id = data.proxmox_virtual_environment_vms.template.vms[0].vm_id
   }
