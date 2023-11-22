@@ -6,6 +6,7 @@
 - name: "Create group {{ user_passwordless_sudo_group }}"
   ansible.builtin.group:
     name: "{{ user_passwordless_sudo_group }}"
+    system: true
     state: present
 
 - name: Restrict access to /etc/sudoers.d

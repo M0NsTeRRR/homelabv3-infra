@@ -14,6 +14,7 @@
     - systemd_resolved
     - user
     - openssh_server
+    - pam
     - fail2ban
     - ca_certificates
   pre_tasks:

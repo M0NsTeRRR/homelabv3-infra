@@ -1,0 +1,14 @@
+---
+- name: Disable allow only root to login when /etc/nologin exists
+  ansible.builtin.lineinfile:
+    dest: "/etc/pam.d/sshd"
+    regexp: "^#?account\\s+required\\s+pam_nologin.so$"
+    line: "#account required pam_nologin.so"
+    state: "present"
+
+- name: Allow wheel group to connect when /etc/nologin exists
+  ansible.builtin.lineinfile:
+    dest: "/etc/pam.d/sshd"
+    insertafter: "#account required pam_nologin.so"
+    line: "auth required pam_wheel.so"
+    state: "present"

@@ -1,0 +1,11 @@
+---
+galaxy_info:
+  role_name: pam
+  author: Ludovic Ortega
+  description: Install and configure pam
+  license: CeCILL
+  min_ansible_version: "2.16.0"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy
