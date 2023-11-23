@@ -3,12 +3,12 @@ locals {
   vm_hostname = "worker3"
   vm_tags     = ["ansible_managed", "kubernetes", "kubernetes_worker"]
 
-  cores  = 6
-  memory = 16384
+  cores  = 8
+  memory = 20480
 
   disk = {
     storage = "SSD1"
-    size    = 20
+    size    = 80
   }
 
   additionnal_disks = [
