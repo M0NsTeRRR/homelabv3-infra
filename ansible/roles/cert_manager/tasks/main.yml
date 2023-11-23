@@ -15,7 +15,7 @@
 
 - name: Download cert-manager crds"
   ansible.builtin.get_url:
-    url: "https://github.com/cert-manager/cert-manager/releases/download/{{ cert_manager_version }}/cert-manager.crds.yaml"
+    url: "https://github.com/cert-manager/cert-manager/releases/download/{{ cert_manager_chart_version }}/cert-manager.crds.yaml"
     dest: /tmp/cert_manager_crds.yaml
     owner: "{{ ansible_user }}"
     group: "{{ ansible_user }}"

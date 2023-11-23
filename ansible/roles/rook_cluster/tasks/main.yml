@@ -1,0 +1,37 @@
+---
+- name: Gather information of rook-ceph chart
+  kubernetes.core.helm_info:
+    name: rook-ceph
+    release_namespace: rook-ceph-cluster
+    kubeconfig: "{{ rook_cluster_localhost_kubeconfig_path }}"
+    validate_certs: true
+  register: rook_cluster_info
+  delegate_to: localhost
+
+- name: Check if rook is already installed
+  ansible.builtin.set_fact:
+    rook_cluster_is_installed: "{% if 'status' in rook_cluster_info %}true{% else %}false{% endif %}"
+  delegate_to: localhost
+
+- name: Add rook-release helm repo
+  kubernetes.core.helm_repository:
+    name: rook-release
+    repo_url: https://charts.rook.io/release
+    kubeconfig: "{{ rook_cluster_localhost_kubeconfig_path }}"
+    validate_certs: true
+  delegate_to: localhost
+
+- name: Deploy rook-ceph cluster chart
+  kubernetes.core.helm:
+    name: rook-ceph
+    chart_ref: rook-release/rook-ceph-cluster
+    chart_version: "{{ rook_cluster_chart_version[1:] }}"
+    release_namespace: rook-ceph-cluster
+    create_namespace: true
+    release_values: "{{ lookup('ansible.builtin.template', 'helm-values.yml.j2') | from_yaml }}"
+    update_repo_cache: true
+    wait: true
+    kubeconfig: "{{ rook_cluster_localhost_kubeconfig_path }}"
+    validate_certs: true
+  delegate_to: localhost
+  when: not rook_cluster_is_installed or rook_cluster_force_install

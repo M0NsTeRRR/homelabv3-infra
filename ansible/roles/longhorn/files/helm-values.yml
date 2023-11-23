@@ -1,3 +1,0 @@
-networkPolicies:
-    enabled: false
-    type: k3s

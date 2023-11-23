@@ -8,22 +8,3 @@
     path: /etc/fstab
     regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
     replace: '# \1'
-
-- name: Install required packages by longhorn
-  ansible.builtin.apt:
-    pkg:
-      - open-iscsi
-      - nfs-common
-    state: present
-
-- name: Enable and start iscsid required by longhorn
-  ansible.builtin.systemd:
-    name: iscsid
-    enabled: true
-    state: started
-
-- name: Disable and stop multipathd required by longhorn
-  ansible.builtin.systemd:
-    name: multipathd
-    enabled: false
-    state: stopped

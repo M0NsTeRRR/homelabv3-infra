@@ -116,9 +116,6 @@ spec:
               limits:
                 memory: 2Gi
                 cpu: "1"
-              requests:
-                memory: 256Mi
-                cpu: "0.2"
       volumes:
         - name: keycloak-vault
           secret:

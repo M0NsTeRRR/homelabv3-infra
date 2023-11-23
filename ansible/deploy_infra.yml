@@ -57,11 +57,12 @@
         traefik_namespace: ingress-internal
         traefik_default_ingress_class: true
         traefik_ingress_class_name: ingress-internal
-    - longhorn
+    - rook_operator
+    - rook_cluster
     - vault
     - cert_manager
-    - cert_manager_scaleway
     - trust_manager
+    - cert_manager_scaleway
     - role: external_dns
     - role: external_dns
       vars:
