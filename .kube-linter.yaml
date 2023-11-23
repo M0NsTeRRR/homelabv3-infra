@@ -1,0 +1,10 @@
+checks:
+  addAllBuiltIn: true
+  exclude:
+    - "non-isolated-pod"
+    - "use-namespace"
+    - "dnsconfig-options"
+    - "required-label-owner"
+    - "required-annotation-email"
+    - "unset-cpu-requirements"
+    - "unset-memory-requirements"

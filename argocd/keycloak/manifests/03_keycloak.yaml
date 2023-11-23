@@ -32,12 +32,19 @@ metadata:
   annotations:
     reloader.stakater.com/auto: "true"
     ignore-check.kube-linter.io/no-read-only-root-fs: "https://github.com/keycloak/keycloak/issues/11286"
+    ignore-check.kube-linter.io/read-secret-from-env-var: "Application can't read env file"
+    ignore-check.kube-linter.io/minimum-three-replicas: "Application not configured to support replica"
+    ignore-check.kube-linter.io/no-node-affinity: "Only one replica so not needed"
 spec:
   replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: keycloak
       app.kubernetes.io/instance: keycloak
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
   template:
     metadata:
       labels:
@@ -116,6 +123,10 @@ spec:
               limits:
                 memory: 2Gi
                 cpu: "1"
+          volumeMounts:
+            - name: keycloak-vault
+              readOnly: true
+              mountPath: "/etc/eycloak-vault"
       volumes:
         - name: keycloak-vault
           secret:
