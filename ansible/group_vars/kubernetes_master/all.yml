@@ -32,6 +32,8 @@ metallb_ip_address_pools:
     auto_assign: true
 rook_operator_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 rook_cluster_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
+rook_cluster_vault_ca: "{{ kubernetes_homelab_ca_config_map }}"
+rook_cluster_vault_secret_key: "secret/data/homelab/prod/rook-ceph-cluster"
 vault_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 vault_init_output_file_path: "{{ root_dir_role_path }}/vault.json.secrets"
 vault_ca_filename: "{{ ca_certificates_local_path_ca_certificate }}"
@@ -101,6 +103,11 @@ vault_policies:
       - path: secret/data/homelab/prod/keycloak
         capabilities:
           - read
+  - name: rook-ceph-cluster
+    rules:
+      - path: secret/data/homelab/prod/rook-ceph-cluster
+        capabilities:
+          - read
 public_vault_datas:
   - path: pki/config/ca
     data:
@@ -168,6 +175,12 @@ public_vault_datas:
       bound_service_account_names: keycloak-vault
       bound_service_account_namespaces: keycloak
       policies: keycloak
+      ttl: 1h
+  - path: auth/kubernetes/role/rook-ceph-cluster
+    data:
+      bound_service_account_names: rook-ceph-cluster-vault
+      bound_service_account_namespaces: rook-ceph-cluster
+      policies: rook-ceph-cluster
       ttl: 1h
 vault_datas: "{{ public_vault_datas + secret_vault_datas }}"
 external_secrets_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"

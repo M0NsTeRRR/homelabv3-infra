@@ -13,6 +13,15 @@
     rook_cluster_is_installed: "{% if 'status' in rook_cluster_info %}true{% else %}false{% endif %}"
   delegate_to: localhost
 
+- name: Setup external-secret
+  kubernetes.core.k8s:
+    definition: "{{ lookup('ansible.builtin.template', 'external_secret.yml.j2') | from_yaml_all }}"
+    kubeconfig: "{{ argocd_localhost_kubeconfig_path }}"
+    wait: true
+    validate_certs: true
+    state: present
+  delegate_to: localhost
+
 - name: Add rook-release helm repo
   kubernetes.core.helm_repository:
     name: rook-release
