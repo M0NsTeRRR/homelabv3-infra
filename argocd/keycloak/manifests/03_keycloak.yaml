@@ -22,6 +22,21 @@ spec:
   ipFamilyPolicy: PreferDualStack
   type: ClusterIP
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: keycloak
+data:
+  KC_PROXY: edge
+  KC_HEALTH_ENABLED: "true"
+  KC_METRICS_ENABLED: "true"
+  KC_HOSTNAME_STRICT_HTTPS: "false"
+  KC_LOG_LEVEL: INFO
+  KC_DB: postgres
+  KC_HOSTNAME: sso.adminafk.fr
+  KC_HOSTNAME_ADMIN: sso.unicornafk.fr
+  KC_DB_URL: jdbc:postgresql://keycloak-cluster-rw/keycloak
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -77,24 +92,9 @@ spec:
                 secretKeyRef:
                   name: keycloak-vault
                   key: ADMIN_PASSWORD
-            - name: KC_PROXY
-              value: "edge"
-            - name: KC_HEALTH_ENABLED
-              value: "true"
-            - name: KC_METRICS_ENABLED
-              value: "true"
-            - name: KC_HOSTNAME_STRICT_HTTPS
-              value: "false"
-            - name: KC_LOG_LEVEL
-              value: INFO
-            - name: KC_DB
-              value: postgres
-            - name: KC_HOSTNAME
-              value: sso.adminafk.fr
-            - name: KC_HOSTNAME_ADMIN
-              value: sso.unicornafk.fr
-            - name: KC_DB_URL
-              value: jdbc:postgresql://keycloak-cluster-rw/keycloak
+          envFrom:
+            - configMapRef:
+                name: keycloak
           ports:
             - name: http
               containerPort: 8080
