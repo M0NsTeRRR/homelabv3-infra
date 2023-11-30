@@ -96,7 +96,7 @@
         '(^|/)roles\\S+defaults/\\S+\\.ya?ml',
       ],
       matchStrings: [
-        'datasource=(?<datasource>\\S*)[\\s]+depName=(?<depName>\\S*)([\\s]+registryUrl=(?<registryUrl>\\S*))?\r?\n[\\S]+\\s"?(?<currentValue>.*)"?',
+        'datasource=(?<datasource>\\S*)[\\s]+depName=(?<depName>\\S*)([\\s]+registryUrl=(?<registryUrl>\\S*))?\r?\n[\\S]+\\s"?(?<currentValue>[a-zA-Z0-9-_.]+)"?',
       ],
       extractVersionTemplate: '(?<version>[0-9]+.[0-9]+(.[0-9]+)?)',
     },
@@ -165,71 +165,6 @@
       ],
       ignoreUnstable: false,
       versioning: 'regex:^v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)',
-    },
-    // handle k3s github tag that don't follow semver
-    {
-      matchPackageNames: [
-        'k3s-io/k3s',
-      ],  
-      matchDepNames: [
-        'k3s-io/k3s',
-      ],
-      ignoreUnstable: false,
-      versioning: 'regex:^v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(\\+k3s1)',
-    },
-    // handle external-dns github tag that don't follow semver
-    {
-      matchPackageNames: [
-        'kubernetes-sigs/external-dns',
-      ],
-      matchDepNames: [
-        'kubernetes-sigs/external-dns',
-      ],
-      versioning: 'regex:^external-dns-helm-chart-(?<major>\\d+)\\.(?<minor>\\d+)\\.?(\\d+)?$',
-    },
-    // handle argo-cd helm github tag that don't follow semver
-    {
-      matchPackageNames: [
-        'argoproj/argo-helm',
-      ],  
-      matchDepNames: [
-        'argoproj/argo-helm',
-      ],
-      ignoreUnstable: false,
-      versioning: 'regex:^argo-cd-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)',
-    },
-    // handle pdns auth github tag that don't follow semver
-    {
-      matchPackageNames: [
-        'PowerDNS/pdns',
-      ],
-      matchDepNames: [
-        'PowerDNS/pdns',
-      ],
-      matchCurrentValue: '/^auth/',
-      versioning: 'regex:^auth-(?<major>\\d+)\\.(?<minor>\\d+)\\.?(\\d+)?-?$',
-    },
-    // handle pdns rec github tag that don't follow semver
-    {
-      matchPackageNames: [
-        'PowerDNS/pdns',
-      ],
-      matchDepNames: [
-        'PowerDNS/pdns',
-      ],
-      matchCurrentValue: '/^rec/',
-      versioning: 'regex:^rec-(?<major>\\d+)\\.(?<minor>\\d+)\\.?(\\d+)?-?$',
-    },
-    // handle pdns dnsdist github tag that don't follow semver
-    {
-      matchPackageNames: [
-        'PowerDNS/pdns',
-      ],
-      matchDepNames: [
-        'PowerDNS/pdns',
-      ],
-      matchCurrentValue: '/^dnsdist/',
-      versioning: 'regex:^dnsdist-(?<major>\\d+)\\.(?<minor>\\d+)\\.?(\\d+)?-?$',
     },
   ],
 }

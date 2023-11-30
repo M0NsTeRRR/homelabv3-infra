@@ -1,6 +1,7 @@
 ---
 # datasource=github-tags depName=k3s-io/k3s
-k3s_version: "v1.28.3+k3s1"
+k3s_github_tag: "v1.28.3+k3s1"
+k3s_version: "{{ k3s_github_tag | replace('+k3s1', '') }}"
 k3s_force_install: false
 k3s_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
 k3s_ha_controlplane_ip: "192.168.0.1,2001:cafe:41:0::"

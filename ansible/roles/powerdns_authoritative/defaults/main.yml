@@ -1,6 +1,7 @@
 ---
 # datasource=github-tags depName=PowerDNS/pdns
-powerdns_authoritative_repo_version: "auth-4.8"
+powerdns_authoritative_github_tag: "auth-4.8.3"
+powerdns_authoritative_repo_version: "{{ (powerdns_authoritative_github_tag | replace('auth-', '') | split('.'))[:-1] | join('.') }}"
 # powerdns_authoritative_version:
 powerdns_authoritative_repository_key: FD380FBB
 powerdns_authoritative_package_state: latest
