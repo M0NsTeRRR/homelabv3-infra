@@ -1,5 +1,5 @@
 ---
 # datasource=github-tags depName=kubernetes/kubernetes
-kubectl_repo_version: "v1.28.4"
+kubectl_repo_version: "1.30.0"
 # kubectl_version:
 kubectl_package_state: latest
