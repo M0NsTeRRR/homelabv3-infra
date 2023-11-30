@@ -198,6 +198,16 @@
       ignoreUnstable: false,
       versioning: 'regex:^argo-cd-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)',
     },
+    // handle kea dhcp gitlab tag that don't follow semver
+    {
+      matchPackageNames: [
+        'prometheus-community/helm-charts',
+      ],
+      matchDepNames: [
+        'prometheus-community/helm-charts',
+      ],
+      versioning: 'regex:^prometheus-operator-crds-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$',
+    },
     // handle pdns auth github tag that don't follow semver
     {
       matchPackageNames: [
