@@ -231,15 +231,5 @@
       matchCurrentValue: '/^dnsdist/',
       versioning: 'regex:^dnsdist-(?<major>\\d+)\\.(?<minor>\\d+)\\.?(\\d+)?-?$',
     },
-    // handle kea dhcp gitlab tag that don't follow semver
-    {
-      matchPackageNames: [
-        'projects/kea',
-      ],
-      matchDepNames: [
-        'projects/kea',
-      ],
-      versioning: 'regex:^Kea-(?<major>\\d+)\\.(?<minor>\\d+)\\.?(\\d+)$',
-    },
   ],
 }
