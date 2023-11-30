@@ -1,0 +1,36 @@
+---
+- name: Gather information of prometheus-operator-crds chart
+  kubernetes.core.helm_info:
+    name: prometheus-operator-crds
+    release_namespace: prometheus-operator-crds
+    kubeconfig: "{{ prometheus_operator_crds_localhost_kubeconfig_path }}"
+    validate_certs: true
+  register: prometheus_operator_crds_info
+  delegate_to: localhost
+
+- name: Check if prometheus_operator_crds is already installed
+  ansible.builtin.set_fact:
+    prometheus_operator_crds_is_installed: "{% if 'status' in prometheus_operator_crds_info %}true{% else %}false{% endif %}"
+  delegate_to: localhost
+
+- name: Add prometheus-community helm repo
+  kubernetes.core.helm_repository:
+    name: prometheus-community
+    repo_url: https://prometheus-community.github.io/helm-charts
+    kubeconfig: "{{ prometheus_operator_crds_localhost_kubeconfig_path }}"
+    validate_certs: true
+  delegate_to: localhost
+
+- name: Deploy prometheus-operator-crds chart
+  kubernetes.core.helm:
+    name: prometheus-operator-crds
+    chart_ref: prometheus-community/prometheus-operator-crds
+    chart_version: "{{ prometheus_operator_crds_chart_version }}"
+    release_namespace: prometheus-operator-crds
+    create_namespace: true
+    update_repo_cache: true
+    wait: true
+    kubeconfig: "{{ prometheus_operator_crds_localhost_kubeconfig_path }}"
+    validate_certs: true
+  delegate_to: localhost
+  when: not prometheus_operator_crds_is_installed or prometheus_operator_crds_force_install

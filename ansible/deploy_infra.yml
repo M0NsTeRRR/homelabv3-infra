@@ -45,6 +45,7 @@
   hosts: kubernetes_master[0]
   become: true
   roles:
+    - prometheus_operator_crds
     - cilium
     - metallb
     - external_secrets

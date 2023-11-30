@@ -1,0 +1,11 @@
+---
+galaxy_info:
+  role_name: prometheus_operator_crds
+  author: Ludovic Ortega
+  description: Install and configure prometheus_operator_crds
+  license: CeCILL
+  min_ansible_version: "2.16.0"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy

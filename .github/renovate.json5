@@ -98,6 +98,7 @@
       matchStrings: [
         'datasource=(?<datasource>\\S*)[\\s]+depName=(?<depName>\\S*)([\\s]+registryUrl=(?<registryUrl>\\S*))?\r?\n[\\S]+\\s"?(?<currentValue>v?[0-9]+\\.[0-9]+\\.[0-9]+)"?',
       ],
+      extractVersion: "(?<version>[0-9]+.[0-9]+(.[0-9]+)?)"
     },
     // match helm-values jinja template
     {
