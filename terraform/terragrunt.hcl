@@ -40,7 +40,7 @@ terraform {
   required_providers {
     proxmox = {
       source  = "bpg/proxmox"
-      version = "=0.38.1"
+      version = "=0.39.0"
     }
     powerdns = {
       source  = "pan-net/powerdns"
