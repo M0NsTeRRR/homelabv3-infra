@@ -1,6 +1,6 @@
 ---
 # datasource=gitlab-tags depName=isc-projects/kea registryUrl=https://gitlab.isc.org
-kea_dhcp_github_tag: "Kea-2.5.4"
+kea_dhcp_github_tag: "519"
 kea_dhcp_repo_version: "{{ (kea_dhcp_github_tag | replace('Kea-', '') | split(.))[:-1] | joint(.) }}"
 kea_dhcp_repo_gpg_key: D4FEAEAEFBD81FB9
 # kea_dhcp_hooks_version:
