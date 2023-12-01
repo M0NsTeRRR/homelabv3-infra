@@ -216,7 +216,7 @@
         'PowerDNS/pdns',
       ],
       matchCurrentValue: '/^auth/',
-      versioning: 'regex:^auth-(?<major>\\d+)\\.(?<minor>\\d+)\\.?(\\d+)?-?$',
+      versioning: 'regex:^auth-(?<major>\\d+)\\.(?<minor>\\d+)\\.?(\\d+)?(-\\S+)?$',
     },
     // handle pdns rec github tag that don't follow semver
     {
@@ -227,7 +227,7 @@
         'PowerDNS/pdns',
       ],
       matchCurrentValue: '/^rec/',
-      versioning: 'regex:^rec-(?<major>\\d+)\\.(?<minor>\\d+)\\.?(\\d+)?-?$',
+      versioning: 'regex:^rec-(?<major>\\d+)\\.(?<minor>\\d+)\\.?(\\d+)?(-\\S+)?$',
     },
     // handle pdns dnsdist github tag that don't follow semver
     {
@@ -238,7 +238,7 @@
         'PowerDNS/pdns',
       ],
       matchCurrentValue: '/^dnsdist/',
-      versioning: 'regex:^dnsdist-(?<major>\\d+)\\.(?<minor>\\d+)\\.?(\\d+)?-?$',
+      versioning: 'regex:^dnsdist-(?<major>\\d+)\\.(?<minor>\\d+)\\.?(\\d+)?(-\\S+)?$',
     },
     // handle kea dhcp gitlab tag that don't follow semver
     {
@@ -248,7 +248,7 @@
       matchDepNames: [
         'projects/kea',
       ],
-      versioning: 'regex:^Kea-(?<major>\\d+)\\.(?<minor>\\d+)\\.?(\\d+)$',
+      versioning: 'regex:^Kea-(?<major>\\d+)\\.(?<minor>\\d+)(\\.(\\d+))?$',
     },
   ],
 }
