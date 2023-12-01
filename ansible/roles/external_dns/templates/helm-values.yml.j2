@@ -1,7 +1,6 @@
 nameOverride: "{{ external_dns_namespace }}"
 image:
-  repository: registry.k8s.io/external-dns/external-dns
-  tag: v0.13.6
+  tag: {{ external_dns_version }}
 deploymentAnnotations:
   reloader.stakater.com/auto: "true"
 registry: txt

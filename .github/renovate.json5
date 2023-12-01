@@ -193,7 +193,6 @@
       matchDepNames: [
         'argoproj/argo-helm',
       ],
-      ignoreUnstable: false,
       versioning: 'regex:^argo-cd-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)',
     },
     // handle kea dhcp gitlab tag that don't follow semver
