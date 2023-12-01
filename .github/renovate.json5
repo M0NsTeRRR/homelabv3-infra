@@ -162,7 +162,6 @@
       matchDepPatterns: [
         '^hashicorp/packer-plugin-'
       ],
-      ignoreUnstable: false,
       versioning: 'regex:^v?(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)',
     },
     // handle k3s github tag that don't follow semver
