@@ -28,6 +28,7 @@
     chart_version: "{{ external_secrets_chart_version }}"
     release_namespace: external-secrets
     create_namespace: true
+    release_values: "{{ lookup('ansible.builtin.file', 'helm-values.yml') | from_yaml }}"
     update_repo_cache: true
     wait: true
     kubeconfig: "{{ external_secrets_localhost_kubeconfig_path }}"

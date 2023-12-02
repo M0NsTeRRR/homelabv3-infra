@@ -1,3 +1,7 @@
 speaker:
   frr:
     enabled: true
+prometheus:
+  rbacPrometheus: false
+  serviceMonitor:
+    enabled: true

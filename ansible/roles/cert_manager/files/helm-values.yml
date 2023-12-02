@@ -3,3 +3,7 @@ webhook:
     enabled: false
 deploymentAnnotations:
   reloader.stakater.com/auto: "true"
+prometheus:
+  enabled: true
+  servicemonitor:
+    enabled: true

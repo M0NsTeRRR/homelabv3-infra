@@ -29,13 +29,23 @@ ipam:
     clusterPoolIPv6PodCIDRList: "{{ cilium_cluster_cidr_ipv6 }}"
     clusterPoolIPv4MaskSize: "{{ cilium_cluster_pool_ipv4_mask }}"
     clusterPoolIPv6MaskSize: "{{ cilium_cluster_pool_ipv6_mask }}"
+prometheus:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+dashboards:
+  enable: true
+operator:
+  prometheus:
+    enabled: true
+    serviceMonitor:
+      enabled: true
 hubble:
   relay:
     enabled: true
   ui:
     enabled: true
   metrics:
-    enableOpenMetrics: true
     enabled:
       - dns
       - drop
@@ -44,12 +54,14 @@ hubble:
       - port-distribution
       - icmp
       - http
-prometheus:
-  enabled: true
+    enableOpenMetrics: true
+    serviceMonitor:
+      enabled: true
+    dashboards:
+      enabled: true
 envoy:
   enabled: true
   prometheus:
     enabled: true
-operator:
-  prometheus:
-    enabled: true
+    serviceMonitor:
+      enabled: true

@@ -1,0 +1,6 @@
+app:
+  metrics:
+    service:
+      enabled: true
+      servicemonitor:
+        enabled: true

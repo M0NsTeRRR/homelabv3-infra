@@ -23,3 +23,7 @@ ingressClass:
 additionalArguments:
   - "--providers.kubernetescrd.allowCrossNamespace=true"
   - "--providers.kubernetesingress.ingressclass={{ traefik_namespace }}"
+metrics:
+  prometheus:
+    serviceMonitor:
+      enabled: true

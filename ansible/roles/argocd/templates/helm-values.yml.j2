@@ -3,11 +3,17 @@ redis-ha:
 
 controller:
   replicas: 1
+  metrics:
+    serviceMonitor:
+      enabled: false
 
 server:
   autoscaling:
     enabled: true
     minReplicas: 2
+  metrics:
+    serviceMonitor:
+      enabled: false
   ingress:
     enabled: true
     annotations:
@@ -26,9 +32,15 @@ repoServer:
   autoscaling:
     enabled: true
     minReplicas: 2
+  metrics:
+    serviceMonitor:
+      enabled: false
 
 applicationSet:
   replicas: 2
+  metrics:
+    serviceMonitor:
+      enabled: false
 
 global:
   image:
@@ -55,3 +67,6 @@ notifications:
     {{ argocd_templates | to_yaml | indent(4) }}
   triggers:
     {{ argocd_triggers | to_yaml | indent(4) }}
+  metrics:
+    serviceMonitor:
+      enabled: false

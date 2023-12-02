@@ -1,1 +1,3 @@
 isArgoRollouts: true
+reloader:
+  podMonitor: true

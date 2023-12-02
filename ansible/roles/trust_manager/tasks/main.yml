@@ -28,6 +28,7 @@
     chart_version: "{{ trust_manager_chart_version }}"
     release_namespace: trust-manager
     create_namespace: true
+    release_values: "{{ lookup('ansible.builtin.file', 'helm-values.yml') | from_yaml }}"
     update_repo_cache: true
     wait: true
     kubeconfig: "{{ trust_manager_localhost_kubeconfig_path }}"
