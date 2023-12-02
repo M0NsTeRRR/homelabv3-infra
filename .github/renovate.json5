@@ -196,7 +196,7 @@
       ],
       versioning: 'regex:^argo-cd-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)',
     },
-    // handle kea dhcp gitlab tag that don't follow semver
+    // handle prometheus operator tag that don't follow semver
     {
       matchPackageNames: [
         'prometheus-community/helm-charts',
@@ -205,6 +205,16 @@
         'prometheus-community/helm-charts',
       ],
       versioning: 'regex:^prometheus-operator-crds-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$',
+    },
+    // handle kubectl tag that don't follow semver
+    {
+      matchPackageNames: [
+        'kubernetes/kubectl',
+      ],
+      matchDepNames: [
+        'kubernetes/kubectl',
+      ],
+      versioning: 'regex:^kubernetes-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$',
     },
     // handle pdns auth github tag that don't follow semver
     {
@@ -239,7 +249,7 @@
       matchCurrentValue: '/^dnsdist/',
       versioning: 'regex:^dnsdist-(?<major>\\d+)\\.(?<minor>\\d+)\\.?(\\d+)?(-\\S+)?$',
     },
-    // handle kea dhcp gitlab tag that don't follow semver
+    // handle kea dhcp tag that don't follow semver
     {
       matchPackageNames: [
         'projects/kea',
