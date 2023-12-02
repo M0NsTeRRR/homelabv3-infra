@@ -109,6 +109,11 @@ vault_policies:
       - path: secret/data/homelab/prod/rook-ceph-cluster
         capabilities:
           - read
+  - name: grafana
+    rules:
+      - path: secret/data/homelab/prod/grafana
+        capabilities:
+          - read
 public_vault_datas:
   - path: pki/config/ca
     data:
@@ -182,6 +187,12 @@ public_vault_datas:
       bound_service_account_names: rook-ceph-cluster-vault
       bound_service_account_namespaces: rook-ceph-cluster
       policies: rook-ceph-cluster
+      ttl: 1h
+  - path: auth/kubernetes/role/grafana
+    data:
+      bound_service_account_names: grafana-vault
+      bound_service_account_namespaces: grafana
+      policies: grafana
       ttl: 1h
 vault_datas: "{{ public_vault_datas + secret_vault_datas }}"
 external_secrets_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
