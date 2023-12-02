@@ -11,6 +11,7 @@ kube_vip_address:
     cidr: 128
     prometheus_server: ":2113"
 kube_vip_interface: enp6s18
+prometheus_operator_crds_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 cilium_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 cilium_service_hosts:
   - "{{ kube_vip_address[0].address }}/{{ kube_vip_address[0].cidr }}"
