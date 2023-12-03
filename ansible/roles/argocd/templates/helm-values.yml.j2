@@ -5,7 +5,7 @@ controller:
   replicas: 1
   metrics:
     serviceMonitor:
-      enabled: false
+      enabled: true
 
 server:
   autoscaling:
@@ -13,7 +13,7 @@ server:
     minReplicas: 2
   metrics:
     serviceMonitor:
-      enabled: false
+      enabled: true
   ingress:
     enabled: true
     annotations:
@@ -34,13 +34,13 @@ repoServer:
     minReplicas: 2
   metrics:
     serviceMonitor:
-      enabled: false
+      enabled: true
 
 applicationSet:
   replicas: 2
   metrics:
     serviceMonitor:
-      enabled: false
+      enabled: true
 
 global:
   image:
@@ -69,4 +69,4 @@ notifications:
     {{ argocd_triggers | to_yaml | indent(4) }}
   metrics:
     serviceMonitor:
-      enabled: false
+      enabled: true
