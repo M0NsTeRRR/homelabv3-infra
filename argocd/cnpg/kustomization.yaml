@@ -12,3 +12,12 @@ helmCharts:
   repo: https://cloudnative-pg.github.io/charts
   version: 0.19.1
   valuesFile: values.yaml
+
+patches:
+  - target:
+      kind: ConfigMap
+      name: test-cnp-dashboard
+    patch: |
+      - op: replace
+        path: /metadata/annotations/grafana_dashboard_folder
+        value: /tmp/dashboards/cilium
