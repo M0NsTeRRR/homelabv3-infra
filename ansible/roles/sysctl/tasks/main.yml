@@ -7,6 +7,8 @@
     reload: true
   with_items:
     - {name: 'dev.tty.ldisc_autoload', value: '0'}
+    - {name: 'fs.inotify.max_user_watches', value: '524288'}
+    - {name: 'fs.inotify.max_user_instances', value: '512'}
     - {name: 'fs.protected_fifos', value: '2'}
     - {name: 'kernel.core_uses_pid', value: '1'}
     - {name: 'kernel.core_pattern', value: '|/bin/false'}
