@@ -1,13 +1,13 @@
 packer {
-  required_version = "v1.9.4"
+  required_version = "1.9.4"
   required_plugins {
     proxmox = {
       source  = "github.com/hashicorp/proxmox"
-      version = "v1.1.6"
+      version = "1.1.6"
     }
     ansible = {
       source  = "github.com/hashicorp/ansible"
-      version = "v1.1.1"
+      version = "1.1.1"
     }
   }
 }
