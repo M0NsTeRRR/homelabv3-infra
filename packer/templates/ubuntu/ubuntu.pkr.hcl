@@ -53,7 +53,7 @@ source "proxmox-iso" "ubuntu" {
   unmount_iso      = true
   machine          = "q35"
   network_adapters {
-    bridge   = "vmbr1"
+    bridge   = "vmbr0"
     model    = "virtio"
     vlan_tag = "20"
   }

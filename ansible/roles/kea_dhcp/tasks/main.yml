@@ -113,4 +113,6 @@
     owner: _kea
     group: _kea
     mode: "0640"
-  notify: Restart isc-kea-ctrl-agent
+  notify:
+    - Restart isc-kea-dhcp4-server
+    - Restart isc-kea-dhcp6-server

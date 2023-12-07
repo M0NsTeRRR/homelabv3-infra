@@ -82,7 +82,7 @@ variable "vm_netmask" {
 
 variable "vm_gateway_ip" {
   type    = string
-  default = "192.168.20.2"
+  default = "192.168.20.1"
 }
 
 variable "vm_dns_ip" {

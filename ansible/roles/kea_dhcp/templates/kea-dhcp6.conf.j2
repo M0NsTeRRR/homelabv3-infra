@@ -88,6 +88,7 @@
         ],
         "subnet6": [
             {% for subnet in kea_dhcp_ipv6_subnets %}{
+                "id": {{ subnet.id }},
                 "subnet": "{{ subnet.subnet }}",
                 "pools": [
                     {% for pool in subnet.pools %}{ 

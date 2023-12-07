@@ -4,23 +4,22 @@ kea_dhcp_dns_group: dns
 kea_dhcp_dns_domains: "{{ local_domains }}"
 kea_dhcp_local_path_ca_certificate: "{{ ca_certificates_local_path_ca_certificate }}"
 kea_dhcp_ipv4_subnets:
-  - subnet: 192.168.20.0/24
+  - id: 1
+    subnet: 192.168.20.0/24
     pools:
       - start: 192.168.20.201
         end: 192.168.20.240
-    router: 192.168.20.2
+    router: 192.168.20.1
     reservations:
       - hostname: ap1
         hw_address: 18:E8:29:A3:24:10
         ip_address: 192.168.20.51
-      - hostname: pi1
-        hw_address: b8:27:eb:e3:8c:53
-        ip_address: 192.168.20.52
-  - subnet: 192.168.30.0/24
+  - id: 2
+    subnet: 192.168.30.0/24
     pools:
       - start: 192.168.30.201
         end: 192.168.30.240
-    router: 192.168.30.2
+    router: 192.168.30.1
     reservations:
       - hostname: desktop-ludo
         hw_address: 00:02:C9:4E:83:8E
@@ -28,11 +27,12 @@ kea_dhcp_ipv4_subnets:
       - hostname: laptop-ludo
         hw_address: 30:9c:23:8f:c8:de
         ip_address: 192.168.30.22
-  - subnet: 192.168.50.0/24
+  - id: 3
+    subnet: 192.168.50.0/24
     pools:
       - start: 192.168.50.201
         end: 192.168.50.240
-    router: 192.168.50.2
+    router: 192.168.50.1
     reservations:
       - hostname: grandstream1
         hw_address: c0:74:ad:36:a5:bb
@@ -85,17 +85,16 @@ kea_dhcp_ipv4_subnets:
       - hostname: monitor02
         hw_address: c8:f0:9e:da:12:bc
         ip_address: 192.168.50.121
-  - subnet: 192.168.60.0/24
+  - id: 4
+    subnet: 192.168.60.0/24
     pools:
       - start: 192.168.60.201
         end: 192.168.60.240
-    router: 192.168.60.2
-    reservations:
-      - hostname: serveur-thomas
-        hw_address: 1c:83:41:28:95:c4
-        ip_address: 192.168.60.201
+    router: 192.168.60.1
+    reservations: []
 kea_dhcp_ipv6_subnets:
-  - subnet: 2a0c:b641:02c0:120::/64
+  - id: 1
+    subnet: 2a0c:b641:02c0:120::/64
     pools:
       - start: 2a0c:b641:02c0:120::201
         end: 2a0c:b641:02c0:120::240
@@ -103,10 +102,8 @@ kea_dhcp_ipv6_subnets:
       - hostname: ap1
         hw_address: 18:E8:29:A3:24:10
         ip_address: 2a0c:b641:02c0:120::51
-      - hostname: pi1
-        hw_address: b8:27:eb:e3:8c:53
-        ip_address: 2a0c:b641:02c0:120::32
-  - subnet: 2a0c:b641:02c0:130::/64
+  - id: 2
+    subnet: 2a0c:b641:02c0:130::/64
     pools:
       - start: 2a0c:b641:02c0:130::201
         end: 2a0c:b641:02c0:130::240
@@ -117,7 +114,8 @@ kea_dhcp_ipv6_subnets:
       - hostname: laptop-ludo
         hw_address: 30:9c:23:8f:c8:de
         ip_address: 2a0c:b641:02c0:130::22
-  - subnet: 2a0c:b641:02c0:150::/64
+  - id: 3
+    subnet: 2a0c:b641:02c0:150::/64
     pools:
       - start: 2a0c:b641:02c0:150::201
         end: 2a0c:b641:02c0:150::240
@@ -171,16 +169,14 @@ kea_dhcp_ipv6_subnets:
         hw_address: c4:de:e2:fa:9b:04
         ip_address: 2a0c:b641:02c0:150::120
       - hostname: monitor02
-        hw_address: EC:4D:3E:2A:C7:18
+        hw_address: c8:f0:9e:da:12:bc
         ip_address: 2a0c:b641:02c0:150::121
-  - subnet: 2a0c:b641:02c0:160::/64
+  - id: 4
+    subnet: 2a0c:b641:02c0:160::/64
     pools:
       - start: 2a0c:b641:02c0:160::201
         end: 2a0c:b641:02c0:160::240
-    reservations:
-      - hostname: serveur-thomas
-        hw_address: 1c:83:41:28:95:c4
-        ip_address: 2a0c:b641:02c0:160::201
+    reservations: []
 kea_dhcp_ipv4_ntp_servers:
   - 192.168.10.23
   - 192.168.10.24

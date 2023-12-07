@@ -53,8 +53,8 @@
   ansible.builtin.copy:
     src: systemd-resolved.conf
     dest: /etc/systemd/resolved.conf.d/99-custom.conf
-    owner: root
-    group: root
+    owner: systemd-resolve
+    group: systemd-resolve
     mode: "0640"
   notify:
     - Enable systemd-resolved

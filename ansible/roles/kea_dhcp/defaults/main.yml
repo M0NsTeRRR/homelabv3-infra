@@ -27,7 +27,8 @@ kea_dhcp_ipv6_unifi_controller: ""
 # kea_dhcp_dns_domains:
 #   - example.com
 # kea_dhcp_ipv4_subnets:
-#   - subnet: 192.168.50.0/24
+#   - id: 1
+#     subnet: 192.168.50.0/24
 #     pools:
 #       - start: 192.168.50.201
 #         end: 192.168.50.240
@@ -37,7 +38,8 @@ kea_dhcp_ipv6_unifi_controller: ""
 #         hw_address: 44:5c:e9:9d:8b:28
 #         ip_address: 192.168.50.91
 # kea_dhcp_ipv6_subnets:
-#   - subnet: 2a0c:b641:02c0:150::/64
+#   - id: 1
+#     subnet: 2a0c:b641:02c0:150::/64
 #     pools:
 #       - start: 2a0c:b641:02c0:150::201
 #         end: 2a0c:b641:02c0:150::240

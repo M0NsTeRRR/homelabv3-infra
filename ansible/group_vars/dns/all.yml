@@ -16,25 +16,6 @@ powerdns_authoritative_records:
   - caa: "unicornafk.fr"
   - caa: "letsencrypt.org"
   - caa: "sectigo.com"
-  # unicornafk.fr
-  # cloud
-  - hostname: vps1.unicornafk.fr.
-    a: 116.203.39.236
-    aaaa: "2a01:4f8:c0c:e770::"
-    rdns: true
-    sshfp:
-      - algorithm: 4
-        type: 2
-        fingerprint: 5fa48b5319751e1bca0e4807ef938a91b0bd8707c08419003c6182f5cb679035
-  - hostname: vps2.unicornafk.fr.
-    a: 141.145.215.178
-    aaaa: "2603:c027:c000:c200::10"
-    rdns: true
-    sshfp:
-      - algorithm: 4
-        type: 2
-        fingerprint: a9759105bf5a6bde1555cf2d30e2049b3e63dc81c899dc5c1dec28cd02a9e88f
-  # lan
   - hostname: rr1.unicornafk.fr.
     a: 192.168.5.13
     aaaa: 2a0c:b641:02c0:105::d
@@ -67,10 +48,6 @@ powerdns_authoritative_records:
     a: 192.168.10.22
     aaaa: 2a0c:b641:02c0:110::22
     rdns: true
-  - hostname: san.unicornafk.fr.
-    a: 192.168.10.53
-    aaaa: 2a0c:b641:02c0:110::53
-    rdns: true
   - hostname: kubernetes.unicornafk.fr.
     a: 192.168.10.80
     aaaa: 2a0c:b641:02c0:110::80
@@ -81,10 +58,6 @@ powerdns_authoritative_records:
   - hostname: ap1.unicornafk.fr.
     a: 192.168.20.51
     aaaa: 2a0c:b641:02c0:120::51
-    rdns: true
-  - hostname: pi1.unicornafk.fr.
-    a: 192.168.20.32
-    aaaa: 2a0c:b641:02c0:120::32
     rdns: true
   - hostname: home-assistant.unicornafk.fr.
     a: 192.168.20.33
@@ -106,14 +79,6 @@ powerdns_authoritative_records:
       - algorithm: 4
         type: 2
         fingerprint: 9d461559cfc1477546741a862a09d4b23f27fb42b135de1480593c26c3166a5d
-  - hostname: sw3.unicornafk.fr.
-    a: 192.168.40.4
-    aaaa: 2a0c:b641:02c0:140::4
-    sshfp:
-      - algorithm: 1
-        type: 2
-        fingerprint: 942A283E7B7D4ED621A7570A6C2785E20904305BDA3199CBCAD7EA5091D88880
-    rdns: true
   - hostname: server1.unicornafk.fr.
     a: 192.168.40.11
     aaaa: 2a0c:b641:02c0:140::11
@@ -128,7 +93,7 @@ powerdns_authoritative_records:
     sshfp:
       - algorithm: 4
         type: 2
-        fingerprint: 0d58c5881c9736d0789a42e1559ad9947ce0c6bf76b5ad8aba3f97442cddc614
+        fingerprint: 04f32228d7ba8e7a1ccae96d2517824e65b674225d9424668b5d553e1f576859
     rdns: true
   - hostname: server3.unicornafk.fr.
     a: 192.168.40.13
@@ -136,27 +101,7 @@ powerdns_authoritative_records:
     sshfp:
       - algorithm: 4
         type: 2
-        fingerprint: 65993f30e1a204306160a66489e9a86e0f072f738cc8d193a10a8a8eb92d5036
-    rdns: true
-  - hostname: server4.unicornafk.fr.
-    a: 192.168.40.14
-    aaaa: 2a0c:b641:02c0:140::14
-    sshfp:
-      - algorithm: 1
-        type: 2
-        fingerprint: 9C38D77335D3F325E5E22C79CAFD4A342D70112165598C5614B98BB04AA4D443
-    rdns: true
-  - hostname: ipmi3.unicornafk.fr.
-    a: 192.168.40.53
-    aaaa: 2a0c:b641:02c0:140::53
-    sshfp:
-      - algorithm: 3
-        type: 2
-        fingerprint: F232A540F47D7105EAF10DD9A5C0A7FBE9D4EAC4DD7CA0B067BDB09B2D94D1D2
-    rdns: true
-  - hostname: ipmi4.unicornafk.fr.
-    a: 192.168.40.54
-    aaaa: 2a0c:b641:02c0:140::54
+        fingerprint: 2e8775fb4f5fc9433cdecb1375ab75b0c6e48f69fa3c1c36de6e800761aecd1d
     rdns: true
   - hostname: nas.unicornafk.fr.
     a: 192.168.50.42
@@ -230,10 +175,6 @@ powerdns_authoritative_records:
     a: 192.168.50.121
     aaaa: 2a0c:b641:02c0:150::121
     rdns: true
-  - hostname: thomas.unicornafk.fr.
-    a: 192.168.60.201
-    aaaa: 2a0c:b641:02c0:160::201
-    rdns: true
   # CNAME
   - hostname: ntp1.unicornafk.fr.
     cname: dhcp1.unicornafk.fr.
@@ -277,8 +218,4 @@ self_signed_cert_list:
       - { name: nginx, state: restarted }
       - { name: dnsdist, state: restarted }
     force_renew: false
-    tlsa:
-      - proto: tcp
-        port: 9443
-        cert_path: "/etc/nginx/ssl/{{ hostvars[inventory_hostname].hostname[:-1] }}.crt"
-        pdns_zone: "{{ hostvars[inventory_hostname].hostname[:-1].split('.')[-2:] | join('.') }}"
+    tlsa: []

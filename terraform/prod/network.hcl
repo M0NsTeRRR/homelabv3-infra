@@ -2,9 +2,9 @@ locals {
   network = {
     tag      = "10"
     netmask  = "24"
-    gateway  = "192.168.10.2"
+    gateway  = "192.168.10.1"
     netmask6 = "64"
-    gateway6 = "2a0c:b641:2c0:110::2"
+    gateway6 = "2a0c:b641:2c0:110::1"
   }
   domain        = "unicornafk.fr"
   reverse_zone  = "10.168.192.in-addr.arpa"
