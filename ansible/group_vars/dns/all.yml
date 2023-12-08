@@ -64,16 +64,16 @@ powerdns_authoritative_records:
     aaaa: 2a0c:b641:02c0:120::33
     rdns: true
   - hostname: sw1.unicornafk.fr.
-    a: 192.168.40.2
-    aaaa: 2a0c:b641:02c0:140::2
+    a: 192.168.40.1
+    aaaa: 2a0c:b641:02c0:140::1
     sshfp:
       - algorithm: 1
         type: 2
         fingerprint: F537A260E2626BFEC959303F0F786F3BC986152E48A0E26C68499C0E79C27797
     rdns: true
   - hostname: sw2.unicornafk.fr.
-    a: 192.168.40.3
-    aaaa: 2a0c:b641:02c0:140::3
+    a: 192.168.40.2
+    aaaa: 2a0c:b641:02c0:140::2
     rdns: true
     sshfp:
       - algorithm: 4
