@@ -1,6 +1,6 @@
 ---
 # datasource=github-tags depName=kubernetes/kubectl
 kubectl_github_tag: "kubernetes-1.28.4"
-kubectl_repo_version: "{{ (kubectl_github_tag | replace('kubernetes-', '') | split('.'))[:-1] | join('.') }}"
+kubectl_repo_version: "v{{ (kubectl_github_tag | replace('kubernetes-', '') | split('.'))[:-1] | join('.') }}"
 # kubectl_version:
 kubectl_package_state: latest
