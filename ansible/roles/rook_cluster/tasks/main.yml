@@ -1,7 +1,7 @@
 ---
-- name: Gather information of rook-ceph chart
+- name: Gather information of rook-ceph-cluster chart
   kubernetes.core.helm_info:
-    name: rook-ceph
+    name: rook-ceph-cluster
     release_namespace: rook-ceph-cluster
     kubeconfig: "{{ rook_cluster_localhost_kubeconfig_path }}"
     validate_certs: true
@@ -30,11 +30,11 @@
     validate_certs: true
   delegate_to: localhost
 
-- name: Deploy rook-ceph cluster chart
+- name: Deploy rook-ceph-cluster cluster chart
   kubernetes.core.helm:
-    name: rook-ceph
+    name: rook-ceph-cluster
     chart_ref: rook-release/rook-ceph-cluster
-    chart_version: "{{ rook_cluster_chart_version[1:] }}"
+    chart_version: "{{ rook_cluster_chart_version }}"
     release_namespace: rook-ceph-cluster
     create_namespace: true
     release_values: "{{ lookup('ansible.builtin.template', 'helm-values.yml.j2') | from_yaml }}"
