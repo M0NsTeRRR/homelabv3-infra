@@ -85,7 +85,7 @@ powerdns_authoritative_records:
     sshfp:
       - algorithm: 4
         type: 2
-        fingerprint: e5c919e2beb198de2f21437535bb18faeb30ff04cda3c343fadde8e5bf780cf6
+        fingerprint: 4fe77c8ae1c13f6cccfc46184a7acb44ee7cb169b8c8dc3cd684a32502ff8a1a
     rdns: true
   - hostname: server2.unicornafk.fr.
     a: 192.168.40.12
