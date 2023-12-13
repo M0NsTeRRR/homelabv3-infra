@@ -5,6 +5,7 @@ metadata:
   name: keycloak
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
+    traefik.ingress.kubernetes.io/router.pathmatcher: block-metrics-ingress-external@kubernetescrd
 spec:
   rules:
     - host: sso.adminafk.fr
@@ -31,6 +32,7 @@ metadata:
     cert-manager.io/cluster-issuer: vault
     cert-manager.io/private-key-algorithm: "RSA"
     cert-manager.io/private-key-size: "4096"
+    traefik.ingress.kubernetes.io/router.pathmatcher: block-metrics-ingress-internal@kubernetescrd
 spec:
   rules:
     - host: sso.unicornafk.fr
