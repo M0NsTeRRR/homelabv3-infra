@@ -8,3 +8,4 @@ resources:
   - manifests/03_keycloak.yaml
   - manifests/04_ingress.yaml
   - manifests/05_backup.yaml
+  - manifests/06_service_monitor.yaml
