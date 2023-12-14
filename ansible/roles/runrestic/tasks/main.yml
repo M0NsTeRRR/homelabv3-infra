@@ -73,7 +73,7 @@
     state: directory
     recurse: true
 
-- name: "Configure runrestic"
+- name: Configure runrestic
   ansible.builtin.template:
     src: config.toml.j2
     dest: "/etc/runrestic/{{ item.config_name }}.toml"

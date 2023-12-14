@@ -82,6 +82,15 @@
   with_items: "{{ powerdns_recursor_rpz_files }}"
   notify: Restart pdns-recursor
 
+- name: File listing rpz to sync
+  ansible.builtin.template:
+    src: rpz-sync.txt.j2
+    dest: /etc/powerdns/rpz-sync.txt
+    owner: "pdns"
+    group: "pdns"
+    mode: "0640"
+  notify: Restart pdns-recursor
+
 - name: Configure PowerDNS recursor rpz lua
   ansible.builtin.template:
     src: recursor-rpz.lua.j2
@@ -99,3 +108,22 @@
     group: "pdns"
     mode: "0640"
   notify: Restart pdns-recursor
+
+- name: Configure PowerDNS recursor rpz sync service
+  ansible.builtin.copy:
+    src: pdns-recursor-rpz-sync.service
+    dest: /etc/systemd/system/pdns-recursor-rpz-sync.service
+    owner: root
+    group: root
+    mode: "0640"
+
+- name: Configure PowerDNS recursor rpz sync timer
+  ansible.builtin.copy:
+    src: pdns-recursor-rpz-sync.timer
+    dest: /etc/systemd/system/pdns-recursor-rpz-sync.timer
+    owner: root
+    group: root
+    mode: "0640"
+  notify:
+    - Enable pdns-recursor-rpz-sync timer
+    - Restart pdns-recursor-rpz-sync timer

@@ -1,0 +1,13 @@
+[Unit]
+Description=pdns recursor rpz sync
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=pdns
+Group=pdns
+ExecStart=wget --backups=1 -i /etc/powerdns/rpz-sync.txt -P /etc/powerdns/rpz
+ExecStartPost=/usr/bin/rec_control reload-lua-config /etc/powerdns/recursor-rpz.lua
+
+[Install]
+WantedBy=multi-user.target
