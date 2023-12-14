@@ -29,7 +29,6 @@ metadata:
 data:
   KC_PROXY: edge
   KC_HEALTH_ENABLED: "true"
-  KC_METRICS_ENABLED: "true"
   KC_HOSTNAME_STRICT_HTTPS: "false"
   KC_LOG_LEVEL: INFO
   KC_DB: postgres
