@@ -64,7 +64,34 @@
     value: "16384"
     state: present
 
-- name: Configure PowerDNS authoritative
+- name: Create rpz directory
+  ansible.builtin.file:
+    name: "/etc/powerdns/rpz"
+    owner: "pdns"
+    group: "pdns"
+    mode: "0750"
+    state: directory
+
+- name: Download RPZ files
+  ansible.builtin.get_url:
+    url: "{{ item }}"
+    dest: "/etc/powerdns/rpz/{{ item | basename }}"
+    owner: "pdns"
+    group: "pdns"
+    mode: "0640"
+  with_items: "{{ powerdns_recursor_rpz_files }}"
+  notify: Restart pdns-recursor
+
+- name: Configure PowerDNS recursor rpz lua
+  ansible.builtin.template:
+    src: recursor-rpz.lua.j2
+    dest: /etc/powerdns/recursor-rpz.lua
+    owner: "pdns"
+    group: "pdns"
+    mode: "0640"
+  notify: Restart pdns-recursor
+
+- name: Configure PowerDNS recursor
   ansible.builtin.template:
     src: recursor.conf.j2
     dest: /etc/powerdns/recursor.conf

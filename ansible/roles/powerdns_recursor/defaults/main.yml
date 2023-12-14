@@ -6,7 +6,8 @@ powerdns_recursor_repository_key: FD380FBB
 powerdns_recursor_package_state: latest
 powerdns_recursor_domains: []
 powerdns_recursor_reverse_zones: []
-
+powerdns_recursor_rpz_files:
+  - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/rpz/pro.txt
 
 # powerdns_recursor_domains:
 #   - unicornafk.fr

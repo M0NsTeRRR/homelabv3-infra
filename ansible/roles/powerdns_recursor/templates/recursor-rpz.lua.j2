@@ -1,0 +1,3 @@
+{% for rpz_file in powerdns_recursor_rpz_files %}
+rpzFile("/etc/powerdns/rpz/{{ rpz_file | basename }}")
+{% endfor %}
