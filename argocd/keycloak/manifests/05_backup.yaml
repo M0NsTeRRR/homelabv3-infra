@@ -53,6 +53,7 @@ spec:
     schedule: '0 2 * * *'
     failedJobsHistoryLimit: 3
     successfulJobsHistoryLimit: 2
+  promurl: "http://grafana-mimir-gateway.grafana-mimir.svc.cluster.local/api/v1/push"
   check:
     schedule: '0 1 * * 1'
     failedJobsHistoryLimit: 3
