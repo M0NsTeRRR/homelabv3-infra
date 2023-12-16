@@ -14,17 +14,17 @@ spec:
             - 'sleep'
             - 'infinity'
           env:
-            - name: POSTGRES_USER
+            - name: PGUSER
               valueFrom:
                 secretKeyRef:
                   name: keycloak-vault
                   key: POSTGRES_USER
-            - name: POSTGRES_PASSWORD
+            - name: PGPASSWORD
               valueFrom:
                 secretKeyRef:
                   name: keycloak-vault
                   key: POSTGRES_PASSWORD
-            - name: POSTGRES_DB
+            - name: PGDATABASE
               value: keycloak
       volumes:
         - name: postgres-vault
@@ -53,11 +53,12 @@ spec:
     schedule: '0 2 * * *'
     failedJobsHistoryLimit: 3
     successfulJobsHistoryLimit: 2
-  promurl: "http://grafana-mimir-gateway.grafana-mimir.svc.cluster.local/api/v1/push"
+    promURL: "http://prometheus-pushgateway.prometheus-pushgateway.svc.cluster.local:9091"
   check:
     schedule: '0 1 * * 1'
     failedJobsHistoryLimit: 3
     successfulJobsHistoryLimit: 2
+    promURL: "http://prometheus-pushgateway.prometheus-pushgateway.svc.cluster.local:9091"
   prune:
     schedule: '0 1 * * 0'
     failedJobsHistoryLimit: 3

@@ -4,11 +4,11 @@ kind: Cluster
 metadata:
   name: keycloak-cluster
 spec:
-  inheritedMetadata:
-
   instances: 3
 
   primaryUpdateStrategy: unsupervised
+
+  enableSuperuserAccess: false
 
   bootstrap:
     initdb:
