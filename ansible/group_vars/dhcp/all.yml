@@ -52,6 +52,12 @@ kea_dhcp_ipv4_subnets:
       - hostname: hs110-chambre1
         hw_address: 98:DA:C4:BE:E9:EA
         ip_address: 192.168.50.103
+      - hostname: meross-tireuse
+        hw_address: 48:e1:e9:dc:96:1e
+        ip_address: 192.168.50.104
+      - hostname: meross-monsieur-cuisine
+        hw_address: 48:e1:e9:dc:9e:a5
+        ip_address: 192.168.50.105
       - hostname: xiaomi-bulb-chambre1
         hw_address: 04:cf:8c:b5:1e:17
         ip_address: 192.168.50.111
@@ -138,6 +144,12 @@ kea_dhcp_ipv6_subnets:
       - hostname: hs110-chambre1
         hw_address: 98:DA:C4:BE:E9:EA
         ip_address: 2a0c:b641:02c0:150::103
+      - hostname: meross-tireuse
+        hw_address: 48:e1:e9:dc:96:1e
+        ip_address: 2a0c:b641:02c0:150::104
+      - hostname: meross-monsieur-cuisine
+        hw_address: 48:e1:e9:dc:96:1e
+        ip_address: 2a0c:b641:02c0:150::105
       - hostname: xiaomi-bulb-chambre1
         hw_address: 04:cf:8c:b5:1e:17
         ip_address: 2a0c:b641:02c0:150::111

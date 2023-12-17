@@ -131,6 +131,14 @@ powerdns_authoritative_records:
     a: 192.168.50.103
     aaaa: 2a0c:b641:02c0:150::103
     rdns: true
+  - hostname: meross-tireuse.unicornafk.fr.
+    a: 192.168.50.104
+    aaaa: 2a0c:b641:02c0:150::104
+    rdns: true
+  - hostname: meross-monsieur-cuisine.unicornafk.fr.
+    a: 192.168.50.105
+    aaaa: 2a0c:b641:02c0:150::105
+    rdns: true
   - hostname: xiaomi-bulb-chambre1.unicornafk.fr.
     a: 192.168.50.111
     aaaa: 2a0c:b641:02c0:150::111
