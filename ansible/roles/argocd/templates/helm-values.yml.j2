@@ -4,6 +4,7 @@ redis-ha:
 controller:
   replicas: 1
   metrics:
+    enabled: true
     serviceMonitor:
       enabled: true
 
@@ -12,6 +13,7 @@ server:
     enabled: true
     minReplicas: 2
   metrics:
+  enabled: true
     serviceMonitor:
       enabled: true
   ingress:
@@ -33,12 +35,14 @@ repoServer:
     enabled: true
     minReplicas: 2
   metrics:
+    enabled: true
     serviceMonitor:
       enabled: true
 
 applicationSet:
   replicas: 2
   metrics:
+    enabled: true
     serviceMonitor:
       enabled: true
 
@@ -68,5 +72,6 @@ notifications:
   triggers:
     {{ argocd_triggers | to_yaml | indent(4) }}
   metrics:
+    enabled: true
     serviceMonitor:
       enabled: true
