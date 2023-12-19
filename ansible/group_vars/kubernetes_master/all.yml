@@ -157,7 +157,7 @@ public_vault_datas:
       bound_service_account_names: cert-manager-scaleway-vault
       bound_service_account_namespaces: cert-manager-scaleway
       policies: cert-manager-scaleway
-      ttl: 1m
+      ttl: 1h
   - path: auth/kubernetes/role/external-dns-internal
     data:
       bound_service_account_names: external-dns-vault
