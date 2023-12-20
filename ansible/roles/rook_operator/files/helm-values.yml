@@ -3,3 +3,4 @@ csi:
     enabled: true
 monitoring:
   enabled: true
+enableDiscoveryDaemon: true
