@@ -4,6 +4,7 @@ namespace: cnpg
 
 resources:
   - https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/main/docs/src/samples/monitoring/grafana-configmap.yaml
+  - https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/main/docs/src/samples/monitoring/prometheusrule.yaml
 
 helmCharts:
 - name: cloudnative-pg
