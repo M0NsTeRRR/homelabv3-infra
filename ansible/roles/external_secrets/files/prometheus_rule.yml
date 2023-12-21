@@ -1,0 +1,35 @@
+# source : https://github.com/external-secrets/external-secrets/issues/2590
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: external-secrets
+  namespace: external-secrets
+spec:
+  groups:
+    - name: external-secrets
+      rules:
+        - alert: SecretSyncError
+          annotations:
+            summary: SecretSyncError {{ $labels.name }}
+            description: |
+              Synchronization of the Secret `{{ $labels.name }}` in namespace `{{ $labels.exported_namespace }}` is failing.
+              Check for errors in the Status field of the associated ExternalSecret object.
+          expr: externalsecret_status_condition{status="False", condition!="Deleted"} > 0
+          for: 10m
+        - alert: SecretStoreError
+          annotations:
+            summary: SecretStoreError {{ $labels.name }}
+            description: |
+              Synchronization of the SecretStore `{{ $labels.name }}` in namespace `{{ $labels.exported_namespace }}` is failing.
+              Check for errors in the Status field of the associated SecretStoreError object.
+          expr: secretstore_status_condition{status="False"} > 0
+          for: 10m
+        - alert: ClusterSecretStoreError
+          annotations:
+            summary: ClusterSecretStoreError {{ $labels.name }}
+            description: |
+              Synchronization of the ClusterSecretStore `{{ $labels.name }}` in namespace `{{ $labels.exported_namespace }}` is failing.
+              Check for errors in the Status field of the associated ClusterSecretStoreError object.
+          expr: clustersecretstore_status_condition{status="False"} > 0
+          for: 10m

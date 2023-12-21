@@ -35,3 +35,12 @@
     validate_certs: true
   delegate_to: localhost
   when: not external_secrets_is_installed or external_secrets_force_install
+
+- name: Create external-secrets prometheus rule
+  kubernetes.core.k8s:
+    definition: "{{ lookup('file', 'prometheus_rule.yml') | from_yaml }}"
+    kubeconfig: "{{ external_secrets_localhost_kubeconfig_path }}"
+    validate_certs: true
+    state: present
+  when: not external_secrets_is_installed or external_secrets_force_install
+  delegate_to: localhost
