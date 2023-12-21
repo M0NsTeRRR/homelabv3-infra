@@ -1,5 +1,2 @@
-image:
-  repository: ghcr.io/cloudnative-pg/cloudnative-pg
-  tag: 1.22.0
 monitoring:
   enablePodMonitor: true
