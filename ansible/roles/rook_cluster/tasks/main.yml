@@ -37,7 +37,7 @@
     chart_version: "{{ rook_cluster_chart_version }}"
     release_namespace: rook-ceph-cluster
     create_namespace: true
-    release_values: "{{ lookup('ansible.builtin.template', 'helm-values.yml.j2') | from_yaml }}"
+    release_values: "{{ lookup('ansible.builtin.file', 'helm-values.yml') | from_yaml }}"
     update_repo_cache: true
     wait: true
     kubeconfig: "{{ rook_cluster_localhost_kubeconfig_path }}"

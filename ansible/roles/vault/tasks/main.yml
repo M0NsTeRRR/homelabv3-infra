@@ -33,7 +33,7 @@
 - name: Add hashicorp helm repo
   kubernetes.core.helm_repository:
     name: hashicorp
-    repo_url: "https://helm.releases.hashicorp.com"
+    repo_url: https://helm.releases.hashicorp.com
     kubeconfig: "{{ vault_localhost_kubeconfig_path }}"
     validate_certs: true
   delegate_to: localhost
