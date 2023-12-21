@@ -58,6 +58,7 @@
         traefik_namespace: ingress-internal
         traefik_default_ingress_class: true
         traefik_ingress_class_name: ingress-internal
+        traefik_create_prometheus_rule: false
     - rook_operator
     - rook_cluster
     - vault
@@ -85,4 +86,5 @@
             property: EXTERNAL_DNS_PDNS_API_KEY
         external_dns_vault_ca: "{{ kubernetes_homelab_ca_config_map }}"
         external_dns_vault_role: external-dns-internal
+        external_dns_create_prometheus_rule: false
     - argocd

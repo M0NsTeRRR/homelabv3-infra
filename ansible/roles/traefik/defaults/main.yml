@@ -8,6 +8,7 @@ traefik_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
 traefik_external_ips: []
 traefik_default_ingress_class: true
 traefik_ingress_class_name: traefik
+traefik_create_prometheus_rule: true
 
 # traefik_external_ips:
 #   - 192.168.0.1
