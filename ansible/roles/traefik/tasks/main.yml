@@ -44,3 +44,22 @@
     state: present
   delegate_to: localhost
   when: not traefik_is_installed or traefik_force_install
+
+- name: Download traefik alertmanager rules
+  ansible.builtin.get_url:
+    url: "https://raw.githubusercontent.com/samber/awesome-prometheus-alerts/master/dist/rules/traefik/embedded-exporter-v2.yml"
+    dest: /tmp/traefik_prometheusrules.yaml
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: "0640"
+  delegate_to: localhost
+  when: not traefik_is_installed or traefik_force_install
+
+- name: Install traefik alertmanager rules manifest
+  kubernetes.core.k8s:
+    src: /tmp/traefik_prometheusrules.yaml
+    kubeconfig: "{{ traefik_localhost_kubeconfig_path }}"
+    validate_certs: true
+    state: present
+  delegate_to: localhost
+  when: not traefik_is_installed or traefik_force_install
