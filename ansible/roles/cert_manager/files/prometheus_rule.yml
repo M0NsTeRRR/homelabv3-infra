@@ -1,0 +1,19 @@
+# source : https://github.com/cert-manager/cert-manager/issues/3342
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: cert-manager
+  namespace: cert-manager
+spec:
+  groups:
+    - name: cert-manager
+      rules:
+        - alert: CertManagerCertificateReadyStatus
+          annotations:
+            description: 'Certificate for "{{`{{ $labels.name }}`}}" is not ready.'
+            summary: Certificate is not ready
+          expr: certmanager_certificate_ready_status{condition="False"} == 1
+          for: 5m
+          labels:
+            severity: critical

@@ -55,6 +55,15 @@
   delegate_to: localhost
   when: not cert_manager_is_installed or cert_manager_force_install
 
+- name: Create cert-manager prometheus rule
+  kubernetes.core.k8s:
+    definition: "{{ lookup('file', 'prometheus_rule.yml') | from_yaml }}"
+    kubeconfig: "{{ cert_manager_localhost_kubeconfig_path }}"
+    validate_certs: true
+    state: present
+  when: not cert_manager_is_installed or cert_manager_force_install
+  delegate_to: localhost
+
 - name: Install cert-manager cluster issuer manifest vault
   kubernetes.core.k8s:
     definition: "{{ lookup('ansible.builtin.template', 'vault-cluster-issuer.yml.j2') | from_yaml_all }}"
