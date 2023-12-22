@@ -76,5 +76,4 @@ ingress:
     ingressClassName: ingress-internal
 monitoring:
   enabled: true
-monitoring:
   createPrometheusRules: true
