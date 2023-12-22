@@ -7,5 +7,5 @@ helmCharts:
   releaseName: prometheus-pushgateway
   namespace: prometheus-pushgateway
   repo: https://prometheus-community.github.io/helm-charts
-  version: 2.4.2
+  version: 2.5.0
   valuesFile: values.yaml
