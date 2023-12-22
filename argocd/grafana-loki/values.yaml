@@ -1,0 +1,128 @@
+querier:
+  extraArgs:
+    - -config.expand-env=true
+  extraEnvFrom:
+    - secretRef:
+        name: loki-bucket
+    - configMapRef:
+        name: loki-bucket
+
+loki:
+  annotations:
+    reloader.stakater.com/auto: "true"
+  storage:
+    bucketNames:
+      chunks: ${BUCKET_NAME}/chunks
+      ruler: ${BUCKET_NAME}/ruler
+      admin: ${BUCKET_NAME}/admin
+    type: s3
+    s3:
+      endpoint: ${BUCKET_HOST}
+      accessKeyId: ${AWS_ACCESS_KEY_ID}
+      secretAccessKey: ${AWS_SECRET_ACCESS_KEY}
+      insecure: true
+  limits_config:
+    ingestion_rate_mb: 20
+
+ruler:
+  enabled: true
+  persistence:
+    enabled: true
+  directories:
+    fake:
+      rules1.txt: |
+        groups:
+          - name: should_fire
+            rules:
+              - alert: HighPercentageError
+                expr: |
+                  sum(rate({app="loki"} |= "error" [5m])) by (job)
+                    /
+                  sum(rate({app="loki"}[5m])) by (job)
+                    > 0.05
+                for: 10m
+                labels:
+                  severity: warning
+                annotations:
+                  summary: High error rate
+
+monitoring:
+  selfMonitoring:
+    grafanaAgent:
+      installOperator: false
+
+serviceMonitor:
+  enabled: true
+
+prometheusRule:
+  enabled: true
+  groups:
+    - name: loki_rules
+      rules:
+        - expr: histogram_quantile(0.99, sum(rate(loki_request_duration_seconds_bucket[1m]))
+            by (le, cluster, job))
+          record: cluster_job:loki_request_duration_seconds:99quantile
+        - expr: histogram_quantile(0.50, sum(rate(loki_request_duration_seconds_bucket[1m]))
+            by (le, cluster, job))
+          record: cluster_job:loki_request_duration_seconds:50quantile
+        - expr: sum(rate(loki_request_duration_seconds_sum[1m])) by (cluster, job) / sum(rate(loki_request_duration_seconds_count[1m]))
+            by (cluster, job)
+          record: cluster_job:loki_request_duration_seconds:avg
+        - expr: sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, cluster, job)
+          record: cluster_job:loki_request_duration_seconds_bucket:sum_rate
+        - expr: sum(rate(loki_request_duration_seconds_sum[1m])) by (cluster, job)
+          record: cluster_job:loki_request_duration_seconds_sum:sum_rate
+        - expr: sum(rate(loki_request_duration_seconds_count[1m])) by (cluster, job)
+          record: cluster_job:loki_request_duration_seconds_count:sum_rate
+        - expr: histogram_quantile(0.99, sum(rate(loki_request_duration_seconds_bucket[1m]))
+            by (le, cluster, job, route))
+          record: cluster_job_route:loki_request_duration_seconds:99quantile
+        - expr: histogram_quantile(0.50, sum(rate(loki_request_duration_seconds_bucket[1m]))
+            by (le, cluster, job, route))
+          record: cluster_job_route:loki_request_duration_seconds:50quantile
+        - expr: sum(rate(loki_request_duration_seconds_sum[1m])) by (cluster, job, route)
+            / sum(rate(loki_request_duration_seconds_count[1m])) by (cluster, job, route)
+          record: cluster_job_route:loki_request_duration_seconds:avg
+        - expr: sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, cluster, job,
+            route)
+          record: cluster_job_route:loki_request_duration_seconds_bucket:sum_rate
+        - expr: sum(rate(loki_request_duration_seconds_sum[1m])) by (cluster, job, route)
+          record: cluster_job_route:loki_request_duration_seconds_sum:sum_rate
+        - expr: sum(rate(loki_request_duration_seconds_count[1m])) by (cluster, job, route)
+          record: cluster_job_route:loki_request_duration_seconds_count:sum_rate
+        - expr: histogram_quantile(0.99, sum(rate(loki_request_duration_seconds_bucket[1m]))
+            by (le, cluster, namespace, job, route))
+          record: cluster_namespace_job_route:loki_request_duration_seconds:99quantile
+        - expr: histogram_quantile(0.50, sum(rate(loki_request_duration_seconds_bucket[1m]))
+            by (le, cluster, namespace, job, route))
+          record: cluster_namespace_job_route:loki_request_duration_seconds:50quantile
+        - expr: sum(rate(loki_request_duration_seconds_sum[1m])) by (cluster, namespace,
+            job, route) / sum(rate(loki_request_duration_seconds_count[1m])) by (cluster,
+            namespace, job, route)
+          record: cluster_namespace_job_route:loki_request_duration_seconds:avg
+        - expr: sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, cluster, namespace,
+            job, route)
+          record: cluster_namespace_job_route:loki_request_duration_seconds_bucket:sum_rate
+        - expr: sum(rate(loki_request_duration_seconds_sum[1m])) by (cluster, namespace,
+            job, route)
+          record: cluster_namespace_job_route:loki_request_duration_seconds_sum:sum_rate
+        - expr: sum(rate(loki_request_duration_seconds_count[1m])) by (cluster, namespace,
+            job, route)
+          record: cluster_namespace_job_route:loki_request_duration_seconds_count:sum_rate
+gateway:
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: "vault"
+      cert-manager.io/private-key-algorithm: "RSA"
+      cert-manager.io/private-key-size: "4096"
+    hosts:
+      - host: loki.unicornafk.fr
+        paths:
+          - path: /
+            pathType: Prefix
+    ingressClassName: "ingress-internal"
+    tls:
+      - secretName: loki.unicornafk.fr
+        hosts:
+          - loki.unicornafk.fr

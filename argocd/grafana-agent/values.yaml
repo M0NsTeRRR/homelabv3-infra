@@ -1,0 +1,13 @@
+agent:
+  enableReporting: false
+  mode: 'flow'
+  configMap:
+    create: false
+    name: grafana-agent-config
+    key: config
+  clustering:
+    enabled: true
+crds:
+  create: false
+configReloader:
+  enabled: true

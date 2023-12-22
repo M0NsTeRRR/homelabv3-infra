@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: grafana-loki
+
+resources:
+  - manifests/01_bucket.yaml
+  - manifests/02_datasource.yaml
+
+helmCharts:
+- name: loki-distributed
+  releaseName: grafana-loki
+  namespace: grafana-loki
+  repo: https://grafana.github.io/helm-charts
+  version: 0.78.0
+  valuesFile: values.yaml

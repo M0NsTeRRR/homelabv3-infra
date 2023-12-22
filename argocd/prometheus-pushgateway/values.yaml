@@ -1,0 +1,16 @@
+serviceMonitor:
+  enabled: true
+  namespace: grafana-agent
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: "vault"
+    cert-manager.io/private-key-algorithm: "RSA"
+    cert-manager.io/private-key-size: "4096"
+  hosts:
+    - pushgateway.unicornafk.fr
+  className: "ingress-internal"
+  tls:
+    - secretName: pushgateway.unicornafk.fr
+      hosts:
+        - pushgateway.unicornafk.fr

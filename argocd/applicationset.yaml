@@ -18,6 +18,24 @@ spec:
       - appName: keycloak
         namespace: keycloak
         syncWave: "-1"
+      - appName: prometheus-pushgateway
+        namespace: prometheus-pushgateway
+        syncWave: "0"
+      - appName: kube-prometheus-stack
+        namespace: kube-prometheus-stack
+        syncWave: "0"
+      - appName: grafana-mimir
+        namespace: grafana-mimir
+        syncWave: "0"
+      - appName: grafana-loki
+        namespace: grafana-loki
+        syncWave: "0"
+      - appName: grafana-agent
+        namespace: grafana-agent
+        syncWave: "0"
+      - appName: grafana
+        namespace: grafana
+        syncWave: "0"
   template:
     metadata:
       name: '{{appName}}'

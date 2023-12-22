@@ -1,0 +1,124 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-agent-config
+data:
+  config: |
+    logging {
+      level  = "info"
+      format = "logfmt"
+    }
+
+    // remote write
+    prometheus.remote_write "default" {
+      endpoint {
+        url = "http://grafana-mimir-gateway.grafana-mimir.svc.cluster.local/api/v1/push"
+      }
+    }
+
+    loki.write "local" {
+      endpoint {
+        url = "http://grafana-loki-loki-distributed-gateway.grafana-loki.svc.cluster.local/loki/api/v1/push"
+      }
+    }
+
+    // prometheus rules
+    mimir.rules.kubernetes "rules" {
+      address = "http://grafana-mimir-gateway.grafana-mimir.svc.cluster.local"
+    }
+
+    // discovery
+    prometheus.exporter.agent "agent" {}
+
+    discovery.kubernetes "pods" {
+      role = "pod"
+    }
+
+    discovery.relabel "logs" {
+      targets = discovery.kubernetes.pods.targets
+
+      rule {
+        source_labels = ["__meta_kubernetes_namespace"]
+        target_label  = "namespace"
+      }
+
+      rule {
+        source_labels = ["__meta_kubernetes_pod_container_name"]
+        target_label  = "container"
+      }
+
+      rule {
+        source_labels = ["__meta_kubernetes_pod_name"]
+        target_label  = "pod"
+      }
+
+      rule {
+        source_labels = ["__meta_kubernetes_pod_node_name"]
+        action = "keep"
+        regex = env("HOSTNAME")
+      }
+
+      rule {
+        source_labels = ["__meta_kubernetes_namespace"]
+        action = "drop"
+        regex = "grafana-agent"
+      }
+
+      rule {
+        source_labels = ["__meta_kubernetes_pod_uid", "__meta_kubernetes_pod_container_name"]
+        target_label  = "__path__"
+        separator     = "/"
+        replacement   = "/var/log/pods/*$1/*.log"
+      }
+    }
+
+    // prometheus scrape
+    prometheus.scrape "agent" {
+      targets    = prometheus.exporter.agent.agent.targets
+      forward_to = [prometheus.remote_write.default.receiver]
+      clustering {
+        enabled = true
+      }
+      scrape_interval = "30s"
+      scrape_timeout  = "5s"
+    }
+
+    prometheus.operator.servicemonitors "servicemonitors" {
+      forward_to = [prometheus.remote_write.default.receiver]
+      clustering {
+        enabled = true
+      }
+      scrape {
+        default_scrape_interval = "30s"
+        default_scrape_timeout  = "5s"
+      }
+    }
+
+    prometheus.operator.podmonitors "podmonitors" {
+      forward_to = [prometheus.remote_write.default.receiver]
+      clustering {
+        enabled = true
+      }
+      scrape {
+        default_scrape_interval = "30s"
+        default_scrape_timeout  = "5s"
+      }
+    }
+
+    // loki source
+    loki.source.journal "read"  {
+      forward_to    = [loki.write.local.receiver]
+    }
+
+    loki.source.kubernetes "pods" {
+      targets    = discovery.relabel.logs.output
+      forward_to = [loki.write.local.receiver]
+      clustering {
+        enabled = true
+      }
+    }
+
+    loki.source.kubernetes_events "events" {
+      log_format = "json"
+      forward_to = [loki.write.local.receiver]
+    }

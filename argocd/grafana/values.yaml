@@ -1,0 +1,122 @@
+envFromSecret: "grafana-vault"
+
+annotations:
+  reloader.stakater.com/auto: "true"
+
+admin:
+  existingSecret: grafana-vault
+  userKey: ADMIN_USER
+  passwordKey: ADMIN_PASSWORD
+
+sidecar:
+  dashboards:
+    enabled: true
+    searchNamespace: ALL
+  datasources:
+    enabled: true
+    searchNamespace: ALL
+  alerts:
+    enabled: true
+    searchNamespace: ALL
+
+grafana.ini:
+  analytics:
+    check_for_updates: true
+  server:
+    root_url: "https://%(domain)s/"
+
+alerting:
+  contactpoints.yaml:
+    apiVersion: 1
+    contactPoints:
+      - orgId: 1
+        name: unicornafk
+        receivers:
+          - uid: unicornafk
+            type: discord
+            settings:
+              url: $DISCORD_WEBHOOK_URL
+  policies.yaml:
+    apiVersion: 1
+    policies:
+      - orgId: 1
+        receiver: unicornafk
+        group_by:
+          - alertname
+
+plugins:
+  - grafana-piechart-panel
+
+dashboardProviders:
+  dashboardproviders.yaml:
+   apiVersion: 1
+   providers:
+   - name: 'default'
+     orgId: 1
+     folder: ''
+     type: file
+     disableDeletion: false
+     allowUiUpdates: true
+     options:
+       path: /var/lib/grafana/dashboards
+
+dashboards:
+  default:
+    Traefik:
+      gnetId: 17347
+      revision: 7
+      datasource: prometheus
+    Argocd:
+      gnetId: 14584
+      revision: 1
+      datasource: prometheus
+    External-dns:
+      gnetId: 15038
+      revision: 3
+      datasource: prometheus
+    Ceph-cluster:
+      gnetId: 2842
+      revision: 17
+      datasource: prometheus
+    Ceph-osd-single:
+      gnetId: 5336
+      revision: 9
+      datasource: prometheus
+    Ceph-pools:
+      gnetId: 5342
+      revision: 9
+      datasource: prometheus
+    Ceph-Vault:
+      gnetId: 12904
+      revision: 2
+      datasource: prometheus
+    External-secrets:
+      url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
+    Cert-manager:
+      url: https://gitlab.com/uneeq-oss/cert-manager-mixin/-/raw/master/dashboards/cert-manager.json
+    Metallb:
+      gnetId: 20162
+      revision: 2
+      datasource:
+        - name: DS_PROMETHEUS
+          value: prometheus
+    K8up:
+      gnetId: 20166
+      revision: 2
+      datasource:
+        - name: DS_PROMETHEUS
+          value: prometheus
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: "vault"
+    cert-manager.io/private-key-algorithm: "RSA"
+    cert-manager.io/private-key-size: "4096"
+  hosts:
+    - monitoring.unicornafk.fr
+  ingressClassName: "ingress-internal"
+  tls:
+    - secretName: monitoring.unicornafk.fr
+      hosts:
+        - monitoring.unicornafk.fr

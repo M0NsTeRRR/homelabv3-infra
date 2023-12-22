@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: prometheus-pushgateway
+
+helmCharts:
+- name: prometheus-pushgateway
+  releaseName: prometheus-pushgateway
+  namespace: prometheus-pushgateway
+  repo: https://prometheus-community.github.io/helm-charts
+  version: 2.4.2
+  valuesFile: values.yaml

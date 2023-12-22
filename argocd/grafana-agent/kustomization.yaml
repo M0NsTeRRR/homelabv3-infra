@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: grafana-agent
+
+resources:
+  - manifests/01_configmap.yaml
+
+helmCharts:
+- name: grafana-agent
+  releaseName: grafana-agent
+  namespace: grafana-agent
+  repo: https://grafana.github.io/helm-charts
+  version: 0.29.0
+  valuesFile: values.yaml

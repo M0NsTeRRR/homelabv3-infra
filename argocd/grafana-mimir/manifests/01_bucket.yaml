@@ -1,0 +1,10 @@
+---
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: mimir-bucket
+spec:
+  bucketName: mimir
+  storageClassName: ceph-bucket
+  additionalConfig:
+    maxSize: "100G"
