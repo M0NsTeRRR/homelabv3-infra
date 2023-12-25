@@ -9,5 +9,8 @@ network:
       addresses:
         - ${ip}
         - ${ipv6}
-      gateway4: ${gateway4}
-      gateway6: ${gateway6}
+      routes:
+        - to: 0.0.0.0/0
+          via: ${gateway4}
+        - to: ::/0
+          via: ${gateway6}
