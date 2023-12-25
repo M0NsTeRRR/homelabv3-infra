@@ -8,7 +8,7 @@
 <!-- Please provide a summary of the change here. -->
 
 # Linked issue(s)
-<!--- If your PR fully resolves and should automatically close the linked issue, use Closes. Otherwise, use Relates --->
+<!--- If your PR fully resolves and should automatically close the linked issue, use Fixes. Otherwise, use Relates --->
 Fixes #0000 | Relates #0000
 
 **Checklist**
