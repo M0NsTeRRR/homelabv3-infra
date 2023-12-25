@@ -31,7 +31,6 @@ terraform {
 }
 download_dir = abspath("${get_parent_terragrunt_dir()}/.terragrunt-cache")
 
-# using for now local builded proxmox provider (waiting new release)
 generate "provider" {
   path      = "provider.tf"
   if_exists = "overwrite_terragrunt"
