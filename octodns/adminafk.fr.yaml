@@ -32,6 +32,9 @@ autoconfig:
 autodiscover:
   - type: CNAME
     value: infomaniak.com.
+helm-charts:
+  - type: CNAME
+    value: m0nsterrr.github.io.
 status:
   - type: CNAME
     value: vps1.adminafk.fr.
