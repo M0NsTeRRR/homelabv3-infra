@@ -33,6 +33,28 @@
     automerge: true,
   },
   regexManagers: [
+    // VSCode devcontainer.json Docker images
+    {
+      fileMatch: ["\\devcontainer.json$"],
+      matchStrings: ["\"image\" *: *\"(?<depName>.+?):(?<currentValue>.+?)\",?"],
+      datasourceTemplate: "docker"
+    },
+    // VSCode devcontainer.json features version
+    {
+      fileMatch: ["\\.?devcontainer.json$"],
+      matchStrings: ['datasource=(?<datasource>\\S*)[\\s]+depName=(?<depName>\\S*)[\\s]+"\\w+":[\\s]+"(?<currentValue>[a-zA-Z0-9-_.]+)"'],
+      "currentValueTemplate": "v{{{ currentValue }}}",
+    },
+    // grafana dashboards
+    {
+      "fileMatch": ["\\.ya?ml$"],
+      "matchStrings": [
+        "gnetId:\\s+(?<packageName>.*?)\\n\\s+revision:\\s+(?<currentValue>.*)",
+        "revision:\\s+(?<currentValue>.*?)\\n\\s+gnetId:\\s+(?<packageName>.*)"
+      ],
+      "versioningTemplate": "regex:^(?<major>\\d+)$",
+      "datasourceTemplate": "custom.grafana-dashboards"
+    }
     // match packer and plugin version
     {
       fileMatch: [
@@ -260,4 +282,13 @@
       versioning: 'regex:^Kea-(?<major>\\d+)\\.(?<minor>\\d+)(\\.(\\d+))?$',
     },
   ],
+  "customDatasources": {
+    "grafana-dashboards": {
+      "defaultRegistryUrlTemplate": "https://grafana.com/api/dashboards/{{packageName}}",
+      "format": "json",
+      "transformTemplates": [
+        "{\"releases\":[{\"version\": $string(revision)}]}"
+      ]
+    }
+  }
 }
