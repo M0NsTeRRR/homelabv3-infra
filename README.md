@@ -6,32 +6,28 @@ This is my Homelab v3 infrastructure.
 ![Octodns](https://github.com/M0NsTeRRR/homelabv3-infra/workflows/Octodns/badge.svg)
 ![Kubernetes Lint](https://github.com/M0NsTeRRR/homelabv3-infra/workflows/Kubernetes%20Lint/badge.svg)
 
-# Requirements
+# Requirement
+- [Devcontainer](https://code.visualstudio.com/docs/devcontainers/containers)
 
-- Python3 and Pip
-- Packer
-  - Packer builder arm (needed for rpi build)
-- Terraform
-  - Terragrunt
-- Kubectl
-- Helm
-
-Create venv `python3 -m venv venv`  
-Source venv `source venv/bin/activate`  
-Upgrade pip `python3 -m pip install --upgrade pip`  
-Install python dependencies `pip install '.[ansible,terraform,octodns]'`  
-
-# Ansible
-
-`cd ansible`
-
-Fill certs folders
-
-Install ansible galaxy dependencies `ansible-galaxy install -r requirements.yml`
-
+# Setup
+## Ansible
+fill certs folders
 fill `.vault_password.txt` at root with ansible vault password used   
 fill all `secrets.yml` based on `secrets.example` in each subdirectory of `groups_vars`  
 
+## Packer
+Port 8888 is mapped to your host to expose http server
+### If not using linux
+Open ports on windows firewall
+Start powershell prompt with admin right `netsh interface portproxy add v4tov4 listenaddress=<WINDOWS IP> connectaddress=$($(wsl hostname -I).Trim()) listenport=<WINDOWS PORT> connectport=<WSL PORT>`  
+Replace <IP> with the LAN IP of your PC and <PORT> with the port to open
+To delete the rules `netsh interface portproxy del v4tov4 listenaddress=<IP> listenport=<PORT>`
+
+## Terraform
+fill `terraform/account.hcl` based on `terraform/account.example`  
+
+# Usage
+## Ansible
 ### Playbooks to create client certificate signed by a CA
 
 `ansible-playbook playbooks/generate-certs.yml`
@@ -41,41 +37,12 @@ fill all `secrets.yml` based on `secrets.example` in each subdirectory of `group
 `ansible-playbook deploy_<zone>.yml`  
 Replace `<zone>` by the appropriate zone name  
 
-# Packer
-`cd packer`
-
-Init packer plugins
-`packer init packer/templates/ubuntu`
-
-Port 8888 used for ubuntu build
-
-Open both ports on windows firewall
-Start powershell prompt with admin right `netsh interface portproxy add v4tov4 listenaddress=<WINDOWS IP> connectaddress=$($(wsl hostname -I).Trim()) listenport=<WINDOWS PORT> connectport=<WSL PORT>`  
-Replace <IP> with the LAN IP of your PC and <PORT> with [8888]
-To delete the rules `netsh interface portproxy del v4tov4 listenaddress=<IP> listenport=<PORT>`
-
-### Supported distributions :
-
-**VM**
-
-- Ubuntu
-
-**Raspberry Pi (v3/v4)**
-
-- Ubuntu
-
+## Packer
 ### Create template
-
-To init packer plugin `packer init templates/ubuntu`  
 
 `./build.sh` (sudo permission required for Raspberry Pi choice only)
 
-# Terraform
-
-`cd terraform`
-
-fill all `account.hcl` based on `account.example`  
-
+## Terraform
 **Command must be run in this directory (prod)**
 
 ### Create an execution plan
