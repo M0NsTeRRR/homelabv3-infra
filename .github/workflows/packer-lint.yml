@@ -23,4 +23,3 @@ jobs:
       run: |
         cd packer/templates
         packer validate -syntax-only ubuntu
-        packer validate -syntax-only raspi
