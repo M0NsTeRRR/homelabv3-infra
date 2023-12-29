@@ -43,18 +43,18 @@
     {
       fileMatch: ["\\.?devcontainer.json$"],
       matchStrings: ['datasource=(?<datasource>\\S*)[\\s]+depName=(?<depName>\\S*)[\\s]+"\\w+":[\\s]+"(?<currentValue>[a-zA-Z0-9-_.]+)"'],
-      "currentValueTemplate": "v{{{ currentValue }}}",
+      currentValueTemplate: "v{{{ currentValue }}}",
     },
     // grafana dashboards
     {
-      "fileMatch": ["\\.ya?ml$"],
-      "matchStrings": [
-        "gnetId:\\s+(?<packageName>.*?)\\n\\s+revision:\\s+(?<currentValue>.*)",
-        "revision:\\s+(?<currentValue>.*?)\\n\\s+gnetId:\\s+(?<packageName>.*)"
+      fileMatch: ["\\.ya?ml$"],
+      matchStrings: [
+        "\\s+(?<depName>\\S*):\n\\s+gnetId:\\s+(?<packageName>\\S*)\n\\s+revision:\\s+(?<currentValue>\\S*)",
+        "\\s+(?<depName>\\S*):\n\\s+revision:\\s+(?<currentValue>\\S*)\n\\s+gnetId:\\s+(?<packageName>\\S*)"
       ],
-      "versioningTemplate": "regex:^(?<major>\\d+)$",
-      "datasourceTemplate": "custom.grafana-dashboards"
-    }
+      versioningTemplate: "regex:^(?<major>\\d+)$",
+      datasourceTemplate: "custom.grafana-dashboards"
+    },
     // match packer and plugin version
     {
       fileMatch: [
