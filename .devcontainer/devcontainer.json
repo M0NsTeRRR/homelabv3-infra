@@ -1,7 +1,7 @@
 // For format details, see https://aka.ms/devcontainer.json
 {
 	"name": "homelabv3",
-	"image": "mcr.microsoft.com/devcontainers/base:ubuntu-22.04",
+	"build": { "dockerfile": "Dockerfile"},
 	"postCreateCommand": "./.devcontainer/postCreateCommand.sh",
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
@@ -31,11 +31,11 @@
 	// "customizations": {},
 
 	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	"remoteUser": "vscode",
+	// "remoteUser": "root",
 
     "mounts": [
         // mount kubeconfig files
-        "source=${localEnv:HOME}${localEnv:USERPROFILE}/.kube,target=/home/lortega/.kube,type=bind,consistency=cached"
+        "source=${localEnv:HOME}${localEnv:USERPROFILE}/.kube,target=/home/vscode/.kube,type=bind,consistency=cached"
     ],
 
     "userEnvProbe": "loginInteractiveShell",
@@ -53,7 +53,8 @@
 				"DavidAnson.vscode-markdownlint",
 				"ms-python.python",
 				"medo64.render-crlf",
-				"redhat.vscode-yaml"
+				"redhat.vscode-yaml",
+				"github.vscode-github-actions"
 			]
 		}
 	}
