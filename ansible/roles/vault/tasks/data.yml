@@ -13,5 +13,5 @@
       Content-Type: application/json
       X-Vault-Token: "{{ vault_root_token }}"
     ca_path: "{{ vault_ca_path }}"
-#  no_log: true
+  no_log: true
   delegate_to: localhost
