@@ -6,7 +6,6 @@ extraEnvFrom:
       name: as212510-net-vault
 ingress:
   enabled: true
-  className: "ingress-external"
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
   hosts:
