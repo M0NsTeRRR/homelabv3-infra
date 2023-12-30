@@ -71,18 +71,18 @@
   notify: Restart uptime-kuma.service
   when: not uptime_kuma_install.stat.exists or uptime_kuma_force_install
 
-- name: Chown static folder
-  ansible.builtin.file:
-    dest: /var/www/uptime-kuma
-    recurse: true
-    owner: uptime-kuma
-    group: uptime-kuma
-
 - name: Install uptime-kuma dependencies
   community.general.npm:
     path: /var/www/uptime-kuma
     production: true
   notify: Restart uptime-kuma.service
+
+- name: Chown /var/www/uptime-kuma folder
+  ansible.builtin.file:
+    dest: /var/www/uptime-kuma
+    recurse: true
+    owner: uptime-kuma
+    group: uptime-kuma
 
 - name: Create systemd service file
   ansible.builtin.copy:
