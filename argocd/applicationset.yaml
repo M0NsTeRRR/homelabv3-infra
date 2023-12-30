@@ -36,6 +36,9 @@ spec:
       - appName: grafana
         namespace: grafana
         syncWave: "0"
+      - appName: as212510-net
+        namespace: as212510-net
+        syncWave: "0"
   template:
     metadata:
       name: '{{appName}}'
