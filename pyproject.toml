@@ -17,6 +17,7 @@ ansible = [
     "kubernetes==28.1.0",
     "PyYAML==6.0.1",
     "jsonpatch==1.33",
+    "mkdocs-material==9.5.3",
 ]
 terraform = [
     "paramiko==3.4.0"
