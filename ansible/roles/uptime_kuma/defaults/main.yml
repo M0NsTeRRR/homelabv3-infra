@@ -1,4 +1,4 @@
 ---
 # datasource=github-tags depName=louislam/uptime-kuma
-uptime_kuma_version: "1.23.10"
+uptime_kuma_version: "1.23.11"
 uptime_kuma_force_install: false
