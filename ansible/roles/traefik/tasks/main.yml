@@ -36,6 +36,15 @@
   delegate_to: localhost
   when: not traefik_is_installed or traefik_force_install
 
+- name: Create traefik security headers middleware
+  kubernetes.core.k8s:
+    definition: "{{ lookup('ansible.builtin.template', 'security-headers.yml.j2') | from_yaml }}"
+    kubeconfig: "{{ traefik_localhost_kubeconfig_path }}"
+    validate_certs: true
+    state: present
+  delegate_to: localhost
+  when: not traefik_is_installed or traefik_force_install
+
 - name: Create traefik dashboard service
   kubernetes.core.k8s:
     definition: "{{ lookup('ansible.builtin.template', 'service.yml.j2') | from_yaml }}"
