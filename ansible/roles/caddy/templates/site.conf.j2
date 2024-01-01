@@ -32,7 +32,7 @@
       Cross-Origin-Embedder-Policy same-origin
       Cross-Origin-Opener-Policy same-origin
       Cross-Origin-Resource-Policy same-origin
-      Content-Security-Policy "default-src 'self'"
+      Content-Security-Policy {% if item.csp %}{{ item.csp }}{% else %}"default-src 'self'"{% endif +%}
     }
 
     encode gzip

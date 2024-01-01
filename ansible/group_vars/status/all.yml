@@ -4,6 +4,7 @@ caddy_domains:
   - names:
       - status.adminafk.fr
     backend_url: http://localhost:3001
+    csp: "default-src: 'self'; script-src: 'self' 'unsafe-inline'"
 runrestic_allowed_command: []
 runrestic_acl_files:
   - /var/www/uptime-kuma/data

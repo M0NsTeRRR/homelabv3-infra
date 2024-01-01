@@ -13,3 +13,5 @@ caddy_domains: []
 #     backend_url: https://192.168.0.1
 #     proxy_headers:
 #       Host: example.fr
+#     # optionnal set CSP header
+#     csp: "default-src: 'self'; script-src: 'self' 'unsafe-inline'"
