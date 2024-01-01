@@ -8,7 +8,7 @@ sudo cp ssl/unicornafk.crt /usr/local/share/ca-certificates
 sudo update-ca-certificates
 
 # install python packages
-pip install '.[ansible,terraform,octodns]'
+pip install '.[ansible,terraform,octodns,documentation]'
 
 # setup packer
 packer init packer/templates/ubuntu

@@ -12,8 +12,8 @@ jobs:
   kubernetes-lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Scan repo with kube-linter
-      uses: stackrox/kube-linter-action@v1.0.4
-      with:
-        directory: argocd
+      - uses: actions/checkout@v4
+      - name: Scan repo with kube-linter
+        uses: stackrox/kube-linter-action@v1.0.4
+        with:
+          directory: argocd

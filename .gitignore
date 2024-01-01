@@ -1,6 +1,5 @@
 # ide
 .idea
-.vscode
 # python
 venv
 *.egg-info
@@ -25,3 +24,5 @@ vault.json.secrets
 *.pem*
 *.img
 inventory.proxmox.yaml
+# Doc
+.cache

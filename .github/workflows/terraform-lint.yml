@@ -12,16 +12,16 @@ jobs:
   terraform-lint:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v3
-      with:
-        terraform_version: latest
-    - name: Check Terraform fmt
-      run: terraform fmt -recursive terraform/modules
-    - name: Setup Terragrunt
-      uses: autero1/action-terragrunt@v1.3.2
-      with:
-        terragrunt_version: latest
-    - name: Check Terragrunt fmt
-      run: terragrunt hclfmt --terragrunt-working-dir terraform --terragrunt-check
+      - uses: actions/checkout@v4
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: latest
+      - name: Check Terraform fmt
+        run: terraform fmt -recursive terraform/modules
+      - name: Setup Terragrunt
+        uses: autero1/action-terragrunt@v1.3.2
+        with:
+          terragrunt_version: latest
+      - name: Check Terragrunt fmt
+        run: terragrunt hclfmt --terragrunt-working-dir terraform --terragrunt-check

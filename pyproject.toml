@@ -16,8 +16,7 @@ ansible = [
     "requests==2.31.0",
     "kubernetes==28.1.0",
     "PyYAML==6.0.1",
-    "jsonpatch==1.33",
-    "mkdocs-material==9.5.3",
+    "jsonpatch==1.33"
 ]
 terraform = [
     "paramiko==3.4.0"
@@ -25,6 +24,10 @@ terraform = [
 octodns = [
     "octodns==1.4.0",
     "octodns_scaleway==0.0.3"
+]
+documentation = [
+    "mkdocs-material==9.5.3",
+    "pytz==2023.3.post1"
 ]
 
 [tool.setuptools.packages.find]
