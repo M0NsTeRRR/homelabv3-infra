@@ -3,55 +3,14 @@ This is my Homelab v3 infrastructure.
 ![Ansible Lint](https://github.com/M0NsTeRRR/homelabv3-infra/workflows/Ansible%20Lint/badge.svg)
 ![Packer Lint](https://github.com/M0NsTeRRR/homelabv3-infra/workflows/Packer%20Lint/badge.svg)
 ![Terraform Lint](https://github.com/M0NsTeRRR/homelabv3-infra/workflows/Terraform%20Lint/badge.svg)
-![Octodns](https://github.com/M0NsTeRRR/homelabv3-infra/workflows/Octodns/badge.svg)
 ![Kubernetes Lint](https://github.com/M0NsTeRRR/homelabv3-infra/workflows/Kubernetes%20Lint/badge.svg)
+![Octodns](https://github.com/M0NsTeRRR/homelabv3-infra/workflows/Octodns/badge.svg)
+![Documentation](https://github.com/M0NsTeRRR/homelabv3-infra/workflows/Generate%20documentation/badge.svg)
 
-# Requirement
-- [Devcontainer](https://code.visualstudio.com/docs/devcontainers/containers)
+# Documentation
 
-# Setup
-## Ansible
-fill certs folders
-fill `.vault_password.txt` at root with ansible vault password used   
-fill all `secrets.yml` based on `secrets.example` in each subdirectory of `groups_vars`  
+https://homelab.unicornafk.fr
 
-## Packer
-Port 8888 is mapped to your host to expose http server
-### If not using linux
-Open ports on windows firewall
-Start powershell prompt with admin right `netsh interface portproxy add v4tov4 listenaddress=<WINDOWS IP> connectaddress=$($(wsl hostname -I).Trim()) listenport=<WINDOWS PORT> connectport=<WSL PORT>`  
-Replace <IP> with the LAN IP of your PC and <PORT> with the port to open
-To delete the rules `netsh interface portproxy del v4tov4 listenaddress=<IP> listenport=<PORT>`
-
-## Terraform
-fill `terraform/account.hcl` based on `terraform/account.example`  
-
-# Usage
-## Ansible
-### Playbooks to create client certificate signed by a CA
-
-`ansible-playbook playbooks/generate-certs.yml`
-
-### Playbooks to deploy a zone
-
-`ansible-playbook deploy_<zone>.yml`  
-Replace `<zone>` by the appropriate zone name  
-
-## Packer
-### Create template
-
-`./build.sh` (sudo permission required for Raspberry Pi choice only)
-
-## Terraform
-**Command must be run in this directory (prod)**
-
-### Create an execution plan
-
-`terragrunt run-all plan`
-
-### Deploy/update infrastructure
-
-`terragrunt run-all apply`
 
 # Contributing
 
