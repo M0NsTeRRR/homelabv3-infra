@@ -2,8 +2,10 @@ name: Generate documentation
 
 on:
   push:
-    branches:
-      - main
+    paths:
+      - docs/**
+      - mkdocs.yml
+      - .github/workflows/doc.yml
 
 permissions:
   contents: write
@@ -11,6 +13,7 @@ permissions:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
