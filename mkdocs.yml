@@ -1,4 +1,5 @@
 site_name: Homelab
+site_url: https://homelab.adminafk.fr
 theme:
   name: material
   logo: assets/unicornafk.svg
@@ -54,6 +55,7 @@ markdown_extensions:
 plugins:
   - search
   - privacy
+  - social
 repo_url: https://github.com/M0NsTeRRR/homelabv3-infra
 edit_uri: edit/main/docs/
 extra:
