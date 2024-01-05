@@ -1,5 +1,18 @@
-site_name: Homelab
+site_name: Homelab docs
 site_url: https://homelab.adminafk.fr
+site_author: Ludovic Ortega
+site_description: >-
+  Homelab documentation
+repo_url: https://github.com/M0NsTeRRR/homelabv3-infra
+copyright: Copyright © Ludovic Ortega, 2023
+edit_uri: edit/main/docs/
+extra:
+  social:
+    - icon: fontawesome/brands/github 
+      link: https://github.com/M0NsTeRRR
+    - icon: fontawesome/brands/x-twitter
+      link: https://twitter.com/MoNsTeRRR_CSGO
+
 theme:
   name: material
   logo: assets/unicornafk.svg
@@ -33,12 +46,15 @@ theme:
     - navigation.instant.prefetch
     - navigation.instant.progress
     - navigation.tracking
+    - navigation.tabs
     - navigation.sections
     - navigation.expand
     - navigation.path
     - navigation.footer
     - content.action.edit
     - content.action.view
+    - content.code.copy
+
 markdown_extensions:
   - admonition
   - pymdownx.details
@@ -52,16 +68,37 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - toc:
+      permalink: true
+  - pymdownx.magiclink:
+      normalize_issue_symbols: true
+      repo_url_shorthand: true
+      user: M0NsTeRRR
+      repo: homelabv3-infra
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+
 plugins:
   - search
   - privacy
   - social
-repo_url: https://github.com/M0NsTeRRR/homelabv3-infra
-edit_uri: edit/main/docs/
-extra:
-  social:
-    - icon: fontawesome/brands/github 
-      link: https://github.com/M0NsTeRRR
-    - icon: fontawesome/brands/x-twitter
-      link: https://twitter.com/MoNsTeRRR_CSGO
-copyright: Copyright © Ludovic Ortega, 2023
+
+nav:
+  - Home: index.md
+  - Getting started:
+    - Introduction: getting-started/index.md
+    - Installation: getting-started/installation.md
+    - Upgrade: getting-started/upgrade.md
+  - Architecture: architecture.md
+  - Guide:
+    - Introduction: guide/index.md
+    - Packer: guide/packer/index.md
+    - Terraform: guide/terraform/index.md
+    - Ansible: guide/ansible/index.md
+    - Argocd: guide/argocd/index.md
+    - Octodns: guide/octodns/index.md
