@@ -28,6 +28,10 @@ Distributions :
 
 Configuration is stored in `ansible` folder.
 
+Fill `ssl` folders with certificates.  
+Fill `.vault_password.txt` at root with ansible vault password used.  
+Fill all `secrets.yml` based on `secrets.example` in each subdirectory of `groups_vars`.
+
 `PLAYBOOK` represents the playbook file used to deploy
 
 ```sh

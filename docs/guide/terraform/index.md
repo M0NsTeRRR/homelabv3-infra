@@ -39,6 +39,8 @@ sequenceDiagram
 
 Configuration is stored in `terraform` folder.
 
+Fill `account.hcl` based on `account.example`.
+
 ```sh
 cd terraform/prod
 terragrunt run-all apply
