@@ -37,6 +37,8 @@ sequenceDiagram
 
 ## Usage
 
+Configuration is stored in `terraform` folder.
+
 ```sh
 cd terraform/prod
 terragrunt run-all apply

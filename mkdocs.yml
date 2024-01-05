@@ -102,3 +102,4 @@ nav:
     - Ansible: guide/ansible/index.md
     - Argocd: guide/argocd/index.md
     - Octodns: guide/octodns/index.md
+    - CI/CD: guide/ci_cd/index.md

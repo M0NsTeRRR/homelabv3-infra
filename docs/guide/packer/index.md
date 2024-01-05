@@ -88,6 +88,8 @@ sequenceDiagram
 
 ## Usage
 
+Configuration is stored in `packer` folder.
+
 Some variables are hardcoded in the bash script, this script will be replaced by a python script in near future.  
 Packer use 8888/tcp port for this HTTP server.
 

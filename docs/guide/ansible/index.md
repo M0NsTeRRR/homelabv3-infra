@@ -26,6 +26,8 @@ Distributions :
 
 ### Execute
 
+Configuration is stored in `ansible` folder.
+
 `PLAYBOOK` represents the playbook file used to deploy
 
 ```sh
