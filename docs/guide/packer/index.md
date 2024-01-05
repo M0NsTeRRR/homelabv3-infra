@@ -1,8 +1,8 @@
 # Packer
 
-## What is packer ?
+## What is Packer ?
 
-[Packer](https://www.packer.io/) gives the ability to automate image builds. It will allow us to deploy virtual machine from a customized packer template with pre-defined generic configuration.
+[Packer](https://www.packer.io/) gives the ability to automate image builds. It will allow us to create customized template with pre-defined generic configuration.
 
 ## List of supported distributions
 
@@ -23,7 +23,7 @@ sequenceDiagram
     Proxmox->>VM: Create and start VM
     Packer->>VM: Typing boot sequence<br>and tell the VM to connect to Packer HTTP server<br>to get cloud init configuration
     Packer->>Packer: Start HTTP server<br>and serve rendered cloud init configuration template<br>(minimal configuration)
-    VM->>Packer: Download HTTP configuration
+    VM->>Packer: Download configuration through HTTP
     VM->>VM: Proceed to autoinstall<br>and reboot at the end
     Packer->>Packer: Waiting availability of SSH server
     Packer->>VM: SSH to the VM<br> and wait end of cloud init execution
@@ -84,9 +84,11 @@ sequenceDiagram
 
 ## Usage
 
-Some variables are hardcoded in the bash script, this script will be replaced by a python script in near future
+Some variables are hardcoded in the bash script, this script will be replaced by a python script in near future.  
+Packer use 8888/tcp port for this HTTP server.
 
 ```sh
 cd packer
 ./build.sh
 ```
+ 
