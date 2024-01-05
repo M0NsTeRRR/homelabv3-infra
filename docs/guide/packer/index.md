@@ -4,9 +4,13 @@
 
 [Packer](https://www.packer.io/) gives the ability to automate image builds. It will allow us to create customized template with pre-defined generic configuration.
 
-## List of supported distributions
+## List of supported configuration
 
 Version is pinned in configuration file.
+
+Hypervisors:
+
+* [Proxmox](https://www.proxmox.com/en/)
 
 Distributions :
 
@@ -18,9 +22,9 @@ Distributions :
 sequenceDiagram
     actor User
     User->>Packer: Launch ./build.sh
-    Packer->>Proxmox: Connect to proxmox API<br>and ask proxmox to create VM
+    Packer->>Hypervisor: Connect to hypervisor API<br>and ask hypervisor to create VM
     create participant VM
-    Proxmox->>VM: Create and start VM
+    Hypervisor->>VM: Create and start VM
     Packer->>VM: Typing boot sequence<br>and tell the VM to connect to Packer HTTP server<br>to get cloud init configuration
     Packer->>Packer: Start HTTP server<br>and serve rendered cloud init configuration template<br>(minimal configuration)
     VM->>Packer: Download configuration through HTTP
@@ -91,4 +95,3 @@ Packer use 8888/tcp port for this HTTP server.
 cd packer
 ./build.sh
 ```
- 
