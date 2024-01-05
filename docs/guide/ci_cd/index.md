@@ -18,8 +18,16 @@
 
 ## Usage
 
-Configuration is stored in `.github/workflows` folder.
+Workflows are stored in `.github/workflows` folder.
 
 Configure the following repository secrets in `Actions secrets and variables` :
 
 * `SCALEWAY_SECRET_KEY`
+
+### Kube-lint
+
+Configuration is stored at root as `.kube-linter.yaml`
+
+### Documentation
+
+Configuration is stored at root as `mkdocs.yml`

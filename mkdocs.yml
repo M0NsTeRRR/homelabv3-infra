@@ -56,6 +56,8 @@ theme:
     - content.code.copy
 
 markdown_extensions:
+  - attr_list
+  - md_in_html
   - admonition
   - pymdownx.details
   - footnotes
@@ -86,15 +88,16 @@ markdown_extensions:
 plugins:
   - search
   - privacy
-  - social
+  - social:
 
 nav:
-  - Home: index.md
+  - Home:
+    - index.md
+    - Architecture: home/architecture.md
   - Getting started:
     - Introduction: getting-started/index.md
     - Installation: getting-started/installation.md
     - Upgrade: getting-started/upgrade.md
-  - Architecture: architecture.md
   - Guide:
     - Introduction: guide/index.md
     - Packer: guide/packer/index.md

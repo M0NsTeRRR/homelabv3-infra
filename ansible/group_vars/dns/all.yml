@@ -107,7 +107,7 @@ powerdns_authoritative_records:
     a: 192.168.50.42
     aaaa: 2a0c:b641:02c0:150::42
     rdns: true
-  - hostname: grandstream1.unicornafk.fr.
+  - hostname: grandstream.unicornafk.fr.
     a: 192.168.50.81
     aaaa: 2a0c:b641:02c0:150::81
     rdns: true
@@ -121,59 +121,45 @@ powerdns_authoritative_records:
     rdns: true
   - hostname: hs110-rack1.unicornafk.fr.
     a: 192.168.50.101
-    aaaa: 2a0c:b641:02c0:150::101
     rdns: true
   - hostname: hs110-rack2.unicornafk.fr.
     a: 192.168.50.102
-    aaaa: 2a0c:b641:02c0:150::102
     rdns: true
   - hostname: hs110-chambre1.unicornafk.fr.
     a: 192.168.50.103
-    aaaa: 2a0c:b641:02c0:150::103
     rdns: true
   - hostname: meross-tireuse.unicornafk.fr.
     a: 192.168.50.104
-    aaaa: 2a0c:b641:02c0:150::104
     rdns: true
   - hostname: meross-monsieur-cuisine.unicornafk.fr.
     a: 192.168.50.105
-    aaaa: 2a0c:b641:02c0:150::105
     rdns: true
   - hostname: xiaomi-bulb-chambre1.unicornafk.fr.
     a: 192.168.50.111
-    aaaa: 2a0c:b641:02c0:150::111
     rdns: true
   - hostname: xiaomi-vaccum.unicornafk.fr.
     a: 192.168.50.112
-    aaaa: 2a0c:b641:02c0:150::112
     rdns: true
   - hostname: xiaomi-bulb-salon.unicornafk.fr.
     a: 192.168.50.113
-    aaaa: 2a0c:b641:02c0:150::113
     rdns: true
   - hostname: xiaomi-light-bar.unicornafk.fr.
     a: 192.168.50.114
-    aaaa: 2a0c:b641:02c0:150::114
     rdns: true
   - hostname: xiaomi-led-chambre1.unicornafk.fr.
     a: 192.168.50.115
-    aaaa: 2a0c:b641:02c0:150::115
     rdns: true
   - hostname: xiaomi-led-bar.unicornafk.fr.
     a: 192.168.50.116
-    aaaa: 2a0c:b641:02c0:150::116
     rdns: true
   - hostname: xiaomi-lamp-salon.unicornafk.fr.
     a: 192.168.50.117
-    aaaa: 2a0c:b641:02c0:150::117
     rdns: true
   - hostname: xiaomi-lamp-cuisine.unicornafk.fr.
     a: 192.168.50.118
-    aaaa: 2a0c:b641:02c0:150::118
     rdns: true
   - hostname: xiaomi-bulb-entree.unicornafk.fr.
     a: 192.168.50.119
-    aaaa: 2a0c:b641:02c0:150::119
     rdns: true
   - hostname: monitor01.unicornafk.fr.
     a: 192.168.50.120
@@ -189,9 +175,6 @@ powerdns_authoritative_records:
     rdns: false
   - hostname: ntp2.unicornafk.fr.
     cname: dhcp2.unicornafk.fr.
-    rdns: false
-  - hostname: status.unicornafk.fr.
-    cname: vps1.unicornafk.fr.
     rdns: false
 
 nginx_configuration:

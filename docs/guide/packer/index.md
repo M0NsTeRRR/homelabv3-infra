@@ -67,7 +67,7 @@ sequenceDiagram
         ufw delete allow <PORT>/tcp
         ```
 
-??? question "On windows how to bind port to wsl ?"
+??? question "How to expose packer HTTP server from WSL ?"
     `WINDOWS IP` represents the IP used to connect  
     `WINDOWS PORT` represents the port used to connect  
     `WSL PORT` represents the packer http server port that will be accessible through `<WINDOWS IP>:<WINDOWS PORT>`  

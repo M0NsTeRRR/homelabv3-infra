@@ -2,7 +2,7 @@
 
 ## What is Argocd ?
 
-[Argocd](https://argo-cd.readthedocs.io/en/stable/) is a declarative, GitOps continuous delivery tool for Kubernetes..
+[Argocd](https://argo-cd.readthedocs.io/en/stable/) is a declarative, GitOps continuous delivery tool for Kubernetes.
 
 ## Usage
 
