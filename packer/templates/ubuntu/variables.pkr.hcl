@@ -1,6 +1,6 @@
-variable "host_ip" {
+variable "http_server_name" {
   type    = string
-  default = ""
+  default = "192.168.30.21"
 }
 
 variable "http_port" {
@@ -8,35 +8,30 @@ variable "http_port" {
   default = 8888
 }
 
-variable "ssh_new_password" {
-  type      = string
-  default   = ""
-  sensitive = true
-}
-
-variable "ssh_password" {
-  type    = string
-  default = ""
-}
-
-variable "ssh_password_encrypted" {
-  type    = string
-  default = ""
-}
-
 variable "ssh_fullname" {
   type    = string
-  default = ""
+  default = "ludovic ortega"
 }
 
 variable "ssh_username" {
   type    = string
-  default = ""
+  default = "lortega"
 }
 
-variable "ssh_autorized_key" {
+
+variable "ssh_password" {
   type    = string
-  default = ""
+  default = "ludovic"
+}
+
+variable "ssh_password_encrypted" {
+  type    = string
+  default = "$6$rounds=4096$z0Sg0elddrnKbQkP$JIDnEJBLfwgLQQNPs966.2x2q2IPS/ybaIY0nVLEDQ9owg4VtbTV0k11DPPkm.rUMpOgOjonqETzgZK8FubYD/"
+}
+
+variable "ssh_autorized_key_file_path" {
+  type    = string
+  default = "../../../ssh_pub_keys/lortega.pub"
 }
 
 variable "proxmox_password" {
@@ -47,17 +42,17 @@ variable "proxmox_password" {
 
 variable "proxmox_url" {
   type    = string
-  default = ""
+  default = "https://server1.unicornafk.fr:8006/api2/json"
 }
 
 variable "proxmox_username" {
   type    = string
-  default = ""
+  default = "root@pam"
 }
 
 variable "proxmox_node" {
   type    = string
-  default = ""
+  default = "server1"
 }
 
 variable "distribution" {

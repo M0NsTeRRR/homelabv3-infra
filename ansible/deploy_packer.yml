@@ -93,8 +93,8 @@
       ansible.builtin.command: cloud-init clean --seed --machine-id
       changed_when: true
 
-    - name: "Update password of {{ main_user }}"
+    - name: "Update password of {{ ansible_ssh_user }}"
       ansible.builtin.user:
-        name: "{{ main_user }}"
+        name: "{{ ansible_ssh_user }}"
         password: "{{ main_password | password_hash('sha512') }}"
         update_password: always

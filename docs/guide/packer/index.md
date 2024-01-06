@@ -21,7 +21,7 @@ Distributions :
 ```mermaid
 sequenceDiagram
     actor User
-    User->>Packer: Launch ./build.sh
+    User->>Packer: Launch packer command
     Packer->>Hypervisor: Connect to hypervisor API<br>and ask hypervisor to create VM
     create participant VM
     Hypervisor->>VM: Create and start VM
@@ -93,7 +93,12 @@ Configuration is stored in `packer` folder.
 Some variables are hardcoded in the bash script, this script will be replaced by a python script in near future.  
 Packer use 8888/tcp port for this HTTP server.
 
+`PROXMOX_PASSWORD` represents the proxmox password used for HTTP API
+
 ```sh
 cd packer
-./build.sh
+packer build \
+  -var "proxmox_password=<PROXMOX_PASSWORD>" \
+  -timestamp-ui \
+  templates/ubuntu
 ```

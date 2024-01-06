@@ -20,9 +20,12 @@ autoinstall:
     hostname: ${build_hostname}
     realname: ${build_fullname}
     username: ${build_username}
-    password: '${build_password_encrypted}'
+    password: ${build_password_encrypted}
   ssh:
     install-server: yes
+    authorized-keys:
+      - ${build_authorized_key}
+    allow-pw: no
   storage:
     layout:
       name: direct

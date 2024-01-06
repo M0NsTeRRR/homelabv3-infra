@@ -24,7 +24,7 @@ source "proxmox-iso" "ubuntu" {
   boot_command = [
     "c<wait>",
     "linux /casper/vmlinuz",
-    " autoinstall ds=\"nocloud-net;seedfrom=http://${var.host_ip}:{{.HTTPPort}}/\"",
+    " autoinstall ds=\"nocloud-net;seedfrom=http://${var.http_server_name}:{{.HTTPPort}}/\"",
     " ip=${var.vm_ip}::${var.vm_gateway_ip}:${var.vm_netmask}::::${var.vm_dns_ip}",
     " --- <enter><wait>",
     "initrd /casper/initrd",
@@ -45,7 +45,7 @@ source "proxmox-iso" "ubuntu" {
   http_port_min     = var.http_port
   http_content = {
     "/meta-data" = file("../../cloud-config/meta-data")
-    "/user-data" = templatefile("../../cloud-config/user-data.pkrtpl.hcl", { build_fullname = var.ssh_fullname, build_hostname = var.distribution, build_username = var.ssh_username, build_password_encrypted = var.ssh_password_encrypted, build_authorized_key = var.ssh_autorized_key })
+    "/user-data" = templatefile("../../cloud-config/user-data.pkrtpl.hcl", { build_fullname = var.ssh_fullname, build_hostname = var.distribution, build_username = var.ssh_username, build_password_encrypted = var.ssh_password_encrypted, build_authorized_key = file(var.ssh_autorized_key_file_path) })
   }
   iso_checksum     = local.iso_checksum
   iso_url          = local.iso_url
@@ -59,7 +59,7 @@ source "proxmox-iso" "ubuntu" {
   }
   template_description = "${var.distribution}-${var.version}, generated on {{ timestamp }}"
   ssh_username         = var.ssh_username
-  ssh_password         = var.ssh_password
+  ssh_agent_auth       = true
   ssh_timeout          = "30m"
   scsi_controller      = "virtio-scsi-single"
   disks {
@@ -83,7 +83,7 @@ build {
 
   provisioner "ansible" {
     ansible_env_vars = ["ANSIBLE_CONFIG=../ansible/ansible.cfg", "ANSIBLE_HOST_KEY_CHECKING=False", "ANSIBLE_BECOME_PASS=${var.ssh_password}"]
-    extra_arguments  = ["--extra-vars", "ansible_password=${var.ssh_password} main_user=${var.ssh_username}", "--ssh-common-args='-o userknownhostsfile=/dev/null'"]
+    extra_arguments  = ["--ssh-common-args='-o userknownhostsfile=/dev/null'"]
     playbook_file    = "../ansible/deploy_packer.yml"
     use_proxy        = false
   }

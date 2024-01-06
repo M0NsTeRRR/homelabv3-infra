@@ -31,8 +31,6 @@ v3 : [homelabv3-infra](https://github.com/M0NsTeRRR/homelabv3-infra)
     * [ ] Ignore pdns/external-dns alpha release
 - Ansible :
     * [ ] Proxmox auto inventory
-- Python :
-    * [ ] Rewrite packer `build.sh` script
 - Kubernetes :
     * [ ] Kubernetes node firewalling
     * [ ] Kubernetes policies rules

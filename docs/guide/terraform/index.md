@@ -25,7 +25,7 @@ DNS :
 ```mermaid
 sequenceDiagram
     actor User
-    User->>Packer: Launch terragrunt command
+    User->>Packer: Launch Terragrunt command
     Terraform->>Hypervisor: Connect to hypervisor API,<br>upload cloud init configuration files<br>and ask hypervisor to create VM with it
     create participant VM
     Hypervisor->>VM: Create and start VM
