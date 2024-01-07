@@ -28,6 +28,7 @@ Distributions :
 
 Configuration is stored in `ansible` folder.
 
+Fill `inventory.proxmox.yml` based on `inventory.proxmox.example`.
 Fill `ssl` folders with certificates.  
 Fill `.vault_password.txt` at root with ansible vault password used.  
 Fill all `secrets.yml` based on `secrets.example` in each subdirectory of `groups_vars`.

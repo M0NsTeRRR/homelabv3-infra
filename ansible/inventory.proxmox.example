@@ -1,0 +1,16 @@
+---
+plugin: community.general.proxmox
+url: https://server1.unicornafk.fr:8006
+user: root@pam
+password:
+validate_certs: true
+strict: true
+want_facts: true
+keyed_groups: 
+  - key: proxmox_tags_parsed
+    separator: ""
+filters:
+  - proxmox_status == "running"
+  - "proxmox_tags_parsed is defined and 'ansible_managed' in proxmox_tags_parsed"
+exclude_nodes: true
+want_proxmox_nodes_ansible_host: true

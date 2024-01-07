@@ -23,6 +23,6 @@ vault.json.secrets
 *.key*
 *.pem*
 *.img
-inventory.proxmox.yaml
+inventory.proxmox.yml
 # Doc
 .cache

@@ -29,8 +29,6 @@ v3 : [homelabv3-infra](https://github.com/M0NsTeRRR/homelabv3-infra)
 - Renovate :
     * [ ] Handle k3s update
     * [ ] Ignore pdns/external-dns alpha release
-- Ansible :
-    * [ ] Proxmox auto inventory
 - Kubernetes :
     * [ ] Kubernetes node firewalling
     * [ ] Kubernetes policies rules
