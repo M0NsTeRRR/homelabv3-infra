@@ -9,8 +9,7 @@ This is my Homelab v3 infrastructure.
 
 # Documentation
 
-https://homelab.unicornafk.fr
-
+https://homelab.adminafk.fr
 
 # Contributing
 
