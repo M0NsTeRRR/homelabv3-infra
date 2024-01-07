@@ -55,6 +55,9 @@ theme:
     - content.action.view
     - content.code.copy
 
+extra_css:
+  - stylesheets/extra.css
+
 markdown_extensions:
   - attr_list
   - md_in_html
@@ -105,4 +108,5 @@ nav:
     - Ansible: guide/ansible/index.md
     - Argocd: guide/argocd/index.md
     - Octodns: guide/octodns/index.md
+    - Renovatebot: guide/renovatebot/index.md
     - CI/CD: guide/ci_cd/index.md
