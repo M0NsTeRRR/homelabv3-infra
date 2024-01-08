@@ -37,7 +37,7 @@
 
 - name: Add PowerDNS Apt repository
   ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/etc/apt/keyrings/dnsdist.asc] https://repo.powerdns.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }}-{{ dnsdist_repo_version | replace('.', '') }} main"
+    repo: "deb [signed-by=/etc/apt/keyrings/dnsdist.asc] https://repo.powerdns.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }}-{{ (dnsdist_repo_version | split('.'))[:-1] | join('') }} main"
     state: present
     filename: dnsdist
 
