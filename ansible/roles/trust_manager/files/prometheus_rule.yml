@@ -1,0 +1,17 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: trust-manager-alerts
+  namespace: trust-manager
+spec:
+  groups:
+    - name: trust_manager_rules
+      rules:
+        - alert: TrustManagerReadCertificateErrors
+          annotations:
+            summary: Total number of certificate read errors
+          expr: certwatcher_read_certificate_errors_total > 0
+          for: 0m
+          labels:
+            severity: warning

@@ -22,10 +22,6 @@ v3 : [homelabv3-infra](https://github.com/M0NsTeRRR/homelabv3-infra)
 
 ## Roadmap
 
-- Prometheus rule :
-    * [ ] external dns
-    * [ ] traefik
-    * [ ] trust-manager
 - Kubernetes :
     * [ ] Kubernetes node firewalling
     * [ ] Kubernetes policies rules

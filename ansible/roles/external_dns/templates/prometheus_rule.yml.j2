@@ -1,0 +1,24 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: external-dns-alerts
+  namespace: "{{ external_dns_namespace }}"
+spec:
+  groups:
+    - name: external_dns_rules
+      rules:
+        - alert: ExternalDnsRegistryErrors
+          annotations:
+            summary: Number of Registry errors
+          expr: external_dns_registry_errors_total > 0
+          for: 0m
+          labels:
+            severity: warning
+        - alert: ExternalDnsSourceErrors
+          annotations:
+            summary: Number of Source errors
+          expr: external_dns_source_errors_total > 0
+          for: 0m
+          labels:
+            severity: warning

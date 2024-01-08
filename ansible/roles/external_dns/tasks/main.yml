@@ -44,3 +44,11 @@
     validate_certs: true
   delegate_to: localhost
   when: not external_dns_is_installed or external_dns_force_install
+
+- name: Create external-dns prometheus rule
+  kubernetes.core.k8s:
+    definition: "{{ lookup('ansible.builtin.template', 'prometheus_rule.yml.j2') | from_yaml }}"
+    kubeconfig: "{{ external_dns_localhost_kubeconfig_path }}"
+    validate_certs: true
+  delegate_to: localhost
+  when: not external_dns_create_prometheus_rule and (external_dns_is_installed or external_dns_force_install)

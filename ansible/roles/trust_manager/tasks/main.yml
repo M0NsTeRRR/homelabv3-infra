@@ -36,6 +36,15 @@
   delegate_to: localhost
   when: not trust_manager_is_installed or trust_manager_force_install
 
+- name: Create trust-manager prometheus rule
+  kubernetes.core.k8s:
+    definition: "{{ lookup('file', 'prometheus_rule.yml') | from_yaml }}"
+    kubeconfig: "{{ trust_manager_localhost_kubeconfig_path }}"
+    validate_certs: true
+    state: present
+  when: not trust_manager_is_installed or trust_manager_force_install
+  delegate_to: localhost
+
 - name: "Install trust-manager certificates {{ item }}"
   kubernetes.core.k8s:
     definition: "{{ lookup('ansible.builtin.template', 'certificate.yml.j2') | from_yaml }}"
