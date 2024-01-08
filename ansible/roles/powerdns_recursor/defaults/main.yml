@@ -1,6 +1,6 @@
 ---
 # datasource=github-tags depName=PowerDNS/pdns
-powerdns_recursor_repo_version: "rec-4.9"
+powerdns_recursor_repo_version: "rec-4.9.2"
 # powerdns_recursor_version:
 powerdns_recursor_repository_key: FD380FBB
 powerdns_recursor_package_state: latest
