@@ -27,7 +27,6 @@ v3 : [homelabv3-infra](https://github.com/M0NsTeRRR/homelabv3-infra)
     * [ ] traefik
     * [ ] trust-manager
 - Renovate :
-    * [ ] Handle k3s update
     * [ ] Ignore pdns/external-dns alpha release
 - Kubernetes :
     * [ ] Kubernetes node firewalling
