@@ -23,7 +23,7 @@ terraform = [
 ]
 octodns = [
     "octodns==1.4.0",
-    "octodns_scaleway==0.0.3"
+    "octodns_scaleway==0.0.4"
 ]
 documentation = [
     "mkdocs-material[imaging]==9.5.3",
