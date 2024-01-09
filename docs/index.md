@@ -13,8 +13,8 @@ v3 : [homelabv3-infra](https://github.com/M0NsTeRRR/homelabv3-infra)
 - [x] Privacy
 - [x] Security
 - [x] Monitoring, logging and alerting
+- [x] Offsite encrypted backup to S3 multi A-Z
 - [x] Manage everything except :
-    * [ ] Public DNS
     * [ ] Emails
 - [x] Eveything is automated with scripts, IaC, etc except :
     * [ ] Hypervisor installation but can be done with [netboot.xyz](https://netboot.xyz/)
@@ -25,7 +25,6 @@ v3 : [homelabv3-infra](https://github.com/M0NsTeRRR/homelabv3-infra)
 - Kubernetes :
     * [ ] Kubernetes node firewalling
     * [ ] Kubernetes policies rules
-    * [ ] Etcd encryption
 - Documentation :
     * [ ] Explain architecture
     * [ ] Explain project motivation

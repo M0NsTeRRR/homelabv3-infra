@@ -5,7 +5,7 @@ This is my Homelab v3 infrastructure.
 ![Terraform Lint](https://github.com/M0NsTeRRR/homelabv3-infra/workflows/Terraform%20Lint/badge.svg)
 ![Kubernetes Lint](https://github.com/M0NsTeRRR/homelabv3-infra/workflows/Kubernetes%20Lint/badge.svg)
 ![Octodns](https://github.com/M0NsTeRRR/homelabv3-infra/workflows/Octodns/badge.svg)
-![Documentation](https://github.com/M0NsTeRRR/homelabv3-infra/workflows/Generate%20documentation/badge.svg)
+![Documentation](https://github.com/M0NsTeRRR/homelabv3-infra/workflows/Documentation/badge.svg)
 
 # Documentation
 
