@@ -62,12 +62,24 @@ dashboardProviders:
 
 dashboards:
   default:
+    Go-runtime:
+      gnetId: 3242
+      revision: 2
+      datasource: prometheus
     Traefik:
       gnetId: 17347
       revision: 7
       datasource: prometheus
-    Argocd:
-      gnetId: 14584
+    Argocd-operational:
+      gnetId: 19993
+      revision: 1
+      datasource: prometheus
+    Argocd-application:
+      gnetId: 19974
+      revision: 1
+      datasource: prometheus
+    Argocd-notifications:
+      gnetId: 19975
       revision: 1
       datasource: prometheus
     External-dns:
