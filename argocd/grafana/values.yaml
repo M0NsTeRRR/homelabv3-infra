@@ -63,7 +63,7 @@ dashboardProviders:
 dashboards:
   default:
     Go-runtime:
-      gnetId: 3242
+      gnetId: 13240
       revision: 2
       datasource: prometheus
     Traefik:
