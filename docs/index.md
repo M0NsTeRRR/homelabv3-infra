@@ -37,4 +37,4 @@ v3 : [homelabv3-infra](https://github.com/M0NsTeRRR/homelabv3-infra)
 - Misc :
     * [ ] Autounseal vault
     * [ ] Fix DHCPv6
-    * [ ] Implement systemd-resolved dnssec validation
+    * [ ] Implement systemd-resolved dnssec validation (DS record not supported by my current registrar)
