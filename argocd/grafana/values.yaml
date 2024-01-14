@@ -118,6 +118,10 @@ dashboards:
       datasource:
         - name: DS_PROMETHEUS
           value: prometheus
+    Blackbox-exporter:
+      gnetId: 14928
+      revision: 6
+      datasource: prometheus
 
 ingress:
   enabled: true
