@@ -31,8 +31,44 @@ data:
     // discovery
     prometheus.exporter.agent "agent" {}
 
+    discovery.kubernetes "ingresses" {
+      role = "ingress"
+    }
+
     discovery.kubernetes "pods" {
       role = "pod"
+    }
+
+    discovery.relabel "ingresses" {
+      targets = discovery.kubernetes.ingresses.targets
+
+      rule {
+        source_labels = ["__address__"]
+        target_label  = "__param_target"
+        action        = "replace"
+      }
+
+      rule {
+        source_labels = ["__param_target"]
+        target_label  = "instance"
+        action        = "replace"
+      }
+
+      rule {
+        source_labels = ["__param_target"]
+        target_label  = "target"
+        action        = "replace"
+      }
+
+      rule {
+        replacement = "/probe"
+        target_label  = "__metrics_path__"
+      }
+
+      rule {
+        replacement = "blackbox-exporter-prometheus-blackbox-exporter.blackbox-exporter.svc:9115"
+        target_label  = "__address__"
+      }
     }
 
     discovery.relabel "logs" {
@@ -77,6 +113,17 @@ data:
     prometheus.scrape "agent" {
       targets    = prometheus.exporter.agent.agent.targets
       forward_to = [prometheus.remote_write.default.receiver]
+      clustering {
+        enabled = true
+      }
+      scrape_interval = "30s"
+      scrape_timeout  = "5s"
+    }
+
+    prometheus.scrape "blackbox" {
+      targets    = discovery.relabel.ingresses.output
+      forward_to = [prometheus.remote_write.default.receiver]
+      params     = { "module" = ["http_2xx_ipv4", "http_2xx_ipv6"] }
       clustering {
         enabled = true
       }
