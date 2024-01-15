@@ -1,6 +1,15 @@
 service:
   ipDualStack:
     enabled: true
+extraVolumes:
+  - name: ca-certs
+    configMap:
+      name: homelab-ca
+extraVolumeMounts:
+  - name: ca-certs
+    mountPath: /etc/ssl/certs/homelab.crt
+    subPath: ca.crt
+    readOnly: true
 serviceMonitor:
   selfMonitor:
     enabled: true
