@@ -61,6 +61,11 @@ data:
       }
 
       rule {
+        replacement = "http_2xx"
+        target_label  = "__param_module"
+      }
+
+      rule {
         replacement = "/probe"
         target_label  = "__metrics_path__"
       }
@@ -123,7 +128,6 @@ data:
     prometheus.scrape "blackbox" {
       targets    = discovery.relabel.ingresses.output
       forward_to = [prometheus.remote_write.default.receiver]
-      params     = { "module" = ["http_2xx_ipv4", "http_2xx_ipv6"] }
       clustering {
         enabled = true
       }
