@@ -11,5 +11,5 @@ helmCharts:
   releaseName: grafana-mimir
   namespace: grafana-mimir
   repo: https://grafana.github.io/helm-charts
-  version: 5.1.4
+  version: 5.2.0
   valuesFile: values.yaml
