@@ -13,6 +13,8 @@ extraVolumeMounts:
 serviceMonitor:
   selfMonitor:
     enabled: true
+configReloader:
+  enabled: true
 prometheusRule:
   enabled: true
   rules:
