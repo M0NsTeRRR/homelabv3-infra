@@ -97,6 +97,7 @@ nav:
   - Home:
     - index.md
     - Architecture: home/architecture.md
+    - Choices: home/choices.md
   - Getting started:
     - Introduction: getting-started/index.md
     - Installation: getting-started/installation.md

@@ -6,6 +6,8 @@ This is the third version of my homelab :rocket:
 ~~v2 : [Homelab-infra](https://github.com/M0NsTeRRR/Homelab-infra)~~  
 v3 : [homelabv3-infra](https://github.com/M0NsTeRRR/homelabv3-infra)
 
+To start, I would like to thank all maintainers and contributors to open source projects that make my lab possible ! 
+
 ## What are the key features
 
 - [x] Open source
@@ -25,12 +27,7 @@ v3 : [homelabv3-infra](https://github.com/M0NsTeRRR/homelabv3-infra)
 - Kubernetes :
     * [ ] Kubernetes node firewalling
     * [ ] Kubernetes policies rules
-- Documentation :
-    * [ ] Explain architecture
-    * [ ] Explain project motivation
-    * [ ] Explain project choice (applications, hardwares, providers)
 - Monitoring/Logging/Alerting :
-    * [x] Kubernetes cluster
     * [ ] Outside kubernetes services
     * [ ] Hypervisors
     * [ ] VM
