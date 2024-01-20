@@ -9,5 +9,8 @@ agent:
     enabled: true
 crds:
   create: false
+controller:
+  extraAnnotations:
+    reloader.stakater.com/auto: "true"
 configReloader:
-  enabled: true
+  enabled: false

@@ -13,8 +13,8 @@ extraVolumeMounts:
 serviceMonitor:
   selfMonitor:
     enabled: true
-configReloader:
-  enabled: true
+podAnnotations:
+  reloader.stakater.com/auto: "true"
 prometheusRule:
   enabled: true
   rules:
