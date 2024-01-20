@@ -121,17 +121,6 @@
         'datasource=(?<datasource>\\S*)[\\s]+depName=(?<depName>\\S*)([\\s]+registryUrl=(?<registryUrl>\\S*))?\r?\n[\\S]+\\s"?(?<currentValue>[a-zA-Z0-9-_.+]+)"?',
       ],
     },
-    // match helm-values jinja template
-    {
-      fileMatch: [
-        '(^|/)(helm-)?values\\.ya?ml\\.j2$'
-      ],
-      matchStrings: [
-        'repository:[\\s]+(?<depName>\\S*)[\\s]+tag:[\\s]+(?<currentValue>\\S*)',
-        'tag:[\\s]+(?<currentValue>\\S*)[\\s]+repository:[\\s]+(?<depName>\\S*)'
-      ],
-      datasourceTemplate: "docker",
-    },
     // match github yaml in kustomization file
     {
       fileMatch: [
