@@ -125,13 +125,32 @@ data:
       scrape_timeout  = "5s"
     }
 
-    prometheus.scrape "blackbox" {
+    prometheus.scrape "blackbox_http" {
       targets    = discovery.relabel.ingresses.output
       forward_to = [prometheus.remote_write.default.receiver]
       clustering {
         enabled = true
       }
       scrape_interval = "30s"
+      scrape_timeout  = "5s"
+    }
+
+    prometheus.scrape "blackbox_icmp" {
+      targets    = [
+        {"__address__" = "blackbox-exporter-prometheus-blackbox-exporter.blackbox-exporter.svc:9115", "__param_target" = "1.1.1.1", "instance" = "1.1.1.1"},
+        {"__address__" = "blackbox-exporter-prometheus-blackbox-exporter.blackbox-exporter.svc:9115", "__param_target" = "2606:4700:4700::1111", "instance" = "2606:4700:4700::1111"},
+        {"__address__" = "blackbox-exporter-prometheus-blackbox-exporter.blackbox-exporter.svc:9115", "__param_target" = "8.8.8.8", "instance" = "8.8.8.8"},
+        {"__address__" = "blackbox-exporter-prometheus-blackbox-exporter.blackbox-exporter.svc:9115", "__param_target" = "2001:4860:4860::8888", "instance" = "2001:4860:4860::8888"},
+        {"__address__" = "blackbox-exporter-prometheus-blackbox-exporter.blackbox-exporter.svc:9115", "__param_target" = "141.145.215.178", "instance" = "141.145.215.178"},
+        {"__address__" = "blackbox-exporter-prometheus-blackbox-exporter.blackbox-exporter.svc:9115", "__param_target" = "2603:c027:c000:c200::10", "instance" = "2603:c027:c000:c200::10"},
+      ]
+      forward_to = [prometheus.remote_write.default.receiver]
+      params       = { "module" = ["icmp"] }
+      metrics_path = "/probe"
+      clustering {
+        enabled = true
+      }
+      scrape_interval = "5s"
       scrape_timeout  = "5s"
     }
 

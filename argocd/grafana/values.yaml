@@ -108,20 +108,26 @@ dashboards:
       url: https://gitlab.com/uneeq-oss/cert-manager-mixin/-/raw/master/dashboards/cert-manager.json
     Metallb:
       gnetId: 20162
-      revision: 2
+      revision: 3
       datasource:
         - name: DS_PROMETHEUS
           value: prometheus
     K8up:
       gnetId: 20166
-      revision: 2
+      revision: 4
       datasource:
         - name: DS_PROMETHEUS
           value: prometheus
-    Blackbox-exporter:
+    Blackbox-exporter-http:
       gnetId: 14928
       revision: 6
       datasource: prometheus
+    Blackbox-exporter-icmp:
+      gnetId: 20338
+      revision: 1
+      datasource:
+        - name: DS_PROMETHEUS
+          value: prometheus
 
 ingress:
   enabled: true
