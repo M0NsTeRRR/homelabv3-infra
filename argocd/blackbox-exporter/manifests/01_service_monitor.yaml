@@ -1,0 +1,143 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app.kubernetes.io/name: prometheus-blackbox-exporter
+    app.kubernetes.io/instance: blackbox-exporter
+  name: blackbox-exporter
+  namespace: blackbox-exporter
+spec:
+  endpoints:
+    - honorLabels: true
+      metricRelabelings:
+        - action: replace
+          replacement: 1.1.1.1
+          sourceLabels:
+            - instance
+          targetLabel: instance
+        - action: replace
+          replacement: 1.1.1.1
+          sourceLabels:
+            - target
+          targetLabel: target
+      params:
+        module:
+          - icmp
+        target:
+          - 1.1.1.1
+      path: /probe
+      port: http
+      scrapeTimeout: 5s
+      scrapeInterval: 5s
+    - honorLabels: true
+      metricRelabelings:
+        - action: replace
+          replacement: 2606:4700:4700::1111
+          sourceLabels:
+            - instance
+          targetLabel: instance
+        - action: replace
+          replacement: 2606:4700:4700::1111
+          sourceLabels:
+            - target
+          targetLabel: target
+      params:
+        module:
+          - icmp
+        target:
+          - 2606:4700:4700::1111
+      path: /probe
+      port: http
+      scrapeTimeout: 5s
+      scrapeInterval: 5s
+    - honorLabels: true
+      metricRelabelings:
+        - action: replace
+          replacement: 8.8.8.8
+          sourceLabels:
+            - instance
+          targetLabel: instance
+        - action: replace
+          replacement: 8.8.8.8
+          sourceLabels:
+            - target
+          targetLabel: target
+      params:
+        module:
+          - icmp
+        target:
+          - 8.8.8.8
+      path: /probe
+      port: http
+      scrapeTimeout: 5s
+      scrapeInterval: 5s
+    - honorLabels: true
+      metricRelabelings:
+        - action: replace
+          replacement: 2001:4860:4860::8888
+          sourceLabels:
+            - instance
+          targetLabel: instance
+        - action: replace
+          replacement: 2001:4860:4860::8888
+          sourceLabels:
+            - target
+          targetLabel: target
+      params:
+        module:
+          - icmp
+        target:
+          - 2001:4860:4860::8888
+      path: /probe
+      port: http
+      scrapeTimeout: 5s
+      scrapeInterval: 5s
+    - honorLabels: true
+      metricRelabelings:
+        - action: replace
+          replacement: 141.145.215.178
+          sourceLabels:
+            - instance
+          targetLabel: instance
+        - action: replace
+          replacement: 141.145.215.178
+          sourceLabels:
+            - target
+          targetLabel: target
+      params:
+        module:
+          - icmp
+        target:
+          - 141.145.215.178
+      path: /probe
+      port: http
+      scrapeTimeout: 5s
+      scrapeInterval: 5s
+    - honorLabels: true
+      metricRelabelings:
+        - action: replace
+          replacement: 2603:c027:c000:c200::10
+          sourceLabels:
+            - instance
+          targetLabel: instance
+        - action: replace
+          replacement: 2603:c027:c000:c200::10
+          sourceLabels:
+            - target
+          targetLabel: target
+      params:
+        module:
+          - icmp
+        target:
+          - 2603:c027:c000:c200::10
+      path: /probe
+      port: http
+      scrapeTimeout: 5s
+      scrapeInterval: 5s
+  jobLabel: blackbox-exporter
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: blackbox-exporter
+      app.kubernetes.io/name: prometheus-blackbox-exporter
+
