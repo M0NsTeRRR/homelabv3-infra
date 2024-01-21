@@ -1,0 +1,104 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app.kubernetes.io/name: prometheus-snmp-exporter
+    app.kubernetes.io/instance: snmp-exporter
+  name: snmp-exporter
+  namespace: snmp-exporter
+spec:
+  endpoints:
+    - honorLabels: true
+      metricRelabelings:
+        - action: replace
+          replacement: r1.unicornafk.fr
+          sourceLabels:
+            - instance
+          targetLabel: instance
+        - action: replace
+          replacement: r1.unicornafk.fr
+          sourceLabels:
+            - target
+          targetLabel: target
+      params:
+        module:
+          - mikrotik
+        target:
+          - 192.168.6.1
+        auth:
+          - homelab_aes
+      path: /snmp
+      port: http
+      scrapeTimeout: 10s
+    - honorLabels: true
+      metricRelabelings:
+        - action: replace
+          replacement: sw1.unicornafk.fr
+          sourceLabels:
+            - instance
+          targetLabel: instance
+        - action: replace
+          replacement: sw1.unicornafk.fr
+          sourceLabels:
+            - target
+          targetLabel: target
+      params:
+        module:
+          - brocade
+        target:
+          - 192.168.10.1
+        auth:
+          - homelab_aes
+      path: /snmp
+      port: http
+      scrapeTimeout: 10s
+    - honorLabels: true
+      metricRelabelings:
+        - action: replace
+          replacement: sw2.unicornafk.fr
+          sourceLabels:
+            - instance
+          targetLabel: instance
+        - action: replace
+          replacement: sw2.unicornafk.fr
+          sourceLabels:
+            - target
+          targetLabel: target
+      params:
+        module:
+          - brocade
+        target:
+          - 192.168.40.2
+        auth:
+          - homelab_aes
+      path: /snmp
+      port: http
+      scrapeTimeout: 10s
+    - honorLabels: true
+      metricRelabelings:
+        - action: replace
+          replacement: nas.unicornafk.fr
+          sourceLabels:
+            - instance
+          targetLabel: instance
+        - action: replace
+          replacement: nas.unicornafk.fr
+          sourceLabels:
+            - target
+          targetLabel: target
+      params:
+        module:
+          - qnap
+        target:
+          - 192.168.50.42
+        auth:
+          - homelab_des
+      path: /snmp
+      port: http
+      scrapeTimeout: 10s
+  jobLabel: snmp-exporter
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: snmp-exporter
+      app.kubernetes.io/name: prometheus-snmp-exporter

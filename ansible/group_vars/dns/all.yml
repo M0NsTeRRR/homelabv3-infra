@@ -17,21 +17,21 @@ powerdns_authoritative_records:
   - caa: "letsencrypt.org"
   - caa: "sectigo.com"
   - hostname: rr1.unicornafk.fr.
-    a: 
+    a:
       - 192.168.5.13
-    aaaa:  
+    aaaa:
       - 2a0c:b641:02c0:105::d
     rdns: true
   - hostname: rr2.unicornafk.fr.
-    a:  
+    a:
       - 192.168.5.17
-    aaaa:  
+    aaaa:
       - 2a0c:b641:02c0:105::11
     rdns: true
   - hostname: r1.unicornafk.fr.
-    a:  
+    a:
       - 192.168.6.1
-    aaaa:  
+    aaaa:
       - 2a0c:b641:02c0:106::1
     sshfp:
       - algorithm: 1
@@ -39,9 +39,9 @@ powerdns_authoritative_records:
         fingerprint: 28e4f34e715bcde2b6628f53397e40889f8a87894651ba79e01d7745bad11679
     rdns: true
   - hostname: r2.unicornafk.fr.
-    a:  
+    a:
       - 192.168.6.3
-    aaaa:  
+    aaaa:
       - 2a0c:b641:02c0:106::3
     sshfp:
       - algorithm: 4
@@ -49,44 +49,44 @@ powerdns_authoritative_records:
         fingerprint: 33a3f4d1970bfa6bd85305adf23c437d8fd2b2b2b30aaaf9653d303733148dce
     rdns: true
   - hostname: dns1.unicornafk.fr.
-    a:  
+    a:
       - 192.168.10.21
-    aaaa:  
+    aaaa:
       - 2a0c:b641:02c0:110::21
     rdns: true
   - hostname: dns2.unicornafk.fr.
-    a:  
+    a:
       - 192.168.10.22
-    aaaa:  
+    aaaa:
       - 2a0c:b641:02c0:110::22
     rdns: true
   - hostname: kubernetes.unicornafk.fr.
-    a:  
+    a:
       - 192.168.10.80
-    aaaa:  
+    aaaa:
       - 2a0c:b641:02c0:110::80
   - hostname: vault.unicornafk.fr.
-    a:  
+    a:
       - 192.168.10.102
-    aaaa:  
+    aaaa:
       - 2a0c:b641:02c0:110::102
     rdns: true
   - hostname: ap1.unicornafk.fr.
-    a:  
+    a:
       - 192.168.20.51
-    aaaa:  
+    aaaa:
       - 2a0c:b641:02c0:120::51
     rdns: true
   - hostname: home-assistant.unicornafk.fr.
-    a:  
+    a:
       - 192.168.20.33
-    aaaa:  
+    aaaa:
       - 2a0c:b641:02c0:120::33
     rdns: true
   - hostname: sw1.unicornafk.fr.
-    a:  
+    a:
       - 192.168.40.1
-    aaaa:  
+    aaaa:
       - 2a0c:b641:02c0:140::1
     sshfp:
       - algorithm: 1
@@ -94,9 +94,9 @@ powerdns_authoritative_records:
         fingerprint: F537A260E2626BFEC959303F0F786F3BC986152E48A0E26C68499C0E79C27797
     rdns: true
   - hostname: sw2.unicornafk.fr.
-    a:  
+    a:
       - 192.168.40.2
-    aaaa:  
+    aaaa:
       - 2a0c:b641:02c0:140::2
     rdns: true
     sshfp:
@@ -113,18 +113,18 @@ powerdns_authoritative_records:
       - 2a0c:b641:02c0:140::12
       - 2a0c:b641:02c0:140::13
   - hostname: server1.unicornafk.fr.
-    a:  
+    a:
       - 192.168.40.11
-    aaaa:  
+    aaaa:
       - 2a0c:b641:02c0:140::11
     sshfp:
       - algorithm: 4
         type: 2
         fingerprint: 4fe77c8ae1c13f6cccfc46184a7acb44ee7cb169b8c8dc3cd684a32502ff8a1a
   - hostname: server2.unicornafk.fr.
-    a:  
+    a:
       - 192.168.40.12
-    aaaa:  
+    aaaa:
       - 2a0c:b641:02c0:140::12
     sshfp:
       - algorithm: 4
@@ -132,9 +132,9 @@ powerdns_authoritative_records:
         fingerprint: 04f32228d7ba8e7a1ccae96d2517824e65b674225d9424668b5d553e1f576859
     rdns: true
   - hostname: server3.unicornafk.fr.
-    a:  
+    a:
       - 192.168.40.13
-    aaaa:  
+    aaaa:
       - 2a0c:b641:02c0:140::13
     sshfp:
       - algorithm: 4
@@ -142,95 +142,95 @@ powerdns_authoritative_records:
         fingerprint: 2e8775fb4f5fc9433cdecb1375ab75b0c6e48f69fa3c1c36de6e800761aecd1d
     rdns: true
   - hostname: nas.unicornafk.fr.
-    a:  
+    a:
       - 192.168.50.42
-    aaaa:  
+    aaaa:
       - 2a0c:b641:02c0:150::42
     rdns: true
   - hostname: grandstream.unicornafk.fr.
-    a:  
+    a:
       - 192.168.50.81
-    aaaa:  
+    aaaa:
       - 2a0c:b641:02c0:150::81
     rdns: true
   - hostname: samsung-tv.unicornafk.fr.
-    a:  
+    a:
       - 192.168.50.91
-    aaaa:  
+    aaaa:
       - 2a0c:b641:02c0:150::91
     rdns: true
   - hostname: nvidia-shield.unicornafk.fr.
-    a:  
+    a:
       - 192.168.50.92
-    aaaa:  
+    aaaa:
       - 2a0c:b641:02c0:150::92
     rdns: true
   - hostname: hs110-rack1.unicornafk.fr.
-    a:  
+    a:
       - 192.168.50.101
     rdns: true
   - hostname: hs110-rack2.unicornafk.fr.
-    a:  
+    a:
       - 192.168.50.102
     rdns: true
   - hostname: hs110-chambre1.unicornafk.fr.
-    a:  
+    a:
       - 192.168.50.103
     rdns: true
   - hostname: meross-tireuse.unicornafk.fr.
-    a:  
+    a:
       - 192.168.50.104
     rdns: true
   - hostname: meross-monsieur-cuisine.unicornafk.fr.
-    a:  
+    a:
       - 192.168.50.105
     rdns: true
   - hostname: xiaomi-bulb-chambre1.unicornafk.fr.
-    a:  
+    a:
       - 192.168.50.111
     rdns: true
   - hostname: xiaomi-vaccum.unicornafk.fr.
-    a:  
+    a:
       - 192.168.50.112
     rdns: true
   - hostname: xiaomi-bulb-salon.unicornafk.fr.
-    a:  
+    a:
       - 192.168.50.113
     rdns: true
   - hostname: xiaomi-light-bar.unicornafk.fr.
-    a:  
+    a:
       - 192.168.50.114
     rdns: true
   - hostname: xiaomi-led-chambre1.unicornafk.fr.
-    a:  
+    a:
       - 192.168.50.115
     rdns: true
   - hostname: xiaomi-led-bar.unicornafk.fr.
-    a:  
+    a:
       - 192.168.50.116
     rdns: true
   - hostname: xiaomi-lamp-salon.unicornafk.fr.
-    a:  
+    a:
       - 192.168.50.117
     rdns: true
   - hostname: xiaomi-lamp-cuisine.unicornafk.fr.
-    a:  
+    a:
       - 192.168.50.118
     rdns: true
   - hostname: xiaomi-bulb-entree.unicornafk.fr.
-    a:  
+    a:
       - 192.168.50.119
     rdns: true
   - hostname: monitor01.unicornafk.fr.
-    a:  
+    a:
       - 192.168.50.120
-    aaaa:   
+    aaaa:
       - 2a0c:b641:02c0:150::120
     rdns: true
   - hostname: monitor02.unicornafk.fr.
-    a:  
+    a:
       - 192.168.50.121
-    aaaa:   
+    aaaa:
       - 2a0c:b641:02c0:150::121
     rdns: true
   # CNAME

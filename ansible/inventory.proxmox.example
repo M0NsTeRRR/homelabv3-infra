@@ -6,7 +6,7 @@ password:
 validate_certs: true
 strict: true
 want_facts: true
-keyed_groups: 
+keyed_groups:
   - key: proxmox_tags_parsed
     separator: ""
 filters:

@@ -39,6 +39,9 @@ spec:
       - appName: blackbox-exporter
         namespace: blackbox-exporter
         syncWave: "0"
+      - appName: snmp-exporter
+        namespace: snmp-exporter
+        syncWave: "0"
       - appName: as212510-net
         namespace: as212510-net
         syncWave: "0"

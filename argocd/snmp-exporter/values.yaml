@@ -1,0 +1,16 @@
+image:
+  repository: prom/snmp-exporter
+  tag: v0.25.0
+service:
+  ipDualStack:
+    enabled: true
+podAnnotations:
+  reloader.stakater.com/auto: "true"
+extraArgs:
+  - "--config.file=/run/secrets/snmp-exporter/snmp.yaml"
+extraSecretMounts:
+  - name: snmp-exporter-vault
+    mountPath: /run/secrets/snmp-exporter/snmp.yaml
+    subPath: snmp.yaml
+    secretName: snmp-exporter-vault
+    readOnly: true

@@ -119,6 +119,11 @@ vault_policies:
       - path: secret/data/homelab/prod/as212510-net
         capabilities:
           - read
+  - name: snmp-exporter
+    rules:
+      - path: secret/data/homelab/prod/snmp-exporter
+        capabilities:
+          - read
 public_vault_datas:
   - path: pki/config/ca
     data:
@@ -205,6 +210,16 @@ public_vault_datas:
       bound_service_account_namespaces: as212510-net
       policies: as212510-net
       ttl: 1h
+  - path: auth/kubernetes/role/snmp-exporter
+    data:
+      bound_service_account_names: snmp-exporter-vault
+      bound_service_account_namespaces: snmp-exporter
+      policies: snmp-exporter
+      ttl: 1h
+  - path: secret/data/homelab/prod/snmp-exporter
+    data:
+      data:
+        snmp.yaml: "{{ snmp_exporter_config }}"
 vault_datas: "{{ public_vault_datas + secret_vault_datas }}"
 external_secrets_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 cert_manager_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
