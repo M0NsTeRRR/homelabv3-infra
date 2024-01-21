@@ -2,11 +2,13 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
+  name: blackbox-exporter
+  namespace: blackbox-exporter
   labels:
     app.kubernetes.io/name: prometheus-blackbox-exporter
     app.kubernetes.io/instance: blackbox-exporter
-  name: blackbox-exporter
-  namespace: blackbox-exporter
+  annotations:
+    ignore-check.kube-linter.io/dangling-servicemonitor: "helm service"
 spec:
   endpoints:
     - honorLabels: true
