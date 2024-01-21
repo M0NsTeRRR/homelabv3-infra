@@ -16,3 +16,6 @@ packer init packer/templates/ubuntu
 
 # setup ansible
 ansible-galaxy install -r ansible/requirements.yml
+
+# use default context
+kubectl config use-context default
