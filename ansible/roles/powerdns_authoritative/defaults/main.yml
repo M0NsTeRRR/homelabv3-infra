@@ -41,9 +41,12 @@ powerdns_authoritative_ca_path: /etc/ssl/certs/test.pem
 #   - 10.168.192.in-addr.arpa
 # powerdns_authoritative_records:
 #   - canonical_hostname: dns1.unicornafk.fr.
-#     a: 192.168.10.21
-#     aaaa: 2a0c:b641:02c0:110::21
-#    sshfp:
+#     a:
+#       - 192.168.10.21
+#     aaaa:
+#       - 2a0c:b641:02c0:110::21
+#     cname: test.unicornafk.fr.
+#     sshfp:
 #      - algorithm: 1
 #        type: 2
 #        fingerprint: F537A260E2626BFEC959303F0F786F3BC986152E48A0E26C68499C0E79C27797

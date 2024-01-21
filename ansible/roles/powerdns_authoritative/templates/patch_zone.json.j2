@@ -41,7 +41,9 @@
       "name": "{{ host.hostname }}",
       "changetype": "REPLACE",
       "records": [
-        { "content": "{{ host.a }}", "disabled": false }
+        {% for a in host.a %}
+        { "content": "{{ a }}", "disabled": false }{% if not loop.last %},{% endif %}
+        {% endfor %}
       ],
       "ttl": "3600",
       "type": "A"
@@ -50,20 +52,24 @@
       "name": "{{ host.hostname }}",
       "changetype": "REPLACE",
       "records": [
-        { "content": "{{ host.aaaa }}", "disabled": false }
+        {% for aaaa in host.aaaa %}
+        { "content": "{{ aaaa }}", "disabled": false }{% if not loop.last %},{% endif %}
+        {% endfor %}
       ],
       "ttl": "3600",
       "type": "AAAA"
-    }{% endif %}{% if host.sshfp is defined and item in host.hostname %}{% for sshfp in host.sshfp %},
+    }{% endif %}{% if host.sshfp is defined and item in host.hostname %},
     {
       "name": "{{ host.hostname }}",
       "changetype": "REPLACE",
       "records": [
-        { "content": "{{ sshfp.algorithm }} {{ sshfp.type }} {{ sshfp.fingerprint }}", "disabled": false }
+        {% for sshfp in host.sshfp %}
+        { "content": "{{ sshfp.algorithm }} {{ sshfp.type }} {{ sshfp.fingerprint }}", "disabled": false }{% if not loop.last %},{% endif %}
+        {% endfor %}
       ],
       "ttl": "3600",
       "type": "SSHFP"
-    }{% if not loop.last %},{% endif %}{% endfor %}{% endif %}{% if host.cname is defined and item in host.hostname %},
+    }{% endif %}{% if host.cname is defined and item in host.hostname %},
     {
       "name": "{{ host.hostname }}",
       "changetype": "REPLACE",
