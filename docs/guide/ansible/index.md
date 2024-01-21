@@ -40,6 +40,8 @@ cd ansible
 ansible-playbook <PLAYBOOK>
 ```
 
+!!! info "KUBECONFIG environment variable is hardcoded to `/home/vscode/.kube/homelab` in `.devcontainer/Dockerfile`"
+
 ??? question "How to execute only a part of an ansible playbook ?"
     * Filter by hosts
 
