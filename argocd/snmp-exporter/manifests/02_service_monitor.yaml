@@ -3,7 +3,6 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: snmp-exporter
-  namespace: snmp-exporter
   labels:
     app.kubernetes.io/name: prometheus-snmp-exporter
     app.kubernetes.io/instance: snmp-exporter
