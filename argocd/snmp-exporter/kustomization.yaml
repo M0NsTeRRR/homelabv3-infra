@@ -5,6 +5,7 @@ namespace: snmp-exporter
 resources:
   - manifests/01_external_secret.yaml
   - manifests/02_service_monitor.yaml
+  - manifests/03_prometheus_rule.yaml
 
 helmCharts:
 - name: prometheus-snmp-exporter

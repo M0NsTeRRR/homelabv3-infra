@@ -1,0 +1,17 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: snmp-exporter-alerts
+spec:
+  groups:
+    - name: SNMPAlerts
+      rules:
+        - alert: SNMPDown
+          expr: up{job=~"snmp.*"} != 1
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            description: 'SNMP device {{$labels.instance}} from job {{$labels.job}} is down.'
+            summary: SNMP device down.
