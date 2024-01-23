@@ -2,7 +2,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: blackbox-exporter
+  name: blackbox-exporter-icmp
   labels:
     app.kubernetes.io/name: prometheus-blackbox-exporter
     app.kubernetes.io/instance: blackbox-exporter
@@ -141,4 +141,140 @@ spec:
     matchLabels:
       app.kubernetes.io/instance: blackbox-exporter
       app.kubernetes.io/name: prometheus-blackbox-exporter
-
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: blackbox-exporter-http
+  labels:
+    app.kubernetes.io/name: prometheus-blackbox-exporter
+    app.kubernetes.io/instance: blackbox-exporter
+  annotations:
+    ignore-check.kube-linter.io/dangling-servicemonitor: "helm service"
+spec:
+  endpoints:
+    - honorLabels: true
+      metricRelabelings:
+        - action: replace
+          replacement: server1.unicornafk.fr
+          sourceLabels:
+            - instance
+          targetLabel: instance
+        - action: replace
+          replacement: server1.unicornafk.fr
+          sourceLabels:
+            - target
+          targetLabel: target
+      params:
+        module:
+          - http_2xx
+        target:
+          - https://server1.unicornafk.fr:8006
+      path: /probe
+      port: http
+      scrapeTimeout: 5s
+    - honorLabels: true
+      metricRelabelings:
+        - action: replace
+          replacement: server2.unicornafk.fr
+          sourceLabels:
+            - instance
+          targetLabel: instance
+        - action: replace
+          replacement: server2.unicornafk.fr
+          sourceLabels:
+            - target
+          targetLabel: target
+      params:
+        module:
+          - http_2xx
+        target:
+          - https://server2.unicornafk.fr:8006
+      path: /probe
+      port: http
+      scrapeTimeout: 5s
+    - honorLabels: true
+      metricRelabelings:
+        - action: replace
+          replacement: server3.unicornafk.fr
+          sourceLabels:
+            - instance
+          targetLabel: instance
+        - action: replace
+          replacement: server3.unicornafk.fr
+          sourceLabels:
+            - target
+          targetLabel: target
+      params:
+        module:
+          - http_2xx
+        target:
+          - https://server3.unicornafk.fr:8006
+      path: /probe
+      port: http
+      scrapeTimeout: 5s
+    - honorLabels: true
+      metricRelabelings:
+        - action: replace
+          replacement: home-assistant.unicornafk.fr
+          sourceLabels:
+            - instance
+          targetLabel: instance
+        - action: replace
+          replacement: home-assistant.unicornafk.fr
+          sourceLabels:
+            - target
+          targetLabel: target
+      params:
+        module:
+          - http_2xx
+        target:
+          - https://home-assistant.unicornafk.fr
+      path: /probe
+      port: http
+      scrapeTimeout: 5s
+    - honorLabels: true
+      metricRelabelings:
+        - action: replace
+          replacement: nas.unicornafk.fr
+          sourceLabels:
+            - instance
+          targetLabel: instance
+        - action: replace
+          replacement: nas.unicornafk.fr
+          sourceLabels:
+            - target
+          targetLabel: target
+      params:
+        module:
+          - http_2xx
+        target:
+          - https://nas.unicornafk.fr
+      path: /probe
+      port: http
+      scrapeTimeout: 5s
+    - honorLabels: true
+      metricRelabelings:
+        - action: replace
+          replacement: vault.unicornafk.fr
+          sourceLabels:
+            - instance
+          targetLabel: instance
+        - action: replace
+          replacement: vault.unicornafk.fr
+          sourceLabels:
+            - target
+          targetLabel: target
+      params:
+        module:
+          - http_2xx
+        target:
+          - https://vault.unicornafk.fr:8200
+      path: /probe
+      port: http
+      scrapeTimeout: 5s
+  jobLabel: blackbox-exporter
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: blackbox-exporter
+      app.kubernetes.io/name: prometheus-blackbox-exporter
