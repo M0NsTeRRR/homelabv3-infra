@@ -23,3 +23,5 @@ Don't forget to change in the following configuration :
 ```
 
 Follow instructions step from [snmp-exporter documentation](https://github.com/prometheus/snmp_exporter/tree/main/generator#snmp-exporter-config-generator)
+
+Configure snmp-exporter config to use the appropriate crendentials
