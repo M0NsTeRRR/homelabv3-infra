@@ -11,7 +11,7 @@ spec:
       rules:
         - alert: CertManagerCertificateReadyStatus
           annotations:
-            description: 'Certificate for "{{`{{ $labels.name }}`}}" is not ready.'
+            description: 'Certificate for "{{ $labels.name }}" is not ready.'
             summary: Certificate is not ready
           expr: certmanager_certificate_ready_status{condition="False"} == 1
           for: 5m
