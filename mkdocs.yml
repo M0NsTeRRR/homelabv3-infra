@@ -111,3 +111,4 @@ nav:
     - Octodns: guide/octodns/index.md
     - Renovatebot: guide/renovatebot/index.md
     - CI/CD: guide/ci_cd/index.md
+    - Proxmox ACME: guide/proxmox_acme/index.md
