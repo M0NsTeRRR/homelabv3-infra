@@ -114,14 +114,19 @@ vault_policies:
       - path: secret/data/homelab/prod/grafana
         capabilities:
           - read
-  - name: as212510-net
-    rules:
-      - path: secret/data/homelab/prod/as212510-net
-        capabilities:
-          - read
   - name: snmp-exporter
     rules:
       - path: secret/data/homelab/prod/snmp-exporter
+        capabilities:
+          - read
+  - name: prometheus-pve-exporter
+    rules:
+      - path: secret/data/homelab/prod/prometheus-pve-exporter
+        capabilities:
+          - read
+  - name: as212510-net
+    rules:
+      - path: secret/data/homelab/prod/as212510-net
         capabilities:
           - read
 public_vault_datas:
@@ -204,22 +209,24 @@ public_vault_datas:
       bound_service_account_namespaces: grafana
       policies: grafana
       ttl: 1h
-  - path: auth/kubernetes/role/as212510-net
-    data:
-      bound_service_account_names: as212510-net-vault
-      bound_service_account_namespaces: as212510-net
-      policies: as212510-net
-      ttl: 1h
   - path: auth/kubernetes/role/snmp-exporter
     data:
       bound_service_account_names: snmp-exporter-vault
       bound_service_account_namespaces: snmp-exporter
       policies: snmp-exporter
       ttl: 1h
-  - path: secret/data/homelab/prod/snmp-exporter
+  - path: auth/kubernetes/role/prometheus-pve-exporter
     data:
-      data:
-        snmp.yaml: "{{ snmp_exporter_config }}"
+      bound_service_account_names: prometheus-pve-exporter-vault
+      bound_service_account_namespaces: prometheus-pve-exporter
+      policies: prometheus-pve-exporter
+      ttl: 1h
+  - path: auth/kubernetes/role/as212510-net
+    data:
+      bound_service_account_names: as212510-net-vault
+      bound_service_account_namespaces: as212510-net
+      policies: as212510-net
+      ttl: 1h
 vault_datas: "{{ public_vault_datas + secret_vault_datas }}"
 external_secrets_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 cert_manager_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"

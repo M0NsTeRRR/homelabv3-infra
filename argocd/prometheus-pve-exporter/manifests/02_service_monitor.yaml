@@ -1,0 +1,115 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: prometheus-pve-exporter-cluster
+  labels:
+    app.kubernetes.io/name: prometheus-pve-exporter
+    app.kubernetes.io/instance: prometheus-pve-exporter
+  annotations:
+    ignore-check.kube-linter.io/dangling-servicemonitor: "helm service"
+spec:
+  endpoints:
+    # Get node metrics
+    - honorLabels: true
+      metricRelabelings:
+        - action: replace
+          replacement: server1.unicornafk.fr
+          sourceLabels:
+            - instance
+          targetLabel: instance
+        - action: replace
+          replacement: server1.unicornafk.fr
+          sourceLabels:
+            - target
+          targetLabel: target
+      params:
+        module:
+          - default
+        cluster:
+          - "0"
+        node:
+          - "1"
+        target:
+          - server1.unicornafk.fr
+      path: /pve
+      port: http
+      scrapeTimeout: 5s
+    - honorLabels: true
+      metricRelabelings:
+        - action: replace
+          replacement: server2.unicornafk.fr
+          sourceLabels:
+            - instance
+          targetLabel: instance
+        - action: replace
+          replacement: server2.unicornafk.fr
+          sourceLabels:
+            - target
+          targetLabel: target
+      params:
+        module:
+          - default
+        cluster:
+          - "0"
+        node:
+          - "1"
+        target:
+          - server2.unicornafk.fr
+      path: /pve
+      port: http
+      scrapeTimeout: 5s
+    - honorLabels: true
+      metricRelabelings:
+        - action: replace
+          replacement: server3.unicornafk.fr
+          sourceLabels:
+            - instance
+          targetLabel: instance
+        - action: replace
+          replacement: server3.unicornafk.fr
+          sourceLabels:
+            - target
+          targetLabel: target
+      params:
+        module:
+          - default
+        cluster:
+          - "0"
+        node:
+          - "1"
+        target:
+          - server3.unicornafk.fr
+      path: /pve
+      port: http
+      scrapeTimeout: 5s
+    # Get cluster metrics
+    - honorLabels: true
+      metricRelabelings:
+        - action: replace
+          replacement: server.unicornafk.fr
+          sourceLabels:
+            - instance
+          targetLabel: instance
+        - action: replace
+          replacement: server.unicornafk.fr
+          sourceLabels:
+            - target
+          targetLabel: target
+      params:
+        module:
+          - default
+        cluster:
+          - "1"
+        node:
+          - "0"
+        target:
+          - server.unicornafk.fr
+      path: /pve
+      port: http
+      scrapeTimeout: 5s
+  jobLabel: prometheus-pve-exporter
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: prometheus-pve-exporter
+      app.kubernetes.io/name: prometheus-pve-exporter

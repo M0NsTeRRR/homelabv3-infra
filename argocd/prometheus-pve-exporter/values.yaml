@@ -1,0 +1,21 @@
+podAnnotations:
+  reloader.stakater.com/auto: "true"
+volumes:
+  - name: ca-certs
+    configMap:
+      name: homelab-ca
+volumeMounts:
+  - name: ca-certs
+    mountPath: /etc/ssl/certs/homelab.crt
+    subPath: ca.crt
+    readOnly: true
+extraEnvFrom:
+  - secretRef:
+      name: prometheus-pve-exporter-vault
+extraEnv:
+  - name: REQUESTS_CA_BUNDLE
+    value: /etc/ssl/certs/homelab.crt
+serviceMonitor:
+  enabled: true
+prometheusRule:
+  enabled: true
