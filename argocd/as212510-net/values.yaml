@@ -1,3 +1,5 @@
+podAnnotations:
+  reloader.stakater.com/auto: "true"
 extraEnv:
   - name: AS212510_NET_ASN
     value: "212510"
