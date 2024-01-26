@@ -3,7 +3,7 @@ packer {
   required_plugins {
     proxmox = {
       source  = "github.com/hashicorp/proxmox"
-      version = "v1.1.6"
+      version = "v1.1.7"
     }
     ansible = {
       source  = "github.com/hashicorp/ansible"
@@ -50,6 +50,7 @@ source "proxmox-iso" "ubuntu" {
   iso_checksum     = local.iso_checksum
   iso_url          = local.iso_url
   iso_storage_pool = "local"
+  iso_download_pve = true
   unmount_iso      = true
   machine          = "q35"
   network_adapters {
