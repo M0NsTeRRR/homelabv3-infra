@@ -1,6 +1,6 @@
 ---
 # datasource=github-tags depName=rook/rook
-rook_cluster_chart_version: "v1.13.2"
+rook_cluster_chart_version: "v1.13.3"
 rook_cluster_force_install: false
 rook_cluster_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
 rook_cluster_vault_ca: ""
