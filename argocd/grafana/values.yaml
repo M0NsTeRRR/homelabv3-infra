@@ -137,7 +137,9 @@ dashboards:
     Proxmox-exporter:
       gnetId: 10347
       revision: 5
-      datasource: prometheus
+      datasource:
+        - name: DS_PROMETHEUS
+          value: prometheus
 
 ingress:
   enabled: true
