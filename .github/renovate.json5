@@ -195,7 +195,7 @@
         'kubernetes-sigs/external-dns',
       ],
       matchCurrentValue: '/^external-dns-helm-chart/',
-      versioning: 'regex:^external-dns-helm-chart-(?<major>\\d+)\\.(?<minor>\\d+)\\.?(\\d+)?$',
+      versioning: 'regex:^external-dns-helm-chart-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)',
     },
     // handle argo-cd helm github tag that don't follow semver
     {
