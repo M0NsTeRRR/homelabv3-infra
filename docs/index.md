@@ -28,10 +28,14 @@ To start, I would like to thank all maintainers and contributors to open source 
     * [ ] Kubernetes node firewalling
     * [ ] Kubernetes policies rules
 - Monitoring/Logging/Alerting :
-    * [ ] Outside kubernetes services
-    * [ ] Hypervisors
+    * [ ] Kea DHCP
+    * [ ] PDNS rec/auth/dnsdist
+    * [ ] Nginx
     * [ ] VM
+- Security :
+    * [ ] Crowdsec
+    * [ ] CSP policy
+    * [ ] Implement systemd-resolved dnssec validation (DS record not supported by my current registrar)
 - Misc :
     * [ ] Autounseal vault
     * [ ] Fix DHCPv6
-    * [ ] Implement systemd-resolved dnssec validation (DS record not supported by my current registrar)
