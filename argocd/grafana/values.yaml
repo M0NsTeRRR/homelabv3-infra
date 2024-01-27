@@ -3,6 +3,9 @@ envFromSecret: "grafana-vault"
 annotations:
   reloader.stakater.com/auto: "true"
 
+serviceMonitor:
+  enabled: true
+
 admin:
   existingSecret: grafana-vault
   userKey: ADMIN_USER
