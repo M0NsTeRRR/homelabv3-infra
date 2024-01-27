@@ -4,6 +4,7 @@ powerdns_recursor_repo_version: "rec-4.9.2"
 # powerdns_recursor_version:
 powerdns_recursor_repository_key: FD380FBB
 powerdns_recursor_package_state: latest
+powerdns_recursor_webserver_password: password
 powerdns_recursor_domains: []
 powerdns_recursor_reverse_zones: []
 powerdns_recursor_rpz_files:

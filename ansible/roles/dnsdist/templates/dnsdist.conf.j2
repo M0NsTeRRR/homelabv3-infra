@@ -14,7 +14,8 @@ newServer({address='[::1]:5300', pool='primary'})
 newServer({address='127.0.0.1:5301', useProxyProtocol=true, pool='recursor'})
 newServer({address='[::1]:5301', useProxyProtocol=true, pool='recursor'})
 
-
+webserver("127.0.0.1:8083")
+setWebserverConfig({apiKey="{{ dnsdist_api_key }}"})
 
 -- https://www.dnsdist.org/advanced/axfr.html
 {% if inventory_hostname == ansible_play_hosts_all[0] %}

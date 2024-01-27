@@ -20,6 +20,7 @@ powerdns_authoritative_subdomains: []
 powerdns_authoritative_reverse_zones: []
 powerdns_authoritative_api_key: api_key
 powerdns_authoritative_api_base_url: http://example.fr
+powerdns_authoritative_webserver_password: password
 powerdns_authoritative_records: []
 powerdns_authoritative_rname: admin.example.fr
 powerdns_authoritative_ca_path: /etc/ssl/certs/test.pem

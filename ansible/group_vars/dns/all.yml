@@ -249,6 +249,12 @@ nginx_configuration:
     locations:
       - location: /api
         proxy_pass: http://127.0.0.1:8081/api
+      - location: /auth/metrics
+        proxy_pass: http://127.0.0.1:8081/metrics
+      - location: /rec/metrics
+        proxy_pass: http://127.0.0.1:8082/metrics
+      - location: /dnsdist/metrics
+        proxy_pass: http://127.0.0.1:8083/metrics
     enable_content_security: true
     http_redirection: false
     ssl_port: 9443
