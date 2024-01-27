@@ -16,3 +16,8 @@ data:
         httpMethod: POST
         prometheusType: Mimir
         timeInterval: 30s
+    - name: mimir-alertmanager
+      type: alertmanager
+      implementation: mimir
+      access: server
+      url: http://grafana-mimir-gateway.grafana-mimir.svc.cluster.local
