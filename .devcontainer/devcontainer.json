@@ -54,7 +54,9 @@
 				"ms-python.python",
 				"medo64.render-crlf",
 				"redhat.vscode-yaml",
-				"github.vscode-github-actions"
+				"github.vscode-github-actions",
+				"donjayamanne.githistory",
+				"eamodio.gitlens"
 			]
 		}
 	}
