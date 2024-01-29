@@ -124,6 +124,11 @@ vault_policies:
       - path: secret/data/homelab/prod/prometheus-pve-exporter
         capabilities:
           - read
+  - name: grafana-agent
+    rules:
+      - path: secret/data/homelab/prod/grafana-agent
+        capabilities:
+          - read
   - name: as212510-net
     rules:
       - path: secret/data/homelab/prod/as212510-net
@@ -220,6 +225,12 @@ public_vault_datas:
       bound_service_account_names: prometheus-pve-exporter-vault
       bound_service_account_namespaces: prometheus-pve-exporter
       policies: prometheus-pve-exporter
+      ttl: 1h
+  - path: auth/kubernetes/role/grafana-agent
+    data:
+      bound_service_account_names: grafana-agent-vault
+      bound_service_account_namespaces: grafana-agent
+      policies: grafana-agent
       ttl: 1h
   - path: auth/kubernetes/role/as212510-net
     data:
