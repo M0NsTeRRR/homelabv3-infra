@@ -27,7 +27,7 @@ octodns = [
 ]
 documentation = [
     "mkdocs-material[imaging]==9.5.5",
-    "pytz==2023.3.post1"
+    "pytz==2023.4"
 ]
 
 [tool.setuptools.packages.find]
