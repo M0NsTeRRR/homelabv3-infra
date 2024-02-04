@@ -111,7 +111,7 @@ dashboards:
       url: https://gitlab.com/uneeq-oss/cert-manager-mixin/-/raw/master/dashboards/cert-manager.json
     Metallb:
       gnetId: 20162
-      revision: 3
+      revision: 4
       datasource:
         - name: DS_PROMETHEUS
           value: prometheus
@@ -140,6 +140,12 @@ dashboards:
     Proxmox-exporter:
       gnetId: 10347
       revision: 5
+      datasource:
+        - name: DS_PROMETHEUS
+          value: prometheus
+    Dnsdist:
+      gnetId: 20422
+      revision: 1
       datasource:
         - name: DS_PROMETHEUS
           value: prometheus
