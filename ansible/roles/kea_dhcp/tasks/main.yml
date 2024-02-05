@@ -79,6 +79,7 @@
     owner: _kea
     group: _kea
     mode: "0640"
+    validate: /usr/sbin/kea-dhcp4 -t %s
   notify: Restart isc-kea-dhcp4-server
 
 - name: Configure kea-dhcp6-server
@@ -88,6 +89,7 @@
     owner: _kea
     group: _kea
     mode: "0640"
+    validate: /usr/sbin/kea-dhcp6 -t %s
   notify: Restart isc-kea-dhcp6-server
 
 - name: Create ssl folder
