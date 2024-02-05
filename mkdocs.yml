@@ -68,6 +68,7 @@ markdown_extensions:
   - pymdownx.caret
   - pymdownx.mark
   - pymdownx.tilde
+  - pymdownx.snippets
   - pymdownx.tasklist:
       custom_checkbox: true
   - pymdownx.emoji:

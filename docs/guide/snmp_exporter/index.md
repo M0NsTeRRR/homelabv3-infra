@@ -18,8 +18,8 @@ Don't forget to change in the following configuration :
 - `<snmp_exporter_pass>`
 - `<snmp_exporter_private>`
 
-``` title="snmp-generator.yml" linenums="1"
---8<-- "docs/guide/snmp-exporter/snmp-generator.yml"
+```yaml title="snmp-generator.yml" linenums="1"
+--8<-- "docs/guide/snmp_exporter/snmp-generator.yml"
 ```
 
 Follow instructions step from [snmp-exporter documentation](https://github.com/prometheus/snmp_exporter/tree/main/generator#snmp-exporter-config-generator)
