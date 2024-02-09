@@ -22,10 +22,9 @@ server:
       cert-manager.io/cluster-issuer: "{{ argocd_ingress_cluster_issuer }}"
       cert-manager.io/private-key-algorithm: "RSA"
       cert-manager.io/private-key-size: "4096"
-    hosts:
-      - {{ argocd_hostname }}
+    hostname: {{ argocd_hostname }}
     ingressClassName: {{ argocd_ingress_class }}
-    tls:
+    extraTls:
       - secretName: {{ argocd_hostname }}
         hosts:
           - {{ argocd_hostname }}
