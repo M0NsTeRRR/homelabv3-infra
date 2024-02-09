@@ -1,0 +1,16 @@
+---
+- name: Enable vault audit log on stdout
+  ansible.builtin.uri:
+    url: "{{ vault_url }}/v1/sys/audit/stdout"
+    method: POST
+    return_content: true
+    body_format: json
+    body: "{{ lookup('ansible.builtin.template', 'audit.json.j2') }}"
+    status_code:
+      - 200
+      - 204
+    headers:
+      Content-Type: application/json
+      X-Vault-Token: "{{ vault_root_token }}"
+    ca_path: "{{ vault_ca_path }}"
+  delegate_to: localhost
