@@ -24,10 +24,7 @@ server:
       cert-manager.io/private-key-size: "4096"
     hostname: {{ argocd_hostname }}
     ingressClassName: {{ argocd_ingress_class }}
-    extraTls:
-      - secretName: {{ argocd_hostname }}
-        hosts:
-          - {{ argocd_hostname }}
+    tls: true
 
 repoServer:
   autoscaling:
