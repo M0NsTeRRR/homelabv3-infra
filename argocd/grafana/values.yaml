@@ -145,6 +145,12 @@ dashboards:
           value: prometheus
     Dnsdist:
       gnetId: 20422
+      revision: 2
+      datasource:
+        - name: DS_PROMETHEUS
+          value: prometheus
+    Powerdns-authoritative:
+      gnetId: 20445
       revision: 1
       datasource:
         - name: DS_PROMETHEUS
