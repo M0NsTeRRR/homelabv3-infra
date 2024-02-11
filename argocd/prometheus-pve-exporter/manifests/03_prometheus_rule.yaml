@@ -1,0 +1,25 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: pve-exporter-alerts
+spec:
+  groups:
+    - name: PVEAlerts
+      rules:
+        - alert: PVEDown
+          expr: up{job=~".*pve-exporter"} != 1
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            description: 'PVE exporter instance {{$labels.instance}} from job {{$labels.job}} is down.'
+            summary: PVE exporter instance down.
+        - alert: PVENodeDown
+          expr: pve_node_info != 1
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            description: 'PVE node {{$labels.instance}} from job {{$labels.job}} is down.'
+            summary: PVE Node down.
