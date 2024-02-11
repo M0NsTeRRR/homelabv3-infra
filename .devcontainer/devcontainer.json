@@ -11,13 +11,13 @@
         },
         "ghcr.io/devcontainers-contrib/features/packer-asdf:2": {
             // datasource=github-tags depName=hashicorp/packer
-            "version": "1.10.0"
+            "version": "1.10.1"
         },
         "ghcr.io/devcontainers/features/terraform:1": {
             // datasource=github-tags depName=hashicorp/terraform
-            "version": "1.6.6",
+            "version": "1.7.3",
             // datasource=github-tags depName=gruntwork-io/terragrunt
-            "terragrunt": "0.54.19"
+            "terragrunt": "0.55.1"
         },
         "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
             "version": "latest"
