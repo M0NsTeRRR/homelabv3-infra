@@ -1,0 +1,45 @@
+#jinja2: lstrip_blocks: "True"
+incoming:
+  listen:
+    - 127.0.0.1:5301
+    - '[::1]:5301'
+  allow_from:
+    - 0.0.0.0/0
+    - '::/0'
+  proxy_protocol_from: '127.0.0.1/8,::1/128'
+recursor:
+  setgid: pdns
+  setuid: pdns
+  serve_rfc1918: false
+  extended_resolution_errors: true
+  lua_config_file: /etc/powerdns/recursor-rpz.lua
+  version_string: anonymous
+  forward_zones:
+  {% for zone in powerdns_recursor_zones %}
+    - zone: {{ zone }}
+      forwarders:
+        - 127.0.0.1:5300
+        - '[::1]:5300'
+  {% endfor %}
+  {% for reverse_zone in powerdns_recursor_reverse_zones %}
+    - zone: {{ reverse_zone }}
+      forwarders:
+        - 127.0.0.1:5300
+        - '[::1]:5300'
+  {% endfor %}
+outgoing:
+  source_address:
+    - 0.0.0.0
+    - '::'
+recordcache:
+  max_negative_ttl: 60
+webservice:
+  webserver: true
+  address: 127.0.0.1
+  allow_from:
+    - 127.0.0.1
+    - '::1'
+  password: {{ powerdns_recursor_webserver_password }}
+  port: 8082
+logging:
+  loglevel: 6

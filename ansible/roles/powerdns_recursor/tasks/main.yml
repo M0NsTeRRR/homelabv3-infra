@@ -47,16 +47,11 @@
 
 - name: Fix perms on PowerDNS configuration
   ansible.builtin.file:
-    name: "/etc/powerdns/recursor.conf"
+    name: "/etc/powerdns/recursor.yml"
     owner: "pdns"
     group: "pdns"
     mode: "0640"
     state: file
-
-- name: Set forward zones
-  ansible.builtin.set_fact:
-    powerdns_recursor_forward_zone: "{{ powerdns_recursor_domains | product(['=127.0.0.1:5300;[::1]:5300']) | map('join') | join(',') }}"
-    powerdns_recursor_forward_reverse_zone: "{{ powerdns_recursor_reverse_zones | product(['=127.0.0.1:5300;[::1]:5300']) | map('join') | join(',') }}"
 
 - name: Set net.ipv6.route.max_size for pdns recursor
   ansible.posix.sysctl:
@@ -102,8 +97,8 @@
 
 - name: Configure PowerDNS recursor
   ansible.builtin.template:
-    src: recursor.conf.j2
-    dest: /etc/powerdns/recursor.conf
+    src: recursor.yml.j2
+    dest: /etc/powerdns/recursor.yml
     owner: "pdns"
     group: "pdns"
     mode: "0640"

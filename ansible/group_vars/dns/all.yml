@@ -3,7 +3,7 @@ dnsdist_local_path_ca_certificate: "{{ ca_certificates_local_path_ca_certificate
 dnsdist_cert_filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}-fullchain.crt"
 dnsdist_key_filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}.key"
 
-powerdns_recursor_domains: '{{ local_domains }}'
+powerdns_recursor_zones: '{{ local_domains }}'
 powerdns_recursor_reverse_zones: '{{ reverse_zones }}'
 
 powerdns_authoritative_rname: "{{ admin_email | replace('@', '.') }}."
