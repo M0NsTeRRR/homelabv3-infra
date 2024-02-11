@@ -35,13 +35,14 @@
     mode: "0644"
 
 - name: Add cloudsmith Apt repository
-  ansible.builtin.apt_repository:
-    repo: "{{ item }}"
-    state: present
-    filename: isc-kea-dhcp
-  with_items:
-    - "deb [signed-by=/etc/apt/keyrings/kea.asc] https://dl.cloudsmith.io/public/isc/{{ kea_dhcp_repo_version | lower | replace('.', '-') }}/deb/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
-    - "deb-src [signed-by=/etc/apt/keyrings/kea.asc] https://dl.cloudsmith.io/public/isc/{{ kea_dhcp_repo_version | lower | replace('.', '-') }}/deb/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main"
+  ansible.builtin.copy:
+    content: |
+      deb [signed-by=/etc/apt/keyrings/kea.asc] https://dl.cloudsmith.io/public/isc/{{ kea_dhcp_repo_version | lower | replace('.', '-') }}/deb/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main
+      deb-src [signed-by=/etc/apt/keyrings/kea.asc] https://dl.cloudsmith.io/public/isc/{{ kea_dhcp_repo_version | lower | replace('.', '-') }}/deb/{{ ansible_distribution | lower }} {{ ansible_distribution_release }} main
+    dest: /etc/apt/sources.list.d/isc-kea-dhcp.list
+    owner: root
+    group: root
+    mode: "0640"
 
 - name: Install isc-kea-hooks
   ansible.builtin.apt:

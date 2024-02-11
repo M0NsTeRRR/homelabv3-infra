@@ -33,13 +33,14 @@
     mode: "0644"
 
 - name: Add Caddy Apt repository
-  ansible.builtin.apt_repository:
-    repo: "{{ item }}"
-    state: present
-    filename: caddy
-  with_items:
-    - "deb [signed-by=/etc/apt/keyrings/caddy.asc] https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main"
-    - "deb-src [signed-by=/etc/apt/keyrings/caddy.asc] https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main"
+  ansible.builtin.copy:
+    content: |
+      deb [signed-by=/etc/apt/keyrings/caddy.asc] https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main
+      deb-src [signed-by=/etc/apt/keyrings/caddy.asc] https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main
+    dest: /etc/apt/sources.list.d/caddy.list
+    owner: root
+    group: root
+    mode: "0640"
 
 - name: Install Caddy
   ansible.builtin.apt:

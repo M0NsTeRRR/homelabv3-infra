@@ -22,10 +22,13 @@
     mode: "0644"
 
 - name: Add PowerDNS Apt repository
-  ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/etc/apt/keyrings/powerdns_authoritative.asc] https://repo.powerdns.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }}-{{ (powerdns_authoritative_repo_version | split('.'))[:-1] | join('') }} main"
-    state: present
-    filename: powerdns_authoritative
+  ansible.builtin.copy:
+    content: |
+      deb [signed-by=/etc/apt/keyrings/powerdns_authoritative.asc] https://repo.powerdns.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }}-{{ (powerdns_authoritative_repo_version | split('.'))[:-1] | join('') }} main
+    dest: /etc/apt/sources.list.d/powerdns_authoritative.list
+    owner: root
+    group: root
+    mode: "0640"
 
 - name: Configure apt preferences
   ansible.builtin.copy:

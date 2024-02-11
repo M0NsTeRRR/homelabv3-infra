@@ -22,10 +22,13 @@
     mode: "0644"
 
 - name: Add PowerDNS recursor apt repository
-  ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/etc/apt/keyrings/powerdns_recursor.asc] https://repo.powerdns.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }}-{{ (powerdns_recursor_repo_version | split('.'))[:-1] | join('') }} main"
-    state: present
-    filename: powerdns_recursor
+  ansible.builtin.copy:
+    content: |
+      deb [signed-by=/etc/apt/keyrings/powerdns_recursor.asc] https://repo.powerdns.com/{{ ansible_distribution | lower }} {{ ansible_distribution_release }}-{{ (powerdns_recursor_repo_version | split('.'))[:-1] | join('') }} main
+    dest: /etc/apt/sources.list.d/powerdns_recursor.list
+    owner: root
+    group: root
+    mode: "0640"
 
 - name: Configure apt preferences
   ansible.builtin.copy:

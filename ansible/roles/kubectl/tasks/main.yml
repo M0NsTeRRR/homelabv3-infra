@@ -8,10 +8,13 @@
     mode: "0644"
 
 - name: Add Kubernetes Apt repository
-  ansible.builtin.apt_repository:
-    repo: "deb [signed-by=/etc/apt/keyrings/kubernetes.asc] https://pkgs.k8s.io/core:/stable:/{{ kubectl_repo_version }}/deb/ /"
-    state: present
-    filename: kubernetes
+  ansible.builtin.copy:
+    content: |
+      deb [signed-by=/etc/apt/keyrings/kubernetes.asc] https://pkgs.k8s.io/core:/stable:/{{ kubectl_repo_version }}/deb/ /
+    dest: /etc/apt/sources.list.d/kubernetes.list
+    owner: root
+    group: root
+    mode: "0640"
 
 - name: Install kubectl
   ansible.builtin.apt:
