@@ -111,7 +111,7 @@ dashboards:
       url: https://gitlab.com/uneeq-oss/cert-manager-mixin/-/raw/master/dashboards/cert-manager.json
     Metallb:
       gnetId: 20162
-      revision: 4
+      revision: 5
       datasource:
         - name: DS_PROMETHEUS
           value: prometheus
@@ -127,7 +127,7 @@ dashboards:
       datasource: prometheus
     Blackbox-exporter-icmp:
       gnetId: 20338
-      revision: 1
+      revision: 2
       datasource:
         - name: DS_PROMETHEUS
           value: prometheus
@@ -145,13 +145,13 @@ dashboards:
           value: prometheus
     Dnsdist:
       gnetId: 20422
-      revision: 2
+      revision: 3
       datasource:
         - name: DS_PROMETHEUS
           value: prometheus
     Powerdns-authoritative:
       gnetId: 20445
-      revision: 1
+      revision: 2
       datasource:
         - name: DS_PROMETHEUS
           value: prometheus
