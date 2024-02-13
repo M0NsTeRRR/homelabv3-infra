@@ -35,7 +35,8 @@
 
     "mounts": [
         // mount kubeconfig files
-        "source=${localEnv:HOME}${localEnv:USERPROFILE}/.kube,target=/home/vscode/.kube,type=bind,consistency=cached"
+        "source=${localEnv:HOME}${localEnv:USERPROFILE}/.kube,target=/home/vscode/.kube,type=bind,consistency=cached",
+		"source=/tmp,target=/tmp,type=bind,consistency=cached"
     ],
 
     "userEnvProbe": "loginInteractiveShell",
