@@ -42,6 +42,18 @@
     ansible_python_interpreter: "{{ nginx_venv }}/bin/python"
   when: not nginx_diffie_hellman.stat.exists
 
+- name: Fix perms on nginx configuration folder
+  ansible.builtin.file:
+    name: "{{ item }}"
+    owner: "nginx"
+    group: "nginx"
+    recurse: true
+    state: directory
+  with_items:
+    - /etc/nginx
+    - /etc/nginx/basic_auth
+    - /var/log/nginx
+
 - name: Remove default nginx configuration
   ansible.builtin.file:
     path: "{{ item }}"
@@ -61,16 +73,15 @@
     mode: "0640"
   notify: Restart nginx
 
-- name: Fix perms on nginx configuration folder
-  ansible.builtin.file:
-    name: "{{ item }}"
-    owner: "nginx"
-    group: "nginx"
-    recurse: true
-    state: directory
-  with_items:
-    - /etc/nginx
-    - /var/log/nginx
+- name: Create nginx basic auth configuration
+  ansible.builtin.template:
+    src: basic_auth.htpasswd.j2
+    dest: "/etc/nginx/basic_auth/.{{ item.key }}"
+    owner: nginx
+    group: nginx
+    mode: "0600"
+  with_dict: "{{ nginx_auth_basic }}"
+  notify: Restart nginx
 
 - name: Create systemd service config folder
   ansible.builtin.file:

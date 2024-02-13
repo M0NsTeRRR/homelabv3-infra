@@ -5,6 +5,7 @@ nginx_package_state: latest
 nginx_cryptography_package_state: latest
 nginx_venv: "/tmp/venv_nginx"
 nginx_configuration: []
+nginx_auth_basic: {}
 
 
 # nginx_configuration:
@@ -16,8 +17,14 @@ nginx_configuration: []
 #        proxy_pass: "http://127.0.0.1:8080"
 #        proxy_headers:
 #          X-Server-URL: https://$server_name/
+#        auth_basic: app # reference a key from `nginx_auth_basic`
 #      - location: /static/
 #        alias: /opt/app/static/
 #     enable_content_security: true
 #     http_redirection: true
 #     ssl_port: "443"
+#  nginx_auth_basic:
+#    app:
+#      users:
+#        - username: john
+#          password: mysuperpassword
