@@ -7,6 +7,8 @@ certs_dir_role_path: "{{ root_dir_role_path }}ssl/"
 ca_certificates_local_path_ca_certificate: "{{ certs_dir_role_path }}unicornafk.crt"
 ca_certificates_certs_dir: "{{ certs_dir_role_path }}"
 
+node_exporter_local_path_ca_certificate: "{{ ca_certificates_local_path_ca_certificate }}"
+
 kubernetes_localhost_kubeconfig_path: "{{ lookup('env', 'HOME') }}/.kube/homelab"
 kubernetes_vip_url: "kubernetes.unicornafk.fr"
 kubernetes_homelab_ca_config_map: "homelab-ca"

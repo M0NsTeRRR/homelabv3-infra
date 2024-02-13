@@ -93,21 +93,16 @@
     validate: /usr/sbin/kea-dhcp6 -t %s
   notify: Restart isc-kea-dhcp6-server
 
-- name: Create ssl folder
+- name: Create required folder
   ansible.builtin.file:
-    name: /etc/kea/ssl
+    name: "{{ item }}"
     state: directory
     owner: _kea
     group: _kea
     mode: "0750"
-
-- name: Create /opt/kea folder
-  ansible.builtin.file:
-    name: /opt/kea
-    state: directory
-    owner: _kea
-    group: _kea
-    mode: "0750"
+  with_items:
+    - /etc/kea/ssl
+    - /opt/kea
 
 - name: Add CA cert
   ansible.builtin.copy:

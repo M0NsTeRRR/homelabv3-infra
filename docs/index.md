@@ -20,7 +20,7 @@ To start, I would like to thank all maintainers and contributors to open source 
     * [ ] Emails
 - [x] Eveything is automated with scripts, IaC, etc except :
     * [ ] Hypervisor installation but can be done with [netboot.xyz](https://netboot.xyz/)
-    * [ ] Networking hardware (routers, switchs)
+    * [ ] Networking hardware device configuration (routers, switchs)
 
 ## Roadmap
 
@@ -29,9 +29,8 @@ To start, I would like to thank all maintainers and contributors to open source 
     * [ ] Kubernetes policies rules
 - Monitoring/Logging/Alerting :
     * [ ] Kea DHCP
-    * [ ] PDNS rec/auth/dnsdist
-    * [ ] Nginx
-    * [ ] VM
+    * [ ] Node-exporter on VM
+    * [ ] Alerting system
 - Security :
     * [ ] Crowdsec
     * [ ] CSP policy

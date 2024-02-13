@@ -19,8 +19,8 @@
                         "max-ack-delay": 5000,
                         "max-unacked-clients": 5,
                         "trust-anchor": "/etc/kea/ssl/ca.crt",
-                        "cert-file": "/etc/kea/ssl/kea-fullchain.crt",
-                        "key-file": "/etc/kea/ssl/kea.key",
+                        "cert-file": "/etc/kea/ssl/{{ inventory_hostname }}-fullchain.crt",
+                        "key-file": "/etc/kea/ssl/{{ inventory_hostname }}.key",
                         "cert-required": true,
                         "peers": [
                             {% for host in ansible_play_hosts %}{

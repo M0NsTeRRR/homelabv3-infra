@@ -270,6 +270,7 @@ self_signed_cert_list:
     cert_remote_folder:
       - { path: /etc/nginx/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: nginx, group: nginx }
       - { path: /etc/dnsdist/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: _dnsdist, group: _dnsdist }
+      - { path: /etc/node_exporter/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: node_exporter, group: node_exporter }
     ownca_not_after: +365d
     upload_key: true
     generate_pkcs12: false
@@ -278,5 +279,6 @@ self_signed_cert_list:
     systemd_services:
       - { name: nginx, state: restarted }
       - { name: dnsdist, state: restarted }
+      - { name: node_exporter, state: restarted }
     force_renew: false
     tlsa: []

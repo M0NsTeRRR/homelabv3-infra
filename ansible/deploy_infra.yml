@@ -1,4 +1,10 @@
 ---
+- name: Configure global services
+  hosts: all
+  become: true
+  roles:
+    - node_exporter
+
 - name: Configure status infra
   hosts: status
   become: true

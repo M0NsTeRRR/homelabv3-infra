@@ -1,0 +1,11 @@
+---
+galaxy_info:
+  role_name: ntp
+  author: Ludovic Ortega
+  description: Install and configure node_exporter
+  license: CeCILL
+  min_ansible_version: "2.16.3"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy
