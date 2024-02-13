@@ -9,8 +9,8 @@
     friendly_name: "{{ item.pkcs12_friendly_name }}"
     passphrase: "{{ item.pkcs12_passphrase }}"
     mode: "0600"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
+    owner: "{{ lookup('env', 'USER') }}"
+    group: "{{ lookup('env', 'USER') }}"
     state: present
   delegate_to: localhost
   become: false

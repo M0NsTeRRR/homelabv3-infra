@@ -94,8 +94,8 @@
       ansible.builtin.file:
         state: directory
         name: "{{ certs_dir }}intermediate/{{ signing_certificate }}"
-        owner: "{{ ansible_user }}"
-        group: "{{ ansible_user }}"
+        owner: "{{ lookup('env', 'USER') }}"
+        group: "{{ lookup('env', 'USER') }}"
         mode: '0750'
 
     - name: Generate cert intermediate authority OpenSSL private key
@@ -140,8 +140,8 @@
       ansible.builtin.file:
         state: directory
         name: "{{ certs_dir }}{{ signing_certificate }}/{{ common_name }}"
-        owner: "{{ ansible_user }}"
-        group: "{{ ansible_user }}"
+        owner: "{{ lookup('env', 'USER') }}"
+        group: "{{ lookup('env', 'USER') }}"
         mode: '0750'
 
     - name: Generate client OpenSSL private key
@@ -181,8 +181,8 @@
       ansible.builtin.copy:
         dest: "{{ certs_dir }}{{ signing_certificate }}/{{ common_name }}/{{ common_name }}-fullchain.crt"
         content: "{{ ''.join(fullchain_cert.complete_chain) }}"
-        owner: "{{ ansible_user }}"
-        group: "{{ ansible_user }}"
+        owner: "{{ lookup('env', 'USER') }}"
+        group: "{{ lookup('env', 'USER') }}"
         mode: '0644'
 
     - name: Generate PKCS#12 file
