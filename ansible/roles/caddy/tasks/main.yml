@@ -20,7 +20,7 @@
   ansible.builtin.user:
     name: caddy
     system: true
-    home: /var/lib/caddy
+    create_home: false
     shell: /usr/sbin/nologin
     group: caddy
 

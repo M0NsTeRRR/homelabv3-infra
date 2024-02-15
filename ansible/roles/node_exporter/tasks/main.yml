@@ -17,7 +17,7 @@
   ansible.builtin.user:
     name: node_exporter
     system: true
-    home: /var/lib/node_exporter
+    create_home: false
     shell: /usr/sbin/nologin
     group: node_exporter
 
