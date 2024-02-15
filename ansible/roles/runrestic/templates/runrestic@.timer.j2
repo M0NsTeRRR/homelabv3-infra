@@ -3,6 +3,7 @@ Description=Run runrestic
 
 [Timer]
 OnCalendar={{ runrestic_systemd_calendar }}
+RandomizedDelaySec=1h
 Persistent=true
 
 [Install]

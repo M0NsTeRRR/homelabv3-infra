@@ -9,7 +9,7 @@
   ansible.builtin.user:
     name: runrestic
     system: true
-    create_home: true
+    create_home: false
     shell: /usr/sbin/nologin
     group: runrestic
 
