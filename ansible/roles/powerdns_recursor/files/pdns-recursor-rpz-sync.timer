@@ -3,6 +3,7 @@ Description=pdns recursor rpz sync cron
 
 [Timer]
 OnCalendar=daily
+RandomizedDelaySec=10m
 Persistent=true
 
 [Install]
