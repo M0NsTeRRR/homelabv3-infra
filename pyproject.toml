@@ -10,7 +10,7 @@ ansible = [
     "ansible-core==2.16.3",
     "ansible-lint==24.2.0",
     "dnspython==2.5.0",
-    "netaddr==1.0.0",
+    "netaddr==1.1.0",
     "cryptography==42.0.2",
     "passlib==1.7.4",
     "requests==2.31.0",
