@@ -127,15 +127,8 @@
     - Daemon-reload
     - Restart runrestic@.timer
 
-- name: Set runrestic acl to access backup folders
-  ansible.posix.acl:
-    path: "{{ item }}"
-    entity: runrestic
-    etype: user
-    permissions: rX
-    recursive: true
-    state: present
-  no_log: true
+- name: Set ACL permissions on files
+  ansible.builtin.include_tasks: set_acl.yml
   with_items: "{{ runrestic_acl_files }}"
 
 - name: Chown runrestic repository
