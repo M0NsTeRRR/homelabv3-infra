@@ -20,4 +20,4 @@ for repository in parsed_cfg["repositories"]:
     if p.returncode == 0:
         print("repo is already initialized")
     else:
-        subprocess.run(["/opt/runrestic/venv/bin/runrestic", "-c", args.config, "init"])
+        subprocess.run(["runrestic", "-c", args.config, "init"])
