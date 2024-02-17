@@ -1,24 +1,24 @@
 ---
 - name: Daemon-reload
-  ansible.builtin.systemd:
+  ansible.builtin.systemd_service:
     daemon_reload: true
 
 - name: Restart pdns-recursor
-  ansible.builtin.systemd:
+  ansible.builtin.systemd_service:
     name: pdns-recursor
     state: restarted
 
 - name: Enable pdns-recursor
-  ansible.builtin.systemd:
+  ansible.builtin.systemd_service:
     name: pdns-recursor
     enabled: true
 
 - name: Restart pdns-recursor-rpz-sync timer
-  ansible.builtin.systemd:
+  ansible.builtin.systemd_service:
     name: pdns-recursor-rpz-sync.timer
     state: restarted
 
 - name: Enable pdns-recursor-rpz-sync timer
-  ansible.builtin.systemd:
+  ansible.builtin.systemd_service:
     name: pdns-recursor-rpz-sync.timer
     enabled: true
