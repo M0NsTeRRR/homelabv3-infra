@@ -113,8 +113,7 @@
     owner: root
     group: root
     mode: "0640"
-  notify:
-    - Daemon-reload
+  notify: Daemon-reload
 
 - name: Configure runrestic@.timer
   ansible.builtin.template:

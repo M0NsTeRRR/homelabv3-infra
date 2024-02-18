@@ -4,6 +4,7 @@ nginx_package_state: latest
 # nginx_cryptography_version:
 nginx_cryptography_package_state: latest
 nginx_venv: "/tmp/venv_nginx"
+nginx_acme_local_folder: ""
 nginx_configuration: []
 nginx_auth_basic: {}
 

@@ -12,6 +12,7 @@
     - {port: "443", proto: tcp, comment: "Dnsdist DoH"}
     - {port: "443", proto: udp, comment: "Dnsdist DoH"}
     - {port: "853", proto: tcp, comment: "Dnsdist DoT"}
+    - {port: "853", proto: udp, comment: "Dnsdist DoQ"}
 
 - name: Add _dnsdist group
   ansible.builtin.group:

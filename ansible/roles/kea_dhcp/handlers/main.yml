@@ -1,24 +1,24 @@
 ---
 - name: Daemon-reload
-  ansible.builtin.systemd:
+  ansible.builtin.systemd_service:
     daemon_reload: true
 
 - name: Enable isc-kea-dhcp4-server
-  ansible.builtin.systemd:
+  ansible.builtin.systemd_service:
     name: isc-kea-dhcp4-server
     enabled: true
 
 - name: Enable isc-kea-dhcp6-server
-  ansible.builtin.systemd:
+  ansible.builtin.systemd_service:
     name: isc-kea-dhcp6-server
     enabled: true
 
 - name: Restart isc-kea-dhcp4-server
-  ansible.builtin.systemd:
+  ansible.builtin.systemd_service:
     name: isc-kea-dhcp4-server
     state: restarted
 
 - name: Restart isc-kea-dhcp6-server
-  ansible.builtin.systemd:
+  ansible.builtin.systemd_service:
     name: isc-kea-dhcp6-server
     state: restarted

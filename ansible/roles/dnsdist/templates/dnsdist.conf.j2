@@ -7,6 +7,9 @@ addDOHLocal('::', '/etc/dnsdist/ssl/{{ dnsdist_cert_filename }}', '/etc/dnsdist/
 addTLSLocal('0.0.0.0', '/etc/dnsdist/ssl/{{ dnsdist_cert_filename }}', '/etc/dnsdist/ssl/{{ dnsdist_key_filename }}')
 addTLSLocal('::', '/etc/dnsdist/ssl/{{ dnsdist_cert_filename }}', '/etc/dnsdist/ssl/{{ dnsdist_key_filename }}')
 
+addDOQLocal('0.0.0.0', '/etc/dnsdist/ssl/{{ dnsdist_cert_filename }}', '/etc/dnsdist/ssl/{{ dnsdist_key_filename }}')
+addDOQLocal('::', '/etc/dnsdist/ssl/{{ dnsdist_cert_filename }}', '/etc/dnsdist/ssl/{{ dnsdist_key_filename }}')
+
 setACL({'0.0.0.0/0', '::/0'})
 
 newServer({address='127.0.0.1:5300', pool='primary'})

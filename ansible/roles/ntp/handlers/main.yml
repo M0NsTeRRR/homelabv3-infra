@@ -1,14 +1,14 @@
 ---
 - name: Restart ntp
-  ansible.builtin.systemd:
+  ansible.builtin.systemd_service:
     name: ntp
     state: restarted
 
 - name: Daemon-reload
-  ansible.builtin.systemd:
+  ansible.builtin.systemd_service:
     daemon_reload: true
 
 - name: Enable ntp
-  ansible.builtin.systemd:
+  ansible.builtin.systemd_service:
     name: ntp
     enabled: true

@@ -1,6 +1,6 @@
 ---
 - name: Restart services that use SSL cert
-  ansible.builtin.systemd:
+  ansible.builtin.systemd_service:
     name: "{{ item.1.name }}"
     state: "{{ item.1.state }}"
   no_log: true
