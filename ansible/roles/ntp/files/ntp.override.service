@@ -1,5 +1,0 @@
-[Service]
-User=ntp
-Group=ntp
-AmbientCapabilities=CAP_NET_BIND_SERVICE,CAP_SYS_TIME
-CapabilityBoundingSet=CAP_NET_BIND_SERVICE,CAP_SYS_TIME

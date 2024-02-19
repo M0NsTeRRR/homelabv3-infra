@@ -32,34 +32,13 @@
     state: "{{ ntp_package_state }}"
   notify:
     - Enable ntp
-    - Daemon-reload
     - Restart ntp
 
 - name: Configure ntp server
   ansible.builtin.copy:
     src: ntp.conf
     dest: /etc/ntp.conf
-    owner: ntp
-    group: ntp
-    mode: "0600"
-  notify: Restart ntp
-
-- name: Create systemd service config folder
-  ansible.builtin.file:
-    name: /etc/systemd/system/ntp.d/
-    owner: "root"
-    group: "root"
-    mode: "0755"
-    state: directory
-
-- name: Create systemd service config file
-  ansible.builtin.copy:
-    src: ntp.override.service
-    dest: /etc/systemd/system/ntp.d/ntp.service
     owner: root
     group: root
-    mode: "0640"
-  notify:
-    - Daemon-reload
-    - Enable ntp
-    - Restart ntp
+    mode: "0644"
+  notify: Restart ntp
