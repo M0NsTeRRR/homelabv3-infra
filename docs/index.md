@@ -29,7 +29,6 @@ To start, I would like to thank all maintainers and contributors to open source 
     * [ ] Kubernetes policies rules
 - Monitoring/Logging/Alerting :
     * [ ] Kea DHCP
-    * [ ] Node-exporter on VM
     * [ ] Alerting system
 - Security :
     * [ ] Crowdsec
