@@ -77,7 +77,7 @@
 - name: Add CA cert
   ansible.builtin.copy:
     src: "{{ node_exporter_local_path_ca_certificate }}"
-    dest: /etc/node_exporter/ssl/ca.crt
+    dest: "/etc/node_exporter/ssl/{{ node_exporter_ca_filename }}"
     owner: node_exporter
     group: node_exporter
     mode: "0640"

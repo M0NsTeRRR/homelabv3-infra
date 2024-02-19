@@ -1,5 +1,5 @@
 tls_server_config:
-  cert_file: /etc/node_exporter/ssl/{{ inventory_hostname }}-fullchain.crt
-  key_file: /etc/node_exporter/ssl/{{ inventory_hostname }}.key
+  cert_file: /etc/node_exporter/ssl/{{ node_exporter_cert_filename }}
+  key_file: /etc/node_exporter/ssl/{{ node_exporter_key_filename }}
   client_auth_type: RequireAndVerifyClientCert
-  client_ca_file: /etc/node_exporter/ssl/ca.crt
+  client_ca_file: /etc/node_exporter/ssl/{{ node_exporter_ca_filename }}

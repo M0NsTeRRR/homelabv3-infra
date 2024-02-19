@@ -1,4 +1,7 @@
 ---
+node_exporter_cert_filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}-fullchain.crt"
+node_exporter_key_filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}.key"
+
 dnsdist_local_path_ca_certificate: "{{ ca_certificates_local_path_ca_certificate }}"
 dnsdist_cert_filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}-fullchain.crt"
 dnsdist_key_filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}.key"
@@ -275,6 +278,8 @@ self_signed_cert_list:
     upload_key: true
     generate_pkcs12: false
     subject_alt_name:
+      - "IP:{{ ansible_default_ipv4.address }}"
+      - "IP:{{ ansible_default_ipv6.address }}"
       - "email:{{ admin_email }}"
     systemd_services:
       - { name: nginx, state: restarted }
