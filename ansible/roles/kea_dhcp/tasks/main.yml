@@ -107,7 +107,7 @@
 - name: Add CA cert
   ansible.builtin.copy:
     src: "{{ kea_dhcp_local_path_ca_certificate }}"
-    dest: /etc/kea/ssl/ca.crt
+    dest: "/etc/kea/ssl/{{ kea_dhcp_ca_filename }}"
     owner: _kea
     group: _kea
     mode: "0640"

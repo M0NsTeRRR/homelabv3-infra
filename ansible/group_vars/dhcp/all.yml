@@ -3,6 +3,9 @@ kea_dhcp_group: dhcp
 kea_dhcp_dns_group: dns
 kea_dhcp_dns_domains: "{{ local_domains }}"
 kea_dhcp_local_path_ca_certificate: "{{ ca_certificates_local_path_ca_certificate }}"
+kea_dhcp_ca_filename: "ca.crt"
+kea_dhcp_cert_filename: "{{ inventory_hostname }}-fullchain.crt"
+kea_dhcp_key_filename: "{{ inventory_hostname }}.key"
 kea_dhcp_ipv4_subnets:
   - id: 1
     subnet: 192.168.20.0/24
