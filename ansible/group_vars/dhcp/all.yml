@@ -221,7 +221,7 @@ self_signed_cert_list:
       - { name: isc-kea-dhcp4-server, state: restarted }
       - { name: isc-kea-dhcp6-server, state: restarted }
       - { name: node_exporter, state: restarted }
-    force_renew: true
+    force_renew: false
     tlsa:
       - proto: tcp
         port: 8080
