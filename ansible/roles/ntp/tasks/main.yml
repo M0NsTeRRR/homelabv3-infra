@@ -41,7 +41,7 @@
     dest: /etc/ntp.conf
     owner: ntp
     group: ntp
-    mode: "0640"
+    mode: "0600"
   notify: Restart ntp
 
 - name: Create systemd service config folder
