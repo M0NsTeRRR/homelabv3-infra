@@ -213,12 +213,9 @@ self_signed_cert_list:
     upload_key: true
     generate_pkcs12: false
     subject_alt_name:
-      - "DNS:{{ groups[kea_dhcp_group][0] }}"
-      - "IP:{{ lookup('dig', groups[kea_dhcp_group][0]) }}"
-      - "IP:{{ lookup('dig', groups[kea_dhcp_group][0], 'qtype=AAAA') }}"
-      - "DNS:{{ groups[kea_dhcp_group][1] }}"
-      - "IP:{{ lookup('dig', groups[kea_dhcp_group][1]) }}"
-      - "IP:{{ lookup('dig', groups[kea_dhcp_group][1], 'qtype=AAAA') }}"
+      - "DNS:{{ inventory_hostname }}"
+      - "IP:{{ ansible_default_ipv4.address }}"
+      - "IP:{{ ansible_default_ipv6.address }}"
       - "email:{{ admin_email }}"
     systemd_services:
       - { name: isc-kea-dhcp4-server, state: restarted }
