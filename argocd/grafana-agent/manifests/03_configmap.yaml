@@ -185,6 +185,26 @@ data:
       scrape_timeout  = "5s"
     }
 
+    prometheus.scrape "node_exporter" {
+      targets = [
+        {"__scheme__" = "https", "__address__" = "dns1.unicornafk.fr:9100", "instance" = "dns1.unicornafk.fr"},
+        {"__scheme__" = "https", "__address__" = "dns2.unicornafk.fr:9100", "instance" = "dns2.unicornafk.fr"},
+        {"__scheme__" = "https", "__address__" = "dhcp1.unicornafk.fr:9100", "instance" = "dhcp1.unicornafk.fr"},
+        {"__scheme__" = "https", "__address__" = "dhcp2.unicornafk.fr:9100", "instance" = "dhcp2.unicornafk.fr"},
+      ]
+      metrics_path    = "/metrics"
+      forward_to = [prometheus.remote_write.default.receiver]
+      tls_config {
+        cert_file = "/mtls/client/tls.crt"
+        key_file  = "/mtls/client/tls.key"
+      }
+      clustering {
+        enabled = true
+      }
+      scrape_interval = "30s"
+      scrape_timeout  = "5s"
+    }
+
     prometheus.scrape "blackbox_ingresses" {
       targets    = discovery.relabel.ingresses.output
       forward_to = [prometheus.remote_write.default.receiver]

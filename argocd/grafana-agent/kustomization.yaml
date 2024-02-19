@@ -3,9 +3,10 @@ kind: Kustomization
 namespace: grafana-agent
 
 resources:
-  - manifests/01_external_secret.yaml
-  - manifests/02_configmap.yaml
-  - manifests/03_prometheus_rule.yaml
+  - manifests/01_certificate.yaml
+  - manifests/02_external_secret.yaml
+  - manifests/03_configmap.yaml
+  - manifests/04_prometheus_rule.yaml
 
 helmCharts:
 - name: grafana-agent
