@@ -6,7 +6,7 @@ This is the third version of my homelab :rocket:
 ~~v2 : [Homelab-infra](https://github.com/M0NsTeRRR/Homelab-infra)~~  
 v3 : [homelabv3-infra](https://github.com/M0NsTeRRR/homelabv3-infra)
 
-To start, I would like to thank all maintainers and contributors to open source projects that make my lab possible ! 
+To start, I would like to thank all maintainers and contributors to open source projects that make my lab possible !
 
 ## What are the key features
 
@@ -28,12 +28,12 @@ To start, I would like to thank all maintainers and contributors to open source 
     * [ ] Kubernetes node firewalling
     * [ ] Kubernetes policies rules
 - Monitoring/Logging/Alerting :
-    * [ ] Kea DHCP
+    * [ ] Kea DHCP (need Docker image, PR created https://github.com/mweinelt/kea-exporter/pull/40)
     * [ ] Alerting system
 - Security :
     * [ ] Crowdsec
     * [ ] CSP policy
     * [ ] Implement systemd-resolved dnssec validation (DS record not supported by my current registrar)
 - Misc :
-    * [ ] Autounseal vault
+    * [ ] Autounseal vault (issue opened to support kubernetes proxy verb https://github.com/lrstanley/vault-unseal/issues/41)
     * [ ] Fix DHCPv6
