@@ -20,4 +20,4 @@ spec:
       encoding: 'UTF8'
 
   storage:
-    size: 3Gi
+    size: 10Gi
