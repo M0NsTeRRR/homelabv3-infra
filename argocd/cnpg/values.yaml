@@ -1,2 +1,4 @@
 monitoring:
-  enablePodMonitor: true
+  podMonitorEnabled: true
+  grafanaDashboard:
+    create: true
