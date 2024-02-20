@@ -246,6 +246,7 @@ powerdns_authoritative_records:
 
 nginx_configuration:
   - server_name: "{{ hostvars[inventory_hostname].hostname[:-1] }}"
+    ssl_verify_client: optional
     additional_server_name:
       - "{{ ansible_default_ipv4.address }}"
       - "{{ ansible_default_ipv6.address }}"
@@ -254,10 +255,13 @@ nginx_configuration:
         proxy_pass: http://127.0.0.1:8081/api
       - location: /auth/metrics
         proxy_pass: http://127.0.0.1:8081/metrics
+        ssl_client_verify: true
       - location: /rec/metrics
         proxy_pass: http://127.0.0.1:8082/metrics
+        ssl_client_verify: true
       - location: /dnsdist/metrics
         proxy_pass: http://127.0.0.1:8083/metrics
+        ssl_client_verify: true
     enable_content_security: true
     http_redirection: false
     ssl_port: 9443

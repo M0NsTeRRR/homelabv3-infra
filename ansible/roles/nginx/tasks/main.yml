@@ -64,6 +64,15 @@
     - /var/www/html
   notify: Restart nginx
 
+- name: Add CA cert
+  ansible.builtin.copy:
+    src: "{{ nginx_local_path_ca_certificate }}"
+    dest: "/etc/nginx/ssl/ca.crt"
+    owner: nginx
+    group: nginx
+    mode: "0640"
+  notify: Restart nginx
+
 - name: Configure default nginx configuration
   ansible.builtin.copy:
     src: nginx.conf

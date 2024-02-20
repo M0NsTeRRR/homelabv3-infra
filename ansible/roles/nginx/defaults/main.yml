@@ -3,6 +3,7 @@
 nginx_package_state: latest
 # nginx_cryptography_version:
 nginx_cryptography_package_state: latest
+nginx_local_path_ca_certificate: /tmp/nginx
 nginx_venv: "/tmp/venv_nginx"
 nginx_acme_local_folder: ""
 nginx_configuration: []
@@ -12,9 +13,11 @@ nginx_auth_basic: {}
 # nginx_configuration:
 #   - server_name: "{{ inventory_hostname }}"
 #     # optional
+#     ssl_verify_client: optional
 #     additional_server_name:
 #        - "192.168.0.1"
 #     - location: /
+#        ssl_client_verify: true
 #        proxy_pass: "http://127.0.0.1:8080"
 #        proxy_headers:
 #          X-Server-URL: https://$server_name/

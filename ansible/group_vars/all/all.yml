@@ -12,6 +12,8 @@ node_exporter_ca_filename: "ca.crt"
 node_exporter_cert_filename: "{{ inventory_hostname }}-fullchain.crt"
 node_exporter_key_filename: "{{ inventory_hostname }}.key"
 
+nginx_local_path_ca_certificate: "{{ ca_certificates_local_path_ca_certificate }}"
+
 kubernetes_localhost_kubeconfig_path: "{{ lookup('env', 'HOME') }}/.kube/homelab"
 kubernetes_vip_url: "kubernetes.unicornafk.fr"
 kubernetes_homelab_ca_config_map: "homelab-ca"
