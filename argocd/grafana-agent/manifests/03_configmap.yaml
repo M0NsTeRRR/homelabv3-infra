@@ -142,6 +142,10 @@ data:
         username = nonsensitive(remote.kubernetes.secret.credentials.data["PDNS_AUTH_USERNAME"])
         password = remote.kubernetes.secret.credentials.data["PDNS_AUTH_PASSWORD"]
       }
+      tls_config {
+        cert_file = "/mtls/client/tls.crt"
+        key_file  = "/mtls/client/tls.key"
+      }
       clustering {
         enabled = true
       }
@@ -160,6 +164,10 @@ data:
         username = nonsensitive(remote.kubernetes.secret.credentials.data["PDNS_REC_USERNAME"])
         password = remote.kubernetes.secret.credentials.data["PDNS_REC_PASSWORD"]
       }
+      tls_config {
+        cert_file = "/mtls/client/tls.crt"
+        key_file  = "/mtls/client/tls.key"
+      }
       clustering {
         enabled = true
       }
@@ -177,6 +185,10 @@ data:
       basic_auth {
         username = nonsensitive(remote.kubernetes.secret.credentials.data["DNSDIST_USERNAME"])
         password = remote.kubernetes.secret.credentials.data["DNSDIST_PASSWORD"]
+      }
+      tls_config {
+        cert_file = "/mtls/client/tls.crt"
+        key_file  = "/mtls/client/tls.key"
       }
       clustering {
         enabled = true
