@@ -20,7 +20,7 @@ jobs:
       - name: Check Terraform fmt
         run: terraform fmt -recursive terraform/modules
       - name: Setup Terragrunt
-        uses: autero1/action-terragrunt@v1.3.2
+        uses: autero1/action-terragrunt@v3.0.1
         with:
           terragrunt_version: latest
       - name: Check Terragrunt fmt
