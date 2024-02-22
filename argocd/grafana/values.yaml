@@ -78,8 +78,8 @@ dashboards:
       revision: 1
       datasource: prometheus
     Argocd-application:
-      gnetId: 19974
-      revision: 1
+      gnetId: 29974
+      revision: 2
       datasource: prometheus
     Argocd-notifications:
       gnetId: 19975
