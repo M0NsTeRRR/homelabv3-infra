@@ -82,8 +82,8 @@ dashboards:
       revision: 2
       datasource: prometheus
     Argocd-notifications:
-      gnetId: 19975
-      revision: 1
+      gnetId: 29975
+      revision: 2
       datasource: prometheus
     External-dns:
       gnetId: 15038
