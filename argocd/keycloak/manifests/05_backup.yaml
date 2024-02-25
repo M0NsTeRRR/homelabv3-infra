@@ -1,42 +1,13 @@
 ---
 apiVersion: k8up.io/v1
-kind: PreBackupPod
-metadata:
-  name: postgres-backup
-spec:
-  backupCommand: sh -c 'pg_dump -h keycloak-cluster-rw --clean'
-  pod:
-    spec:
-      containers:
-        - name: postgres-dump
-          image: postgres:16.0
-          command:
-            - 'sleep'
-            - 'infinity'
-          env:
-            - name: PGUSER
-              valueFrom:
-                secretKeyRef:
-                  name: keycloak-vault
-                  key: POSTGRES_USER
-            - name: PGPASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: keycloak-vault
-                  key: POSTGRES_PASSWORD
-            - name: PGDATABASE
-              value: keycloak
-      volumes:
-        - name: postgres-vault
-          secret:
-            secretName: postgres-vault
----
-apiVersion: k8up.io/v1
 kind: Schedule
 metadata:
   name: backup-schedule
 spec:
   backend:
+    envFrom:
+      - secretRef:
+          name: "backup-app-vault"
     repoPasswordSecretRef:
       name: backup-vault
       key: RESTIC_PASSWORD
