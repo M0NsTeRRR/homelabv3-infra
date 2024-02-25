@@ -3,7 +3,10 @@ apiVersion: k8up.io/v1
 kind: Schedule
 metadata:
   name: backup-schedule
+  namespace: keycloak
 spec:
+  podSecurityContext:
+    runAsUser: 0
   backend:
     envFrom:
       - secretRef:
@@ -21,7 +24,7 @@ spec:
         name: backup-vault
         key: S3_SECRET_KEY
   backup:
-    schedule: '0 2 * * *'
+    schedule: '2 0 * * *'
     failedJobsHistoryLimit: 3
     successfulJobsHistoryLimit: 2
     promURL: "http://prometheus-pushgateway.prometheus-pushgateway.svc.cluster.local:9091"
