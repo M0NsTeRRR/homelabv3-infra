@@ -74,17 +74,23 @@ dashboards:
       revision: 7
       datasource: prometheus
     Argocd-operational:
-      gnetId: 29993
+      gnetId: 19993
       revision: 2
-      datasource: prometheus
+      datasource:
+        - name: DS_PROMETHEUS
+          value: prometheus
     Argocd-application:
-      gnetId: 29974
+      gnetId: 19974
       revision: 2
-      datasource: prometheus
+      datasource:
+        - name: DS_PROMETHEUS
+          value: prometheus
     Argocd-notifications:
-      gnetId: 29975
+      gnetId: 19975
       revision: 2
-      datasource: prometheus
+      datasource:
+        - name: DS_PROMETHEUS
+          value: prometheus
     External-dns:
       gnetId: 15038
       revision: 3
