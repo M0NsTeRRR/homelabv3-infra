@@ -12,5 +12,5 @@ helmCharts:
   releaseName: snmp-exporter
   namespace: snmp-exporter
   repo: https://prometheus-community.github.io/helm-charts
-  version: 1.8.2
+  version: 2.1.0
   valuesFile: values.yaml
