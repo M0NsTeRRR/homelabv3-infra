@@ -35,7 +35,7 @@ data:
     }
 
     // discovery
-    prometheus.exporter.agent "agent" {}
+    prometheus.exporter.self "agent" {}
 
     discovery.kubernetes "ingresses" {
       role = "ingress"
@@ -122,7 +122,7 @@ data:
 
     // prometheus scrape
     prometheus.scrape "agent" {
-      targets    = prometheus.exporter.agent.agent.targets
+      targets    = prometheus.exporter.self.agent.targets
       forward_to = [prometheus.remote_write.default.receiver]
       clustering {
         enabled = true
