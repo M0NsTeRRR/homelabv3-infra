@@ -1,5 +1,4 @@
 prometheus:
-  rbacPrometheus: false
   serviceMonitor:
     enabled: true
   prometheusRule:
