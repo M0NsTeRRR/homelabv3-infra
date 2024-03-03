@@ -1,0 +1,24 @@
+---
+# datasource=github-tags depName=go-acme/lego
+lego_version: 4.15.0
+lego_force_install: false
+lego_builtin_webserver: false
+lego_systemd_calendar: "*-*-* 0:00:00"
+lego_acme_url: "https://acme-v02.api.letsencrypt.org/directory"
+lego_account_email: ""
+lego_renew_days: "7"
+lego_certificates: {}
+
+# lego_certificates:
+#   test:
+#     domain: test.example.fr
+#     san:
+#       - test2.example.fr
+#     destinations:
+#       - path: /etc/node_exporter/ssl
+#         filename: test.example.fr
+#         owner: nginx
+#         group: nginx
+#     systemd_services:
+#       - name: nginx
+#         state: restarted

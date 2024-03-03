@@ -1,0 +1,17 @@
+#jinja2: lstrip_blocks: "True"
+{
+    "general": {
+        "server": "{{ lego_acme_url }}",
+        "account_email": "{{ lego_account_email }}",
+        "days": "{{ lego_renew_days }}",
+        "lego_config_folder": "/etc/lego"{% if not lego_builtin_webserver %},
+        "webroot": "/var/www/lego"
+        {% endif %}
+    },
+    "certificate": {
+        "domain": "{{ item.domain }}",
+        "san": {{ item.san | to_nice_json }}
+    },
+    "destinations": {{ item.destinations | to_nice_json }},
+    "systemd_services": {{ item.systemd_services | to_nice_json }}
+}

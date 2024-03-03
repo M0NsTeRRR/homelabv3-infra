@@ -266,6 +266,19 @@ nginx_configuration:
     http_redirection: false
     ssl_port: 9443
 
+lego_builtin_webserver: false
+lego_certificates:
+  - domain: "{{ inventory_hostname }}"
+    san: []
+    destinations:
+      - { path: /etc/nginx/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: nginx, group: nginx }
+      - { path: /etc/dnsdist/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: _dnsdist, group: _dnsdist }
+      - { path: /etc/node_exporter/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: node_exporter, group: node_exporter }
+    systemd_services:
+      - { name: nginx, state: restarted }
+      - { name: dnsdist, state: restarted }
+      - { name: node_exporter, state: restarted }
+
 self_signed_cert_list:
   - common_name: "{{ hostvars[inventory_hostname].hostname[:-1] }}"
     country: "{{ country }}"
@@ -274,20 +287,14 @@ self_signed_cert_list:
     intermediate_cert_local_path: "{{ certs_dir_role_path }}intermediate/homelab/homelab.crt"
     intermediate_private_local_path: "{{ certs_dir_role_path }}intermediate/homelab/homelab.key"
     intermediate_private_passphrase: "{{ ca_private_passphrase }}"
-    cert_remote_folder:
-      - { path: /etc/nginx/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: nginx, group: nginx }
-      - { path: /etc/dnsdist/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: _dnsdist, group: _dnsdist }
-      - { path: /etc/node_exporter/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: node_exporter, group: node_exporter }
-    ownca_not_after: +365d
+    cert_remote_folder: "{{ lego_certificates[0].destination }}"
+    ownca_not_after: +30d
     upload_key: true
     generate_pkcs12: false
     subject_alt_name:
       - "IP:{{ ansible_default_ipv4.address }}"
       - "IP:{{ ansible_default_ipv6.address }}"
       - "email:{{ admin_email }}"
-    systemd_services:
-      - { name: nginx, state: restarted }
-      - { name: dnsdist, state: restarted }
-      - { name: node_exporter, state: restarted }
+    systemd_services: "{{ lego_certificates[0].systemd_services }}"
     force_renew: false
     tlsa: []

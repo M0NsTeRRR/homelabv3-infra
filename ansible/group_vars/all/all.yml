@@ -7,10 +7,19 @@ certs_dir_role_path: "{{ root_dir_role_path }}ssl/"
 ca_certificates_local_path_ca_certificate: "{{ certs_dir_role_path }}unicornafk.crt"
 ca_certificates_certs_dir: "{{ certs_dir_role_path }}"
 
+ufw_additional_rules:
+  - { port: "8200", proto: "tcp", direction: "out", to_ip: "192.18.10.102", comment: "Vault HTTPS ACME" }
+  - { port: "8200", proto: "tcp", direction: "out", to_ip: "2a0c:b641:2c0:110::102", comment: "Vault HTTPS ACME" }
+
 node_exporter_local_path_ca_certificate: "{{ ca_certificates_local_path_ca_certificate }}"
 node_exporter_ca_filename: "ca.crt"
 node_exporter_cert_filename: "{{ inventory_hostname }}-fullchain.crt"
 node_exporter_key_filename: "{{ inventory_hostname }}.key"
+
+vault_url: "https://vault.unicornafk.fr:8200"
+
+lego_account_email: "{{ monitoring_email }}"
+lego_acme_url: "{{ vault_url }}/v1/pki/acme/directory"
 
 nginx_local_path_ca_certificate: "{{ ca_certificates_local_path_ca_certificate }}"
 

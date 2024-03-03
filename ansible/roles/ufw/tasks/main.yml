@@ -29,16 +29,19 @@
     rule: allow
     port: "{{ item.port }}"
     proto: "{{ item.proto }}"
+    to_ip: "{{ item.to_ip | default('any') }}"
     comment: "{{ item.comment }} (ansible_managed)"
-  with_items:
-    - { port: "22", proto: "tcp", direction: "in", comment: "SSH" }
-    - { port: "53", proto: "tcp", direction: "out", comment: "DNS" }
-    - { port: "53", proto: "udp", direction: "out", comment: "DNS" }
-    - { port: "853", proto: "tcp", direction: "out", comment: "DoT" }
-    - { port: "123", proto: "tcp", direction: "out", comment: "NTP" }
-    - { port: "80", proto: "tcp", direction: "out", comment: "HTTP" }
-    - { port: "443", proto: "tcp", direction: "out", comment: "HTTPS/DoT" }
-    - { port: "443", proto: "udp", direction: "out", comment: "HTTPS/DoT" }
+  with_items: "{{ default_rules + ufw_additional_rules }}"
+  vars:
+    default_rules:
+      - { port: "22", proto: "tcp", direction: "in", comment: "SSH" }
+      - { port: "53", proto: "tcp", direction: "out", comment: "DNS" }
+      - { port: "53", proto: "udp", direction: "out", comment: "DNS" }
+      - { port: "853", proto: "tcp", direction: "out", comment: "DoT" }
+      - { port: "123", proto: "tcp", direction: "out", comment: "NTP" }
+      - { port: "80", proto: "tcp", direction: "out", comment: "HTTP" }
+      - { port: "443", proto: "tcp", direction: "out", comment: "HTTPS/DoT" }
+      - { port: "443", proto: "udp", direction: "out", comment: "HTTPS/DoT" }
 
 - name: Allow outgoing ICMP/Traceroute request in before.rules
   ansible.builtin.blockinfile:

@@ -4,6 +4,7 @@
   become: true
   roles:
     - node_exporter
+    - lego
 
 - name: Configure status infra
   hosts: status

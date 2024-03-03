@@ -1,0 +1,10 @@
+---
+- name: Daemon-reload
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+
+- name: Enable lego@.timer
+  ansible.builtin.systemd_service:
+    name: "lego@{{ item.key }}.timer"
+    enabled: true
+  with_items: "{{ lego_certificates }}"

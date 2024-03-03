@@ -1,0 +1,101 @@
+---
+- name: Create lego required folders
+  ansible.builtin.file:
+    name: "{{ item }}"
+    state: directory
+    owner: root
+    group: root
+    mode: "0700"
+  with_items: "{{ default_folders + (['/etc/lego/'] | product(domains_list) | map('join') | list) }}"
+  vars:
+    domains_list: "{{ lego_certificates | map(attribute='domain') }}"
+    default_folders:
+      - /etc/lego/
+      - /opt/lego
+
+- name: Create lego ACME folder
+  ansible.builtin.file:
+    name: /var/www/lego
+    state: directory
+    owner: nginx
+    group: nginx
+    mode: "0740"
+  when: not lego_builtin_webserver
+
+- name: Check if lego is already installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/lego
+  register: lego
+
+- name: Detect machine architecture
+  ansible.builtin.set_fact:
+    arch: "{% if ansible_architecture == 'aarch64' %}arm64{% else %}amd64{% endif %}"
+  when: not lego.stat.exists or lego_force_install
+
+- name: Download last version of lego
+  ansible.builtin.get_url:
+    url: "https://github.com/go-acme/lego/releases/download/v{{ lego_version }}/lego_v{{ lego_version }}_{{ ansible_system | lower }}_{{ arch }}.tar.gz"
+    checksum: "sha256:https://github.com/go-acme/lego/releases/download/v{{ lego_version }}/lego_{{ lego_version }}_checksums.txt"
+    dest: /tmp/lego.tar.gz
+    owner: root
+    group: root
+    mode: "0700"
+  when: not lego.stat.exists or lego_force_install
+
+- name: Extract latest binary of lego
+  ansible.builtin.unarchive:
+    src: /tmp/lego.tar.gz
+    dest: /opt/lego
+    owner: root
+    group: root
+    mode: "0700"
+    remote_src: true
+  when: not lego.stat.exists or lego_force_install
+
+- name: Copy lego binary to /usr/local/bin
+  ansible.builtin.copy:
+    src: "/opt/lego/lego"
+    dest: /usr/local/bin/lego
+    owner: root
+    group: root
+    mode: "0700"
+    remote_src: true
+  notify: Restart lego.service
+  when: not lego.stat.exists or lego_force_install
+
+- name: Copy lego renew script
+  ansible.builtin.copy:
+    src: renew.py
+    dest: /opt/lego/renew.py
+    owner: root
+    group: root
+    mode: "0740"
+
+- name: Configure lego bootstrap script
+  ansible.builtin.template:
+    src: config.json.j2
+    dest: /etc/lego/{{ item.domain }}/config.json
+    owner: root
+    group: root
+    mode: "0640"
+  with_items: "{{ lego_certificates }}"
+
+- name: Configure lego@.service
+  ansible.builtin.copy:
+    src: lego@.service
+    dest: /etc/systemd/system/lego@.service
+    owner: root
+    group: root
+    mode: "0640"
+  notify: Daemon-reload
+
+- name: Configure lego@.timer
+  ansible.builtin.template:
+    src: lego@.timer.j2
+    dest: /etc/systemd/system/lego@.timer
+    owner: root
+    group: root
+    mode: "0640"
+  notify:
+    - Daemon-reload
+    - Enable lego@.timer

@@ -1,0 +1,10 @@
+[Unit]
+Description=Run lego
+
+[Timer]
+OnCalendar={{ lego_systemd_calendar }}
+RandomizedDelaySec=10m
+Persistent=true
+
+[Install]
+WantedBy=timers.target

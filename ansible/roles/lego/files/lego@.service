@@ -1,0 +1,15 @@
+[Unit]
+Description=Lego
+After=network-online.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+ExecStart=/opt/lego/renew.py \
+    --config /etc/lego/%I/config.json
+RestartSec=10
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -1,3 +1,8 @@
 ---
 # ufw_version:
 ufw_package_state: latest
+ufw_additional_rules: []
+
+# ufw_additional_rules:
+#   # to_ip is optional
+#   - { port: "8200", proto: "tcp", direction: "out", to_ip: "192.18.10.101", comment: "Vault ACME" }
