@@ -201,6 +201,18 @@ kea_dhcp_ipv6_ntp_servers:
 kea_dhcp_ipv4_unifi_controller: 192.168.20.50
 kea_dhcp_ipv6_unifi_controller: 2a0c:b641:02c0:120::50
 
+lego_builtin_webserver: true
+lego_certificates:
+  - domain: "{{ inventory_hostname }}"
+    san: []
+    destinations:
+      - { path: /etc/kea/ssl, filename: "{{ inventory_hostname }}", owner: _kea, group: _kea }
+      - { path: /etc/node_exporter/ssl, filename: "{{ inventory_hostname }}", owner: node_exporter, group: node_exporter }
+    systemd_services:
+      - { name: isc-kea-dhcp4-server, state: restarted }
+      - { name: isc-kea-dhcp6-server, state: restarted }
+      - { name: node_exporter, state: restarted }
+
 self_signed_cert_list:
   - common_name: "{{ inventory_hostname }}"
     country: "{{ country }}"
@@ -209,10 +221,8 @@ self_signed_cert_list:
     intermediate_cert_local_path: "{{ certs_dir_role_path }}intermediate/homelab/homelab.crt"
     intermediate_private_local_path: "{{ certs_dir_role_path }}intermediate/homelab/homelab.key"
     intermediate_private_passphrase: "{{ ca_private_passphrase }}"
-    cert_remote_folder:
-      - { path: /etc/kea/ssl, filename: "{{ inventory_hostname }}", owner: _kea, group: _kea }
-      - { path: /etc/node_exporter/ssl, filename: "{{ inventory_hostname }}", owner: node_exporter, group: node_exporter }
-    ownca_not_after: +365d
+    cert_remote_folder: "{{ lego_certificates[0].destination }}"
+    ownca_not_after: +30d
     upload_key: true
     generate_pkcs12: false
     subject_alt_name:
@@ -220,10 +230,7 @@ self_signed_cert_list:
       - "IP:{{ ansible_default_ipv4.address }}"
       - "IP:{{ ansible_default_ipv6.address }}"
       - "email:{{ admin_email }}"
-    systemd_services:
-      - { name: isc-kea-dhcp4-server, state: restarted }
-      - { name: isc-kea-dhcp6-server, state: restarted }
-      - { name: node_exporter, state: restarted }
+    systemd_services: "{{ lego_certificates[0].systemd_services }}"
     force_renew: false
     tlsa:
       - proto: tcp
