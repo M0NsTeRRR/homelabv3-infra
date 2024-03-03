@@ -5,12 +5,13 @@ node_exporter_key_filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}.ke
 dnsdist_local_path_ca_certificate: "{{ ca_certificates_local_path_ca_certificate }}"
 dnsdist_cert_filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}-fullchain.crt"
 dnsdist_key_filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}.key"
+dnsdist_doh_proxified: true
 
 powerdns_recursor_zones: '{{ local_domains }}'
 powerdns_recursor_reverse_zones: '{{ reverse_zones }}'
 
 powerdns_authoritative_rname: "{{ admin_email | replace('@', '.') }}."
-powerdns_authoritative_api_base_url: "https://{{ ansible_default_ipv4.address }}:9443"
+powerdns_authoritative_api_base_url: "https://{{ ansible_default_ipv4.address }}"
 powerdns_authoritative_ca_path: "{{ ca_certificates_local_path_ca_certificate }}"
 powerdns_authoritative_domains: '{{ local_domains }}'
 powerdns_authoritative_subdomains: '{{ subdomains }}'
@@ -244,6 +245,7 @@ powerdns_authoritative_records:
     cname: dhcp2.unicornafk.fr.
     rdns: false
 
+nginx_acme_local_folder: "/var/www/lego"
 nginx_configuration:
   - server_name: "{{ hostvars[inventory_hostname].hostname[:-1] }}"
     ssl_verify_client: optional
@@ -251,6 +253,8 @@ nginx_configuration:
       - "{{ ansible_default_ipv4.address }}"
       - "{{ ansible_default_ipv6.address }}"
     locations:
+      - location: /dns-query
+        proxy_pass: http://127.0.0.1:8053/dns-query
       - location: /api
         proxy_pass: http://127.0.0.1:8081/api
       - location: /auth/metrics
@@ -264,11 +268,11 @@ nginx_configuration:
         ssl_client_verify: true
     enable_content_security: true
     http_redirection: false
-    ssl_port: 9443
+    ssl_port: 443
 
 lego_builtin_webserver: false
 lego_certificates:
-  - domain: "{{ inventory_hostname }}"
+  - domain: "{{ hostvars[inventory_hostname].hostname[:-1] }}"
     san: []
     destinations:
       - { path: /etc/nginx/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: nginx, group: nginx }

@@ -3,6 +3,7 @@
 lego_version: 4.15.0
 lego_force_install: false
 lego_builtin_webserver: false
+lego_acme_folder: /var/www/lego
 lego_systemd_calendar: "*-*-* 0:00:00"
 lego_acme_url: "https://acme-v02.api.letsencrypt.org/directory"
 lego_account_email: ""

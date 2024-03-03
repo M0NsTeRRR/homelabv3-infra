@@ -15,7 +15,7 @@
 
 - name: Create lego ACME folder
   ansible.builtin.file:
-    name: /var/www/lego
+    name: "{{ lego_acme_folder }}"
     state: directory
     owner: nginx
     group: nginx

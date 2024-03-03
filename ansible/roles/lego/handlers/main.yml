@@ -3,8 +3,15 @@
   ansible.builtin.systemd_service:
     daemon_reload: true
 
+- name: Restart lego.service # noqa: ignore-errors
+  ansible.builtin.systemd_service:
+    name: "lego@{{ item.domain }}.service"
+    state: restarted
+  ignore_errors: true
+  with_items: "{{ lego_certificates }}"
+
 - name: Enable lego@.timer
   ansible.builtin.systemd_service:
-    name: "lego@{{ item.key }}.timer"
+    name: "lego@{{ item.domain }}.timer"
     enabled: true
   with_items: "{{ lego_certificates }}"

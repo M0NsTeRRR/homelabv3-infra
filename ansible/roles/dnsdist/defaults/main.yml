@@ -9,3 +9,4 @@ dnsdist_ca_filename: "ca.crt"
 dnsdist_cert_filename: "example.fr.crt"
 dnsdist_key_filename: "example.fr.key"
 dnsdist_api_key: api_key
+dnsdist_doh_proxified: false

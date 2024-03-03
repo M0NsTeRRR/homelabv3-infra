@@ -1,8 +1,14 @@
 addLocal('0.0.0.0')
 addLocal('::')
 
-addDOHLocal('0.0.0.0', '/etc/dnsdist/ssl/{{ dnsdist_cert_filename }}', '/etc/dnsdist/ssl/{{ dnsdist_key_filename }}')
-addDOHLocal('::', '/etc/dnsdist/ssl/{{ dnsdist_cert_filename }}', '/etc/dnsdist/ssl/{{ dnsdist_key_filename }}')
+
+{% if dnsdist_doh_proxified %}
+addDOHLocal('127.0.0.1:8053')
+addDOHLocal('[::1]:8053')
+{% else %}
+addDOHLocal('0.0.0.0', '/etc/dnsdist/ssl/{{ dnsdist_cert_filename }}', '/etc/dnsdist/ssl/{{ dnsdist_key_filename }}', {customResponseHeaders={["alt-svc"]="h3=\":443\""{{ "}}" }})
+addDOHLocal('::', '/etc/dnsdist/ssl/{{ dnsdist_cert_filename }}', '/etc/dnsdist/ssl/{{ dnsdist_key_filename }}', {customResponseHeaders={["alt-svc"]="h3=\":443\""{{ "}}" }})
+{% endif %}
 
 addTLSLocal('0.0.0.0', '/etc/dnsdist/ssl/{{ dnsdist_cert_filename }}', '/etc/dnsdist/ssl/{{ dnsdist_key_filename }}')
 addTLSLocal('::', '/etc/dnsdist/ssl/{{ dnsdist_cert_filename }}', '/etc/dnsdist/ssl/{{ dnsdist_key_filename }}')

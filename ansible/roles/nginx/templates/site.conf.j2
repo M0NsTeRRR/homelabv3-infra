@@ -79,4 +79,17 @@ server {
     return 301 https://$server_name$request_uri;
   }
 }
+{% elif nginx_acme_local_folder is defined %}
+server {
+  listen 80;
+  listen [::]:80;
+
+  server_name {{ item.server_name }};
+
+  {% if nginx_acme_local_folder is defined %}
+  location /.well-known/acme-challenge {
+    root {{ nginx_acme_local_folder }};
+  }
+  {% endif %}
+}
 {% endif %}

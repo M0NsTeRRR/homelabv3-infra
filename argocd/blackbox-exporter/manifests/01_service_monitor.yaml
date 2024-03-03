@@ -229,7 +229,7 @@ spec:
         module:
           - http_2xx
         target:
-          - https://dns1.unicornafk.fr:9443
+          - https://dns1.unicornafk.fr
       path: /probe
       port: http
       scrapeTimeout: 5s
@@ -249,7 +249,7 @@ spec:
         module:
           - http_2xx
         target:
-          - https://dns2.unicornafk.fr:9443
+          - https://dns2.unicornafk.fr
       path: /probe
       port: http
       scrapeTimeout: 5s
