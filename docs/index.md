@@ -14,6 +14,7 @@ To start, I would like to thank all maintainers and contributors to open source 
 - [x] Dual stacks IPv4/IPv6
 - [x] Privacy
 - [x] Security
+- [x] PKI with certificates autorenew
 - [x] Monitoring, logging and alerting
 - [x] Offsite encrypted backup to S3 multi A-Z
 - [x] Manage everything except :
