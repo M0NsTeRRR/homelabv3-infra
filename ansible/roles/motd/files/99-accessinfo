@@ -1,5 +1,5 @@
-#!/bin/bash
-echo -e "\e[1;31m
+#!/bin/sh
+echo "\e[1;31m
 
   UNAUTHORIZED ACCESS TO THIS DEVICE IS PROHIBITED
 
