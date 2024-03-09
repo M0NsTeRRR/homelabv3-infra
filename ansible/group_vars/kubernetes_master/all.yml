@@ -154,7 +154,8 @@ public_vault_datas:
     data:
       allowed_domains: unicornafk.fr
       allow_subdomains: true
-      ttl: 720h
+      ttl: 90d
+      max_ttl: 365d
       key_type: rsa
       key_bits: 4096
       signature_bits: 512
