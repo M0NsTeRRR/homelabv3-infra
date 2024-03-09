@@ -33,15 +33,15 @@ systemd_timesyncd_ntp:
 
 systemd_resolved_dnssec: false
 systemd_resolved_dns:
-  - 192.168.10.21
-  - 192.168.10.22
-  - 2a0c:b641:2c0:110::21
-  - 2a0c:b641:2c0:110::22
+  - 192.168.10.21#dns1.unicornafk.fr
+  - 192.168.10.22#dns2.unicornafk.fr
+  - 2a0c:b641:2c0:110::21#dns1.unicornafk.fr
+  - 2a0c:b641:2c0:110::22#dns2.unicornafk.fr
 systemd_resolved_fallback_dns:
-  - 9.9.9.9
-  - 149.112.112.112
-  - 2620:fe::fe
-  - 2620:fe::9
+  - 9.9.9.9#dns.quad9.net
+  - 149.112.112.112#dns.quad9.net
+  - 2620:fe::fe#dns.quad9.net
+  - 2620:fe::9#dns.quad9.net
 systemd_resolved_domains: "{{ local_domains }}"
 
 domains:
