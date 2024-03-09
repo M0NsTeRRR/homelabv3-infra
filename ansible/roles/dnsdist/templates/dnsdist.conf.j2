@@ -10,6 +10,9 @@ addDOHLocal('0.0.0.0', '/etc/dnsdist/ssl/{{ dnsdist_cert_filename }}', '/etc/dns
 addDOHLocal('::', '/etc/dnsdist/ssl/{{ dnsdist_cert_filename }}', '/etc/dnsdist/ssl/{{ dnsdist_key_filename }}', {customResponseHeaders={["alt-svc"]="h3=\":443\""{{ "}}" }})
 {% endif %}
 
+addDOH3Local('0.0.0.0', '/etc/dnsdist/ssl/{{ dnsdist_cert_filename }}', '/etc/dnsdist/ssl/{{ dnsdist_key_filename }}')
+addDOH3Local('::', '/etc/dnsdist/ssl/{{ dnsdist_cert_filename }}', '/etc/dnsdist/ssl/{{ dnsdist_key_filename }}')
+
 addTLSLocal('0.0.0.0', '/etc/dnsdist/ssl/{{ dnsdist_cert_filename }}', '/etc/dnsdist/ssl/{{ dnsdist_key_filename }}')
 addTLSLocal('::', '/etc/dnsdist/ssl/{{ dnsdist_cert_filename }}', '/etc/dnsdist/ssl/{{ dnsdist_key_filename }}')
 
