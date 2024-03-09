@@ -1,10 +1,16 @@
 ---
+- name: Install systemd-timesyncd
+  ansible.builtin.apt:
+    name: "systemd-timesyncd{% if systemd_timesyncd_version is defined %}={{ systemd_timesyncd_version }}{% endif %}"
+    update_cache: true
+    state: "{{ systemd_timesyncd_package_state }}"
+
 - name: Configure systemd-timesyncd
   ansible.builtin.template:
     src: timesyncd.conf.j2
     dest: /etc/systemd/timesyncd.conf
-    owner: root
-    group: root
+    owner: systemd-timesync
+    group: systemd-timesync
     mode: "0640"
   notify:
     - Enable systemd-timesyncd
