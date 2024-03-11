@@ -1,11 +1,4 @@
 ---
-- name: Configure global services
-  hosts: all
-  become: true
-  roles:
-    - node_exporter
-    - lego
-
 - name: Configure status infra
   hosts: status
   become: true
@@ -19,6 +12,8 @@
   hosts: dns
   become: true
   roles:
+    - node_exporter
+    - lego
     - self_signed_cert
     - postgresql
     - nginx
@@ -30,6 +25,8 @@
   hosts: dhcp
   become: true
   roles:
+    - node_exporter
+    - lego
     - self_signed_cert
     - kea_dhcp
     - ntp
