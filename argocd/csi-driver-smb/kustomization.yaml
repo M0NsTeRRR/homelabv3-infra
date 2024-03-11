@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: csi-driver-smb
+
+resources:
+  - manifests/01_external_secret.yaml
+  - manifests/02_storage_class.yaml
+
+helmCharts:
+- name: csi-driver-smb
+  releaseName: csi-driver-smb
+  namespace: csi-driver-smb
+  repo: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
+  version: v1.14.0

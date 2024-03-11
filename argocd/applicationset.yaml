@@ -9,6 +9,9 @@ spec:
       - appName: stakater
         namespace: stakater
         syncWave: "-2"
+      - appName: csi-driver-smb
+        namespace: csi-driver-smb
+        syncWave: "-2"
       - appName: k8up
         namespace: k8up
         syncWave: "-2"

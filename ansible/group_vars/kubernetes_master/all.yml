@@ -98,6 +98,11 @@ vault_policies:
       - path: secret/data/homelab/prod/argocd
         capabilities:
           - read
+  - name: csi-driver-smb
+    rules:
+      - path: secret/data/homelab/prod/csi-driver-smb
+        capabilities:
+          - read
   - name: keycloak
     rules:
       - path: secret/data/homelab/prod/keycloak
@@ -196,6 +201,12 @@ public_vault_datas:
       bound_service_account_namespaces: argocd
       policies: argocd
       ttl: 1h
+  - path: auth/kubernetes/role/csi-driver-smb
+    data:
+      bound_service_account_names: csi-driver-smb-vault
+      bound_service_account_namespaces: csi-driver-smb
+      policies: csi-driver-smb
+      ttl: 1m
   - path: auth/kubernetes/role/keycloak
     data:
       bound_service_account_names: keycloak-vault
