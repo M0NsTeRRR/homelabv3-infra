@@ -1,6 +1,6 @@
 ---
 # datasource=github-tags depName=go-acme/lego
-lego_version: 4.15.0
+lego_version: 4.16.1
 lego_force_install: false
 lego_builtin_webserver: false
 lego_acme_folder: /var/www/lego
