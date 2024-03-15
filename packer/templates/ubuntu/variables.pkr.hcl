@@ -62,7 +62,7 @@ variable "distribution" {
 
 variable "version" {
   type    = string
-  default = "22.04.3"
+  default = "22.04.4"
 }
 
 variable "vm_ip" {
@@ -82,5 +82,5 @@ variable "vm_gateway_ip" {
 
 variable "vm_dns_ip" {
   type    = string
-  default = "9.9.9.9"
+  default = "192.168.10.21"
 }
