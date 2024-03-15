@@ -70,13 +70,14 @@ sequenceDiagram
 ??? question "How to expose packer HTTP server from WSL ?"
     `WINDOWS IP` represents the IP used to connect  
     `WINDOWS PORT` represents the port used to connect  
+    `WSL_IP` represents the packer http server ip that will be accessible through `<WINDOWS IP>:<WINDOWS PORT>`  
     `WSL PORT` represents the packer http server port that will be accessible through `<WINDOWS IP>:<WINDOWS PORT>`  
 
     * To create a port forwarding rule open powershell prompt with admin right
 
         ```powershell
         New-NetFirewallRule -DisplayName 'Packer' -Direction Inbound -Protocol TCP -LocalPort <WINDOWS PORT> -Action Allow
-        netsh interface portproxy add v4tov4 listenaddress=<WINDOWS IP> connectaddress=127.0.0.1 listenport=<WINDOWS PORT> connectport=<WSL PORT>
+        netsh interface portproxy add v4tov4 listenaddress=<WINDOWS IP> connectaddress=<WSL_IP> listenport=<WINDOWS PORT> connectport=<WSL PORT>
         ```
 
     * To delete a port forwarding rule open powershell prompt with admin right
@@ -90,7 +91,6 @@ sequenceDiagram
 
 Configuration is stored in `packer` folder.
 
-Some variables are hardcoded in the bash script, this script will be replaced by a python script in near future.  
 Packer use 8888/tcp port for this HTTP server.
 
 `PROXMOX_PASSWORD` represents the proxmox password used for HTTP API
