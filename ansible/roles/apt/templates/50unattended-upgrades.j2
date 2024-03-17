@@ -1,0 +1,15 @@
+Unattended-Upgrade::Origins-Pattern {
+        "origin=*";
+        "origin=";
+};
+Unattended-Upgrade::Package-Blacklist {
+};
+Dpkg::Options {
+   "--force-confdef";
+   "--force-confold";
+};
+Unattended-Upgrade::DevRelease "auto";
+Unattended-Upgrade::SyslogEnable "true";
+Unattended-Upgrade::Remove-Unused-Dependencies "true";
+Unattended-Upgrade::Automatic-Reboot "{{ apt_unattended_automatic_reboot }}";
+Unattended-Upgrade::Automatic-Reboot-WithUsers "false";

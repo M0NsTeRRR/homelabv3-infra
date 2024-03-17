@@ -1,0 +1,11 @@
+[Unit]
+Description=apt daily download
+
+[Timer]
+OnCalendar=
+OnCalendar={{ apt_daily_oncalendar }}
+RandomizedDelaySec={{ apt_daily_randomizeddelaysec }}
+Persistent=true
+
+[Install]
+WantedBy=timers.target

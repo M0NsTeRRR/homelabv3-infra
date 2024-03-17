@@ -35,8 +35,11 @@
   hosts: kubernetes
   become: true
   roles:
+    - swap
+    - role: apt
+      vars:
+        apt_unattended_automatic_reboot: false
     - kubectl
-    - common_kubernetes
     - k3s
 
 - name: Configure kube-vip

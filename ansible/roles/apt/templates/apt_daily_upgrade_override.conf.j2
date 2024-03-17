@@ -1,0 +1,12 @@
+[Unit]
+Description=apt daily upgrade
+After=apt-daily.timer
+
+[Timer]
+OnCalendar=
+OnCalendar={{ apt_daily_upgrade_oncalendar }}
+RandomizedDelaySec={{ apt_daily_upgrade_randomizeddelaysec }}
+Persistent=true
+
+[Install]
+WantedBy=timers.target

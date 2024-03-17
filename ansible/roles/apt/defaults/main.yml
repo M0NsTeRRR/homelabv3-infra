@@ -1,0 +1,8 @@
+---
+# apt_unattended_upgrades_version:
+apt_unattended_upgrades_package_state: latest
+apt_daily_oncalendar: "*-*-* 04:00"
+apt_daily_randomizeddelaysec: 30m
+apt_daily_upgrade_oncalendar: "*-*-* 05:00"
+apt_daily_upgrade_randomizeddelaysec: 2h
+apt_unattended_automatic_reboot: true

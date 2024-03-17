@@ -1,0 +1,14 @@
+---
+- name: Daemon-reload
+  ansible.builtin.systemd_service:
+    daemon_reload: true
+
+- name: Restart apt-daily.timer
+  ansible.builtin.systemd_service:
+    name: apt-daily.timer
+    state: restarted
+
+- name: Restart apt-daily-upgrade.timer
+  ansible.builtin.systemd_service:
+    name: apt-daily-upgrade.timer
+    state: restarted
