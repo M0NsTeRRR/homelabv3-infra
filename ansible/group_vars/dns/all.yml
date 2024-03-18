@@ -1,5 +1,7 @@
 ---
 grafana_agent_flow_node_name: "{{ hostvars[inventory_hostname].hostname[:-1] }}"
+grafana_agent_flow_cert_filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}-fullchain.crt"
+grafana_agent_flow_key_filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}.key"
 grafana_agent_flow_extra_scrape:
   - name: pdns_auth
     targets:
@@ -286,9 +288,11 @@ lego_certificates:
     destinations:
       - { path: /etc/nginx/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: nginx, group: nginx }
       - { path: /etc/dnsdist/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: _dnsdist, group: _dnsdist }
+      - { path: /etc/grafana-agent-flow/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: grafana-agent-flow, group: grafana-agent-flow }
     systemd_services:
       - { name: nginx, state: restarted }
       - { name: dnsdist, state: restarted }
+      - { name: grafana-agent-flow, state: restarted }
 
 self_signed_cert_list:
   - common_name: "{{ hostvars[inventory_hostname].hostname[:-1] }}"

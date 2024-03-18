@@ -1,4 +1,12 @@
 ---
+- name: Open port 12345
+  community.general.ufw:
+    direction: in
+    rule: allow
+    port: "12345"
+    proto: tcp
+    comment: "grafana-agent-flow (ansible_managed)"
+
 - name: Add grafana-agent-flow group
   ansible.builtin.group:
     name: grafana-agent-flow
@@ -37,6 +45,14 @@
     state: "{{ grafana_agent_flow_package_state }}"
   notify: Enable grafana-agent-flow
 
+- name: Create node_exporter required folders
+  ansible.builtin.file:
+    name: /etc/grafana-agent-flow/ssl
+    state: directory
+    owner: grafana-agent-flow
+    group: grafana-agent-flow
+    mode: "0700"
+
 - name: Fix perms on /var/lib/grafana-agent-flow folder
   ansible.builtin.file:
     name: /var/lib/grafana-agent-flow
@@ -44,6 +60,15 @@
     group: grafana-agent-flow
     recurse: true
     state: directory
+
+- name: Add CA cert
+  ansible.builtin.copy:
+    src: "{{ grafana_agent_flow_local_path_ca_certificate }}"
+    dest: /etc/grafana-agent-flow/ssl/ca.crt
+    owner: grafana-agent-flow
+    group: grafana-agent-flow
+    mode: "0640"
+  notify: Restart grafana-agent-flow
 
 - name: Configure grafana-agent-flow env variables
   ansible.builtin.template:

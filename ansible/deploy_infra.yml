@@ -3,6 +3,7 @@
   hosts: all,!cloud,!kubernetes
   become: true
   roles:
+    - self_signed_cert
     - grafana_agent_flow
 
 - name: Configure status infra
@@ -19,7 +20,6 @@
   become: true
   roles:
     - lego
-    - self_signed_cert
     - postgresql
     - nginx
     - dnsdist
@@ -31,7 +31,6 @@
   become: true
   roles:
     - lego
-    - self_signed_cert
     - kea_dhcp
     - ntp
 

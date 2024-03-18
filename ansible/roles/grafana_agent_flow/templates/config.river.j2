@@ -1,4 +1,13 @@
 #jinja2: lstrip_blocks: "True"
+http {
+  tls {
+    cert_file        = "/etc/grafana-agent-flow/ssl/{{ grafana_agent_flow_cert_filename }}"
+    key_file         = "/etc/grafana-agent-flow/ssl/{{ grafana_agent_flow_key_filename }}"
+    client_ca_file   = "/etc/grafana-agent-flow/ssl/ca.crt"
+    client_auth_type = "RequireAndVerifyClientCert"
+  }
+}
+
 logging {
   level  = "info"
   format = "logfmt"
@@ -23,12 +32,19 @@ loki.write "default" {
   }
 }
 
-prometheus.scrape "linux_node" {
+prometheus.scrape "node_exporter" {
   targets = prometheus.exporter.unix.node.targets
   job_name     = "node-exporter"
-  forward_to = [
-    prometheus.remote_write.default.receiver,
-  ]
+  forward_to = [prometheus.relabel.node_exporter.receiver]
+
+}
+
+prometheus.relabel "node_exporter" {
+  rule {
+    replacement   = "node-exporter"
+    target_label  = "job"
+  }
+  forward_to = [prometheus.remote_write.default.receiver]
 }
 
 {% for scrape in grafana_agent_flow_extra_scrape %}

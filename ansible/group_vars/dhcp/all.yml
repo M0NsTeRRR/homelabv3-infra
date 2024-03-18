@@ -207,9 +207,11 @@ lego_certificates:
     san: []
     destinations:
       - { path: /etc/kea/ssl, filename: "{{ inventory_hostname }}", owner: _kea, group: _kea }
+      - { path: /etc/grafana-agent-flow/ssl, filename: "{{ inventory_hostname }}", owner: grafana-agent-flow, group: grafana-agent-flow }
     systemd_services:
       - { name: isc-kea-dhcp4-server, state: restarted }
       - { name: isc-kea-dhcp6-server, state: restarted }
+      - { name: grafana-agent-flow, state: restarted }
 
 self_signed_cert_list:
   - common_name: "{{ inventory_hostname }}"

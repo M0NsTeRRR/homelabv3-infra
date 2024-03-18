@@ -10,6 +10,12 @@ data:
       format = "logfmt"
     }
 
+    // Kubernetes secrets
+    remote.kubernetes.secret "credentials" {
+      namespace = "grafana-agent"
+      name = "grafana-agent-vault"
+    }
+
     // remote write
     prometheus.remote_write "default" {
       endpoint {
@@ -118,6 +124,26 @@ data:
     prometheus.scrape "agent" {
       targets    = prometheus.exporter.self.agent.targets
       forward_to = [prometheus.remote_write.default.receiver]
+      clustering {
+        enabled = true
+      }
+      scrape_interval = "30s"
+      scrape_timeout  = "5s"
+    }
+
+    // scrape external agent
+    prometheus.scrape "external_agent" {
+      targets = [
+        {"__scheme__" = "https", "__address__" = "dns1.unicornafk.fr:12345", "instance" = "dns1.unicornafk.fr"},
+        {"__scheme__" = "https", "__address__" = "dns2.unicornafk.fr:12345", "instance" = "dns2.unicornafk.fr"},
+        {"__scheme__" = "https", "__address__" = "dhcp1.unicornafk.fr:12345", "instance" = "dhcp1.unicornafk.fr"},
+        {"__scheme__" = "https", "__address__" = "dhcp2.unicornafk.fr:12345", "instance" = "dhcp2.unicornafk.fr"},
+      ]
+      forward_to = [prometheus.remote_write.default.receiver]
+      tls_config {
+        cert_file = "/mtls/client/tls.crt"
+        key_file  = "/mtls/client/tls.key"
+      }
       clustering {
         enabled = true
       }
