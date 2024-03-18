@@ -13,6 +13,7 @@ ufw_additional_rules:
 
 vault_url: "https://vault.unicornafk.fr:8200"
 
+grafana_agent_flow_node_name: "{{ inventory_hostname }}"
 grafana_agent_flow_prometheus_url: "https://mimir.unicornafk.fr/api/v1/push"
 grafana_agent_flow_loki_url: "https://loki.unicornafk.fr/loki/api/v1/push"
 

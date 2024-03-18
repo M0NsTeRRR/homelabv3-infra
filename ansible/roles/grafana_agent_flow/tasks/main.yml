@@ -45,9 +45,9 @@
     recurse: true
     state: directory
 
-- name: Copy grafana-agent-flow env variables
-  ansible.builtin.copy:
-    src: grafana-agent-flow
+- name: Configure grafana-agent-flow env variables
+  ansible.builtin.template:
+    src: grafana-agent-flow.j2
     dest: /etc/default/grafana-agent-flow
     owner: root
     group: root

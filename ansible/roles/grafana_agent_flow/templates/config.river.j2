@@ -9,6 +9,11 @@ prometheus.exporter.unix "node" {}
 prometheus.remote_write "default" {
   endpoint {
     url = "{{ grafana_agent_flow_prometheus_url }}"
+    
+    write_relabel_config {
+      target_label  = "instance"
+      replacement = "{{ grafana_agent_flow_node_name }}"
+    }
   }
 }
 
@@ -76,7 +81,7 @@ loki.relabel "journal" {
     target_label  = "level"
   }
   rule {
-    source_labels = ["__journal__hostname"]
+    replacement   = "{{ grafana_agent_flow_node_name }}"
     target_label  = "instance"
   }
 }
@@ -87,7 +92,7 @@ loki.source.journal "read" {
   ]
   relabel_rules = loki.relabel.journal.rules
   labels = {
-    "job" = "integrations/node_exporter",
+    "job" = "journal",
   }
 }
 

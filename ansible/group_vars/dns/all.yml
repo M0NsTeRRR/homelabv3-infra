@@ -1,4 +1,5 @@
 ---
+grafana_agent_flow_node_name: "{{ hostvars[inventory_hostname].hostname[:-1] }}"
 grafana_agent_flow_extra_scrape:
   - name: pdns_auth
     targets:

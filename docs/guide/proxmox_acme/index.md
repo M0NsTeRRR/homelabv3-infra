@@ -7,11 +7,11 @@
 ## How to enable Proxmox ACME ?
 In this guide we will see how to enable proxmox ACME with vault.
 This guide assume vault PKI is already setup using the ansible role from this repository.
-This guide also assume that you proxmox server trust vault PKI.
+This guide also assume that your proxmox server trust the vault PKI.
 
 - `email_account` with your email account (not used)
 - `vault_acme_url` like `https://vault.unicornafk.fr:8200/v1/pki/acme/directory`
-- `proxmox_domains` it's a list of domains separated by ";" like `server.unicornafk.fr;server1.unicornafk.fr`. As we are using DNS round robin (recommended way to get cluster metrics) on proxmox exporter we must have an entry matching that record `server.unicornafk.fr`
+- `proxmox_domains` it's a list of domains separated by `;` like `server.unicornafk.fr;server1.unicornafk.fr`. As we are using DNS round robin (recommended way to get cluster metrics) on proxmox exporter we must have an entry matching that record `server.unicornafk.fr`
 
 Execute the following steps :
 
