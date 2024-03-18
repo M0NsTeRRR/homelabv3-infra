@@ -1,8 +1,0 @@
----
-# datasource=github-tags depName=prometheus/node_exporter
-node_exporter_version: 1.7.0
-node_exporter_force_install: false
-node_exporter_local_path_ca_certificate: /tmp/node_exporter
-node_exporter_ca_filename: "ca.crt"
-node_exporter_cert_filename: "example.fr.crt"
-node_exporter_key_filename: "example.fr.key"

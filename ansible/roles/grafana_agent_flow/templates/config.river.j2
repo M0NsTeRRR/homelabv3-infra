@@ -1,0 +1,93 @@
+#jinja2: lstrip_blocks: "True"
+logging {
+  level  = "info"
+  format = "logfmt"
+}
+
+prometheus.exporter.unix "node" {}
+
+prometheus.remote_write "default" {
+  endpoint {
+    url = "{{ grafana_agent_flow_prometheus_url }}"
+  }
+}
+
+loki.write "default" {
+  endpoint {
+    url = "{{ grafana_agent_flow_loki_url }}"
+  }
+}
+
+prometheus.scrape "linux_node" {
+  targets = prometheus.exporter.unix.node.targets
+  job_name     = "node-exporter"
+  forward_to = [
+    prometheus.remote_write.default.receiver,
+  ]
+}
+
+{% for scrape in grafana_agent_flow_extra_scrape %}
+prometheus.scrape "{{ scrape.name }}" {
+  targets = [
+    {% for target in scrape.targets %}
+    {"__address__" = "{{ target.address }}"},
+    {% endfor %}
+  ]
+
+  job_name     = "{{ scrape.name }}"
+  {% if scrape.metrics_path is defined %}
+  metrics_path = "{{ scrape.metrics_path }}"
+  {% else %}
+  metrics_path = "/metrics"
+  {% endif %}
+
+  forward_to   = [prometheus.remote_write.default.receiver]
+
+  {% if scrape.basic_auth is defined %}
+  basic_auth {
+    username = "{{ scrape.basic_auth.username }}"
+    password = "{{ scrape.basic_auth.password }}"
+  }
+  {% endif %}
+
+  scrape_interval = "30s"
+  scrape_timeout  = "5s"
+}
+{% endfor %}
+
+
+loki.relabel "journal" {
+  forward_to = []
+
+  rule {
+    source_labels = ["__journal__systemd_unit"]
+    target_label  = "unit"
+  }
+  rule {
+    source_labels = ["__journal__boot_id"]
+    target_label  = "boot_id"
+  }
+  rule {
+    source_labels = ["__journal__transport"]
+    target_label  = "transport"
+  }
+  rule {
+    source_labels = ["__journal_priority_keyword"]
+    target_label  = "level"
+  }
+  rule {
+    source_labels = ["__journal__hostname"]
+    target_label  = "instance"
+  }
+}
+
+loki.source.journal "read" {
+  forward_to = [
+    loki.write.default.receiver,
+  ]
+  relabel_rules = loki.relabel.journal.rules
+  labels = {
+    "job" = "integrations/node_exporter",
+  }
+}
+

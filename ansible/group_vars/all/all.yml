@@ -11,12 +11,10 @@ ufw_additional_rules:
   - { port: "8200", proto: "tcp", direction: "out", to_ip: "192.18.10.102", comment: "Vault HTTPS ACME" }
   - { port: "8200", proto: "tcp", direction: "out", to_ip: "2a0c:b641:2c0:110::102", comment: "Vault HTTPS ACME" }
 
-node_exporter_local_path_ca_certificate: "{{ ca_certificates_local_path_ca_certificate }}"
-node_exporter_ca_filename: "ca.crt"
-node_exporter_cert_filename: "{{ inventory_hostname }}-fullchain.crt"
-node_exporter_key_filename: "{{ inventory_hostname }}.key"
-
 vault_url: "https://vault.unicornafk.fr:8200"
+
+grafana_agent_flow_prometheus_url: "https://mimir.unicornafk.fr/api/v1/push"
+grafana_agent_flow_loki_url: "https://loki.unicornafk.fr/loki/api/v1/push"
 
 lego_account_email: "{{ monitoring_email }}"
 lego_acme_url: "{{ vault_url }}/v1/pki/acme/directory"

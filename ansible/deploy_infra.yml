@@ -1,4 +1,10 @@
 ---
+- name: Configure base infra
+  hosts: all,!cloud,!kubernetes
+  become: true
+  roles:
+    - grafana_agent_flow
+
 - name: Configure status infra
   hosts: status
   become: true
@@ -12,7 +18,6 @@
   hosts: dns
   become: true
   roles:
-    - node_exporter
     - lego
     - self_signed_cert
     - postgresql
@@ -25,7 +30,6 @@
   hosts: dhcp
   become: true
   roles:
-    - node_exporter
     - lego
     - self_signed_cert
     - kea_dhcp

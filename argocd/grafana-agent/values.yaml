@@ -11,9 +11,6 @@ agent:
         mountPath: /etc/ssl/certs/homelab.crt
         subPath: ca.crt
         readOnly: true
-      - name: client-mtls
-        mountPath: /mtls/client
-        readOnly: true
   clustering:
     enabled: true
 crds:
@@ -26,8 +23,5 @@ controller:
       - name: ca-certs
         configMap:
           name: homelab-ca
-      - name: client-mtls
-        secret:
-          secretName: client-mtls
 configReloader:
   enabled: false
