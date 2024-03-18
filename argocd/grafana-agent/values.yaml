@@ -31,3 +31,5 @@ controller:
           secretName: client-mtls
 configReloader:
   enabled: false
+serviceMonitor:
+  enabled: true
