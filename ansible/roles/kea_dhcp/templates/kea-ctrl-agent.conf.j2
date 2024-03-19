@@ -1,0 +1,33 @@
+{
+    "Control-agent": {
+        "http-host": "::",
+        "http-port": 8000,
+        "trust-anchor": "/etc/kea/ssl/{{ kea_dhcp_ca_filename }}",
+        "cert-file": "/etc/kea/ssl/{{ kea_dhcp_cert_filename }}",
+        "key-file": "/etc/kea/ssl/{{ kea_dhcp_key_filename }}",
+        "cert-required": true,
+
+        "control-sockets": {
+            "dhcp4": {
+                "socket-type": "unix",
+                "socket-name": "/opt/kea/kea-dhcp4-ctrl.sock"
+            },
+            "dhcp6": {
+                "socket-type": "unix",
+                "socket-name": "/opt/kea/kea-dhcp6-ctrl.sock",
+                "user-context": { "version": 3 }
+            }
+        },
+
+        "loggers": [{
+            "name": "kea-ctrl-agent",
+            "output_options": [
+                {
+                    "output": "stdout",
+                }
+            ],
+            "severity": "INFO",
+            "debuglevel": 0
+        }]
+    }
+}

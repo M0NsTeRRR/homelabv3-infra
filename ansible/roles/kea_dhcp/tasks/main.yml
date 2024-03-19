@@ -9,8 +9,9 @@
   with_items:
     - { port: "67", proto: udp, direction: in, comment: "Kea-dhcp DHCP" }
     - { port: "547", proto: udp, direction: in, comment: "Kea-dhcp DHCPv6" }
-    - { port: "8080", proto: tcp, direction: in, comment: "Kea-dhcp HA" }
-    - { port: "8080", proto: tcp, direction: out, comment: "Kea-dhcp HA" }
+    - { port: "8000", proto: tcp, direction: in, comment: "Kea-ctrl-agent HA" }
+    - { port: "8080", proto: tcp, direction: in, comment: "Kea-dhcp4 HA" }
+    - { port: "8080", proto: tcp, direction: out, comment: "Kea-dhcp6 HA" }
 
 - name: Add _kea group
   ansible.builtin.group:
@@ -55,12 +56,21 @@
     name: "isc-kea-dhcp4{% if kea_dhcp_v4_version is defined %}={{ kea_dhcp_v4_version }}{% endif %}"
     update_cache: true
     state: "{{ kea_dhcp_v4_package_state }}"
+  notify: Enable isc-kea-dhcp4
 
 - name: Install isc-kea-dhcp6
   ansible.builtin.apt:
     name: "isc-kea-dhcp6{% if kea_dhcp_v6_version is defined %}={{ kea_dhcp_v6_version }}{% endif %}"
     update_cache: true
     state: "{{ kea_dhcp_v6_package_state }}"
+  notify: Enable isc-kea-dhcp6
+
+- name: Install isc-kea-ctrl-agent
+  ansible.builtin.apt:
+    name: "isc-kea-ctrl-agent{% if kea_dhcp_ctrl_agent_version is defined %}={{ kea_dhcp_ctrl_agent_version }}{% endif %}"
+    update_cache: true
+    state: "{{ kea_dhcp_ctrl_agent_package_state }}"
+  notify: Enable isc-kea-ctrl-agent
 
 - name: Fix perms on kea folder
   ansible.builtin.file:
@@ -92,6 +102,16 @@
     mode: "0640"
     validate: /usr/sbin/kea-dhcp6 -t %s
   notify: Restart isc-kea-dhcp6-server
+
+- name: Configure kea-dhcp6-server
+  ansible.builtin.template:
+    src: kea-ctrl-agent.conf.j2
+    dest: /etc/kea/kea-ctrl-agent.conf
+    owner: _kea
+    group: _kea
+    mode: "0640"
+    validate: /usr/sbin/kea-ctrl-agent -t %s
+  notify: Restart isc-kea-ctrl-agent
 
 - name: Create required folder
   ansible.builtin.file:

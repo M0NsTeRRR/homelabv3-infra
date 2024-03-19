@@ -107,8 +107,7 @@
             }{% if not loop.last %},{% endif %}
             {% endfor %}
         ],
-        "loggers": [
-        {
+        "loggers": [{
             "name": "kea-dhcp6",
             "output_options": [
                 {
@@ -117,7 +116,6 @@
             ],
             "severity": "INFO",
             "debuglevel": 0
-        }
-      ]
+        }]
     }
 }

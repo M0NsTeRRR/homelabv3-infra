@@ -8,6 +8,8 @@ kea_dhcp_hooks_package_state: latest
 kea_dhcp_v4_package_state: latest
 # kea_dhcp_v6_version:
 kea_dhcp_v6_package_state: latest
+# kea_dhcp_ctrl_agent_version:
+kea_dhcp_ctrl_agent_package_state: latest
 kea_dhcp_api_user: ""
 kea_dhcp_api_password: ""
 kea_dhcp_local_path_ca_certificate: "/tmp/ca.crt"

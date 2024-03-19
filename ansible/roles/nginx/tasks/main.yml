@@ -18,10 +18,7 @@
     name: "nginx{% if nginx_version is defined %}={{ nginx_version }}{% endif %}"
     update_cache: true
     state: "{{ nginx_package_state }}"
-  notify:
-    - Enable nginx
-    - Daemon-reload
-    - Restart nginx
+  notify: Enable nginx
 
 - name: Check if diffie-hellman parameters exists
   ansible.builtin.stat:
