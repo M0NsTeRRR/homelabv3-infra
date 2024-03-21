@@ -22,7 +22,7 @@ terraform = [
     "paramiko==3.4.0"
 ]
 octodns = [
-    "octodns==1.6.0",
+    "octodns==1.6.1",
     "octodns_scaleway==0.0.4"
 ]
 documentation = [
