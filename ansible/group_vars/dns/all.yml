@@ -258,6 +258,13 @@ powerdns_authoritative_records:
       - 2a0c:b641:02c0:150::121
     rdns: true
   # CNAME
+  - hostname: dhcp.unicornafk.fr.
+    a:
+      - 192.168.10.23
+      - 192.168.10.24
+    aaaa:
+      - 2a0c:b641:02c0:110::23
+      - 2a0c:b641:02c0:110::24
   - hostname: ntp1.unicornafk.fr.
     cname: dhcp1.unicornafk.fr.
     rdns: false

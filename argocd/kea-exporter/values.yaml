@@ -1,0 +1,32 @@
+podAnnotations:
+  reloader.stakater.com/auto: "true"
+volumes:
+  - name: ca-certs
+    configMap:
+      name: homelab-ca
+  - name: client-mtls
+    secret:
+      secretName: client-mtls
+volumeMounts:
+  - name: ca-certs
+    mountPath: /etc/ssl/certs/homelab.crt
+    subPath: ca.crt
+    readOnly: true
+  - name: client-mtls
+    mountPath: /mtls/client
+    readOnly: true
+extraEnv:
+  - name: MODE
+    value: http
+  - name: TARGETS
+    value: https://dhcp.unicornafk.fr:8000
+  - name: CLIENT_CERT
+    value: /mtls/client/tls.crt
+  - name: CLIENT_KEY
+    value: /mtls/client/tls.key
+  - name: REQUESTS_CA_BUNDLE
+    value: /etc/ssl/certs/homelab.crt
+serviceMonitor:
+  enabled: true
+prometheusRule:
+  enabled: true
