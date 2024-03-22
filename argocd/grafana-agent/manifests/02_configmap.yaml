@@ -10,12 +10,6 @@ data:
       format = "logfmt"
     }
 
-    // Kubernetes secrets
-    remote.kubernetes.secret "credentials" {
-      namespace = "grafana-agent"
-      name = "grafana-agent-vault"
-    }
-
     // remote write
     prometheus.remote_write "default" {
       endpoint {
