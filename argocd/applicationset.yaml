@@ -48,6 +48,9 @@ spec:
       - appName: prometheus-pve-exporter
         namespace: prometheus-pve-exporter
         syncWave: "0"
+      - appName: kea-exporter
+        namespace: kea-exporter
+        syncWave: "0"
       - appName: as212510-net
         namespace: as212510-net
         syncWave: "0"
