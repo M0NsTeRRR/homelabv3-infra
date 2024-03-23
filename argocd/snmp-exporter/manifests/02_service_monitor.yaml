@@ -3,6 +3,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: snmp-exporter
+  namespace: snmp-exporter
   labels:
     app.kubernetes.io/name: prometheus-snmp-exporter
     app.kubernetes.io/instance: snmp-exporter
@@ -12,16 +13,10 @@ spec:
   endpoints:
     - honorLabels: true
       metricRelabelings:
-        - action: replace
-          replacement: r1.unicornafk.fr
+        - replacement: r1.unicornafk.fr
           sourceLabels:
             - instance
           targetLabel: instance
-        - action: replace
-          replacement: r1.unicornafk.fr
-          sourceLabels:
-            - target
-          targetLabel: target
       params:
         module:
           - mikrotik
@@ -34,16 +29,10 @@ spec:
       scrapeTimeout: 10s
     - honorLabels: true
       metricRelabelings:
-        - action: replace
-          replacement: sw1.unicornafk.fr
+        - replacement: sw1.unicornafk.fr
           sourceLabels:
             - instance
           targetLabel: instance
-        - action: replace
-          replacement: sw1.unicornafk.fr
-          sourceLabels:
-            - target
-          targetLabel: target
       params:
         module:
           - brocade
@@ -56,16 +45,10 @@ spec:
       scrapeTimeout: 10s
     - honorLabels: true
       metricRelabelings:
-        - action: replace
-          replacement: sw2.unicornafk.fr
+        - replacement: sw2.unicornafk.fr
           sourceLabels:
             - instance
           targetLabel: instance
-        - action: replace
-          replacement: sw2.unicornafk.fr
-          sourceLabels:
-            - target
-          targetLabel: target
       params:
         module:
           - brocade
@@ -78,16 +61,10 @@ spec:
       scrapeTimeout: 10s
     - honorLabels: true
       metricRelabelings:
-        - action: replace
-          replacement: nas.unicornafk.fr
+        - replacement: nas.unicornafk.fr
           sourceLabels:
             - instance
           targetLabel: instance
-        - action: replace
-          replacement: nas.unicornafk.fr
-          sourceLabels:
-            - target
-          targetLabel: target
       params:
         module:
           - qnap

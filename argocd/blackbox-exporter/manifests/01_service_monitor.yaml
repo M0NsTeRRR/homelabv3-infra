@@ -11,131 +11,83 @@ metadata:
 spec:
   endpoints:
     - honorLabels: true
-      metricRelabelings:
-        - action: replace
-          replacement: 1.1.1.1
-          sourceLabels:
-            - instance
-          targetLabel: instance
-        - action: replace
-          replacement: 1.1.1.1
-          sourceLabels:
-            - target
-          targetLabel: target
+      relabelings:
+      - sourceLabels:
+          - __param_target
+        targetLabel: instance
       params:
         module:
           - icmp
         target:
-          - 1.1.1.1
+          - 1.1.1.1 # cloudflare dns
       path: /probe
       port: http
       scrapeTimeout: 5s
-      scrapeInterval: 5s
     - honorLabels: true
-      metricRelabelings:
-        - action: replace
-          replacement: 2606:4700:4700::1111
-          sourceLabels:
-            - instance
-          targetLabel: instance
-        - action: replace
-          replacement: 2606:4700:4700::1111
-          sourceLabels:
-            - target
-          targetLabel: target
+      relabelings:
+      - sourceLabels:
+          - __param_target
+        targetLabel: instance
       params:
         module:
           - icmp
         target:
-          - 2606:4700:4700::1111
+          - 2606:4700:4700::1111 # cloudflare dns
       path: /probe
       port: http
       scrapeTimeout: 5s
-      scrapeInterval: 5s
     - honorLabels: true
-      metricRelabelings:
-        - action: replace
-          replacement: 8.8.8.8
-          sourceLabels:
-            - instance
-          targetLabel: instance
-        - action: replace
-          replacement: 8.8.8.8
-          sourceLabels:
-            - target
-          targetLabel: target
+      relabelings:
+      - sourceLabels:
+          - __param_target
+        targetLabel: instance
       params:
         module:
           - icmp
         target:
-          - 8.8.8.8
+          - 8.8.8.8 # google dns
       path: /probe
       port: http
       scrapeTimeout: 5s
-      scrapeInterval: 5s
     - honorLabels: true
-      metricRelabelings:
-        - action: replace
-          replacement: 2001:4860:4860::8888
-          sourceLabels:
-            - instance
-          targetLabel: instance
-        - action: replace
-          replacement: 2001:4860:4860::8888
-          sourceLabels:
-            - target
-          targetLabel: target
+      relabelings:
+      - sourceLabels:
+          - __param_target
+        targetLabel: instance
       params:
         module:
           - icmp
         target:
-          - 2001:4860:4860::8888
+          - 2001:4860:4860::8888 # google dns
       path: /probe
       port: http
       scrapeTimeout: 5s
-      scrapeInterval: 5s
     - honorLabels: true
-      metricRelabelings:
-        - action: replace
-          replacement: 141.145.215.178
-          sourceLabels:
-            - instance
-          targetLabel: instance
-        - action: replace
-          replacement: 141.145.215.178
-          sourceLabels:
-            - target
-          targetLabel: target
+      relabelings:
+      - sourceLabels:
+          - __param_target
+        targetLabel: instance
       params:
         module:
           - icmp
         target:
-          - 141.145.215.178
+          - 141.145.215.178 # vps1.adminafk.fr
       path: /probe
       port: http
       scrapeTimeout: 5s
-      scrapeInterval: 5s
     - honorLabels: true
-      metricRelabelings:
-        - action: replace
-          replacement: 2603:c027:c000:c200::10
-          sourceLabels:
-            - instance
-          targetLabel: instance
-        - action: replace
-          replacement: 2603:c027:c000:c200::10
-          sourceLabels:
-            - target
-          targetLabel: target
+      relabelings:
+      - sourceLabels:
+          - __param_target
+        targetLabel: instance
       params:
         module:
           - icmp
         target:
-          - 2603:c027:c000:c200::10
+          - 2603:c027:c000:c200::10 # vps1.adminafk.fr
       path: /probe
       port: http
       scrapeTimeout: 5s
-      scrapeInterval: 5s
   jobLabel: blackbox-exporter
   selector:
     matchLabels:
@@ -154,17 +106,10 @@ metadata:
 spec:
   endpoints:
     - honorLabels: true
-      metricRelabelings:
-        - action: replace
-          replacement: server1.unicornafk.fr
-          sourceLabels:
-            - instance
-          targetLabel: instance
-        - action: replace
-          replacement: server1.unicornafk.fr
-          sourceLabels:
-            - target
-          targetLabel: target
+      relabelings:
+      - sourceLabels:
+          - __param_target
+        targetLabel: instance
       params:
         module:
           - http_2xx
@@ -174,17 +119,10 @@ spec:
       port: http
       scrapeTimeout: 5s
     - honorLabels: true
-      metricRelabelings:
-        - action: replace
-          replacement: server2.unicornafk.fr
-          sourceLabels:
-            - instance
-          targetLabel: instance
-        - action: replace
-          replacement: server2.unicornafk.fr
-          sourceLabels:
-            - target
-          targetLabel: target
+      relabelings:
+      - sourceLabels:
+          - __param_target
+        targetLabel: instance
       params:
         module:
           - http_2xx
@@ -194,17 +132,10 @@ spec:
       port: http
       scrapeTimeout: 5s
     - honorLabels: true
-      metricRelabelings:
-        - action: replace
-          replacement: server3.unicornafk.fr
-          sourceLabels:
-            - instance
-          targetLabel: instance
-        - action: replace
-          replacement: server3.unicornafk.fr
-          sourceLabels:
-            - target
-          targetLabel: target
+      relabelings:
+      - sourceLabels:
+          - __param_target
+        targetLabel: instance
       params:
         module:
           - http_2xx
@@ -214,17 +145,10 @@ spec:
       port: http
       scrapeTimeout: 5s
     - honorLabels: true
-      metricRelabelings:
-        - action: replace
-          replacement: dns1.unicornafk.fr
-          sourceLabels:
-            - instance
-          targetLabel: instance
-        - action: replace
-          replacement: dns1.unicornafk.fr
-          sourceLabels:
-            - target
-          targetLabel: target
+      relabelings:
+      - sourceLabels:
+          - __param_target
+        targetLabel: instance
       params:
         module:
           - http_2xx
@@ -234,17 +158,10 @@ spec:
       port: http
       scrapeTimeout: 5s
     - honorLabels: true
-      metricRelabelings:
-        - action: replace
-          replacement: dns2.unicornafk.fr
-          sourceLabels:
-            - instance
-          targetLabel: instance
-        - action: replace
-          replacement: dns2.unicornafk.fr
-          sourceLabels:
-            - target
-          targetLabel: target
+      relabelings:
+      - sourceLabels:
+          - __param_target
+        targetLabel: instance
       params:
         module:
           - http_2xx
@@ -254,17 +171,10 @@ spec:
       port: http
       scrapeTimeout: 5s
     - honorLabels: true
-      metricRelabelings:
-        - action: replace
-          replacement: home-assistant.unicornafk.fr
-          sourceLabels:
-            - instance
-          targetLabel: instance
-        - action: replace
-          replacement: home-assistant.unicornafk.fr
-          sourceLabels:
-            - target
-          targetLabel: target
+      relabelings:
+      - sourceLabels:
+          - __param_target
+        targetLabel: instance
       params:
         module:
           - http_2xx
@@ -274,17 +184,10 @@ spec:
       port: http
       scrapeTimeout: 5s
     - honorLabels: true
-      metricRelabelings:
-        - action: replace
-          replacement: nas.unicornafk.fr
-          sourceLabels:
-            - instance
-          targetLabel: instance
-        - action: replace
-          replacement: nas.unicornafk.fr
-          sourceLabels:
-            - target
-          targetLabel: target
+      relabelings:
+      - sourceLabels:
+          - __param_target
+        targetLabel: instance
       params:
         module:
           - http_2xx
@@ -294,17 +197,10 @@ spec:
       port: http
       scrapeTimeout: 5s
     - honorLabels: true
-      metricRelabelings:
-        - action: replace
-          replacement: vault.unicornafk.fr
-          sourceLabels:
-            - instance
-          targetLabel: instance
-        - action: replace
-          replacement: vault.unicornafk.fr
-          sourceLabels:
-            - target
-          targetLabel: target
+      relabelings:
+      - sourceLabels:
+          - __param_target
+        targetLabel: instance
       params:
         module:
           - http_2xx

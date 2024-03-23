@@ -12,17 +12,10 @@ spec:
   endpoints:
     # Get node metrics
     - honorLabels: true
-      metricRelabelings:
-        - action: replace
-          replacement: server1.unicornafk.fr
-          sourceLabels:
-            - instance
-          targetLabel: instance
-        - action: replace
-          replacement: server1.unicornafk.fr
-          sourceLabels:
-            - target
-          targetLabel: target
+      relabelings:
+      - sourceLabels:
+          - __param_target
+        targetLabel: instance
       params:
         module:
           - default
@@ -36,17 +29,10 @@ spec:
       port: http
       scrapeTimeout: 5s
     - honorLabels: true
-      metricRelabelings:
-        - action: replace
-          replacement: server2.unicornafk.fr
-          sourceLabels:
-            - instance
-          targetLabel: instance
-        - action: replace
-          replacement: server2.unicornafk.fr
-          sourceLabels:
-            - target
-          targetLabel: target
+      relabelings:
+      - sourceLabels:
+          - __param_target
+        targetLabel: instance
       params:
         module:
           - default
@@ -60,17 +46,10 @@ spec:
       port: http
       scrapeTimeout: 5s
     - honorLabels: true
-      metricRelabelings:
-        - action: replace
-          replacement: server3.unicornafk.fr
-          sourceLabels:
-            - instance
-          targetLabel: instance
-        - action: replace
-          replacement: server3.unicornafk.fr
-          sourceLabels:
-            - target
-          targetLabel: target
+      relabelings:
+      - sourceLabels:
+          - __param_target
+        targetLabel: instance
       params:
         module:
           - default
@@ -85,17 +64,10 @@ spec:
       scrapeTimeout: 5s
     # Get cluster metrics
     - honorLabels: true
-      metricRelabelings:
-        - action: replace
-          replacement: server.unicornafk.fr
-          sourceLabels:
-            - instance
-          targetLabel: instance
-        - action: replace
-          replacement: server.unicornafk.fr
-          sourceLabels:
-            - target
-          targetLabel: target
+      relabelings:
+      - sourceLabels:
+          - __param_target
+        targetLabel: instance
       params:
         module:
           - default
