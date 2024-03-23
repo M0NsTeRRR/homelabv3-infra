@@ -167,6 +167,12 @@ dashboards:
       datasource:
         - name: DS_PROMETHEUS
           value: prometheus
+    Kea-exporter:
+      gnetId: 12688
+      revision: 3
+      datasource:
+        - name: DS_PROMETHEUS
+          value: prometheus
 
 ingress:
   enabled: true
