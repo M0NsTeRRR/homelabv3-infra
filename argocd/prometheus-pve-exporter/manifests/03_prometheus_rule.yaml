@@ -7,7 +7,7 @@ spec:
   groups:
     - name: PVEAlerts
       rules:
-        - alert: PVEDown
+        - alert: PVEExporterDown
           expr: up{job="prometheus-pve-exporter"} != 1
           for: 5m
           labels:
