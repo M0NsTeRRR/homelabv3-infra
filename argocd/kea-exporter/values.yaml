@@ -28,5 +28,10 @@ extraEnv:
     value: /etc/ssl/certs/homelab.crt
 serviceMonitor:
   enabled: true
+  metricRelabelings:
+    - replacement: dhcp.unicornafk.fr
+      sourceLabels:
+        - instance
+      targetLabel: instance
 prometheusRule:
   enabled: true
