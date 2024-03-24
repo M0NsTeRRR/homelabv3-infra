@@ -169,7 +169,7 @@ dashboards:
           value: prometheus
     Kea-exporter:
       gnetId: 12688
-      revision: 3
+      revision: 4
       datasource:
         - name: DS_PROMETHEUS
           value: prometheus
