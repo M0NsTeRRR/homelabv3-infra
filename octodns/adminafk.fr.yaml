@@ -38,6 +38,9 @@ helm-charts:
 homelab:
   - type: CNAME
     value: m0nsterrr.github.io.
+openpgpkey:
+  - type: CNAME
+    value: wkd.keys.openpgp.org.
 status:
   - type: CNAME
     value: vps1.adminafk.fr.
