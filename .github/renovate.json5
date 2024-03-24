@@ -32,15 +32,17 @@
   pin: {
     automerge: true,
   },
-  regexManagers: [
+  customManagers: [
     // VSCode devcontainer.json features version
     {
+      customType: "regex",
       fileMatch: ["devcontainer.json$"],
       matchStrings: ['datasource=(?<datasource>\\S*)[\\s]+depName=(?<depName>\\S*)[\\s]+"\\w+":[\\s]+"(?<currentValue>[a-zA-Z0-9-_.]+)"'],
       versioningTemplate: 'regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.?(?<patch>\\d+)?-?(?<compatibility>\\S+)?$',
     },
     // grafana dashboards
     {
+      customType: "regex",
       fileMatch: ["\\.ya?ml$"],
       matchStrings: [
         "\\s+(?<depName>\\S*):\n\\s+gnetId:\\s+(?<packageName>\\S*)\n\\s+revision:\\s+(?<currentValue>\\S*)",
@@ -51,6 +53,7 @@
     },
     // match packer and plugin version
     {
+      customType: "regex",
       fileMatch: [
         '\\.pkr\\.hcl',
       ],
@@ -64,6 +67,7 @@
     },
     // match distribution version
     {
+      customType: "regex",
       fileMatch: [
         '\\.pkr\\.hcl',
       ],
@@ -75,6 +79,7 @@
     },
     // match terraform and terragrunt version
     {
+      customType: "regex",
       fileMatch: [
         '(^|/)terragrunt\\.hcl$',
       ],
@@ -86,6 +91,7 @@
     },
     // match terraform plugin version
     {
+      customType: "regex",
       fileMatch: [
         '(^|/)terragrunt\\.hcl$',
       ],
@@ -97,6 +103,7 @@
     },
     // match min_ansible_version in ansible role meta
     {
+      customType: "regex",
       fileMatch: [
         '(^|/)roles\\S+meta/\\S+\\.ya?ml',
       ],
@@ -108,6 +115,7 @@
     },
     // match program version in ansible defaults 
     {
+      customType: "regex",
       fileMatch: [
         '(^|/)roles\\S+defaults/\\S+\\.ya?ml',
       ],
@@ -117,6 +125,7 @@
     },
     // match github yaml in kustomization file
     {
+      customType: "regex",
       fileMatch: [
         "(^|/)kustomization.ya?ml$"
       ],
