@@ -1,0 +1,14 @@
+volumes:
+  - name: movies-data
+    persistentVolumeClaim:
+      claimName: pvc-storage
+  - name: download-data
+    persistentVolumeClaim:
+      claimName: pvc-storage
+volumeMounts:
+  - name: movies-data
+    mountPath: /movies
+    subPath: movies
+  - name: download-data
+    mountPath: /downloads
+    subPath: downloads

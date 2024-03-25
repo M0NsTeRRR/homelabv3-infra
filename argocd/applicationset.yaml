@@ -54,6 +54,9 @@ spec:
       - appName: as212510-net
         namespace: as212510-net
         syncWave: "0"
+      - appName: radarr
+        namespace: radarr
+        syncWave: "0"
   template:
     metadata:
       name: '{{appName}}'
