@@ -3,7 +3,6 @@ kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: pvc-storage
-  namespace: radarr
 spec:
   accessModes:
     - ReadWriteMany
