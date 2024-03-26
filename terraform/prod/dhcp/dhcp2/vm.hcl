@@ -8,7 +8,7 @@ locals {
 
   disk = {
     storage = "SSD1"
-    size    = 15
+    size    = 20
   }
 
   vm_ip  = "192.168.10.24"
