@@ -7,7 +7,7 @@ lego_acme_folder: /var/www/lego
 lego_systemd_calendar: "*-*-* 0:00:00"
 lego_acme_url: "https://acme-v02.api.letsencrypt.org/directory"
 lego_account_email: ""
-lego_renew_days: "7"
+lego_renew_days: "30"
 lego_certificates: {}
 
 # lego_certificates:
