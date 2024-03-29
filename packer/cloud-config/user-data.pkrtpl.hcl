@@ -20,9 +20,10 @@ autoinstall:
     layout:
       name: direct
   user-data:
-    default_user:
-      name: ${build_username}
-      gecos:  ${build_fullname}
-      hashed_passwd: ${build_password_encrypted}
-      ssh_authorized_keys:
-        - ${build_authorized_key}
+    system_info:
+      default_user:
+        name: ${build_username}
+        gecos:  ${build_fullname}
+        hashed_passwd: ${build_password_encrypted}
+        ssh_authorized_keys:
+          - ${build_authorized_key}
