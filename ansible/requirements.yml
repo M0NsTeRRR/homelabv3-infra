@@ -1,11 +1,11 @@
 ---
 collections:
   - name: ansible.utils
-    version: "3.1.0"
+    version: "4.0.0"
   - name: ansible.posix
     version: "1.5.4"
   - name: community.general
-    version: "8.4.0"
+    version: "8.5.0"
   - name: community.crypto
     version: "2.18.0"
   - name: community.postgresql
