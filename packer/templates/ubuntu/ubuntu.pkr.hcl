@@ -50,7 +50,7 @@ source "proxmox-iso" "ubuntu" {
   iso_checksum     = local.iso_checksum
   iso_url          = local.iso_url
   iso_storage_pool = "local"
-  iso_download_pve = true
+  iso_download_pve = false
   unmount_iso      = true
   machine          = "q35"
   network_adapters {
