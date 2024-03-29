@@ -4,6 +4,7 @@
   become: true
   roles:
     - self_signed_cert
+    - lego
     - grafana_agent_flow
 
 - name: Configure status infra
@@ -19,7 +20,6 @@
   hosts: dns
   become: true
   roles:
-    - lego
     - postgresql
     - nginx
     - dnsdist
@@ -30,9 +30,14 @@
   hosts: dhcp
   become: true
   roles:
-    - lego
     - kea_dhcp
     - ntp
+
+- name: Configure VPN server
+  hosts: vpn
+  become: true
+  roles:
+    - wireguard
 
 - name: Configure kubernetes
   hosts: kubernetes

@@ -132,6 +132,7 @@ data:
         {"__scheme__" = "https", "__address__" = "dns2.unicornafk.fr:12345", "instance" = "dns2.unicornafk.fr"},
         {"__scheme__" = "https", "__address__" = "dhcp1.unicornafk.fr:12345", "instance" = "dhcp1.unicornafk.fr"},
         {"__scheme__" = "https", "__address__" = "dhcp2.unicornafk.fr:12345", "instance" = "dhcp2.unicornafk.fr"},
+        {"__scheme__" = "https", "__address__" = "vpn.unicornafk.fr:12345", "instance" = "vpn.unicornafk.fr"},
       ]
       forward_to = [prometheus.remote_write.default.receiver]
       tls_config {
