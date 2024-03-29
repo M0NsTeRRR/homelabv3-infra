@@ -45,7 +45,7 @@
     state: "{{ grafana_agent_flow_package_state }}"
   notify: Enable grafana-agent-flow
 
-- name: Create node_exporter required folders
+- name: Create grafana-agent-flow required folders
   ansible.builtin.file:
     name: /etc/grafana-agent-flow/ssl
     state: directory
