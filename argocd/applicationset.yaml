@@ -63,6 +63,9 @@ spec:
       - appName: bazarr
         namespace: bazarr
         syncWave: "0"
+      - appName: prowlarr
+        namespace: prowlarr
+        syncWave: "0"
   template:
     metadata:
       name: '{{appName}}'
