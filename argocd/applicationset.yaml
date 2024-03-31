@@ -66,6 +66,9 @@ spec:
       - appName: prowlarr
         namespace: prowlarr
         syncWave: "0"
+      - appName: overseerr
+        namespace: overseerr
+        syncWave: "0"
   template:
     metadata:
       name: '{{appName}}'
