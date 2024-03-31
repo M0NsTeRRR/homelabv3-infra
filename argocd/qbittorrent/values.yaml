@@ -1,3 +1,6 @@
+extraEnv:
+  - name: QBT_EULA
+    value: accept
 volumes:
   - name: data
     persistentVolumeClaim:
