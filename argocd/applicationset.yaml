@@ -60,6 +60,9 @@ spec:
       - appName: sonarr
         namespace: sonarr
         syncWave: "0"
+      - appName: bazarr
+        namespace: bazarr
+        syncWave: "0"
   template:
     metadata:
       name: '{{appName}}'

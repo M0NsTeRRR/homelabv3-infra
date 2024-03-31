@@ -1,0 +1,14 @@
+volumes:
+  - name: data
+    persistentVolumeClaim:
+      claimName: media-storage
+volumeMounts:
+  - name: data
+    mountPath: /movies
+    subPath: movies
+  - name: data
+    mountPath: /tv
+    subPath: tv
+  - name: data
+    mountPath: /downloads
+    subPath: downloads
