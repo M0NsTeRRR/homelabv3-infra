@@ -57,6 +57,9 @@ spec:
       - appName: radarr
         namespace: radarr
         syncWave: "0"
+      - appName: sonarr
+        namespace: sonarr
+        syncWave: "0"
   template:
     metadata:
       name: '{{appName}}'
