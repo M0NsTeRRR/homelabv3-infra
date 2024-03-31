@@ -72,6 +72,9 @@ spec:
       - appName: flaresolverr
         namespace: flaresolverr
         syncWave: "0"
+      - appName: qbittorrent
+        namespace: qbittorrent
+        syncWave: "0"
   template:
     metadata:
       name: '{{appName}}'
