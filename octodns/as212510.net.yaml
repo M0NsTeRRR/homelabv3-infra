@@ -7,7 +7,7 @@
     values:
       - flags: 0
         tag: iodef
-        value: "mailto:security@as212510.net"
+        value: "mailto:noc@as212510.net"
       - flags: 0
         tag: issue
         value: sectigo.com
@@ -15,20 +15,24 @@
         tag: issue
         value: letsencrypt.org
   - type: MX
-    value:
-      exchange: mta-gw.infomaniak.ch.
-      preference: 5
+    values:
+      - exchange: mail.protonmail.ch.
+        preference: 10
+      - exchange: mail.protonmail.ch.
+        preference: 20
   - type: TXT
-    value: v=spf1 include:spf.infomaniak.ch -all
-20230930._domainkey:
-  - type: TXT
-    value: v=DKIM1\; t=s\; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7iMHEWtuEk16QI6qASa+fARqEM73PVc/V+f1+Ry2nRg997Odimaox0uGutmbz8V5NSxHkRt0tpkueaDU0JPEp4u8DKhni4GX9hsG0y2vgfodXuqnWQe5jirKtIoqpUj1aD/2rFfeberVXvrZzzgYpVXhpIkUlzfOmU3Ua5+sOFXXzv8OHzXoQT60ENunYJkfNyOZxL0mSVWO/jyIq6rCbReKL6l/EQht7fKonMuTVTHdSr/Bj5Yqf3XXr9QdNQ3KvCCZbTdCL5ydiWIGLo0R7FFj+Jof4FPFLGlvQiY0OQzr4Kr1OvVqk2OX9mlSNIE5RwTZZ4wOH8c499g4y4SjewIDAQAB
+    values:
+      - v=spf1 include:_spf.protonmail.ch ~all
+      - protonmail-verification=2cab0ff7a8e924c37c715c4cc99fbc2464a355ec
 _dmarc:
   - type: TXT
-    value: v=DMARC1\; p=reject\; aspf=s\; adkim=s\; rua=mailto:dmarc@as21250.net\; ruf=mailto:dmarc@as21250.net\;
-autoconfig:
+    value: v=DMARC1\; p=reject\; aspf=s\; adkim=s\; rua=mailto:noc@as21250.net\; ruf=mailto:noc@as21250.net\;
+protonmail2._domainkey:
   - type: CNAME
-    value: infomaniak.com.
-autodiscover:
+    value: protonmail2.domainkey.dgnik3qjnqlslo3wp5cn3stwn3stngzrfru5a6iriojittyaqllcq.domains.proton.ch.
+protonmail3._domainkey:
   - type: CNAME
-    value: infomaniak.com.
+    value: protonmail3.domainkey.dgnik3qjnqlslo3wp5cn3stwn3stngzrfru5a6iriojittyaqllcq.domains.proton.ch.
+protonmail._domainkey:
+  - type: CNAME
+    value: protonmail.domainkey.dgnik3qjnqlslo3wp5cn3stwn3stngzrfru5a6iriojittyaqllcq.domains.proton.ch.

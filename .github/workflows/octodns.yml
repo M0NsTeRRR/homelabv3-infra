@@ -43,4 +43,4 @@ jobs:
           pip install '.[octodns]'     
       - name: Apply octodns config
         run: |
-          octodns-sync --config-file=./octodns/config.yaml --doit
+          octodns-sync --config-file=./octodns/config.yaml --doit --force

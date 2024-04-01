@@ -15,23 +15,18 @@
         tag: issue
         value: letsencrypt.org
   - type: MX
-    value:
-      exchange: mta-gw.infomaniak.ch.
-      preference: 5
+    values:
+      - exchange: mail.protonmail.ch.
+        preference: 10
+      - exchange: mail.protonmail.ch.
+        preference: 20
   - type: TXT
-    value: v=spf1 include:spf.infomaniak.ch -all
-20230625._domainkey:
-  - type: TXT
-    value: v=DKIM1\; t=s\; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAl93g8F6ZEgcHoTmTQKMfEI9PahMaV2p5EOSgPdsApOiE0MeJ/sLDRK2KyOT7PRJtLnIAgvAWesVh9sy58vRFg092EdeO2Ix8CMrhzCuGsFAI9vPNlbjsKSfvbAFLvDBNt9rZMsAzIvapcVYBGxl4fC0CXnAfi6ZvnyJUxo2pYqUs0DjwoYfbnPk/vBQcl53My9s31bivGryFnSuT3OOniZs26FrEwbi904bxlUC36oFPDEX4VnLpesRkU42gxdZ4jTy/FzhBhqz8HS3AquBbdqon7UAWnco0RxyxbE5IScjra0TG34cxqFgZ7mBmAvdOvgHb2YoefevdK7MJ3CCXjQIDAQAB
+    values:
+      - v=spf1 include:_spf.protonmail.ch ~all
+      - protonmail-verification=bb2ef492ae53a9fd3ca261214fea6b79608f7dd2
 _dmarc:
   - type: TXT
-    value: v=DMARC1\; p=reject\; aspf=s\; adkim=s\; rua=mailto:dmarc@adminafk.fr\; ruf=mailto:dmarc@adminafk.fr\;
-autoconfig:
-  - type: CNAME
-    value: infomaniak.com.
-autodiscover:
-  - type: CNAME
-    value: infomaniak.com.
+    value: v=DMARC1\; p=reject\; aspf=s\; adkim=s\; rua=mailto:security@adminafk.fr\; ruf=mailto:security@adminafk.fr\;
 helm-charts:
   - type: CNAME
     value: m0nsterrr.github.io.
@@ -41,6 +36,15 @@ homelab:
 openpgpkey:
   - type: CNAME
     value: wkd.keys.openpgp.org.
+protonmail2._domainkey:
+  - type: CNAME
+    value: protonmail2.domainkey.dvoriaoqj4eea74hf2fdkwahdtdicse74pex3gpla6dzjae74z3da.domains.proton.ch.
+protonmail3._domainkey:
+  - type: CNAME
+    value: protonmail3.domainkey.dvoriaoqj4eea74hf2fdkwahdtdicse74pex3gpla6dzjae74z3da.domains.proton.ch.
+protonmail._domainkey:
+  - type: CNAME
+    value: protonmail.domainkey.dvoriaoqj4eea74hf2fdkwahdtdicse74pex3gpla6dzjae74z3da.domains.proton.ch.
 status:
   - type: CNAME
     value: vps1.adminafk.fr.
