@@ -1,6 +1,3 @@
-extraEnv:
-  - name: QBT_EULA
-    value: accept
 volumes:
   - name: data
     persistentVolumeClaim:
@@ -9,3 +6,22 @@ volumeMounts:
   - name: data
     mountPath: /downloads
     subPath: downloads
+gluetun:
+  extraEnv:
+    - name: FIREWALL_INPUT_PORTS
+      value: "8888"
+    - name: FIREWALL_OUTBOUND_SUBNETS
+      value: "10.0.0.0/8"
+    - name: VPN_SERVICE_PROVIDER
+      value: "custom"
+    - name: VPN_PORT_FORWARDING_PROVIDER
+      value: "protonvpn"
+    - name: VPN_TYPE
+      value: "wireguard"
+    - name: VPN_PORT_FORWARDING
+      value: "on"
+    - name: DNS_KEEP_NAMESERVER
+      value: "on"
+  extraEnvFrom:
+    - secretRef:
+        name: gluetun-vault

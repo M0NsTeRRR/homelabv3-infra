@@ -3,12 +3,13 @@ kind: Kustomization
 namespace: qbittorrent
 
 resources:
-  - manifests/01_pvc.yaml
+  - manifests/01_external_secret.yaml
+  - manifests/02_pvc.yaml
 
 helmCharts:
 - name: qbittorrent
   releaseName: qbittorrent
   namespace: qbittorrent
   repo: https://helm-charts.adminafk.fr
-  version: 0.1.0
+  version: 0.2.0
   valuesFile: values.yaml
