@@ -9,7 +9,7 @@ volumeMounts:
 gluetun:
   extraEnv:
     - name: FIREWALL_INPUT_PORTS
-      value: "8888"
+      value: "80"
     - name: FIREWALL_OUTBOUND_SUBNETS
       value: "10.0.0.0/8"
     - name: VPN_SERVICE_PROVIDER
