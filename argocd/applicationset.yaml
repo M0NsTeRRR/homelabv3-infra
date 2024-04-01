@@ -75,6 +75,9 @@ spec:
       - appName: qbittorrent
         namespace: qbittorrent
         syncWave: "0"
+      - appName: plex
+        namespace: plex
+        syncWave: "0"
   template:
     metadata:
       name: '{{appName}}'

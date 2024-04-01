@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: plex
+
+helmCharts:
+- name: plex-media-server
+  releaseName: plex
+  namespace: plex
+  repo: https://raw.githubusercontent.com/plexinc/pms-docker/gh-pages
+  version: 0.2.1
+  valuesFile: values.yaml
