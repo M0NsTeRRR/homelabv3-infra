@@ -7,4 +7,4 @@ helmCharts:
   releaseName: overseerr
   namespace: overseerr
   repo: https://helm-charts.adminafk.fr
-  version: 0.1.0
+  version: 0.1.1
