@@ -3,6 +3,18 @@ image:
   repository: plexinc/pms-docker
   tag: "1.40.1.8227-c0dd5a73e"
 
+extraVolumes:
+  - name: data
+    persistentVolumeClaim:
+      claimName: media-storage
+extraVolumeMounts:
+  - name: data
+    mountPath: /movies
+    subPath: movies
+  - name: data
+    mountPath: /tv
+    subPath: tv
+
 ingress:
   enabled: true
   ingressClassName: "ingress-internal"
