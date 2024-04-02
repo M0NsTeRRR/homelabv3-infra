@@ -66,8 +66,8 @@ spec:
       - appName: prowlarr
         namespace: prowlarr
         syncWave: "0"
-      - appName: overseerr
-        namespace: overseerr
+      - appName: jellyseerr
+        namespace: jellyseerr
         syncWave: "0"
       - appName: flaresolverr
         namespace: flaresolverr
