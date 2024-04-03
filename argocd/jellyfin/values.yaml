@@ -13,7 +13,9 @@ extraVolumeMounts:
 ingress:
   enabled: true
   annotations:
-    cert-manager.io/cluster-issuer: letsencrypt
+    cert-manager.io/cluster-issuer: "vault"
+    cert-manager.io/private-key-algorithm: "RSA"
+    cert-manager.io/private-key-size: "4096"
   hosts:
     - host: jellyfin.unicornafk.fr
       paths:
