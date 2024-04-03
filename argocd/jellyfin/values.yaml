@@ -1,0 +1,26 @@
+extraVolumes:
+  - name: data
+    persistentVolumeClaim:
+      claimName: media-storage
+extraVolumeMounts:
+  - name: data
+    mountPath: /movies
+    subPath: movies
+  - name: data
+    mountPath: /tv
+    subPath: tv
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+  hosts:
+    - host: jellyfin.unicornafk.fr
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    - hosts:
+        - jellyfin.unicornafk.fr
+      secretName: jellyfin.unicornafk.fr-tls
+  ingressClassName: ingress-internal

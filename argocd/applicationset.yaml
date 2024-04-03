@@ -75,8 +75,8 @@ spec:
       - appName: qbittorrent
         namespace: qbittorrent
         syncWave: "0"
-      - appName: plex
-        namespace: plex
+      - appName: jellyfin
+        namespace: jellyfin
         syncWave: "0"
   template:
     metadata:

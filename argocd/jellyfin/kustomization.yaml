@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: jellyfin
+
+resources:
+  - manifests/01_pvc.yaml
+
+helmCharts:
+- name: jellyfin
+  releaseName: jellyfin
+  namespace: jellyfin
+  repo: https://helm-charts.adminafk.fr
+  version: 0.1.0
+  valuesFile: values.yaml
