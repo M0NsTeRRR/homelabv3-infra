@@ -9,15 +9,15 @@ volumeMounts:
 gluetun:
   extraEnv:
     - name: FIREWALL_INPUT_PORTS
-      value: "6881"
+      value: "80,6881"
     - name: FIREWALL_OUTBOUND_SUBNETS
       value: "10.0.0.0/8"
     - name: VPN_SERVICE_PROVIDER
       value: "custom"
-    - name: VPN_PORT_FORWARDING_PROVIDER
-      value: "protonvpn"
     - name: VPN_TYPE
       value: "wireguard"
+    - name: VPN_PORT_FORWARDING_PROVIDER
+      value: "protonvpn"
     - name: VPN_PORT_FORWARDING
       value: "on"
     - name: DNS_KEEP_NAMESERVER
