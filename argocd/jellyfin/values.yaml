@@ -1,8 +1,8 @@
-extraVolumes:
+volumes:
   - name: data
     persistentVolumeClaim:
       claimName: media-storage
-extraVolumeMounts:
+volumeMounts:
   - name: data
     mountPath: /movies
     subPath: movies
