@@ -1,0 +1,16 @@
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: "vault"
+    cert-manager.io/private-key-algorithm: "RSA"
+    cert-manager.io/private-key-size: "4096"
+  hosts:
+    - host: jellyseerr.unicornafk.fr
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    - hosts:
+        - jellyseerr.unicornafk.fr
+      secretName: jellyseerr.unicornafk.fr-tls
+  ingressClassName: ingress-internal

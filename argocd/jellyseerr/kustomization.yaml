@@ -8,3 +8,4 @@ helmCharts:
   namespace: jellyseerr
   repo: https://helm-charts.adminafk.fr
   version: 0.1.0
+  valuesFile: values.yaml
