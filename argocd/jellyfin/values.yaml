@@ -6,9 +6,11 @@ volumeMounts:
   - name: data
     mountPath: /movies
     subPath: movies
+    readOnly: true
   - name: data
     mountPath: /tv
     subPath: tv
+    readOnly: true
 
 ingress:
   enabled: true

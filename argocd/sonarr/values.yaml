@@ -1,3 +1,6 @@
+extraEnv:
+  - name: TZ
+    value: Europe/Paris
 volumes:
   - name: data
     persistentVolumeClaim:

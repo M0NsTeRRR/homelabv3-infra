@@ -8,3 +8,4 @@ helmCharts:
   namespace: flaresolverr
   repo: https://helm-charts.adminafk.fr
   version: 0.1.1
+  valuesFile: values.yaml
