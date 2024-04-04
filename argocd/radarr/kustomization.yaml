@@ -10,5 +10,5 @@ helmCharts:
   releaseName: radarr
   namespace: radarr
   repo: https://helm-charts.adminafk.fr
-  version: 0.1.3
+  version: 0.1.5
   valuesFile: values.yaml
