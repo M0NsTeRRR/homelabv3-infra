@@ -173,6 +173,12 @@ dashboards:
       datasource:
         - name: DS_PROMETHEUS
           value: prometheus
+    FlareSolverr:
+      gnetId: 19363
+      revision: 1
+      datasource:
+        - name: DS_PROMETHEUS
+          value: prometheus
 
 ingress:
   enabled: true
