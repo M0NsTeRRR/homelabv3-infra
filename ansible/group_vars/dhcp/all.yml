@@ -204,8 +204,7 @@ kea_dhcp_ipv6_unifi_controller: 2a0c:b641:02c0:120::50
 lego_builtin_webserver: true
 lego_certificates:
   - domain: "{{ inventory_hostname }}"
-    san:
-      - dhcp.unicornafk.fr
+    san: []
     destinations:
       - { path: /etc/kea/ssl, filename: "{{ inventory_hostname }}", owner: _kea, group: _kea }
       - { path: /etc/grafana-agent-flow/ssl, filename: "{{ inventory_hostname }}", owner: grafana-agent-flow, group: grafana-agent-flow }
@@ -228,7 +227,6 @@ self_signed_cert_list:
     generate_pkcs12: false
     subject_alt_name:
       - "DNS:{{ inventory_hostname }}"
-      - "DNS:dhcp.unicornafk.fr"
       - "IP:{{ ansible_default_ipv4.address }}"
       - "IP:{{ ansible_default_ipv6.address }}"
       - "email:{{ admin_email }}"

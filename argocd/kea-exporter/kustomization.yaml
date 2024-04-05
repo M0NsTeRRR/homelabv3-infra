@@ -7,8 +7,14 @@ resources:
 
 helmCharts:
 - name: kea-exporter
-  releaseName: kea-exporter
+  releaseName: kea1-exporter
   namespace: kea-exporter
   repo: https://helm-charts.adminafk.fr
   version: 0.1.3
-  valuesFile: values.yaml
+  valuesFile: values_1.yaml
+- name: kea-exporter
+  releaseName: kea2-exporter
+  namespace: kea-exporter
+  repo: https://helm-charts.adminafk.fr
+  version: 0.1.3
+  valuesFile: values_2.yaml

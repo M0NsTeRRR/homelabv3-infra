@@ -19,7 +19,7 @@ extraEnv:
   - name: MODE
     value: http
   - name: TARGETS
-    value: https://dhcp.unicornafk.fr:8000
+    value: https://dhcp2.unicornafk.fr:8000
   - name: CLIENT_CERT
     value: /mtls/client/tls.crt
   - name: CLIENT_KEY
@@ -29,9 +29,7 @@ extraEnv:
 serviceMonitor:
   enabled: true
   metricRelabelings:
-    - replacement: dhcp.unicornafk.fr
+    - replacement: dhcp2.unicornafk.fr
       sourceLabels:
         - instance
       targetLabel: instance
-prometheusRule:
-  enabled: true
