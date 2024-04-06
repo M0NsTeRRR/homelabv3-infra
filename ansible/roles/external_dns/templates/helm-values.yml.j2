@@ -40,5 +40,7 @@ extraVolumeMounts:
     mountPath: /etc/external-dns/ssl
     readOnly: true
 {% endif %}
+service:
+  ipFamilyPolicy: "PreferDualStack"
 serviceMonitor:
   enabled: true
