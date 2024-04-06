@@ -1,3 +1,7 @@
+service:
+  ipDualStack:
+    enabled: true
+    ipFamilyPolicy: "PreferDualStack"
 serviceMonitor:
   enabled: true
   namespace: grafana-agent
