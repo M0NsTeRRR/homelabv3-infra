@@ -295,9 +295,6 @@ argocd_repositories:
   homelab:
     name: homelab
     url: https://github.com/M0NsTeRRR/homelabv3-infra
-  test:
-    name: test
-    url: https://github.com/M0NsTeRRR/test_argocd
 argocd_notifiers:
   service.webhook.discord: |
       headers:
@@ -596,4 +593,4 @@ argocd_templates:
 argocd_applications:
   - name: homelabv3-infra
     repo_url: https://github.com/M0NsTeRRR/homelabv3-infra
-    path: argocd
+    path: argocd/*

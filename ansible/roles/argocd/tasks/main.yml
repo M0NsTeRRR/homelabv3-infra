@@ -47,7 +47,7 @@
 
 - name: Deploy applications
   kubernetes.core.k8s:
-    definition: "{{ lookup('ansible.builtin.template', 'application.yml.j2') | from_yaml }}"
+    definition: "{{ lookup('ansible.builtin.template', 'application_set.yml.j2') | from_yaml }}"
     kubeconfig: "{{ argocd_localhost_kubeconfig_path }}"
     validate_certs: true
     state: present
