@@ -1,3 +1,5 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
@@ -7,7 +9,6 @@ resources:
 helmCharts:
 - name: kube-prometheus-stack
   releaseName: kube-prometheus-stack
-  namespace: kube-prometheus-stack
   repo: https://prometheus-community.github.io/helm-charts
   version: 57.2.0
   valuesFile: values.yaml

@@ -1,6 +1,7 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: cnpg
 
 resources:
   - https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/main/docs/src/samples/monitoring/prometheusrule.yaml
@@ -8,7 +9,6 @@ resources:
 helmCharts:
 - name: cloudnative-pg
   releaseName: cnpg
-  namespace: cnpg
   repo: https://cloudnative-pg.github.io/charts
   version: 0.20.2
   valuesFile: values.yaml

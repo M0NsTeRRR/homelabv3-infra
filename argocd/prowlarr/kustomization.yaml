@@ -1,11 +1,11 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: prowlarr
 
 helmCharts:
 - name: prowlarr
   releaseName: prowlarr
-  namespace: prowlarr
   repo: https://helm-charts.adminafk.fr
   version: 0.1.7
   valuesFile: values.yaml

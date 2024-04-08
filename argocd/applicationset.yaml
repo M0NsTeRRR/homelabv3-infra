@@ -18,9 +18,6 @@ spec:
       - appName: cnpg
         namespace: cnpg
         syncWave: "-2"
-      - appName: keycloak
-        namespace: keycloak
-        syncWave: "-1"
       - appName: prometheus-pushgateway
         namespace: prometheus-pushgateway
         syncWave: "0"

@@ -1,6 +1,7 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: kea-exporter
 
 resources:
   - manifests/01_certificate.yaml
@@ -8,13 +9,11 @@ resources:
 helmCharts:
 - name: kea-exporter
   releaseName: kea1-exporter
-  namespace: kea-exporter
   repo: https://helm-charts.adminafk.fr
   version: 0.2.0
   valuesFile: values_1.yaml
 - name: kea-exporter
   releaseName: kea2-exporter
-  namespace: kea-exporter
   repo: https://helm-charts.adminafk.fr
   version: 0.2.0
   valuesFile: values_2.yaml
