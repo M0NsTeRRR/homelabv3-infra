@@ -8,12 +8,18 @@ controller:
     serviceMonitor:
       enabled: true
 
+dex:
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+
 server:
   autoscaling:
     enabled: true
     minReplicas: 2
   metrics:
-  enabled: true
+    enabled: true
     serviceMonitor:
       enabled: true
   ingress:
