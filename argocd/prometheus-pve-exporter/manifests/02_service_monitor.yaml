@@ -13,7 +13,8 @@ spec:
     # Get node metrics
     - honorLabels: true
       relabelings:
-      - sourceLabels:
+      - action: replace
+        sourceLabels:
           - __param_target
         targetLabel: instance
       params:
@@ -30,7 +31,8 @@ spec:
       scrapeTimeout: 5s
     - honorLabels: true
       relabelings:
-      - sourceLabels:
+      - action: replace
+        sourceLabels:
           - __param_target
         targetLabel: instance
       params:
@@ -47,7 +49,8 @@ spec:
       scrapeTimeout: 5s
     - honorLabels: true
       relabelings:
-      - sourceLabels:
+      - action: replace
+        sourceLabels:
           - __param_target
         targetLabel: instance
       params:
@@ -65,7 +68,8 @@ spec:
     # Get cluster metrics
     - honorLabels: true
       relabelings:
-      - sourceLabels:
+      - action: replace
+        sourceLabels:
           - __param_target
         targetLabel: instance
       params:

@@ -13,7 +13,8 @@ spec:
   endpoints:
     - honorLabels: true
       metricRelabelings:
-        - replacement: r1.unicornafk.fr
+        - action: replace
+          replacement: r1.unicornafk.fr
           sourceLabels:
             - instance
           targetLabel: instance
@@ -29,7 +30,8 @@ spec:
       scrapeTimeout: 10s
     - honorLabels: true
       metricRelabelings:
-        - replacement: sw1.unicornafk.fr
+        - action: replace
+          replacement: sw1.unicornafk.fr
           sourceLabels:
             - instance
           targetLabel: instance
@@ -45,7 +47,8 @@ spec:
       scrapeTimeout: 10s
     - honorLabels: true
       metricRelabelings:
-        - replacement: sw2.unicornafk.fr
+        - action: replace
+          replacement: sw2.unicornafk.fr
           sourceLabels:
             - instance
           targetLabel: instance
@@ -61,7 +64,8 @@ spec:
       scrapeTimeout: 10s
     - honorLabels: true
       metricRelabelings:
-        - replacement: nas.unicornafk.fr
+        - action: replace
+          replacement: nas.unicornafk.fr
           sourceLabels:
             - instance
           targetLabel: instance

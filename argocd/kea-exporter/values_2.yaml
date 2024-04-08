@@ -31,7 +31,8 @@ extraEnv:
 serviceMonitor:
   enabled: true
   metricRelabelings:
-    - replacement: dhcp2.unicornafk.fr
+    - action: replace
+      replacement: dhcp2.unicornafk.fr
       sourceLabels:
         - instance
       targetLabel: instance
