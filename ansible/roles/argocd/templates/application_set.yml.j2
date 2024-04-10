@@ -22,6 +22,8 @@ spec:
         repoURL: {{ item.repo_url }}
         targetRevision: HEAD
         path: '{{ '{{' }}.path.path{{ '}}' }}'
+        kustomize:
+          namespace: '{{ '{{' }}.path.basename{{ '}}' }}'
       destination:
         server: https://kubernetes.default.svc
         namespace: '{{ '{{' }}.path.basename{{ '}}' }}'
@@ -31,3 +33,9 @@ spec:
         syncOptions:
           - CreateNamespace=true
           - ServerSideApply=true
+      # fix: https://github.com/argoproj/argo-cd/issues/13585
+      ignoreDifferences:
+      - group: storage.k8s.io
+        kind: CSIDriver
+        jqPathExpressions:
+        - .spec.seLinuxMount
