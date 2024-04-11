@@ -7,5 +7,5 @@ helmCharts:
 - name: flaresolverr
   releaseName: flaresolverr
   repo: https://helm-charts.adminafk.fr
-  version: 0.2.0
+  version: 0.2.1
   valuesFile: values.yaml
