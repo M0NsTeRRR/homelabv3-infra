@@ -1,6 +1,6 @@
 ---
 # datasource=github-tags depName=cilium/cilium
-cilium_version: "v1.15.3"
+cilium_version: "v1.15.4"
 cilium_force_install: false
 cilium_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
 cilium_service_hosts: []
