@@ -1,2 +1,4 @@
 serviceMonitor:
   enabled: true
+service:
+  ipFamilyPolicy: "PreferDualStack"
