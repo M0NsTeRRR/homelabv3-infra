@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/M0NsTeRRR/helm-charts/main/charts/prowlarr/values.schema.json
 extraEnv:
   - name: TZ
     value: Europe/Paris

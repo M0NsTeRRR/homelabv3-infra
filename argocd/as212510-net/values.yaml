@@ -1,5 +1,4 @@
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/M0NsTeRRR/helm-charts/main/charts/as212510-net/values.schema.json
 podAnnotations:
   reloader.stakater.com/auto: "true"
 extraEnv:
