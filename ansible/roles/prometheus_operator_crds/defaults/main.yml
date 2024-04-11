@@ -1,6 +1,6 @@
 ---
 # datasource=github-tags depName=prometheus-community/helm-charts
-prometheus_operator_crds_github_tag: "prometheus-operator-crds-10.0.0"
+prometheus_operator_crds_github_tag: "prometheus-operator-crds-11.0.0"
 prometheus_operator_crds_chart_version: "{{ prometheus_operator_crds_github_tag | replace('prometheus-operator-crds-', '') }}"
 prometheus_operator_crds_force_install: false
 prometheus_operator_crds_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
