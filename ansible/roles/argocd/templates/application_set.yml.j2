@@ -1,3 +1,4 @@
+#jinja2: lstrip_blocks: "True"
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
@@ -12,7 +13,7 @@ spec:
       repoURL: {{ item.repo_url }}
       revision: HEAD
       directories:
-      - path: {{ item.path }}
+        {{ item.directories | to_yaml | indent(8)}}
   template:
     metadata:
       name: '{{ '{{' }}.path.basename{{ '}}' }}'

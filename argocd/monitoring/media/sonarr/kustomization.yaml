@@ -1,11 +1,14 @@
 ---
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
-namespace: stakater
+kind: Kustomization
+
+resources:
+  - manifests/01_pvc.yaml
 
 helmCharts:
-- name: reloader
-  releaseName: stakater
-  repo: https://stakater.github.io/stakater-charts
-  version: 1.0.79
+- name: sonarr
+  releaseName: sonarr
+  repo: https://helm-charts.adminafk.fr
+  version: 0.2.2
   valuesFile: values.yaml

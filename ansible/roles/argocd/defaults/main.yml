@@ -45,4 +45,5 @@ argocd_applications: []
 # argocd_applications:
 #   name: example
 #   repo_url: https://example.git
-#   path: apps
+#   directories:
+#     - path: apps
