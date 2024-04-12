@@ -1,0 +1,62 @@
+global:
+  env:
+    - name: AUTHENTIK_DISABLE_STARTUP_ANALYTICS
+      value: "true"
+    - name: AUTHENTIK_DISABLE_UPDATE_CHECK
+      value: "true"
+    - name: AUTHENTIK_ERROR_REPORTING__ENABLED
+      value: "false"
+    - name: AUTHENTIK_POSTGRESQL__HOST
+      value: "authentik-cluster-rw"
+    - name: AUTHENTIK_POSTGRESQL__SSLMODE
+      value: verify-ca
+    - name: AUTHENTIK_POSTGRESQL__SSLROOTCERT
+      value: /etc/ssl/certs/homelab.crt
+    - name: AUTHENTIK_POSTGRESQL__SSLCERT
+      value: /mtls/client/tls.crt
+    - name: AUTHENTIK_POSTGRESQL__SSLKEY
+      value: /mtls/client/tls.key
+  envFrom:
+    - secretRef:
+        name: authentik-vault
+  volumeMounts:
+    - name: ca-certs
+      mountPath: /etc/ssl/certs/homelab.crt
+      subPath: ca.crt
+      readOnly: true
+    - name: authentik-postgres-cert
+      mountPath: /mtls/client
+      readOnly: true
+  volumes:
+    - name: ca-certs
+      configMap:
+        name: homelab-ca
+    - name: authentik-postgres-cert
+      secret:
+        secretName: authentik-postgres-cert
+redis:
+  enabled: true
+server:
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: "vault"
+      cert-manager.io/private-key-algorithm: "RSA"
+      cert-manager.io/private-key-size: "4096"
+    hosts:
+      - sso.unicornafk.fr
+    paths:
+      - /
+    pathType: ImplementationSpecific
+    tls:
+      - hosts:
+          - sso.unicornafk.fr
+        secretName: sso.unicornafk.fr-tls
+    ingressClassName: ingress-internal
+prometheus:
+  rules:
+    enabled: true

@@ -1,0 +1,57 @@
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: authentik-postgres-cert
+  labels:
+    cnpg.io/reload: ""
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: authentik-postgres-cert
+spec:
+  secretName: authentik-postgres-cert
+  privateKey:
+    algorithm: RSA
+    size: 4096
+  usages:
+    - server auth
+  dnsNames:
+    - authentik-cluster-rw
+    - authentik-cluster-rw.default
+    - authentik-cluster-rw.default.svc
+    - authentik-cluster-r
+    - authentik-cluster-r.default
+    - authentik-cluster-r.default.svc
+    - authentik-cluster-ro
+    - authentik-cluster-ro.default
+    - authentik-cluster-ro.default.svc
+  issuerRef:
+    name: vault
+    kind: Issuer
+    group: cert-manager.io
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: authentik-postgres-client-cert
+  labels:
+    cnpg.io/reload: ""
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: authentik-postgres-client-cert
+spec:
+  secretName: authentik-postgres-client-cert
+  privateKey:
+    algorithm: RSA
+    size: 4096
+  usages:
+    - client auth
+  commonName: streaming_replica
+  issuerRef:
+    name: selfsigned-issuer
+    kind: Issuer
+    group: cert-manager.io

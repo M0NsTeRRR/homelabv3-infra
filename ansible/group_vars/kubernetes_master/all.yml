@@ -103,9 +103,9 @@ vault_policies:
       - path: secret/data/homelab/prod/csi-driver-smb
         capabilities:
           - read
-  - name: keycloak
+  - name: authentik
     rules:
-      - path: secret/data/homelab/prod/keycloak
+      - path: secret/data/homelab/prod/authentik
         capabilities:
           - read
   - name: rook-ceph-cluster
@@ -207,11 +207,11 @@ public_vault_datas:
       bound_service_account_namespaces: csi-driver-smb
       policies: csi-driver-smb
       ttl: 1m
-  - path: auth/kubernetes/role/keycloak
+  - path: auth/kubernetes/role/authentik
     data:
-      bound_service_account_names: keycloak-vault
-      bound_service_account_namespaces: keycloak
-      policies: keycloak
+      bound_service_account_names: authentik-vault
+      bound_service_account_namespaces: authentik
+      policies: authentik
       ttl: 1h
   - path: auth/kubernetes/role/rook-ceph-cluster
     data:

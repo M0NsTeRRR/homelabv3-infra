@@ -1,0 +1,29 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: authentik-cluster
+spec:
+  instances: 1
+
+  primaryUpdateStrategy: unsupervised
+
+  enableSuperuserAccess: false
+
+  certificates:
+    serverTLSSecret: authentik-postgres-cert
+    serverCASecret: authentik-postgres-cert
+    clientCASecret: authentik-postgres-client-cert
+    replicationTLSSecret: authentik-postgres-client-cert
+
+  bootstrap:
+    initdb:
+      database: authentik
+      owner: authentik
+      secret:
+        name: postgres-vault
+      dataChecksums: true
+      encoding: 'UTF8'
+
+  storage:
+    size: 10Gi
