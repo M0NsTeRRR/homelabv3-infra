@@ -13,8 +13,6 @@ spec:
   certificates:
     serverCASecret: homelab-ca
     serverTLSSecret: authentik-postgres-cert
-    clientCASecret: homelab-ca
-    replicationTLSSecret: authentik-postgres-client-cert
 
   bootstrap:
     initdb:

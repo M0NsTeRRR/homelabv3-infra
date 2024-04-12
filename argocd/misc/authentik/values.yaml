@@ -12,10 +12,6 @@ global:
       value: verify-ca
     - name: AUTHENTIK_POSTGRESQL__SSLROOTCERT
       value: /etc/ssl/certs/homelab.crt
-    - name: AUTHENTIK_POSTGRESQL__SSLCERT
-      value: /mtls/client/tls.crt
-    - name: AUTHENTIK_POSTGRESQL__SSLKEY
-      value: /mtls/client/tls.key
   envFrom:
     - secretRef:
         name: authentik-vault
@@ -24,16 +20,10 @@ global:
       mountPath: /etc/ssl/certs/homelab.crt
       subPath: ca.crt
       readOnly: true
-    - name: authentik-postgres-cert
-      mountPath: /mtls/client
-      readOnly: true
   volumes:
     - name: ca-certs
       configMap:
         name: homelab-ca
-    - name: authentik-postgres-cert
-      secret:
-        secretName: authentik-postgres-cert
 redis:
   enabled: true
 server:
