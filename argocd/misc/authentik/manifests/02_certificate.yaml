@@ -29,8 +29,7 @@ spec:
     - authentik-cluster-ro.default.svc
   issuerRef:
     name: vault
-    kind: Issuer
-    group: cert-manager.io
+    kind: ClusterIssuer
 ---
 apiVersion: v1
 kind: Secret
@@ -52,6 +51,5 @@ spec:
     - client auth
   commonName: streaming_replica
   issuerRef:
-    name: selfsigned-issuer
-    kind: Issuer
-    group: cert-manager.io
+    name: vault
+    kind: ClusterIssuer
