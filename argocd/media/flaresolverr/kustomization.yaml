@@ -1,0 +1,11 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+helmCharts:
+- name: flaresolverr
+  releaseName: flaresolverr
+  repo: https://helm-charts.adminafk.fr
+  version: 0.2.4
+  valuesFile: values.yaml
