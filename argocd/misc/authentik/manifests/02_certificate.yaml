@@ -49,7 +49,7 @@ spec:
     size: 4096
   usages:
     - client auth
-  commonName: streaming_replica
+  commonName: authentik.unicornafk.fr
   issuerRef:
     name: vault
     kind: ClusterIssuer
