@@ -1,0 +1,14 @@
+#jinja2: lstrip_blocks: "True"
+replicaCount: 2
+app:
+  metrics:
+    service:
+      enabled: true
+      servicemonitor:
+        enabled: true
+secretTargets:
+  enabled: true
+  authorizedSecrets:
+  {% for certificate in trust_manager_certificates %}
+    - {{ certificate.name }}
+  {% endfor %}
