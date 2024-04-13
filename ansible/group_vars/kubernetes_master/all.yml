@@ -62,9 +62,21 @@ vault_secrets_engine:
         - Link
         - Replay-Nonce
 vault_auth_methods:
+  - name: oidc
+    path: oidc
   - name: kubernetes
     path: kubernetes
 vault_policies:
+  - name: viewer
+    rules:
+      - path: /secret/*
+        capabilities:
+          - read
+          - list
+      - path: pki*
+        capabilities:
+          - read
+          - list
   - name: pki
     rules:
       - path: pki*

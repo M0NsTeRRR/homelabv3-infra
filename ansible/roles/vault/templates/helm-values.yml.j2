@@ -21,10 +21,17 @@ server:
       secret:
         defaultMode: 420
         secretName: vault-server-tls
+    - name: ca-certs
+      configMap:
+        name: homelab-ca
 
   volumeMounts:
     - mountPath: /vault/userconfig/vault-server-tls
       name: userconfig-vault-server-tls
+      readOnly: true
+    - name: ca-certs
+      mountPath: /etc/ssl/certs/homelab.crt
+      subPath: ca.crt
       readOnly: true
 
   dataStorage:
