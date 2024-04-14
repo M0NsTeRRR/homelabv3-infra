@@ -11,10 +11,8 @@ spec:
   enableSuperuserAccess: false
 
   certificates:
+    serverCASecret: homelab-ca
     serverTLSSecret: authentik-postgres-cert
-    serverCASecret: authentik-postgres-cert
-    clientCASecret: authentik-postgres-client-cert
-    replicationTLSSecret: authentik-postgres-client-cert
 
   bootstrap:
     initdb:

@@ -29,29 +29,4 @@ spec:
     - authentik-cluster-ro.default.svc
   issuerRef:
     name: vault
-    kind: Issuer
-    group: cert-manager.io
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: authentik-postgres-client-cert
-  labels:
-    cnpg.io/reload: ""
----
-apiVersion: cert-manager.io/v1
-kind: Certificate
-metadata:
-  name: authentik-postgres-client-cert
-spec:
-  secretName: authentik-postgres-client-cert
-  privateKey:
-    algorithm: RSA
-    size: 4096
-  usages:
-    - client auth
-  commonName: streaming_replica
-  issuerRef:
-    name: selfsigned-issuer
-    kind: Issuer
-    group: cert-manager.io
+    kind: ClusterIssuer

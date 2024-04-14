@@ -3,6 +3,16 @@ envFromSecret: "grafana-vault"
 annotations:
   reloader.stakater.com/auto: "true"
 
+extraVolumeMounts:
+  - name: ca-certs
+    mountPath: /etc/ssl/certs/homelab.crt
+    subPath: ca.crt
+    readOnly: true
+extraVolumes:
+  - name: ca-certs
+    configMap:
+      name: homelab-ca
+
 serviceMonitor:
   enabled: true
 
@@ -27,6 +37,17 @@ grafana.ini:
     check_for_updates: true
   server:
     root_url: "https://%(domain)s/"
+  auth:
+    signout_redirect_url: "https://sso.unicornafk.fr/application/o/grafana/end-session/"
+    oauth_auto_login: false
+  auth.generic_oauth:
+    name: authentik
+    enabled: true
+    scopes: "openid profile email"
+    auth_url: "https://sso.unicornafk.fr/application/o/authorize/"
+    token_url: "https://sso.unicornafk.fr/application/o/token/"
+    api_url: "https://sso.unicornafk.fr/application/o/userinfo/"
+    role_attribute_path: contains(groups, 'Grafana Admins') && 'Admin' || contains(groups, 'Grafana Editors') && 'Editor' || contains(groups, 'Grafana Viewers') && 'Viewer'
 
 alerting:
   contactpoints.yaml:
@@ -79,6 +100,10 @@ dashboards:
       datasource:
         - name: DS_PROMETHEUS
           value: prometheus
+    Authentik:
+      gnetId: 14837
+      revision: 2
+      datasource: prometheus
     Argocd-application:
       gnetId: 19974
       revision: 2

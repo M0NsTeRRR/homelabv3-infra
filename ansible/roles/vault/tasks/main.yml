@@ -68,7 +68,7 @@
 
 - name: Init vault
   ansible.builtin.include_tasks: init.yml
-  when: not vault_is_installed or vault_force_install
+  when: not vault_is_installed
 
 - name: Unseal vault
   ansible.builtin.include_tasks: unseal.yml
