@@ -9,10 +9,7 @@ controller:
       enabled: true
 
 dex:
-  metrics:
-    enabled: true
-    serviceMonitor:
-      enabled: true
+  enabled: false
 
 server:
   autoscaling:
@@ -53,12 +50,28 @@ global:
     tag: {{ argocd_version }}
   networkPolicy:
     create: false
+  deploymentAnnotations:
+    reloader.stakater.com/auto: "true"
 
 configs:
   params:
     server.insecure: true
   cm:
     kustomize.buildOptions: "--enable-helm"
+    oidc.config:
+      name: authentik
+      issuer: https://sso.unicornafk.fr/application/o/argocd/
+      clientID: $argocd-vault:OAUTH_CLIENT_ID
+      clientSecret: $argocd-vault:OAUTH_CLIENT_SECRET
+      allowedAudiences: []
+      skipAudienceCheckWhenTokenHasNoAudience: false
+      requestedScopes: ["openid", "profile", "email", "groups"]
+      requestedIDTokenClaims: {"groups": {"essential": true}}
+      enablePKCEAuthentication: true
+  rbac:
+    policy.csv: |
+      g, Argocd Admins, role:admin
+      g, Argocd Viewers, role:readonly
   repositories:
     {{ argocd_repositories | to_yaml | indent(4) }}
 

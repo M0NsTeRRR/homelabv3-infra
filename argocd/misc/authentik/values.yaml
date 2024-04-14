@@ -31,6 +31,14 @@ server:
     enabled: true
     serviceMonitor:
       enabled: true
+  volumes:
+    - name: icons
+      configMap:
+        name: authentik-icons
+  volumeMounts:
+    - name: icons
+      mountPath: /media/public/unicornafk.svg
+      subPath: unicornafk.svg
   ingress:
     enabled: true
     annotations:

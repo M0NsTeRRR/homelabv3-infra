@@ -11,6 +11,8 @@ ufw_additional_rules:
   - { port: "8200", proto: "tcp", direction: "out", to_ip: "192.18.10.102", comment: "Vault HTTPS ACME" }
   - { port: "8200", proto: "tcp", direction: "out", to_ip: "2a0c:b641:2c0:110::102", comment: "Vault HTTPS ACME" }
 
+oidc_issuer_url: https://sso.unicornafk.fr
+
 vault_url: "https://vault.unicornafk.fr:8200"
 
 grafana_agent_flow_node_name: "{{ inventory_hostname }}"
