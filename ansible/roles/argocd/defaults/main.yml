@@ -6,6 +6,7 @@ argocd_chart_github_tag: "argo-cd-6.7.11"
 argocd_chart_version: "{{ argocd_chart_github_tag | replace('argo-cd-', '') }}"
 argocd_force_install: false
 argocd_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
+argocd_oidc_issuer_url: https://sso.example.fr/application/o/argocd/
 argocd_hostname: argocd.example.fr
 argocd_ingress_cluster_issuer: nginx
 argocd_ingress_class: nginx

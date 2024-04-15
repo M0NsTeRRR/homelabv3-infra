@@ -8,9 +8,6 @@ controller:
     serviceMonitor:
       enabled: true
 
-dex:
-  enabled: false
-
 server:
   autoscaling:
     enabled: true
@@ -57,17 +54,22 @@ configs:
   params:
     server.insecure: true
   cm:
+    url: {{ argocd_hostname }}
     kustomize.buildOptions: "--enable-helm"
-    oidc.config:
-      name: authentik
-      issuer: https://sso.unicornafk.fr/application/o/argocd/
-      clientID: $argocd-vault:OAUTH_CLIENT_ID
-      clientSecret: $argocd-vault:OAUTH_CLIENT_SECRET
-      allowedAudiences: []
-      skipAudienceCheckWhenTokenHasNoAudience: false
-      requestedScopes: ["openid", "profile", "email", "groups"]
-      requestedIDTokenClaims: {"groups": {"essential": true}}
-      enablePKCEAuthentication: true
+    dex.config: |
+      connectors:
+      - config:
+          issuer: {{ argocd_oidc_issuer_url }}
+          clientID: $argocd-vault:OAUTH_CLIENT_ID
+          clientSecret: $argocd-vault:OAUTH_CLIENT_SECRET
+          insecureEnableGroups: true
+          scopes:
+            - openid
+            - profile
+            - email
+        name: authentik
+        type: oidc
+        id: authentik
   rbac:
     policy.csv: |
       g, Argocd Admins, role:admin
