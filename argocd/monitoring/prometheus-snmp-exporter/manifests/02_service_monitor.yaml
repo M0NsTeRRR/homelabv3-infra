@@ -2,11 +2,10 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: snmp-exporter
-  namespace: snmp-exporter
+  name: prometheus-snmp-exporter
   labels:
     app.kubernetes.io/name: prometheus-snmp-exporter
-    app.kubernetes.io/instance: snmp-exporter
+    app.kubernetes.io/instance: prometheus-snmp-exporter
   annotations:
     ignore-check.kube-linter.io/dangling-servicemonitor: "helm service"
 spec:
@@ -79,8 +78,8 @@ spec:
       path: /snmp
       port: http
       scrapeTimeout: 10s
-  jobLabel: snmp-exporter
+  jobLabel: prometheus-snmp-exporter
   selector:
     matchLabels:
-      app.kubernetes.io/instance: snmp-exporter
+      app.kubernetes.io/instance: prometheus-snmp-exporter
       app.kubernetes.io/name: prometheus-snmp-exporter

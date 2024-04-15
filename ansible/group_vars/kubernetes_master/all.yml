@@ -130,9 +130,9 @@ vault_policies:
       - path: secret/data/homelab/prod/grafana
         capabilities:
           - read
-  - name: snmp-exporter
+  - name: prometheus-snmp-exporter
     rules:
-      - path: secret/data/homelab/prod/snmp-exporter
+      - path: secret/data/homelab/prod/prometheus-snmp-exporter
         capabilities:
           - read
   - name: prometheus-pve-exporter
@@ -236,11 +236,11 @@ public_vault_datas:
       bound_service_account_namespaces: grafana
       policies: grafana
       ttl: 1h
-  - path: auth/kubernetes/role/snmp-exporter
+  - path: auth/kubernetes/role/prometheus-snmp-exporter
     data:
       bound_service_account_names: snmp-exporter-vault
-      bound_service_account_namespaces: snmp-exporter
-      policies: snmp-exporter
+      bound_service_account_namespaces: prometheus-snmp-exporter
+      policies: prometheus-snmp-exporter
       ttl: 1h
   - path: auth/kubernetes/role/prometheus-pve-exporter
     data:

@@ -2,10 +2,10 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: blackbox-exporter-icmp
+  name: prometheus-blackbox-exporter-icmp
   labels:
     app.kubernetes.io/name: prometheus-blackbox-exporter
-    app.kubernetes.io/instance: blackbox-exporter
+    app.kubernetes.io/instance: prometheus-blackbox-exporter
   annotations:
     ignore-check.kube-linter.io/dangling-servicemonitor: "helm service"
 spec:
@@ -94,19 +94,19 @@ spec:
       path: /probe
       port: http
       scrapeTimeout: 5s
-  jobLabel: blackbox-exporter
+  jobLabel: prometheus-blackbox-exporter
   selector:
     matchLabels:
-      app.kubernetes.io/instance: blackbox-exporter
+      app.kubernetes.io/instance: prometheus-blackbox-exporter
       app.kubernetes.io/name: prometheus-blackbox-exporter
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: blackbox-exporter-http
+  name: prometheus-blackbox-exporter-http
   labels:
     app.kubernetes.io/name: prometheus-blackbox-exporter
-    app.kubernetes.io/instance: blackbox-exporter
+    app.kubernetes.io/instance: prometheus-blackbox-exporter
   annotations:
     ignore-check.kube-linter.io/dangling-servicemonitor: "helm service"
 spec:
@@ -223,8 +223,8 @@ spec:
       path: /probe
       port: http
       scrapeTimeout: 5s
-  jobLabel: blackbox-exporter
+  jobLabel: prometheus-blackbox-exporter
   selector:
     matchLabels:
-      app.kubernetes.io/instance: blackbox-exporter
+      app.kubernetes.io/instance: prometheus-blackbox-exporter
       app.kubernetes.io/name: prometheus-blackbox-exporter

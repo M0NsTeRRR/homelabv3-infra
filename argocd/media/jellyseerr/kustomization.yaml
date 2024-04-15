@@ -3,13 +3,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-resources:
-  - manifests/01_external_secret.yaml
-  - manifests/02_pvc.yaml
+namespace: jellyseerr
 
 helmCharts:
-- name: qbittorrent
-  releaseName: qbittorrent
+- name: jellyseerr
+  releaseName: jellyseerr
+  namespace: jellyseerr
   repo: https://helm-charts.adminafk.fr
-  version: 0.3.5
+  version: 0.1.8
   valuesFile: values.yaml

@@ -11,6 +11,7 @@ resources:
 helmCharts:
 - name: grafana
   releaseName: grafana
+  namespace: grafana
   repo: https://grafana.github.io/helm-charts
   version: 7.3.8
   valuesFile: values.yaml
