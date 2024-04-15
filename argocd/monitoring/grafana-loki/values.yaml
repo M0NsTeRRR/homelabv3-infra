@@ -1,15 +1,7 @@
-querier:
-  extraArgs:
-    - -config.expand-env=true
-  extraEnvFrom:
-    - secretRef:
-        name: loki-bucket
-    - configMapRef:
-        name: loki-bucket
-
 loki:
   annotations:
     reloader.stakater.com/auto: "true"
+  auth_enabled: false
   storage:
     bucketNames:
       chunks: ${BUCKET_NAME}/chunks
@@ -21,11 +13,26 @@ loki:
       accessKeyId: ${AWS_ACCESS_KEY_ID}
       secretAccessKey: ${AWS_SECRET_ACCESS_KEY}
       insecure: true
-  limits_config:
-    ingestion_rate_mb: 20
+  schemaConfig:
+    configs:
+      - from: "2024-04-01"
+        object_store: s3
+        store: tsdb
+        schema: v13
+        index:
+          prefix: index_
+          period: 24h
+
+querier:
+  extraArgs:
+    - -config.expand-env=true
+  extraEnvFrom:
+    - secretRef:
+        name: loki-bucket
+    - configMapRef:
+        name: loki-bucket
 
 ruler:
-  enabled: true
   persistence:
     enabled: true
   directories:
@@ -47,68 +54,13 @@ ruler:
                   summary: High error rate
 
 monitoring:
-  selfMonitoring:
-    grafanaAgent:
-      installOperator: false
+  serviceMonitor:
+    enabled: true
+  dashboards:
+    enabled: true
+  rules:
+    enabled: true
 
-serviceMonitor:
-  enabled: true
-
-prometheusRule:
-  enabled: true
-  groups:
-    - name: loki_rules
-      rules:
-        - expr: histogram_quantile(0.99, sum(rate(loki_request_duration_seconds_bucket[1m]))
-            by (le, cluster, job))
-          record: cluster_job:loki_request_duration_seconds:99quantile
-        - expr: histogram_quantile(0.50, sum(rate(loki_request_duration_seconds_bucket[1m]))
-            by (le, cluster, job))
-          record: cluster_job:loki_request_duration_seconds:50quantile
-        - expr: sum(rate(loki_request_duration_seconds_sum[1m])) by (cluster, job) / sum(rate(loki_request_duration_seconds_count[1m]))
-            by (cluster, job)
-          record: cluster_job:loki_request_duration_seconds:avg
-        - expr: sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, cluster, job)
-          record: cluster_job:loki_request_duration_seconds_bucket:sum_rate
-        - expr: sum(rate(loki_request_duration_seconds_sum[1m])) by (cluster, job)
-          record: cluster_job:loki_request_duration_seconds_sum:sum_rate
-        - expr: sum(rate(loki_request_duration_seconds_count[1m])) by (cluster, job)
-          record: cluster_job:loki_request_duration_seconds_count:sum_rate
-        - expr: histogram_quantile(0.99, sum(rate(loki_request_duration_seconds_bucket[1m]))
-            by (le, cluster, job, route))
-          record: cluster_job_route:loki_request_duration_seconds:99quantile
-        - expr: histogram_quantile(0.50, sum(rate(loki_request_duration_seconds_bucket[1m]))
-            by (le, cluster, job, route))
-          record: cluster_job_route:loki_request_duration_seconds:50quantile
-        - expr: sum(rate(loki_request_duration_seconds_sum[1m])) by (cluster, job, route)
-            / sum(rate(loki_request_duration_seconds_count[1m])) by (cluster, job, route)
-          record: cluster_job_route:loki_request_duration_seconds:avg
-        - expr: sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, cluster, job,
-            route)
-          record: cluster_job_route:loki_request_duration_seconds_bucket:sum_rate
-        - expr: sum(rate(loki_request_duration_seconds_sum[1m])) by (cluster, job, route)
-          record: cluster_job_route:loki_request_duration_seconds_sum:sum_rate
-        - expr: sum(rate(loki_request_duration_seconds_count[1m])) by (cluster, job, route)
-          record: cluster_job_route:loki_request_duration_seconds_count:sum_rate
-        - expr: histogram_quantile(0.99, sum(rate(loki_request_duration_seconds_bucket[1m]))
-            by (le, cluster, namespace, job, route))
-          record: cluster_namespace_job_route:loki_request_duration_seconds:99quantile
-        - expr: histogram_quantile(0.50, sum(rate(loki_request_duration_seconds_bucket[1m]))
-            by (le, cluster, namespace, job, route))
-          record: cluster_namespace_job_route:loki_request_duration_seconds:50quantile
-        - expr: sum(rate(loki_request_duration_seconds_sum[1m])) by (cluster, namespace,
-            job, route) / sum(rate(loki_request_duration_seconds_count[1m])) by (cluster,
-            namespace, job, route)
-          record: cluster_namespace_job_route:loki_request_duration_seconds:avg
-        - expr: sum(rate(loki_request_duration_seconds_bucket[1m])) by (le, cluster, namespace,
-            job, route)
-          record: cluster_namespace_job_route:loki_request_duration_seconds_bucket:sum_rate
-        - expr: sum(rate(loki_request_duration_seconds_sum[1m])) by (cluster, namespace,
-            job, route)
-          record: cluster_namespace_job_route:loki_request_duration_seconds_sum:sum_rate
-        - expr: sum(rate(loki_request_duration_seconds_count[1m])) by (cluster, namespace,
-            job, route)
-          record: cluster_namespace_job_route:loki_request_duration_seconds_count:sum_rate
 gateway:
   ingress:
     enabled: true

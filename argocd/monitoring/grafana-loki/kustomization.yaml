@@ -10,9 +10,9 @@ resources:
   - manifests/02_datasource.yaml
 
 helmCharts:
-- name: loki-distributed
+- name: loki
   releaseName: grafana-loki
   namespace: grafana-loki
   repo: https://grafana.github.io/helm-charts
-  version: 0.78.5
+  version: 6.2.0
   valuesFile: values.yaml
