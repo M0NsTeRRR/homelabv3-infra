@@ -23,9 +23,9 @@ loki:
           prefix: index_
           period: 24h
 
-querier:
+backend:
   extraArgs:
-    - -config.expand-env=true
+    - '-config.expand-env=true'
   extraEnvFrom:
     - secretRef:
         name: loki-bucket
