@@ -22,7 +22,7 @@
     state: present
   delegate_to: localhost
 
-- name: Add suda helm repo
+- name: Add external-dns helm repo
   kubernetes.core.helm_repository:
     name: external-dns
     repo_url: https://kubernetes-sigs.github.io/external-dns/

@@ -1,0 +1,14 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: routinator
+
+helmCharts:
+- name: routinator
+  releaseName: routinator
+  namespace: routinator
+  repo: https://helm-charts.adminafk.fr
+  version: 0.1.0
+  valuesFile: values.yaml

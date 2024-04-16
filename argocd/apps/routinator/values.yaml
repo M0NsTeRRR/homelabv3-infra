@@ -1,0 +1,24 @@
+---
+podAnnotations:
+  reloader.stakater.com/auto: "true"
+rtrService:
+  annotations:
+    metallb.universe.tf/loadBalancerIPs: 192.168.10.103,2a0c:b641:2c0:110::103
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+  hosts:
+    - host: as212510.net
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    - hosts:
+        - as212510.net
+      secretName: as212510.net-tls
+  ingressClassName: ingress-external
+serviceMonitor:
+  enabled: true
+prometheusRule:
+  enabled: true

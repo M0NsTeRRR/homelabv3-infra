@@ -281,7 +281,7 @@ external_dns_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path
 external_dns_namespace: "external-dns-external"
 external_dns_provider: scaleway
 external_dns_txt_owner_id: homelab.kubernetes
-external_dns_domain_filters: "{{ domains }}"
+external_dns_domain_filters: "{{ external_domains }}"
 external_dns_envs:
   EXTERNAL_DNS_INGRESS_CLASS: ingress-external
   EXTERNAL_DNS_DEFAULT_TARGETS: |-
