@@ -1,6 +1,6 @@
 ---
 # datasource=github-tags depName=kube-vip/kube-vip
-kube_vip_version: "v0.7.2"
+kube_vip_version: "v0.8.0"
 kube_vip_force_install: false
 kube_vip_master_group: master
 kube_vip_address: []
