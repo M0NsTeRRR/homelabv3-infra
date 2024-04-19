@@ -23,6 +23,24 @@ loki:
           prefix: index_
           period: 24h
 
+read:
+  extraArgs:
+    - '-config.expand-env=true'
+  extraEnvFrom:
+    - secretRef:
+        name: loki-bucket
+    - configMapRef:
+        name: loki-bucket
+
+write:
+  extraArgs:
+    - '-config.expand-env=true'
+  extraEnvFrom:
+    - secretRef:
+        name: loki-bucket
+    - configMapRef:
+        name: loki-bucket
+
 backend:
   extraArgs:
     - '-config.expand-env=true'
