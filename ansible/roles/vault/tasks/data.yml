@@ -1,5 +1,5 @@
 ---
-- name: "Create vault secret {{ item.path }}"
+- name: "Create vault secret {{ item.path }}" # noqa: ignore-errors
   ansible.builtin.uri:
     url: "{{ vault_url }}/v1/{{ item.path }}"
     method: POST
@@ -14,4 +14,5 @@
       X-Vault-Token: "{{ vault_root_token }}"
     ca_path: "{{ vault_ca_path }}"
   no_log: true
+  ignore_errors: "{{ item.ignore_errors is defined and item.ignore_errors }}"
   delegate_to: localhost
