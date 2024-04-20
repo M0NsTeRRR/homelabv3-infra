@@ -76,9 +76,9 @@
         traefik_create_prometheus_rule: false
     - rook_operator
     - rook_cluster
-    - vault
     - cert_manager
     - trust_manager
+    - vault
     - cert_manager_scaleway
     - role: external_dns
     - role: external_dns
