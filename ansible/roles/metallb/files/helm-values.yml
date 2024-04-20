@@ -1,4 +1,6 @@
 prometheus:
+  serviceAccount: "prometheus"
+  namespace: "metallb"
   serviceMonitor:
     enabled: true
   prometheusRule:
