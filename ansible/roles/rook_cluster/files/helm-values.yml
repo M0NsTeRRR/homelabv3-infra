@@ -10,6 +10,43 @@ cephClusterSpec:
   dashboard:
     enabled: true
     ssl: false
+  resources:
+    mgr:
+      requests:
+        cpu: "0"
+        memory: "0"
+    mon:
+      requests:
+        cpu: "0"
+        memory: "0"
+    osd:
+      requests:
+        cpu: "0"
+        memory: "0"
+    prepareosd:
+      requests:
+        cpu: "0"
+        memory: "0"
+    mgr-sidecar:
+      requests:
+        cpu: "0"
+        memory: "0"
+    crashcollector:
+      requests:
+        cpu: "0"
+        memory: "0"
+    logcollector:
+      requests:
+        cpu: "0"
+        memory: "0"
+    cleanup:
+      requests:
+        cpu: "0"
+        memory: "0"
+    exporter:
+      requests:
+        cpu: "0"
+        memory: "0"
 cephObjectStores:
   - name: ceph-objectstore
     # see https://github.com/rook/rook/blob/master/Documentation/CRDs/Object-Storage/ceph-object-store-crd.md#object-store-settings for available configuration
@@ -31,8 +68,8 @@ cephObjectStores:
             cpu: "2000m"
             memory: "2Gi"
           requests:
-            cpu: "1000m"
-            memory: "1Gi"
+        cpu: "0"
+        memory: "0"
         # securePort: 443
         # sslCertificateRef:
         instances: 1
@@ -60,6 +97,52 @@ cephObjectStores:
           hosts:
             - s3.unicornafk.fr
       ingressClassName: ingress-internal
+cephFileSystems:
+  - name: ceph-filesystem
+    # see https://github.com/rook/rook/blob/master/Documentation/CRDs/Shared-Filesystem/ceph-filesystem-crd.md#filesystem-settings for available configuration
+    spec:
+      metadataPool:
+        replicated:
+          size: 3
+      dataPools:
+        - failureDomain: host
+          replicated:
+            size: 3
+          # Optional and highly recommended, 'data0' by default, see https://github.com/rook/rook/blob/master/Documentation/CRDs/Shared-Filesystem/ceph-filesystem-crd.md#pools
+          name: data0
+      metadataServer:
+        activeCount: 1
+        activeStandby: true
+        resources:
+          limits:
+            memory: "4Gi"
+          requests:
+            cpu: "0"
+            memory: "0"
+        priorityClassName: system-cluster-critical
+    storageClass:
+      enabled: true
+      isDefault: false
+      name: ceph-filesystem
+      # (Optional) specify a data pool to use, must be the name of one of the data pools above, 'data0' by default
+      pool: data0
+      reclaimPolicy: Delete
+      allowVolumeExpansion: true
+      volumeBindingMode: "Immediate"
+      mountOptions: []
+      # see https://github.com/rook/rook/blob/master/Documentation/Storage-Configuration/Shared-Filesystem-CephFS/filesystem-storage.md#provision-storage for available configuration
+      parameters:
+        # The secrets contain Ceph admin credentials.
+        csi.storage.k8s.io/provisioner-secret-name: rook-csi-cephfs-provisioner
+        csi.storage.k8s.io/provisioner-secret-namespace: "{{ .Release.Namespace }}"
+        csi.storage.k8s.io/controller-expand-secret-name: rook-csi-cephfs-provisioner
+        csi.storage.k8s.io/controller-expand-secret-namespace: "{{ .Release.Namespace }}"
+        csi.storage.k8s.io/node-stage-secret-name: rook-csi-cephfs-node
+        csi.storage.k8s.io/node-stage-secret-namespace: "{{ .Release.Namespace }}"
+        # Specify the filesystem type of the volume. If not specified, csi-provisioner
+        # will set default as `ext4`. Note that `xfs` is not recommended due to potential deadlock
+        # in hyperconverged settings where the volume is mounted on the same node as the osds.
+        csi.storage.k8s.io/fstype: ext4
 ingress:
   dashboard:
     annotations:
