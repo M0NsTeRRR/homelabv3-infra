@@ -238,7 +238,7 @@ public_vault_datas:
       ttl: 1h
   - path: auth/kubernetes/role/prometheus-snmp-exporter
     data:
-      bound_service_account_names: snmp-exporter-vault
+      bound_service_account_names: prometheus-snmp-exporter-vault
       bound_service_account_namespaces: prometheus-snmp-exporter
       policies: prometheus-snmp-exporter
       ttl: 1h
