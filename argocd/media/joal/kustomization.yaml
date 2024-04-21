@@ -3,16 +3,15 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: qbittorrent
+namespace: joal
 
 resources:
-  - manifests/01_external_secret.yaml
-  - manifests/02_pvc.yaml
+  - manifests/01_configmap.yaml
 
 helmCharts:
-- name: qbittorrent
-  releaseName: qbittorrent
-  namespace: qbittorrent
+- name: joal
+  releaseName: joal
+  namespace: joal
   repo: https://helm-charts.adminafk.fr
-  version: 0.3.6
+  version: 0.1.0
   valuesFile: values.yaml
