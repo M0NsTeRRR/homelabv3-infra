@@ -204,6 +204,12 @@ dashboards:
       datasource:
         - name: DS_PROMETHEUS
           value: prometheus
+    Routinator:
+      gnetId: 11922
+      revision: 7
+      datasource:
+        - name: DS_PROMETHEUS
+          value: prometheus
 
 ingress:
   enabled: true
