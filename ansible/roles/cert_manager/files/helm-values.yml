@@ -1,6 +1,8 @@
+serviceIPFamilyPolicy: "PreferDualStack"
 webhook:
   networkPolicy:
     enabled: false
+  serviceIPFamilyPolicy: "PreferDualStack"
 deploymentAnnotations:
   reloader.stakater.com/auto: "true"
 prometheus:
