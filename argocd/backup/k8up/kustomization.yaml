@@ -13,5 +13,5 @@ helmCharts:
   releaseName: k8up
   namespace: k8up
   repo: https://k8up-io.github.io/k8up
-  version: 4.5.0
+  version: 4.6.0
   valuesFile: values.yaml
