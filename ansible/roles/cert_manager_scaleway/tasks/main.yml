@@ -22,10 +22,10 @@
     state: present
   delegate_to: localhost
 
-- name: Add suda helm repo
+- name: Add scaleway helm repo
   kubernetes.core.helm_repository:
-    name: suda
-    repo_url: https://suda.github.io/charts/
+    name: scaleway
+    repo_url: https://helm.scw.cloud/
     kubeconfig: "{{ cert_manager_scaleway_localhost_kubeconfig_path }}"
     validate_certs: true
   delegate_to: localhost
@@ -33,8 +33,8 @@
 - name: Deploy cert-manager-scaleway chart
   kubernetes.core.helm:
     name: cert-manager-scaleway
-    chart_ref: suda/scaleway-webhook
-    chart_version: "{{ cert_manager_scaleway_chart_version }}"
+    chart_ref: scaleway/scaleway-certmanager-webhook
+    chart_version: "{{ cert_manager_scaleway_chart_version[1:] }}"
     release_namespace: cert-manager-scaleway
     create_namespace: true
     release_values: "{{ lookup('ansible.builtin.template', 'helm-values.yml.j2') | from_yaml }}"
