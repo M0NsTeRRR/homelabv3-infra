@@ -1,5 +1,5 @@
-terraform_version_constraint  = "v1.8.2"
-terragrunt_version_constraint = "v0.58.2"
+terraform_version_constraint  = "v1.8.3"
+terragrunt_version_constraint = "v0.58.3"
 
 locals {
   account_vars = read_terragrunt_config(find_in_parent_folders("account.hcl"))
@@ -39,7 +39,7 @@ terraform {
   required_providers {
     proxmox = {
       source  = "bpg/proxmox"
-      version = "=0.55.0"
+      version = "=0.55.1"
     }
     powerdns = {
       source  = "pan-net/powerdns"
