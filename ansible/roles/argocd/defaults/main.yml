@@ -2,7 +2,7 @@
 # datasource=github-tags depName=argoproj/argo-cd
 argocd_version: "v2.11.0"
 # datasource=github-tags depName=argoproj/argo-helm
-argocd_chart_github_tag: "argo-cd-6.8.0"
+argocd_chart_github_tag: "argo-cd-6.8.1"
 argocd_chart_version: "{{ argocd_chart_github_tag | replace('argo-cd-', '') }}"
 argocd_force_install: false
 argocd_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
