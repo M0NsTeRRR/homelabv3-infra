@@ -1,0 +1,20 @@
+server:
+  persistentVolume:
+    size: 100Gi
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: "vault"
+      cert-manager.io/private-key-algorithm: "RSA"
+      cert-manager.io/private-key-size: "4096"
+    hosts:
+      - name: victoria-metrics.unicornafk.fr
+        path: /
+    pathType: ImplementationSpecific
+    ingressClassName: "ingress-internal"
+    tls:
+      - secretName: victoria-metrics.unicornafk.fr
+        hosts:
+          - victoria-metrics.unicornafk.fr
+  serviceMonitor:
+    enabled: true

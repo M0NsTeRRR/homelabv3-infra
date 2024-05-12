@@ -1,0 +1,62 @@
+---
+apiVersion: opentelemetry.io/v1alpha1
+kind: OpenTelemetryCollector
+metadata:
+  name: collector
+spec:
+  mode: daemonset
+  targetAllocator:
+    enabled: true
+  config: |
+    presets:
+      kubernetesAttributes:
+        enabled: true
+      kubernetesEvents:
+        enabled: true
+      logsCollection:
+        enabled: true
+      # others things are scrapped through kube-prom-stack
+
+    receivers:
+      prometheus:
+        config:
+          scrape_configs:
+          - job_name: 'otel-collector'
+            scrape_interval: 10s
+            static_configs:
+            - targets: [ '0.0.0.0:8888' ]
+            metric_relabel_configs:
+            - action: labeldrop
+              regex: (id|name)
+              replacement: $$1
+            - action: labelmap
+              regex: label_(.+)
+              replacement: $$1
+      k8s_events:
+      otlp:
+        protocols:
+          grpc:
+          http:
+
+    processors:
+
+    exporters:
+      prometheus:
+        endpoint: http://victoria-metrics-victoria-metrics-single-server.victoria-metrics.svc.cluster.local:8428/api/v1/write
+      quickwit:
+        endpoint: http://quickwit-indexer.quickwit.svc.cluster.local:7281
+
+    service:
+      pipelines:
+        metrics:
+          receivers: [otlp]
+          processors: [memory_limiter, batch]
+          exporters: [prometheus]
+        logs:
+          receivers: [otlp]
+          processors: [memory_limiter, batch]
+          exporters: [quickwit]
+        traces:
+          receivers: [otlp]
+          processors: [memory_limiter, batch]
+          exporters: [quickwit]
