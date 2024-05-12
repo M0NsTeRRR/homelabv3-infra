@@ -13,7 +13,7 @@
     external_dns_is_installed: "{% if 'status' in external_dns_info %}true{% else %}false{% endif %}"
   delegate_to: localhost
 
-- name: Setup external-secret
+- name: Setup external-dns
   kubernetes.core.k8s:
     definition: "{{ lookup('ansible.builtin.template', 'external_secret.yml.j2') | from_yaml_all }}"
     kubeconfig: "{{ external_dns_localhost_kubeconfig_path }}"
