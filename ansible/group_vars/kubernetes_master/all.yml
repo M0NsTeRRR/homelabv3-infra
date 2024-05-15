@@ -1,15 +1,7 @@
 ---
 kube_vip_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 kube_vip_master_group: kubernetes_master
-kube_vip_address:
-  - namespace: kube-vip-ipv4
-    address: 192.168.10.80
-    cidr: 32
-    prometheus_server: ":2112"
-  - namespace: kube-vip-ipv6
-    address: 2a0c:b641:2c0:110::80
-    cidr: 128
-    prometheus_server: ":2113"
+kube_vip_address: "192.168.10.80,2a0c:b641:2c0:110::80"
 kube_vip_interface: enp6s18
 prometheus_operator_crds_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 cilium_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
