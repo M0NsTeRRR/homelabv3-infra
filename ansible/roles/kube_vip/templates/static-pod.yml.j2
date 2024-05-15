@@ -13,20 +13,24 @@ spec:
       value: "true"
     - name: port
       value: "6443"
+    - name: vip_nodename
+      valueFrom:
+        fieldRef:
+          fieldPath: spec.nodeName
     - name: vip_interface
       value: {{ kube_vip_interface }}
     - name: vip_cidr
-      value: "{{ kube_vip_cidr }}"
+      value: {{ kube_vip_cidr }}
+    - name: dns_mode
+      value: first
     - name: cp_enable
       value: "true"
     - name: cp_namespace
       value: {{ kube_vip_namespace }}
-    - name: vip_ddns
-      value: "false"
-    - name: svc_enable
-      value: "true"
     - name: vip_leaderelection
       value: "true"
+    - name: vip_leasename
+      value: plndr-cp-lock
     - name: vip_leaseduration
       value: "5"
     - name: vip_renewdeadline
@@ -38,7 +42,7 @@ spec:
     - name: prometheus_server
       value: :2112
     image: ghcr.io/kube-vip/kube-vip:{{ kube_vip_version }}
-    imagePullPolicy: Always
+    imagePullPolicy: IfNotPresent
     name: kube-vip
     resources: {}
     securityContext:
