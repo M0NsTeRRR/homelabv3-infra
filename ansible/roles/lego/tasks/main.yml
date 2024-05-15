@@ -13,15 +13,6 @@
       - /etc/lego/
       - /opt/lego
 
-- name: Create lego ACME folder
-  ansible.builtin.file:
-    name: "{{ lego_acme_folder }}"
-    state: directory
-    owner: nginx
-    group: nginx
-    mode: "0740"
-  when: not lego_builtin_webserver
-
 - name: Check if lego is already installed
   ansible.builtin.stat:
     path: /usr/local/bin/lego

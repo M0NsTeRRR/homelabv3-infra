@@ -4,14 +4,14 @@
         "server": "{{ lego_acme_url }}",
         "account_email": "{{ lego_account_email }}",
         "days": "{{ lego_renew_days }}",
-        "lego_config_folder": "/etc/lego"{% if not lego_builtin_webserver %},
-        "webroot": "/var/www/lego"
-        {% endif %}
+        "lego_config_folder": "/etc/lego",
+        "webroot_port": {{ lego_webserver_port }},
+        "webserver_proxified": {{ lego_webserver_proxified | to_json }}
     },
     "certificate": {
         "domain": "{{ item.domain }}",
-        "san": {{ item.san | to_nice_json }}
+        "san": {{ item.san | to_nice_json | indent(8) }}
     },
-    "destinations": {{ item.destinations | to_nice_json }},
-    "systemd_services": {{ item.systemd_services | to_nice_json }}
+    "destinations": {{ item.destinations | to_nice_json | indent(4) }},
+    "systemd_services": {{ item.systemd_services | to_nice_json | indent(4) }}
 }

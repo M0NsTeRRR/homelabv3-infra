@@ -2,8 +2,8 @@
 # datasource=github-tags depName=go-acme/lego
 lego_version: 4.16.1
 lego_force_install: false
-lego_builtin_webserver: false
-lego_acme_folder: /var/www/lego
+lego_webserver_port: 80
+lego_webserver_proxified: true
 lego_systemd_calendar: "*-*-* 0:00:00"
 lego_acme_url: "https://acme-v02.api.letsencrypt.org/directory"
 lego_account_email: ""

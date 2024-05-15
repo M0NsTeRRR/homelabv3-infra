@@ -265,7 +265,20 @@ powerdns_authoritative_records:
     cname: dhcp2.unicornafk.fr.
     rdns: false
 
-nginx_acme_local_folder: "/var/www/lego"
+lego_webserver_proxified: true
+lego_webserver_port: 20222
+lego_certificates:
+  - domain: "{{ hostvars[inventory_hostname].hostname[:-1] }}"
+    san: []
+    destinations:
+      - { path: /etc/nginx/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: nginx, group: nginx }
+      - { path: /etc/dnsdist/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: _dnsdist, group: _dnsdist }
+      - { path: /etc/grafana-agent-flow/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: grafana-agent-flow, group: grafana-agent-flow }
+    systemd_services:
+      - { name: nginx, state: restarted }
+      - { name: dnsdist, state: restarted }
+      - { name: grafana-agent-flow, state: restarted }
+
 nginx_configuration:
   - server_name: "{{ hostvars[inventory_hostname].hostname[:-1] }}"
     ssl_verify_client: optional
@@ -278,21 +291,12 @@ nginx_configuration:
       - location: /api
         proxy_pass: http://127.0.0.1:8081/api
     enable_content_security: true
-    http_redirection: false
+    http:
+      enable: true
+      locations:
+        - location: /.well-known/acme-challenge
+          proxy_pass: http://127.0.0.1:{{ lego_webserver_port }}
     ssl_port: 443
-
-lego_builtin_webserver: false
-lego_certificates:
-  - domain: "{{ hostvars[inventory_hostname].hostname[:-1] }}"
-    san: []
-    destinations:
-      - { path: /etc/nginx/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: nginx, group: nginx }
-      - { path: /etc/dnsdist/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: _dnsdist, group: _dnsdist }
-      - { path: /etc/grafana-agent-flow/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: grafana-agent-flow, group: grafana-agent-flow }
-    systemd_services:
-      - { name: nginx, state: restarted }
-      - { name: dnsdist, state: restarted }
-      - { name: grafana-agent-flow, state: restarted }
 
 self_signed_cert_list:
   - common_name: "{{ hostvars[inventory_hostname].hostname[:-1] }}"

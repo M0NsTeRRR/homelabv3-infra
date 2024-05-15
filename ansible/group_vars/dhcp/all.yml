@@ -201,7 +201,7 @@ kea_dhcp_ipv6_ntp_servers:
 kea_dhcp_ipv4_unifi_controller: 192.168.20.50
 kea_dhcp_ipv6_unifi_controller: 2a0c:b641:02c0:120::50
 
-lego_builtin_webserver: true
+lego_webserver_proxified: false
 lego_certificates:
   - domain: "{{ inventory_hostname }}"
     san: []

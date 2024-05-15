@@ -30,65 +30,25 @@ server {
   access_log /var/log/nginx/{{ item.server_name }}.access.log;
   error_log /var/log/nginx/{{ item.server_name }}.error.log warn;
 
-  {% for location in item.locations %}
-  location {{ location.location }} {
-    {% if location.ssl_client_verify is defined and location.ssl_client_verify %}
-    if ($ssl_client_verify != "SUCCESS") { return 403; }
-    {% endif %}
-    {% if location.proxy_pass is defined %}
-    proxy_set_header        Host $host;
-    proxy_set_header        X-Real-IP $remote_addr;
-    proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header        X-Forwarded-Proto $scheme;
-
-    proxy_pass              {{ location.proxy_pass }};
-    proxy_read_timeout      90;
-    {% endif %}
-    {% if location.alias is defined %}
-    alias {{ location.alias }};
-    autoindex off;
-    {% endif %}
-    {% if location.proxy_headers is defined %}
-    {% for headerName, headerValue in location.proxy_headers.items() %}
-    proxy_set_header        {{ headerName }} {{ headerValue }};
-    {% endfor %}
-    {% endif %}
-
-    {% if location.auth_basic is defined %}
-    auth_basic              "Authentification required for this area";
-    auth_basic_user_file    /etc/nginx/basic_auth/.{{ location.auth_basic }};
-    {% endif %}
-  }
-  {% endfor %}
+  {% with locations=item.locations %}
+    {% include "nginx_locations_block.j2" %}
+  {% endwith %}
 }
 
-{% if item.http_redirection %}
+{% if item.http and item.http.enable %}
 server {
   listen 80;
   listen [::]:80;
 
   server_name {{ item.server_name }};
 
-  {% if nginx_acme_local_folder is defined %}
-  location /.well-known/acme-challenge {
-    root {{ nginx_acme_local_folder }};
-  }
-  {% endif %}
+  {% with locations=item.http.locations %}
+    {% include "nginx_locations_block.j2" %}
+  {% endwith %}
 
+  {% if item.http.redirection is not defined or item.http.redirection %}
   location / {
     return 301 https://$server_name$request_uri;
-  }
-}
-{% elif nginx_acme_local_folder is defined %}
-server {
-  listen 80;
-  listen [::]:80;
-
-  server_name {{ item.server_name }};
-
-  {% if nginx_acme_local_folder is defined %}
-  location /.well-known/acme-challenge {
-    root {{ nginx_acme_local_folder }};
   }
   {% endif %}
 }

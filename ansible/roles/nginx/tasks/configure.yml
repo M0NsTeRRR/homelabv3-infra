@@ -6,7 +6,7 @@
     port: "80"
     proto: tcp
     comment: "Nginx HTTP (ansible_managed)"
-  when: item.http_redirection
+  when: item.http and item.http.enable
 
 - name: "Open port {{ item.ssl_port }}"
   community.general.ufw:

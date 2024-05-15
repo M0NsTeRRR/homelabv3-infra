@@ -5,7 +5,7 @@ wireguard_server_ipv6: 2a0c:b641:02c0:104::1/64
 wireguard_dns_ips: "{{ groups['dns'] + (groups['dns'] | map('extract', hostvars, 'ipv6') | list) }}"
 wireguard_domains: "{{ local_domains }}"
 
-lego_builtin_webserver: true
+lego_webserver_proxified: false
 lego_certificates:
   - domain: "{{ inventory_hostname }}"
     san: []

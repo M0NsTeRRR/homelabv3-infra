@@ -1,0 +1,29 @@
+{% for location in locations %}
+  location {{ location.location }} {
+    {% if location.ssl_client_verify is defined and location.ssl_client_verify %}
+    if ($ssl_client_verify != "SUCCESS") { return 403; }
+    {% endif %}
+
+    {% if location.auth_basic is defined %}
+    auth_basic              "Authentification required for this area";
+    auth_basic_user_file    /etc/nginx/basic_auth/.{{ location.auth_basic }};
+    {% endif %}
+
+    {% if location.proxy_pass is defined %}
+    proxy_set_header        Host $host;
+    proxy_set_header        X-Real-IP $remote_addr;
+    proxy_set_header        X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header        X-Forwarded-Proto $scheme;
+    {% if location.proxy_headers is defined %}
+    {% for headerName, headerValue in location.proxy_headers.items() %}
+    proxy_set_header        {{ headerName }} {{ headerValue }};
+    {% endfor %}
+    {% endif %}
+    proxy_pass              {{ location.proxy_pass }};
+    proxy_read_timeout      90;
+    {% elif location.alias is defined %}
+    alias {{ location.alias }};
+    autoindex off;
+    {% endif %}
+  }
+{% endfor %}
