@@ -1,6 +1,6 @@
 ---
 # datasource=github-tags depName=cert-manager/trust-manager
-trust_manager_chart_version: "v0.9.2"
+trust_manager_chart_version: "v0.10.0"
 trust_manager_force_install: false
 trust_manager_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
 trust_manager_certificates: {}
