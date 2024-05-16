@@ -15,5 +15,5 @@ helmCharts:
   releaseName: grafana-agent
   namespace: grafana-agent
   repo: https://grafana.github.io/helm-charts
-  version: 0.38.0
+  version: 0.39.0
   valuesFile: values.yaml
