@@ -13,5 +13,5 @@ helmCharts:
   releaseName: jellyfin
   namespace: jellyfin
   repo: https://helm-charts.adminafk.fr
-  version: 0.1.11
+  version: 0.1.12
   valuesFile: values.yaml
