@@ -1,6 +1,6 @@
 image:
   repository: prom/snmp-exporter
-  tag: v0.25.0
+  tag: v0.26.0
 service:
   ipDualStack:
     enabled: true
