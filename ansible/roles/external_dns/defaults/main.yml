@@ -1,6 +1,6 @@
 ---
 # datasource=github-tags depName=kubernetes-sigs/external-dns
-external_dns_version: "v0.14.1"
+external_dns_version: "v0.14.2"
 # datasource=github-tags depName=kubernetes-sigs/external-dns
 external_dns_chart_github_tag: "external-dns-helm-chart-1.14.4"
 external_dns_chart_version: "{{ external_dns_chart_github_tag | replace('external-dns-helm-chart-', '') }}"
