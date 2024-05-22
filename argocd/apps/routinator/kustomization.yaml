@@ -10,5 +10,5 @@ helmCharts:
   releaseName: routinator
   namespace: routinator
   repo: https://helm-charts.adminafk.fr
-  version: 0.1.0
+  version: 0.1.1
   valuesFile: values.yaml
