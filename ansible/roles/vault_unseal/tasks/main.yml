@@ -1,0 +1,101 @@
+---
+- name: Open Kubernetes API port
+  community.general.ufw:
+    direction: out
+    rule: allow
+    to_ip: "{{ item }}"
+    port: "6443"
+    proto: tcp
+    comment: "Kubernetes API (ansible_managed)"
+  with_items: "{{ vault_unseal_k8s_api_ips }}"
+
+- name: Add vault-unseal group
+  ansible.builtin.group:
+    name: vault-unseal
+    system: true
+    state: present
+
+- name: Add vault-unseal user
+  ansible.builtin.user:
+    name: vault-unseal
+    system: true
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: vault-unseal
+
+- name: Create /etc/vault-unseal folder
+  ansible.builtin.file:
+    path: /etc/vault-unseal
+    state: directory
+    owner: vault-unseal
+    group: vault-unseal
+    mode: '0700'
+
+- name: Check if vault-unseal is already installed
+  ansible.builtin.stat:
+    path: /usr/local/bin/vault-unseal
+  register: vault_unseal
+
+- name: Detect machine architecture
+  ansible.builtin.set_fact:
+    arch: "{% if ansible_architecture == 'aarch64' %}arm64{% else %}amd64{% endif %}"
+  when: not vault_unseal.stat.exists or vault_unseal_force_install
+
+- name: Download last version of vault-unseal
+  ansible.builtin.get_url:
+    url: "https://github.com/M0NsTeRRR/vault-unseal/releases/download/v{{ vault_unseal_version }}/vault-unseal_linux_{{ arch }}"
+    checksum: "sha256:https://github.com/M0NsTeRRR/vault-unseal/releases/download/v{{ vault_unseal_version }}/vault-unseal_checksums.txt"
+    dest: /usr/local/bin/vault-unseal
+    owner: vault-unseal
+    group: vault-unseal
+    mode: "0700"
+  notify: Restart vault-unseal.service
+  when: not vault_unseal.stat.exists or vault_unseal_force_install
+
+- name: Create vault-unseal configuration
+  ansible.builtin.template:
+    src: vault-unseal.yaml.j2
+    dest: /etc/vault-unseal/vault-unseal.yaml
+    owner: vault-unseal
+    group: vault-unseal
+    mode: "0600"
+  notify: Restart vault-unseal.service
+
+- name: Create vault-unseal service account
+  kubernetes.core.k8s:
+    template: service_account.yaml.j2
+    kubeconfig: "{{ vault_unseal_localhost_kubeconfig_path }}"
+    validate_certs: true
+    state: present
+  delegate_to: localhost
+
+- name: Fetch vault-unseal service account token
+  kubernetes.core.k8s_info:
+    kind: Secret
+    namespace: "{{ vault_unseal_k8s_namespace }}"
+    name: vault-unseal-sa-token
+    kubeconfig: "{{ vault_unseal_localhost_kubeconfig_path }}"
+    validate_certs: true
+  register: vault_unseal_k8s_service_account_result
+  delegate_to: localhost
+
+- name: Create vault-unseal kubeconfig
+  ansible.builtin.template:
+    src: kubeconfig.yaml.j2
+    dest: /etc/vault-unseal/kubeconfig
+    owner: vault-unseal
+    group: vault-unseal
+    mode: "0600"
+  notify: Restart vault-unseal.service
+
+- name: Create systemd service file
+  ansible.builtin.copy:
+    src: vault-unseal.service
+    dest: /etc/systemd/system/vault-unseal.service
+    owner: vault-unseal
+    group: vault-unseal
+    mode: "0640"
+  notify:
+    - Daemon-reload
+    - Enable vault-unseal.service
+    - Restart vault-unseal.service

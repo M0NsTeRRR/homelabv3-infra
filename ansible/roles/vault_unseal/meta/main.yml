@@ -1,0 +1,11 @@
+---
+galaxy_info:
+  role_name: vault_unseal
+  author: Ludovic Ortega
+  description: Install and configure vault_unseal
+  license: CeCILL
+  min_ansible_version: "2.16.6"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - jammy

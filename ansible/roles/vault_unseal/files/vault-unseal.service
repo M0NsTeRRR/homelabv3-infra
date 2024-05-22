@@ -1,0 +1,14 @@
+[Unit]
+Description=vault-unseal
+After=network-online.target
+
+[Service]
+Type=simple
+User=vault-unseal
+Group=vault-unseal
+ExecStart=/usr/local/bin/vault-unseal -c /etc/vault-unseal/vault-unseal.yaml
+RestartSec=10
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

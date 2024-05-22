@@ -103,3 +103,9 @@
         external_dns_vault_role: external-dns-internal
         external_dns_create_prometheus_rule: false
     - argocd
+
+- name: Configure Vault unseal
+  hosts: dns,vpn
+  become: true
+  roles:
+    - vault_unseal

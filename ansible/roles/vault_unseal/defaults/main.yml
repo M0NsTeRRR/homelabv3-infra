@@ -1,0 +1,12 @@
+---
+# datasource=github-tags depName=M0NsTeRRR/vault-unseal
+vault_unseal_version: 0.1.1
+vault_unseal_force_install: false
+vault_unseal_env: prod
+vault_unseal_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
+vault_unseal_k8s_api_server: ""
+vault_unseal_k8s_api_ips: []
+vault_unseal_k8s_api_port: 6443
+vault_unseal_k8s_namespace: vault
+vault_unseal_nodes: []
+vault_unseal_tokens: []

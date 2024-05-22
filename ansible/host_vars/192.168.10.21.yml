@@ -1,0 +1,2 @@
+---
+vault_unseal_tokens: "{{ vault_unseal_keys[0:2] }}"

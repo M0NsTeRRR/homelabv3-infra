@@ -7,6 +7,10 @@ certs_dir_role_path: "{{ root_dir_role_path }}ssl/"
 ca_certificates_local_path_ca_certificate: "{{ certs_dir_role_path }}unicornafk.crt"
 ca_certificates_certs_dir: "{{ certs_dir_role_path }}"
 
+kubernetes_localhost_kubeconfig_path: "{{ lookup('env', 'HOME') }}/.kube/homelab"
+kubernetes_vip_url: "kubernetes.unicornafk.fr"
+kubernetes_homelab_ca_config_map: "homelab-ca"
+
 ufw_additional_rules:
   - { port: "8200", proto: "tcp", direction: "out", to_ip: "192.18.10.102", comment: "Vault HTTPS ACME" }
   - { port: "8200", proto: "tcp", direction: "out", to_ip: "2a0c:b641:2c0:110::102", comment: "Vault HTTPS ACME" }
@@ -14,6 +18,16 @@ ufw_additional_rules:
 oidc_issuer_url: https://sso.unicornafk.fr
 
 vault_url: "https://vault.unicornafk.fr:8200"
+
+vault_unseal_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
+vault_unseal_k8s_api_server: "https://{{ kubernetes_vip_url }}:6443"
+vault_unseal_k8s_api_ips:
+  - "{{ lookup('community.general.dig', kubernetes_vip_url) }}"
+  - "{{ lookup('community.general.dig', kubernetes_vip_url, 'qtype=AAAA') }}"
+vault_unseal_nodes:
+  - https:vault-0:8200
+  - https:vault-1:8200
+  - https:vault-2:8200
 
 grafana_agent_flow_node_name: "{{ inventory_hostname }}"
 grafana_agent_flow_local_path_ca_certificate: "{{ ca_certificates_local_path_ca_certificate }}"
@@ -26,10 +40,6 @@ lego_account_email: "{{ monitoring_email }}"
 lego_acme_url: "{{ vault_url }}/v1/pki/acme/directory"
 
 nginx_local_path_ca_certificate: "{{ ca_certificates_local_path_ca_certificate }}"
-
-kubernetes_localhost_kubeconfig_path: "{{ lookup('env', 'HOME') }}/.kube/homelab"
-kubernetes_vip_url: "kubernetes.unicornafk.fr"
-kubernetes_homelab_ca_config_map: "homelab-ca"
 
 systemd_timesyncd_ntp:
   - ntp1.unicornafk.fr
