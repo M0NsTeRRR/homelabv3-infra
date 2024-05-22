@@ -13,5 +13,5 @@ helmCharts:
   releaseName: as212510-net
   namespace: as212510-net
   repo: https://helm-charts.adminafk.fr
-  version: 0.5.3
+  version: 0.5.4
   valuesFile: values.yaml
