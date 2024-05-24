@@ -5,7 +5,7 @@ galaxy_info:
   description: Install and configure nodejs
   company: Ludovic Ortega
   license: CeCILL
-  min_ansible_version: "2.16.6"
+  min_ansible_version: "2.17.0"
   platforms:
     - name: Ubuntu
       versions:
