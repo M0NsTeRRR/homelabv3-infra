@@ -13,4 +13,4 @@ helmCharts:
 - name: csi-driver-smb
   releaseName: csi-driver-smb
   repo: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
-  version: v1.14.0
+  version: v1.15.0
