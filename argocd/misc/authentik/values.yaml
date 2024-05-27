@@ -20,10 +20,20 @@ global:
       mountPath: /etc/ssl/certs/homelab.crt
       subPath: ca.crt
       readOnly: true
+    - name: homelab-blueprint
+      mountPath: /blueprints/custom/homelab.yaml
+      subPath: homelab.yaml
+      readOnly: true
   volumes:
     - name: ca-certs
       configMap:
         name: homelab-ca
+    - name: homelab-blueprint
+      secret:
+        secretName: blueprint-vault
+        items:
+          - key: homelab.yaml
+            path: homelab.yaml
 redis:
   enabled: true
 server:
