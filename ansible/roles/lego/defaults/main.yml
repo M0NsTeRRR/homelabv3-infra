@@ -1,6 +1,6 @@
 ---
 # datasource=github-tags depName=go-acme/lego
-lego_version: 4.16.1
+lego_version: 4.17.3
 lego_force_install: false
 lego_webserver_port: 80
 lego_webserver_proxified: true
