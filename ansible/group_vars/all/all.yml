@@ -64,7 +64,7 @@ domains:
   - as212510.net
 local_domains:
   - "{{ domains[0] }}"
-external_domains: "{{ domains[1:2] }}"
+external_domains: "{{ domains[1:3] }}"
 subdomains:
   - dmz.unicornafk.fr
   - lab.unicornafk.fr
