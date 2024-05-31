@@ -1,0 +1,59 @@
+---
+podAnnotations:
+  reloader.stakater.com/auto: "true"
+
+extraEnv:
+  - name: HYPERGLASS_REDIS_HOST
+    value: "hyperglass-valkey-master"
+extraEnvFrom:
+  - secretRef:
+      name: hyperglass-vault
+
+volumes:
+  - name: hyperglass
+    configMap:
+      name: hyperglass
+  - name: hyperglass-devices
+    secret:
+      secretName: hyperglass-devices-vault
+volumeMounts:
+  - name: hyperglass
+    mountPath: /etc/hyperglass/config.yaml
+    subPath: config.yaml
+    readOnly: true
+  - name: hyperglass-devices
+    mountPath: /etc/hyperglass/devices.yaml
+    subPath: devices.yaml
+    readOnly: true
+  - name: hyperglass
+    mountPath: /etc/hyperglass/directives.yaml
+    subPath: directives.yaml
+    readOnly: true
+
+valkey:
+  enabled: true
+  auth:
+    enabled: true
+    existingSecret: "hyperglass-vault"
+    existingSecretPasswordKey: "HYPERGLASS_REDIS_PASSWORD" 
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+    prometheusRule:
+      enabled: true
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+  hosts:
+    - host: lg.as212510.net
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    - hosts:
+        - lg.as212510.net
+      secretName: lg.as212510.net-tls
+  ingressClassName: ingress-external

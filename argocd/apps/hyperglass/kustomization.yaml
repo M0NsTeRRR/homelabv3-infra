@@ -1,0 +1,18 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: hyperglass
+
+resources:
+  - manifests/01_external_secret.yaml
+  - manifests/02_directives.yaml
+
+helmCharts:
+- name: hyperglass
+  releaseName: hyperglass
+  namespace: hyperglass
+  repo: https://helm-charts.adminafk.fr
+  version: 0.1.0
+  valuesFile: values.yaml

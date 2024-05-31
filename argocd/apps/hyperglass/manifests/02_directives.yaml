@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hyperglass
+data:
+  config.yaml: |-
+    org_name: AS212510
+    plugins: []
+    primary_asn: 212510
+    request_timeout: 90
+    site_title: AS212510 - Looking glass
+    site_description: AS212510 looking glass powered by Hyperglass
+  directives.yaml: |-
+    bgp-as-path-v6:
+      name: BGP AS Path
+      rules:
+        - condition: "::/0"
+          command: "ipv6 route print where bgp-as-path={target}"
+      field:
+        description: AS Path Regular Expression
+    bgp-community-v6:
+      name: BGP Community
+      rules:
+        - condition: "::/0"
+          command: "ipv6 route print where bgp-communities={target}"
+      field:
+        description: BGP Community String
+    bgp-route-v6:
+      name: BGP Route
+      rules:
+        - condition: "::/0"
+          command: "ipv6 route print where dst-address={target}"
+      field:
+        description: IP Address, Prefix, or Hostname
+    ping-v6:
+      name: Ping
+      rules:
+        - condition: "::/0"
+          command: "ping src-address={source6} count=5 {target}"
+      field:
+        description: IP Address, Prefix, or Hostname
+    traceroute-v6:
+      name: Traceroute
+      rules:
+        - condition: "::/0"
+          command: "tool traceroute src-address={source6} timeout=1 duration=5 count=1 {target}"
+      field:
+        description: IP Address, Prefix, or Hostname

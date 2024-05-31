@@ -137,6 +137,11 @@ vault_policies:
       - path: secret/data/homelab/prod/as212510-net
         capabilities:
           - read
+  - name: hyperglass
+    rules:
+      - path: secret/data/homelab/prod/hyperglass
+        capabilities:
+          - read
   - name: gluetun
     rules:
       - path: secret/data/homelab/prod/gluetun
@@ -245,6 +250,12 @@ public_vault_datas:
       bound_service_account_names: as212510-net-vault
       bound_service_account_namespaces: as212510-net
       policies: as212510-net
+      ttl: 1h
+  - path: auth/kubernetes/role/hyperglass
+    data:
+      bound_service_account_names: hyperglass-vault
+      bound_service_account_namespaces: hyperglass
+      policies: hyperglass
       ttl: 1h
   - path: auth/kubernetes/role/gluetun
     data:
