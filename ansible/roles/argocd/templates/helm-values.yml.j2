@@ -47,6 +47,8 @@ global:
     tag: {{ argocd_version }}
   networkPolicy:
     create: false
+  dualStack:
+    ipFamilyPolicy: "PreferDualStack"
   deploymentAnnotations:
     reloader.stakater.com/auto: "true"
 
