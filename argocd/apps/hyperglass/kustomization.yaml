@@ -7,7 +7,7 @@ namespace: hyperglass
 
 resources:
   - manifests/01_external_secret.yaml
-  - manifests/02_directives.yaml
+  - manifests/02_config.yaml
 
 helmCharts:
 - name: hyperglass

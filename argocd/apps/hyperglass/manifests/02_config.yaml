@@ -8,8 +8,8 @@ data:
     plugins: []
     primary_asn: 212510
     request_timeout: 90
-    site_title: AS212510 - Looking glass
-    site_description: AS212510 looking glass powered by Hyperglass
+    site_title: "{org_name} - Looking glass"
+    site_description: "{org_name} looking glass powered by Hyperglass"
     web:
       logo:
         favicon: /etc/hyperglass/unicornafk.svg
@@ -18,7 +18,7 @@ data:
       greeting:
         enable: true
         file: /etc/hyperglass/greeting.md
-        title: Welcome to AS212510 Looking Glass powered by [Hyperglass](https://hyperglass.dev)
+        title: Welcome to AS212510 Looking Glass
         button: Continue
         required: true
   greeting.md: |-
