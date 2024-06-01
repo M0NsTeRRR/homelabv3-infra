@@ -29,6 +29,14 @@ volumeMounts:
     mountPath: /etc/hyperglass/directives.yaml
     subPath: directives.yaml
     readOnly: true
+  - name: hyperglass
+    mountPath: /etc/hyperglass/greeting.md
+    subPath: greeting.md
+    readOnly: true
+  - name: hyperglass
+    mountPath: /etc/hyperglass/unicornafk.svg
+    subPath: unicornafk.svg
+    readOnly: true
 
 valkey:
   enabled: true
