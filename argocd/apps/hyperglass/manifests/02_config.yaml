@@ -11,6 +11,9 @@ data:
     site_title: "{org_name} - Looking glass"
     site_description: "{org_name} looking glass powered by Hyperglass"
     web:
+      dns_provider:
+        name: quad9
+        url: https://dns.quad9.net/dns-query
       logo:
         favicon: /etc/hyperglass/unicornafk.svg
         light: /etc/hyperglass/unicornafk.svg
