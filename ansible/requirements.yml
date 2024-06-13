@@ -11,4 +11,4 @@ collections:
   - name: community.postgresql
     version: "3.4.1"
   - name: kubernetes.core
-    version: "4.0.0"
+    version: "5.0.0"
