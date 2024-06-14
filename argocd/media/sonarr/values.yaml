@@ -3,13 +3,13 @@ extraEnv:
   - name: TZ
     value: Europe/Paris
 volumes:
-  - name: data
+  - name: &volume-data data
     persistentVolumeClaim:
       claimName: media-storage
 volumeMounts:
-  - name: data
+  - name: *volume-data
     mountPath: /tv
     subPath: tv
-  - name: data
+  - name: *volume-data
     mountPath: /downloads
     subPath: downloads

@@ -3,7 +3,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: prometheus-snmp-exporter
+namespace: &namespace prometheus-snmp-exporter
 
 resources:
   - manifests/01_external_secret.yaml
@@ -13,7 +13,7 @@ resources:
 helmCharts:
 - name: prometheus-snmp-exporter
   releaseName: prometheus-snmp-exporter
-  namespace: prometheus-snmp-exporter
+  namespace: *namespace
   repo: https://prometheus-community.github.io/helm-charts
   version: 5.4.0
   valuesFile: values.yaml

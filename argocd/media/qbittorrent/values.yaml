@@ -1,10 +1,10 @@
 ---
 volumes:
-  - name: data
+  - name: &volume-data data
     persistentVolumeClaim:
       claimName: media-storage
 volumeMounts:
-  - name: data
+  - name: *volume-data
     mountPath: /downloads
     subPath: downloads
 gluetun:

@@ -7,33 +7,33 @@ extraEnv:
     value: "hyperglass-valkey-master"
 extraEnvFrom:
   - secretRef:
-      name: hyperglass-vault
+      name: &secret-ref hyperglass-vault
 
 volumes:
-  - name: hyperglass
+  - name: &volume-config hyperglass
     configMap:
       name: hyperglass
-  - name: hyperglass-devices
+  - name: &volume-devices hyperglass-devices
     secret:
       secretName: hyperglass-devices-vault
 volumeMounts:
-  - name: hyperglass
+  - name: *volume-config
     mountPath: /etc/hyperglass/config.yaml
     subPath: config.yaml
     readOnly: true
-  - name: hyperglass-devices
+  - name: *volume-devices
     mountPath: /etc/hyperglass/devices.yaml
     subPath: devices.yaml
     readOnly: true
-  - name: hyperglass
+  - name: *volume-config
     mountPath: /etc/hyperglass/directives.yaml
     subPath: directives.yaml
     readOnly: true
-  - name: hyperglass
+  - name: *volume-config
     mountPath: /etc/hyperglass/greeting.md
     subPath: greeting.md
     readOnly: true
-  - name: hyperglass
+  - name: *volume-config
     mountPath: /etc/hyperglass/unicornafk.svg
     subPath: unicornafk.svg
     readOnly: true
@@ -42,7 +42,7 @@ valkey:
   enabled: true
   auth:
     enabled: true
-    existingSecret: "hyperglass-vault"
+    existingSecret: *secret-ref
     existingSecretPasswordKey: "HYPERGLASS_REDIS_PASSWORD" 
   metrics:
     enabled: true
@@ -56,12 +56,12 @@ ingress:
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
   hosts:
-    - host: lg.as212510.net
+    - host: &host lg.as212510.net
       paths:
         - path: /
           pathType: ImplementationSpecific
   tls:
     - hosts:
-        - lg.as212510.net
+        - *host
       secretName: lg.as212510.net-tls
   ingressClassName: ingress-external

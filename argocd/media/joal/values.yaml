@@ -1,15 +1,15 @@
 ---
 volumes:
-  - name: joal-config
+  - name: &volume-config joal-config
     configMap:
       name: joal-config
 
 volumeMounts:
-  - name: joal-config
+  - name: *volume-config
     mountPath: /data/config.json
     subPath: config.json
     readOnly: true
-  - name: joal-config
+  - name: *volume-config
     mountPath: /data/clients/qbittorrent-4.6.4.client
     subPath: torrent.client
     readOnly: true

@@ -3,7 +3,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: k8up
+namespace: &namespace k8up
 
 resources:
   - https://github.com/k8up-io/k8up/releases/download/k8up-4.6.0/k8up-crd.yaml
@@ -11,7 +11,7 @@ resources:
 helmCharts:
 - name: k8up
   releaseName: k8up
-  namespace: k8up
+  namespace: *namespace
   repo: https://k8up-io.github.io/k8up
   version: 4.7.0
   valuesFile: values.yaml

@@ -2,18 +2,18 @@
 podAnnotations:
   reloader.stakater.com/auto: "true"
 volumes:
-  - name: ca-certs
+  - name: &volume-ca ca-certs
     configMap:
       name: homelab-ca
-  - name: client-mtls
+  - name: &volume-mtls client-mtls
     secret:
       secretName: client-mtls
 volumeMounts:
-  - name: ca-certs
+  - name: *volume-ca
     mountPath: /etc/ssl/certs/homelab.crt
     subPath: ca.crt
     readOnly: true
-  - name: client-mtls
+  - name: *volume-mtls
     mountPath: /mtls/client
     readOnly: true
 extraEnv:

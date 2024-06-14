@@ -49,7 +49,7 @@ kubeControllerManager:
   service:
     ipDualStack:
       enabled: true
-  endpoints:
+  endpoints: &kubernetes-masters
     - "192.168.10.81"
     - "192.168.10.82"
     - "192.168.10.83"
@@ -63,18 +63,12 @@ kubeEtcd:
   service:
     ipDualStack:
       enabled: true
-  endpoints:
-    - "192.168.10.81"
-    - "192.168.10.82"
-    - "192.168.10.83"
+  endpoints: *&kubernetes-masters
 kubeScheduler:
   service:
     ipDualStack:
       enabled: true
-  endpoints:
-    - "192.168.10.81"
-    - "192.168.10.82"
-    - "192.168.10.83"
+  endpoints: *&kubernetes-masters
   serviceMonitor:
     metricRelabelings:
       # Remove duplicate metrics

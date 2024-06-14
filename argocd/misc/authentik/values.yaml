@@ -15,25 +15,25 @@ global:
   envFrom:
     - secretRef:
         name: authentik-vault
-  volumeMounts:
-    - name: ca-certs
-      mountPath: /etc/ssl/certs/homelab.crt
-      subPath: ca.crt
-      readOnly: true
-    - name: homelab-blueprint
-      mountPath: /blueprints/custom/homelab.yaml
-      subPath: homelab.yaml
-      readOnly: true
   volumes:
-    - name: ca-certs
+    - name: &volume-ca ca-certs
       configMap:
         name: homelab-ca
-    - name: homelab-blueprint
+    - name: &volume-bluprint homelab-blueprint
       secret:
         secretName: blueprint-vault
         items:
           - key: homelab.yaml
             path: homelab.yaml
+  volumeMounts:
+    - name: *volume-ca
+      mountPath: /etc/ssl/certs/homelab.crt
+      subPath: ca.crt
+      readOnly: true
+    - name: *volume-bluprint
+      mountPath: /blueprints/custom/homelab.yaml
+      subPath: homelab.yaml
+      readOnly: true
 redis:
   enabled: true
 server:
@@ -42,11 +42,11 @@ server:
     serviceMonitor:
       enabled: true
   volumes:
-    - name: icons
+    - name: &volume-icons icons
       configMap:
         name: authentik-icons
   volumeMounts:
-    - name: icons
+    - name: *volume-icons
       mountPath: /media/public/unicornafk.svg
       subPath: unicornafk.svg
   ingress:
@@ -56,13 +56,13 @@ server:
       cert-manager.io/private-key-algorithm: "RSA"
       cert-manager.io/private-key-size: "4096"
     hosts:
-      - sso.unicornafk.fr
+      - &host sso.unicornafk.fr
     paths:
       - /
     pathType: ImplementationSpecific
     tls:
       - hosts:
-          - sso.unicornafk.fr
+          - *host
         secretName: sso.unicornafk.fr-tls
     ingressClassName: ingress-internal
 prometheus:

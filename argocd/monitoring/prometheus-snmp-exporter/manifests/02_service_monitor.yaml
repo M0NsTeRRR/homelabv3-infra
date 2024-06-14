@@ -3,14 +3,14 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: prometheus-snmp-exporter
-  labels:
+  labels: &labels
     app.kubernetes.io/name: prometheus-snmp-exporter
     app.kubernetes.io/instance: prometheus-snmp-exporter
   annotations:
     ignore-check.kube-linter.io/dangling-servicemonitor: "helm service"
 spec:
   endpoints:
-    - honorLabels: true
+    - honorLabels: &honor-labels true
       metricRelabelings:
         - action: replace
           replacement: r1.unicornafk.fr
@@ -24,9 +24,9 @@ spec:
           - 192.168.6.1
         auth:
           - homelab_aes
-      path: /snmp
-      port: http
-      scrapeTimeout: 10s
+      path: &path /snmp
+      port: &port http
+      scrapeTimeout: &scrape-timeout 10s
     - honorLabels: true
       metricRelabelings:
         - action: replace
@@ -41,9 +41,9 @@ spec:
           - 192.168.10.1
         auth:
           - homelab_aes
-      path: /snmp
-      port: http
-      scrapeTimeout: 10s
+      path: *path
+      port: *port
+      scrapeTimeout: *scrape-timeout
     - honorLabels: true
       metricRelabelings:
         - action: replace
@@ -58,9 +58,9 @@ spec:
           - 192.168.40.2
         auth:
           - homelab_aes
-      path: /snmp
-      port: http
-      scrapeTimeout: 10s
+      path: *path
+      port: *port
+      scrapeTimeout: *scrape-timeout
     - honorLabels: true
       metricRelabelings:
         - action: replace
@@ -75,11 +75,9 @@ spec:
           - 192.168.50.42
         auth:
           - homelab_des
-      path: /snmp
-      port: http
-      scrapeTimeout: 10s
+      path: *path
+      port: *port
+      scrapeTimeout: *scrape-timeout
   jobLabel: prometheus-snmp-exporter
   selector:
-    matchLabels:
-      app.kubernetes.io/instance: prometheus-snmp-exporter
-      app.kubernetes.io/name: prometheus-snmp-exporter
+    matchLabels: *labels

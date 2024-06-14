@@ -3,7 +3,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: jellyfin
+namespace: &namespace jellyfin
 
 resources:
   - manifests/01_pvc.yaml
@@ -11,7 +11,7 @@ resources:
 helmCharts:
 - name: jellyfin
   releaseName: jellyfin
-  namespace: jellyfin
+  namespace: *namespace
   repo: https://helm-charts.adminafk.fr
   version: 0.2.2
   valuesFile: values.yaml

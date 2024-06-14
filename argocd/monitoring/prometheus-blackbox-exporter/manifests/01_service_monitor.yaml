@@ -10,221 +10,157 @@ metadata:
     ignore-check.kube-linter.io/dangling-servicemonitor: "helm service"
 spec:
   endpoints:
-    - honorLabels: true
-      relabelings:
+    - honorLabels: &honor-labels true
+      relabelings: &relabelings
       - action: replace
         sourceLabels:
           - __param_target
         targetLabel: instance
       params:
-        module:
+        module: &module
           - icmp
         target:
           - 1.1.1.1 # cloudflare dns
-      path: /probe
-      port: http
-      scrapeTimeout: 5s
-    - honorLabels: true
-      relabelings:
-      - action: replace
-        sourceLabels:
-          - __param_target
-        targetLabel: instance
+      path: &path /probe
+      port: &port http
+      scrapeTimeout: &scrape-timeout 5s
+    - honorLabels: *honor-labels
+      relabelings: *relabelings
       params:
-        module:
-          - icmp
+        module: *module
         target:
           - 2606:4700:4700::1111 # cloudflare dns
-      path: /probe
-      port: http
-      scrapeTimeout: 5s
-    - honorLabels: true
-      relabelings:
-      - action: replace
-        sourceLabels:
-          - __param_target
-        targetLabel: instance
+      path: *path
+      port: *port
+      scrapeTimeout: *scrape-timeout
+    - honorLabels: *honor-labels
+      relabelings: *relabelings
       params:
-        module:
-          - icmp
+        module: *module
         target:
           - 8.8.8.8 # google dns
-      path: /probe
-      port: http
-      scrapeTimeout: 5s
-    - honorLabels: true
-      relabelings:
-      - action: replace
-        sourceLabels:
-          - __param_target
-        targetLabel: instance
+      path: *path
+      port: *port
+      scrapeTimeout: *scrape-timeout
+    - honorLabels: *honor-labels
+      relabelings: *relabelings
       params:
-        module:
-          - icmp
+        module: *module
         target:
           - 2001:4860:4860::8888 # google dns
-      path: /probe
-      port: http
-      scrapeTimeout: 5s
-    - honorLabels: true
-      relabelings:
-      - action: replace
-        sourceLabels:
-          - __param_target
-        targetLabel: instance
+      path: *path
+      port: *port
+      scrapeTimeout: *scrape-timeout
+    - honorLabels: *honor-labels
+      relabelings: *relabelings
       params:
-        module:
-          - icmp
+        module: *module
         target:
           - 141.145.215.178 # vps1.adminafk.fr
-      path: /probe
-      port: http
-      scrapeTimeout: 5s
-    - honorLabels: true
-      relabelings:
-      - action: replace
-        sourceLabels:
-          - __param_target
-        targetLabel: instance
+      path: *path
+      port: *port
+      scrapeTimeout: *scrape-timeout
+    - honorLabels: *honor-labels
+      relabelings: *relabelings
       params:
-        module:
-          - icmp
+        module: *module
         target:
           - 2603:c027:c000:c200::10 # vps1.adminafk.fr
-      path: /probe
-      port: http
-      scrapeTimeout: 5s
+      path: *path
+      port: *port
+      scrapeTimeout: *scrape-timeout
   jobLabel: prometheus-blackbox-exporter
   selector:
-    matchLabels:
-      app.kubernetes.io/instance: prometheus-blackbox-exporter
-      app.kubernetes.io/name: prometheus-blackbox-exporter
+    matchLabels: *labels
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: prometheus-blackbox-exporter-http
-  labels:
+  labels: &labels
     app.kubernetes.io/name: prometheus-blackbox-exporter
     app.kubernetes.io/instance: prometheus-blackbox-exporter
   annotations:
     ignore-check.kube-linter.io/dangling-servicemonitor: "helm service"
 spec:
   endpoints:
-    - honorLabels: true
-      relabelings:
+    - honorLabels: &honor-labels true
+      relabelings: &relabelings
       - action: replace
         sourceLabels:
           - __param_target
         targetLabel: instance
       params:
-        module:
+        module: &module
           - http_2xx
         target:
           - https://server1.unicornafk.fr:8006
-      path: /probe
-      port: http
-      scrapeTimeout: 5s
-    - honorLabels: true
-      relabelings:
-      - action: replace
-        sourceLabels:
-          - __param_target
-        targetLabel: instance
+      path: &path /probe
+      port: &port http
+      scrapeTimeout: &scrape-timeout 5s
+    - honorLabels: *honor-labels
+      relabelings: *relabelings
       params:
-        module:
-          - http_2xx
+        module: *module
         target:
           - https://server2.unicornafk.fr:8006
-      path: /probe
-      port: http
-      scrapeTimeout: 5s
-    - honorLabels: true
-      relabelings:
-      - action: replace
-        sourceLabels:
-          - __param_target
-        targetLabel: instance
+      path: *path
+      port: *port
+      scrapeTimeout: *scrape-timeout
+    - honorLabels: *honor-labels
+      relabelings: *relabelings
       params:
-        module:
-          - http_2xx
+        module: *module
         target:
           - https://server3.unicornafk.fr:8006
-      path: /probe
-      port: http
-      scrapeTimeout: 5s
-    - honorLabels: true
-      relabelings:
-      - action: replace
-        sourceLabels:
-          - __param_target
-        targetLabel: instance
+      path: *path
+      port: *port
+      scrapeTimeout: *scrape-timeout
+    - honorLabels: *honor-labels
+      relabelings: *relabelings
       params:
-        module:
-          - http_2xx
+        module: *module
         target:
           - https://dns1.unicornafk.fr
-      path: /probe
-      port: http
-      scrapeTimeout: 5s
-    - honorLabels: true
-      relabelings:
-      - action: replace
-        sourceLabels:
-          - __param_target
-        targetLabel: instance
+      path: *path
+      port: *port
+      scrapeTimeout: *scrape-timeout
+    - honorLabels: *honor-labels
+      relabelings: *relabelings
       params:
-        module:
-          - http_2xx
+        module: *module
         target:
           - https://dns2.unicornafk.fr
-      path: /probe
-      port: http
-      scrapeTimeout: 5s
-    - honorLabels: true
-      relabelings:
-      - action: replace
-        sourceLabels:
-          - __param_target
-        targetLabel: instance
+      path: *path
+      port: *port
+      scrapeTimeout: *scrape-timeout
+    - honorLabels: *honor-labels
+      relabelings: *relabelings
       params:
-        module:
-          - http_2xx
+        module: *module
         target:
           - https://home-assistant.unicornafk.fr
-      path: /probe
-      port: http
-      scrapeTimeout: 5s
-    - honorLabels: true
-      relabelings:
-      - action: replace
-        sourceLabels:
-          - __param_target
-        targetLabel: instance
+      path: *path
+      port: *port
+      scrapeTimeout: *scrape-timeout
+    - honorLabels: *honor-labels
+      relabelings: *relabelings
       params:
-        module:
-          - http_2xx
+        module: *module
         target:
           - https://nas.unicornafk.fr
-      path: /probe
-      port: http
-      scrapeTimeout: 5s
-    - honorLabels: true
-      relabelings:
-      - action: replace
-        sourceLabels:
-          - __param_target
-        targetLabel: instance
+      path: *path
+      port: *port
+      scrapeTimeout: *scrape-timeout
+    - honorLabels: *honor-labels
+      relabelings: *relabelings
       params:
-        module:
-          - http_2xx
+        module: *module
         target:
-          - https://vault.unicornafk.fr:8200
-      path: /probe
-      port: http
-      scrapeTimeout: 5s
+          - https://vault.unicornafk.fr
+      path: *path
+      port: *port
+      scrapeTimeout: *scrape-timeout
   jobLabel: prometheus-blackbox-exporter
   selector:
-    matchLabels:
-      app.kubernetes.io/instance: prometheus-blackbox-exporter
-      app.kubernetes.io/name: prometheus-blackbox-exporter
+    matchLabels: *labels

@@ -1,14 +1,14 @@
 ---
 volumes:
-  - name: data
+  - name: &volume-data data
     persistentVolumeClaim:
       claimName: media-storage
 volumeMounts:
-  - name: data
+  - name: *volume-data
     mountPath: /movies
     subPath: movies
     readOnly: true
-  - name: data
+  - name: *volume-data
     mountPath: /tv
     subPath: tv
     readOnly: true
@@ -20,12 +20,12 @@ ingress:
     cert-manager.io/private-key-algorithm: "RSA"
     cert-manager.io/private-key-size: "4096"
   hosts:
-    - host: jellyfin.unicornafk.fr
+    - host: &host jellyfin.unicornafk.fr
       paths:
         - path: /
           pathType: ImplementationSpecific
   tls:
     - hosts:
-        - jellyfin.unicornafk.fr
+        - *host
       secretName: jellyfin.unicornafk.fr-tls
   ingressClassName: ingress-internal

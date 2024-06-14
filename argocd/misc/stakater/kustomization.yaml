@@ -3,12 +3,12 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: stakater
+namespace: &namespace stakater
 
 helmCharts:
 - name: reloader
   releaseName: stakater
-  namespace: stakater
+  namespace: *namespace
   repo: https://stakater.github.io/stakater-charts
   version: 1.0.107
   valuesFile: values.yaml

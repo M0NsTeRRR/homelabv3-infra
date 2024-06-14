@@ -3,15 +3,15 @@ envFromSecret: "grafana-vault"
 annotations:
   reloader.stakater.com/auto: "true"
 
+extraVolumes:
+  - name: &volume-ca ca-certs
+    configMap:
+      name: homelab-ca
 extraVolumeMounts:
-  - name: ca-certs
+  - name: *volume-ca
     mountPath: /etc/ssl/certs/homelab.crt
     subPath: ca.crt
     readOnly: true
-extraVolumes:
-  - name: ca-certs
-    configMap:
-      name: homelab-ca
 
 serviceMonitor:
   enabled: true
@@ -54,7 +54,7 @@ alerting:
     apiVersion: 1
     contactPoints:
       - orgId: 1
-        name: unicornafk
+        name: &contact-receiver unicornafk
         receivers:
           - uid: unicornafk
             type: discord
@@ -64,7 +64,7 @@ alerting:
     apiVersion: 1
     policies:
       - orgId: 1
-        receiver: unicornafk
+        receiver: *contact-receiver
         group_by:
           - alertname
 
@@ -89,53 +89,53 @@ dashboards:
     Go-runtime:
       gnetId: 13240
       revision: 2
-      datasource: prometheus
+      datasource: &datasource prometheus
     Traefik:
       gnetId: 18348
       revision: 8
-      datasource: prometheus
+      datasource: *datasource
     Argocd-operational:
       gnetId: 19993
       revision: 2
       datasource:
         - name: DS_PROMETHEUS
-          value: prometheus
+          value: *datasource
     Authentik:
       gnetId: 14837
       revision: 2
-      datasource: prometheus
+      datasource: *datasource
     Argocd-application:
       gnetId: 19974
       revision: 2
       datasource:
         - name: DS_PROMETHEUS
-          value: prometheus
+          value: *datasource
     Argocd-notifications:
       gnetId: 19975
       revision: 2
       datasource:
         - name: DS_PROMETHEUS
-          value: prometheus
+          value: *datasource
     External-dns:
       gnetId: 15038
       revision: 3
-      datasource: prometheus
+      datasource: *datasource
     Ceph-cluster:
       gnetId: 2842
       revision: 17
-      datasource: prometheus
+      datasource: *datasource
     Ceph-osd-single:
       gnetId: 5336
       revision: 9
-      datasource: prometheus
+      datasource: *datasource
     Ceph-pools:
       gnetId: 5342
       revision: 9
-      datasource: prometheus
+      datasource: *datasource
     Ceph-Vault:
       gnetId: 12904
       revision: 2
-      datasource: prometheus
+      datasource: *datasource
     External-secrets:
       url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
     Cert-manager:
@@ -145,71 +145,71 @@ dashboards:
       revision: 5
       datasource:
         - name: DS_PROMETHEUS
-          value: prometheus
+          value: *datasource
     K8up:
       gnetId: 20166
       revision: 4
       datasource:
         - name: DS_PROMETHEUS
-          value: prometheus
+          value: *datasource
     Blackbox-exporter-http:
       gnetId: 14928
       revision: 6
-      datasource: prometheus
+      datasource: *datasource
     Blackbox-exporter-icmp:
       gnetId: 20338
       revision: 2
       datasource:
         - name: DS_PROMETHEUS
-          value: prometheus
+          value: *datasource
     Snmp-device:
       gnetId: 20347
       revision: 2
       datasource:
         - name: DS_PROMETHEUS
-          value: prometheus
+          value: *datasource
     Proxmox-exporter:
       gnetId: 10347
       revision: 5
       datasource:
         - name: DS_PROMETHEUS
-          value: prometheus
+          value: *datasource
     Dnsdist:
       gnetId: 20422
       revision: 4
       datasource:
         - name: DS_PROMETHEUS
-          value: prometheus
+          value: *datasource
     Powerdns-authoritative:
       gnetId: 20445
       revision: 2
       datasource:
         - name: DS_PROMETHEUS
-          value: prometheus
+          value: *datasource
     Powerdns-recursor:
       gnetId: 20448
       revision: 1
       datasource:
         - name: DS_PROMETHEUS
-          value: prometheus
+          value: *datasource
     Kea-exporter:
       gnetId: 12688
       revision: 4
       datasource:
         - name: DS_PROMETHEUS
-          value: prometheus
+          value: *datasource
     FlareSolverr:
       gnetId: 19363
       revision: 1
       datasource:
         - name: DS_PROMETHEUS
-          value: prometheus
+          value: *datasource
     Routinator:
       gnetId: 11922
       revision: 7
       datasource:
         - name: DS_PROMETHEUS
-          value: prometheus
+          value: *datasource
 
 ingress:
   enabled: true
@@ -218,9 +218,9 @@ ingress:
     cert-manager.io/private-key-algorithm: "RSA"
     cert-manager.io/private-key-size: "4096"
   hosts:
-    - monitoring.unicornafk.fr
+    - &host monitoring.unicornafk.fr
   ingressClassName: "ingress-internal"
   tls:
     - secretName: monitoring.unicornafk.fr
       hosts:
-        - monitoring.unicornafk.fr
+        - *host

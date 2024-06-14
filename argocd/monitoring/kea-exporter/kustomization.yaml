@@ -3,21 +3,21 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: kea-exporter
+namespace: &namespace kea-exporter
 
 resources:
   - manifests/01_certificate.yaml
 
 helmCharts:
-- name: kea-exporter
+- name: &kea-helm-chart-name kea-exporter
   releaseName: kea1-exporter
-  namespace: kea-exporter
-  repo: https://helm-charts.adminafk.fr
+  namespace: *namespace
+  repo: &kea-helm-chart-repo https://helm-charts.adminafk.fr
   version: 0.2.5
   valuesFile: values_1.yaml
-- name: kea-exporter
+- name: *kea-helm-chart-name
   releaseName: kea2-exporter
-  namespace: kea-exporter
-  repo: https://helm-charts.adminafk.fr
+  namespace: *namespace
+  repo: *kea-helm-chart-repo
   version: 0.2.5
   valuesFile: values_2.yaml

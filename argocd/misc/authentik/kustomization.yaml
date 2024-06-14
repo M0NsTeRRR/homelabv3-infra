@@ -3,7 +3,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: authentik
+namespace: &namespace authentik
 
 resources:
   - manifests/01_external_secret.yaml
@@ -14,7 +14,7 @@ resources:
 helmCharts:
 - name: authentik
   releaseName: authentik
-  namespace: authentik
+  namespace: *namespace
   repo: https://charts.goauthentik.io
   version: 2024.4.2
   valuesFile: values.yaml
