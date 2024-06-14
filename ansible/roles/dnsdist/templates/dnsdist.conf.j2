@@ -1,6 +1,6 @@
+#jinja2: lstrip_blocks: "True"
 addLocal('0.0.0.0')
 addLocal('::')
-
 
 {% if dnsdist_doh_proxified %}
 addDOHLocal('127.0.0.1:8053')
@@ -8,10 +8,9 @@ addDOHLocal('[::1]:8053')
 {% else %}
 addDOHLocal('0.0.0.0', '/etc/dnsdist/ssl/{{ dnsdist_cert_filename }}', '/etc/dnsdist/ssl/{{ dnsdist_key_filename }}', {customResponseHeaders={["alt-svc"]="h3=\":443\""{{ "}}" }})
 addDOHLocal('::', '/etc/dnsdist/ssl/{{ dnsdist_cert_filename }}', '/etc/dnsdist/ssl/{{ dnsdist_key_filename }}', {customResponseHeaders={["alt-svc"]="h3=\":443\""{{ "}}" }})
-{% endif %}
-
 addDOH3Local('0.0.0.0', '/etc/dnsdist/ssl/{{ dnsdist_cert_filename }}', '/etc/dnsdist/ssl/{{ dnsdist_key_filename }}')
 addDOH3Local('::', '/etc/dnsdist/ssl/{{ dnsdist_cert_filename }}', '/etc/dnsdist/ssl/{{ dnsdist_key_filename }}')
+{% endif %}
 
 addTLSLocal('0.0.0.0', '/etc/dnsdist/ssl/{{ dnsdist_cert_filename }}', '/etc/dnsdist/ssl/{{ dnsdist_key_filename }}')
 addTLSLocal('::', '/etc/dnsdist/ssl/{{ dnsdist_cert_filename }}', '/etc/dnsdist/ssl/{{ dnsdist_key_filename }}')

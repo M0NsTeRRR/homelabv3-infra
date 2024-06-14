@@ -21,6 +21,12 @@ grafana_agent_flow_extra_scrape:
     basic_auth:
       username: ""
       password: "{{ dnsdist_api_key }}"
+  - name: caddy
+    targets:
+      - address: localhost:2019
+    basic_auth:
+      username: "{{ caddy_metrics_basic_auth.username }}"
+      password: "{{ caddy_metrics_basic_auth.password }}"
 
 dnsdist_local_path_ca_certificate: "{{ ca_certificates_local_path_ca_certificate }}"
 dnsdist_cert_filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}-fullchain.crt"
@@ -271,32 +277,29 @@ lego_certificates:
   - domain: "{{ hostvars[inventory_hostname].hostname[:-1] }}"
     san: []
     destinations:
-      - { path: /etc/nginx/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: nginx, group: nginx }
+      - { path: /etc/caddy/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: caddy, group: caddy }
       - { path: /etc/dnsdist/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: _dnsdist, group: _dnsdist }
       - { path: /etc/grafana-agent-flow/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: grafana-agent-flow, group: grafana-agent-flow }
     systemd_services:
-      - { name: nginx, state: restarted }
+      - { name: caddy, state: restarted }
       - { name: dnsdist, state: restarted }
       - { name: grafana-agent-flow, state: restarted }
 
-nginx_configuration:
-  - server_name: "{{ hostvars[inventory_hostname].hostname[:-1] }}"
-    ssl_verify_client: optional
-    additional_server_name:
+caddy_auto_https: "disable_certs"
+caddy_configuration:
+  - sites:
+      - "{{ hostvars[inventory_hostname].hostname[:-1] }}"
       - "{{ ansible_default_ipv4.address }}"
       - "{{ ansible_default_ipv6.address }}"
-    locations:
-      - location: /dns-query
-        proxy_pass: http://127.0.0.1:8053/dns-query
-      - location: /api
-        proxy_pass: http://127.0.0.1:8081/api
-    enable_content_security: true
+    https:
+      - handle: /dns-query
+        reverse_proxy: "127.0.0.1:8053"
+        http_version: "h2c"
+      - handle: "/api/*"
+        reverse_proxy: "127.0.0.1:8081"
     http:
-      enable: true
-      locations:
-        - location: /.well-known/acme-challenge
-          proxy_pass: http://127.0.0.1:{{ lego_webserver_port }}
-    ssl_port: 443
+      - handle: /.well-known/acme-challenge/*
+        reverse_proxy: "127.0.0.1:{{ lego_webserver_port }}"
 
 self_signed_cert_list:
   - common_name: "{{ hostvars[inventory_hostname].hostname[:-1] }}"

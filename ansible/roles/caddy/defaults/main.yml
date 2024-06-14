@@ -2,16 +2,22 @@
 # caddy_version:
 caddy_package_state: latest
 caddy_email: email@example.com
-caddy_domains: []
+caddy_auto_https: ""
+caddy_configuration: []
+caddy_metrics_basic_auth:
+  username: ""
+  password: ""
 
-
-# caddy_domains:
-#   - names:
+# caddy_configuration:
+#   - sites:
 #       - domain1.fr
 #       - domain2.fr
-#       ...
-#     backend_url: https://192.168.0.1
-#     proxy_headers:
-#       Host: example.fr
-#     # optionnal set CSP header
-#     csp: "default-src: 'self'; script-src: 'self' 'unsafe-inline'"
+#     https:
+#       - handle: /dns-query
+#         reverse_proxy: "127.0.0.1:8053"
+#         http_version: "h2c"
+#       - handle: "/api/*"
+#         reverse_proxy: "127.0.0.1:8081"
+#     http:
+#       - handle: /.well-known/acme-challenge/*
+#         reverse_proxy: "127.0.0.1:{{ lego_webserver_port }}"

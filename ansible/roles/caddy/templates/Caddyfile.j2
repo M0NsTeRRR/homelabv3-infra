@@ -1,5 +1,19 @@
+#jinja2: lstrip_blocks: "True"
 {
-    email {{ caddy_email }}
+        email {{ caddy_email }}
+        {% if caddy_auto_https %}
+        auto_https {{ caddy_auto_https }}
+        {% endif %}
+        servers {
+                metrics
+        }
+}
+
+https://localhost:2019 {
+	basicauth {
+		{{ caddy_metrics_basic_auth.username }} {{ caddy_metrics_basic_auth.password | password_hash('bcrypt') }}
+	}
+        metrics
 }
 
 import /etc/caddy/conf.d/*.conf

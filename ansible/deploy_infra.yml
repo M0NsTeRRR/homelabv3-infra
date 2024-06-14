@@ -21,7 +21,7 @@
   become: true
   roles:
     - postgresql
-    - nginx
+    - caddy
     - dnsdist
     - powerdns_recursor
     - powerdns_authoritative

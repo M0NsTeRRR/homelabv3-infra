@@ -9,8 +9,6 @@
   with_items:
     - {port: "53", proto: tcp, comment: "Dnsdist DNS"}
     - {port: "53", proto: udp, comment: "Dnsdist DNS"}
-    - {port: "443", proto: tcp, comment: "Dnsdist DoH"}
-    - {port: "443", proto: udp, comment: "Dnsdist DoH3"}
     - {port: "853", proto: tcp, comment: "Dnsdist DoT"}
     - {port: "853", proto: udp, comment: "Dnsdist DoQ"}
 

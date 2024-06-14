@@ -20,7 +20,7 @@
   ansible.builtin.user:
     name: caddy
     system: true
-    create_home: false
+    create_home: true
     shell: /usr/sbin/nologin
     group: caddy
 
@@ -61,6 +61,7 @@
     mode: "0750"
   with_items:
     - /etc/caddy/conf.d
+    - /etc/caddy/ssl
 
 - name: Configure default Caddy config
   ansible.builtin.template:
@@ -73,11 +74,11 @@
 
 - name: Configure Caddy
   ansible.builtin.template:
-    src: site.conf.j2
-    dest: "/etc/caddy/conf.d/{{ item.names[0] }}.conf"
+    src: conf.j2
+    dest: "/etc/caddy/conf.d/{{ item.sites[0] }}.conf"
     owner: caddy
     group: caddy
     mode: "0640"
     validate: /usr/bin/caddy validate --config %s --adapter caddyfile
-  with_items: "{{ caddy_domains }}"
+  with_items: "{{ caddy_configuration }}"
   notify: Restart caddy.service

@@ -1,0 +1,50 @@
+{% for site in item.sites %}{% if not https %}http://{% endif %}{{ site }}{% if not loop.last %}, {% endif %}{% endfor %} {
+        {% for backend in backends %}
+        handle {{ backend.handle }} {
+                reverse_proxy {{ backend.reverse_proxy }} {
+                        {% if backend.proxy_headers is defined %}
+                        {% for headerName, headerValue in backend.proxy_headers.items() %}
+                        header_up {{ headerName }} {{ headerValue }}
+                        {% endfor %}
+                        {% endif %}
+
+                        {% if backend.http_version is defined %}
+                        transport http {
+                                versions {{ backend.http_version }}
+                        }
+                        {% endif %}
+                }
+        }
+        {% endfor %}
+
+        handle {
+		respond 404
+	}
+
+        {% if (caddy_auto_https is defined and caddy_auto_https in ["off", "disable_certs"]) and https %}
+        tls /etc/caddy/ssl/{{ item.sites[0] }}-fullchain.crt /etc/caddy/ssl/{{ item.sites[0] }}.key
+        {% endif %}
+
+        header {
+                -Server
+                header_up Host {host}
+                header_up X-Real-IP {remote}
+                header_up X-Forwarded-Port {remote_port}
+                header_up X-Url-Scheme {scheme}
+                header_up X-Forwarded-Host {host}
+                header_up Set-Cookie "Path=/; HttpOnly; Secure";
+                Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+                Permissions-Policy "accelerometer=(), ambient-light-sensor=(), autoplay=(), battery=(), camera=(), cross-origin-isolated=(), display-capture=(), document-domain=(), encrypted-media=(), execution-while-not-rendered=(), execution-while-out-of-viewport=(), fullscreen=(), geolocation=(), gyroscope=(), keyboard-map=(), magnetometer=(), microphone=(), midi=(), navigation-override=(), payment=(), picture-in-picture=(), publickey-credentials-get=(), screen-wake-lock=(), sync-xhr=(), usb=(), web-share=(), xr-spatial-tracking=(), clipboard-read=(), clipboard-write=(), gamepad=(), speaker-selection=(), conversion-measurement=(), focus-without-user-activation=(), hid=(), idle-detection=(), interest-cohort=(), serial=(), sync-script=(), trust-token-redemption=(), window-placement=(), vertical-scroll=()"
+                Referrer-Policy "strict-origin-when-cross-origin"
+                X-Frame-Options sameorigin
+                X-Permitted-Cross-Domain-Policies none
+                X-XSS-Protection "1; mode=block"
+                X-Content-Type-Options nosniff
+                Cross-Origin-Embedder-Policy same-origin
+                Cross-Origin-Opener-Policy same-origin
+                Cross-Origin-Resource-Policy same-origin
+                Content-Security-Policy {% if item.csp is defined %}{{ item.csp }}{% else %}"default-src 'self'"{% endif +%}
+        }
+
+        encode gzip
+}
