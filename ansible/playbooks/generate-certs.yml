@@ -26,9 +26,11 @@
       private: false
     - name: "client_key_usage"
       prompt: "CSR client key usage ? (eg. nonRepudiation,digitalSignature,keyEncipherment,dataEncipherment)"
+      default: "digitalSignature,keyEncipherment"
       private: false
     - name: "client_extended_key_usage"
       prompt: "CSR client extended key usage ? (eg. serverAuth,clientAuth)"
+      default: "serverAuth"
       private: false
   tasks:
     - name: Set subject_alt_name and cast boolean variable
