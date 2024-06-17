@@ -45,9 +45,10 @@
       customType: "regex",
       fileMatch: ["\\.ya?ml$"],
       matchStrings: [
-        "\\s+(?<depName>\\S*):\n\\s+gnetId:\\s+(?<packageName>\\S*)\n\\s+revision:\\s+(?<currentValue>\\S*)",
-        "\\s+(?<depName>\\S*):\n\\s+revision:\\s+(?<currentValue>\\S*)\n\\s+gnetId:\\s+(?<packageName>\\S*)"
+        "(?<depName>\\S*):\n(?<indentation>\\s+)gnetId:\\s+(?<packageName>\\S*)\n\\s+revision:\\s+(?<currentValue>\\S*)",
+        "(?<depName>\\S*):\n(?<indentation>\\s+)revision:\\s+(?<currentValue>\\S*)\n\\s+gnetId:\\s+(?<packageName>\\S*)"
       ],
+      autoReplaceStringTemplate: "{{{depName}}}:\n{{{indentation}}}gnetId: {{{packageName}}}\n{{{indentation}}}revision: {{{newValue}}}",
       versioningTemplate: "regex:^(?<major>\\d+)$",
       datasourceTemplate: "custom.grafana-dashboards"
     },
