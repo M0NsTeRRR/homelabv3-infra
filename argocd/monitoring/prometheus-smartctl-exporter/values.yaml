@@ -1,0 +1,7 @@
+service:
+  ipDualStack:
+    enabled: true
+serviceMonitor:
+  enabled: true
+prometheusRules:
+  enabled: true

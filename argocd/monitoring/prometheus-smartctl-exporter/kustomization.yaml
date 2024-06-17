@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: &namespace prometheus-smartctl-exporter
+
+resources:
+  - manifests/01_external_secret.yaml
+  - manifests/02_service_monitor.yaml
+  - manifests/03_prometheus_rule.yaml
+
+helmCharts:
+- name: prometheus-smartctl-exporter
+  releaseName: prometheus-smartctl-exporter
+  namespace: *namespace
+  repo: https://prometheus-community.github.io/helm-charts
+  version: 0.9.0
+  valuesFile: values.yaml
