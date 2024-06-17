@@ -91,7 +91,7 @@ dashboards:
       revision: 2
       datasource: &datasource prometheus
     Traefik:
-      gnetId: 18348
+      gnetId: 17347
       revision: 8
       datasource: *datasource
     Argocd-operational:
