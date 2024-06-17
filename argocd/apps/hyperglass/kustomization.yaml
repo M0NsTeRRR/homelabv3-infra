@@ -14,5 +14,5 @@ helmCharts:
   releaseName: hyperglass
   namespace: *namespace
   repo: https://helm-charts.adminafk.fr
-  version: 0.1.3
+  version: 0.1.4
   valuesFile: values.yaml
