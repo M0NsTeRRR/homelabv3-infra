@@ -1,0 +1,16 @@
+---
+name: "Pluto"
+
+on:
+  schedule:
+    - cron: "0 0 * * 1"
+
+jobs:
+  pluto:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download Pluto
+        uses: FairwindsOps/pluto/github-action@v5.19.4
+      - name: Pluto detect-files
+        run: pluto detect-files -d argocd/
