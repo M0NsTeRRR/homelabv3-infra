@@ -157,7 +157,7 @@ dashboards:
       revision: 6
       datasource: *datasource
     Blackbox-exporter-icmp:
-      gnetId: 30338
+      gnetId: 20338
       revision: 3
       datasource:
         - name: DS_PROMETHEUS
