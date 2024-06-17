@@ -5,11 +5,6 @@ kind: Kustomization
 
 namespace: &namespace prometheus-smartctl-exporter
 
-resources:
-  - manifests/01_external_secret.yaml
-  - manifests/02_service_monitor.yaml
-  - manifests/03_prometheus_rule.yaml
-
 helmCharts:
 - name: prometheus-smartctl-exporter
   releaseName: prometheus-smartctl-exporter
