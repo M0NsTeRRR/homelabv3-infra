@@ -210,7 +210,12 @@ dashboards:
       datasource:
         - name: DS_PROMETHEUS
           value: *datasource
-
+    Smartcl-exporter:
+      gnetId: 20204
+      revision: 1
+      datasource:
+        - name: DS_PROMETHEUS
+          value: *datasource
 ingress:
   enabled: true
   annotations:
