@@ -1,4 +1,16 @@
 ---
+extraEnv:
+- name: QBT_BitTorrent__Session__MaxActiveDownloads
+  value: "5"
+- name: QBT_BitTorrent__Session__MaxActiveTorrents
+  value: "10"
+- name: QBT_BitTorrent__Session__MaxActiveUploads
+  value: "5"
+- name: QBT_Preferences__WebUI__Password_PBKDF2
+  valueFrom:
+    secretKeyRef:
+      key: PASSWORD_PBKF2
+      name: qbittorrent-vault 
 volumes:
   - name: &volume-data data
     persistentVolumeClaim:

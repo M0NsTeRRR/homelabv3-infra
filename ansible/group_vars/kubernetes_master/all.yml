@@ -142,8 +142,11 @@ vault_policies:
       - path: secret/data/homelab/prod/hyperglass
         capabilities:
           - read
-  - name: gluetun
+  - name: qbittorrent
     rules:
+      - path: secret/data/homelab/prod/qbittorrent
+        capabilities:
+          - read
       - path: secret/data/homelab/prod/gluetun
         capabilities:
           - read
@@ -257,11 +260,11 @@ public_vault_datas:
       bound_service_account_namespaces: hyperglass
       policies: hyperglass
       ttl: 1h
-  - path: auth/kubernetes/role/gluetun
+  - path: auth/kubernetes/role/qbittorrent
     data:
-      bound_service_account_names: gluetun-vault
+      bound_service_account_names: qbittorrent-vault
       bound_service_account_namespaces: qbittorrent
-      policies: gluetun
+      policies: qbittorrent
       ttl: 1h
 vault_datas: "{{ public_vault_datas + secret_vault_datas }}"
 external_secrets_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
