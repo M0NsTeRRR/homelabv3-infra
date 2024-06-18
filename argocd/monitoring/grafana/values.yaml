@@ -210,7 +210,7 @@ dashboards:
       datasource:
         - name: DS_PROMETHEUS
           value: *datasource
-    Smartcl-exporter:
+    Smartctl-exporter:
       gnetId: 20204
       revision: 1
       datasource:
