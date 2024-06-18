@@ -142,6 +142,26 @@ vault_policies:
       - path: secret/data/homelab/prod/hyperglass
         capabilities:
           - read
+  - name: bazarr
+    rules:
+      - path: secret/data/homelab/prod/bazarr
+        capabilities:
+          - read
+  - name: prowlarr
+    rules:
+      - path: secret/data/homelab/prod/prowlarr
+        capabilities:
+          - read
+  - name: radarr
+    rules:
+      - path: secret/data/homelab/prod/radarr
+        capabilities:
+          - read
+  - name: sonarr
+    rules:
+      - path: secret/data/homelab/prod/sonarr
+        capabilities:
+          - read
   - name: qbittorrent
     rules:
       - path: secret/data/homelab/prod/qbittorrent
@@ -265,6 +285,30 @@ public_vault_datas:
       bound_service_account_names: qbittorrent-vault
       bound_service_account_namespaces: qbittorrent
       policies: qbittorrent
+      ttl: 1h
+  - path: auth/kubernetes/role/bazarr
+    data:
+      bound_service_account_names: bazarr-vault
+      bound_service_account_namespaces: bazarr
+      policies: bazarr
+      ttl: 1h
+  - path: auth/kubernetes/role/prowlarr
+    data:
+      bound_service_account_names: prowlarr-vault
+      bound_service_account_namespaces: prowlarr
+      policies: prowlarr
+      ttl: 1h
+  - path: auth/kubernetes/role/radarr
+    data:
+      bound_service_account_names: radarr-vault
+      bound_service_account_namespaces: radarr
+      policies: radarr
+      ttl: 1h
+  - path: auth/kubernetes/role/sonarr
+    data:
+      bound_service_account_names: sonarr-vault
+      bound_service_account_namespaces: sonarr
+      policies: sonarr
       ttl: 1h
 vault_datas: "{{ public_vault_datas + secret_vault_datas }}"
 external_secrets_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"

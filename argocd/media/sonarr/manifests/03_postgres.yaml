@@ -1,0 +1,23 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: sonarr-cluster
+spec:
+  instances: 1
+
+  primaryUpdateStrategy: unsupervised
+
+  enableSuperuserAccess: false
+
+  bootstrap:
+    initdb:
+      database: sonarr
+      owner: sonarr
+      secret:
+        name: postgres-vault
+      dataChecksums: true
+      encoding: 'UTF8'
+
+  storage:
+    size: 2Gi

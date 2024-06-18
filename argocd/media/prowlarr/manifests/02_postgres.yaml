@@ -1,0 +1,23 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: prowlarr-cluster
+spec:
+  instances: 1
+
+  primaryUpdateStrategy: unsupervised
+
+  enableSuperuserAccess: false
+
+  bootstrap:
+    initdb:
+      database: prowlarr
+      owner: prowlarr
+      secret:
+        name: postgres-vault
+      dataChecksums: true
+      encoding: 'UTF8'
+
+  storage:
+    size: 2Gi

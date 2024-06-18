@@ -1,4 +1,7 @@
 ---
+strategy:
+  type: RollingUpdate
+
 extraEnv:
 - name: QBT_BitTorrent__Session__MaxActiveDownloads
   value: "5"

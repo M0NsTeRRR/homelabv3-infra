@@ -1,7 +1,33 @@
 ---
+strategy:
+  type: RollingUpdate
+
 extraEnv:
   - name: TZ
     value: Europe/Paris
+  - name: RADARR__APP__INSTANCENAME
+    value: Bazarr
+  - name: RADARR__APP__THEME
+    value: dark
+  - name: RADARR__AUTH__METHOD
+    value: External
+  - name: RADARR__AUTH__REQUIRED
+    value: DisabledForLocalAddresses
+  - name: RADARR__LOG__DBENABLED
+    value: "False"
+  - name: RADARR__LOG__LEVEL
+    value: info
+  - name: RADARR__POSTGRES__HOST
+    value: "radarr-cluster-rw"
+  - name: RADARR__POSTGRES__PORT
+    value: "5432"
+  - name: RADARR__POSTGRES__MAINDB
+    value: radarr
+  - name: RADARR__LOG__ANALYTICSENABLED
+    value: "False"
+extraEnvFrom:
+  - secretRef:
+      name: radarr-vault
 volumes:
   - name: &volume-data data
     persistentVolumeClaim:

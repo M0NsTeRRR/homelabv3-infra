@@ -1,4 +1,7 @@
 ---
+strategy:
+  type: RollingUpdate
+
 volumes:
   - name: &volume-config joal-config
     configMap:

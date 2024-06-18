@@ -1,7 +1,21 @@
 ---
+strategy:
+  type: RollingUpdate
+
 extraEnv:
   - name: TZ
     value: Europe/Paris
+  - name: POSTGRES_ENABLED
+    value: "True"
+  - name: POSTGRES_HOST
+    value: "bazarr-cluster-rw"
+  - name: POSTGRES_PORT
+    value: "5432"
+  - name: POSTGRES_DATABASE
+    value: bazarr
+extraEnvFrom:
+  - secretRef:
+      name: bazarr-vault
 volumes:
   - name: data
     persistentVolumeClaim:

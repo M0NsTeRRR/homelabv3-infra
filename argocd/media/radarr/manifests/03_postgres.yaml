@@ -1,0 +1,23 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: radarr-cluster
+spec:
+  instances: 1
+
+  primaryUpdateStrategy: unsupervised
+
+  enableSuperuserAccess: false
+
+  bootstrap:
+    initdb:
+      database: radarr
+      owner: radarr
+      secret:
+        name: postgres-vault
+      dataChecksums: true
+      encoding: 'UTF8'
+
+  storage:
+    size: 2Gi

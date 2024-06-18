@@ -5,6 +5,10 @@ kind: Kustomization
 
 namespace: &namespace prowlarr
 
+resources:
+  - manifests/01_external_secret.yaml
+  - manifests/02_postgres.yaml
+
 helmCharts:
 - name: prowlarr
   releaseName: prowlarr

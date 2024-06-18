@@ -6,7 +6,9 @@ kind: Kustomization
 namespace: &namespace sonarr
 
 resources:
-  - manifests/01_pvc.yaml
+  - manifests/01_external_secret.yaml
+  - manifests/02_pvc.yaml
+  - manifests/03_postgres.yaml
 
 helmCharts:
 - name: sonarr
