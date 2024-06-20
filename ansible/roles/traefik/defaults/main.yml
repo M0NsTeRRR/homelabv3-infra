@@ -1,6 +1,6 @@
 ---
 # datasource=github-tags depName=traefik/traefik
-traefik_version: "v3.0.2"
+traefik_version: "v3.0.3"
 # datasource=github-tags depName=traefik/traefik-helm-chart
 traefik_chart_version: "v28.3.0"
 traefik_force_install: false
