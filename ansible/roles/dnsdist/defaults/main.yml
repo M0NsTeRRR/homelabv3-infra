@@ -1,6 +1,6 @@
 ---
 # datasource=github-tags depName=PowerDNS/pdns
-dnsdist_repo_version: "dnsdist-1.9.4"
+dnsdist_repo_version: "dnsdist-1.9.5"
 # dnsdist_version:
 dnsdist_repository_key: FD380FBB
 dnsdist_package_state: latest
