@@ -4,6 +4,7 @@
     "config:recommended",
     "docker:enableMajor",
     "replacements:k8s-registry-move",
+    ":automergeBranch",
     ":disableRateLimiting",
     ":dependencyDashboard",
     ":semanticCommits",
@@ -16,8 +17,8 @@
     "github>M0NsTeRRR/homelabv3-infra//.github/renovate/semanticCommits.json5",
     "github>M0NsTeRRR/homelabv3-infra//.github/renovate/terraform.json5"
   ],
-  "automergeType": "pr",
-  "platformAutomerge": true,
+  "dependencyDashboardTitle": "Renovate Dashboard 🤖",
+  "suppressNotifications": ["prEditedNotification", "prIgnoreNotification"],
   "rebaseWhen": "conflicted",
   "schedule": [
     "before 9pm on friday"
