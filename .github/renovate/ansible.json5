@@ -29,7 +29,7 @@
       "description": ["Group ansible release"],
       "groupName": "ansible version",
       "matchDatasources": ["pypi"],
-      "matchPackagePatterns": [
+      "matchDepPatterns": [
         "ansible/ansible",
         "ansible-core",
         "ansible/ansible-lint"
