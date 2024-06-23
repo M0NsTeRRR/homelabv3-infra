@@ -1,5 +1,5 @@
 ---
-# datasource=github-tags depName=cilium/cilium
+# renovate: datasource=github-releases depName=cilium/cilium
 cilium_version: "v1.15.6"
 cilium_force_install: false
 cilium_localhost_kubeconfig_path: /home/user/.kube/kubeconfig

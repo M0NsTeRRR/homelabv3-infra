@@ -1,7 +1,7 @@
 ---
 # runrestic_version:
 runrestic_package_state: latest
-# datasource=github-tags depName=restic/restic
+# renovate: datasource=github-releases depName=restic/restic
 runrestic_restic_version: v0.16.4
 runrestic_force_install: true
 runrestic_systemd_calendar: "*-*-* 0:00:00"

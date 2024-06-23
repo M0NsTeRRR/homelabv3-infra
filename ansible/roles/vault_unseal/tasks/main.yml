@@ -43,8 +43,8 @@
 
 - name: Download last version of vault-unseal
   ansible.builtin.get_url:
-    url: "https://github.com/M0NsTeRRR/vault-unseal/releases/download/v{{ vault_unseal_version }}/vault-unseal_linux_{{ arch }}"
-    checksum: "sha256:https://github.com/M0NsTeRRR/vault-unseal/releases/download/v{{ vault_unseal_version }}/vault-unseal_checksums.txt"
+    url: "https://github.com/M0NsTeRRR/vault-unseal/releases/download/{{ vault_unseal_version }}/vault-unseal_linux_{{ arch }}"
+    checksum: "sha256:https://github.com/M0NsTeRRR/vault-unseal/releases/download/{{ vault_unseal_version }}/vault-unseal_checksums.txt"
     dest: /usr/local/bin/vault-unseal
     owner: vault-unseal
     group: vault-unseal

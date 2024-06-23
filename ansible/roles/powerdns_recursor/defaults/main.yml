@@ -1,5 +1,5 @@
 ---
-# datasource=github-tags depName=PowerDNS/pdns
+# renovate: datasource=github-tags depName=PowerDNS/pdns
 powerdns_recursor_repo_version: "rec-5.0.6"
 # powerdns_recursor_version:
 powerdns_recursor_repository_key: FD380FBB

@@ -1,6 +1,6 @@
 ---
-# datasource=github-tags depName=M0NsTeRRR/vault-unseal
-vault_unseal_version: 0.1.1
+# renovate: datasource=github-releases depName=M0NsTeRRR/vault-unseal
+vault_unseal_version: "v0.1.1"
 vault_unseal_force_install: false
 vault_unseal_env: prod
 vault_unseal_localhost_kubeconfig_path: /home/user/.kube/kubeconfig

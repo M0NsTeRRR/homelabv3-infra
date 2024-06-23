@@ -1,0 +1,102 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "customManagers": [
+    {
+      "description": ["Process Ansible role meta files"],
+      "customType": "regex",
+      "fileMatch": [
+        "(^|/)roles\\S+meta/\\S+\\.ya?ml",
+      ],
+      "matchStrings": [
+        'min_ansible_version:\\s+"(?<currentValue>\\S*)"',
+      ],
+      "depNameTemplate": "ansible-core",
+      "datasourceTemplate": "pypi",
+    },
+    {
+      "description": ["Process Ansible application version in files"],
+      "customType": "regex",
+      "fileMatch": [
+        "(^|/)roles\\S+defaults/\\S+\\.ya?ml",
+      ],
+      "matchStrings": [
+        'renovate:[\\s]+datasource=(?<datasource>\\S*)[\\s]+depName=(?<depName>\\S*)([\\s]+registryUrl=(?<registryUrl>\\S*))?\r?\n[\\S]+\\s"?(?<currentValue>[a-zA-Z0-9-_.+]+)"?',
+      ],
+    },
+  ],
+  "packageRules": [
+    {
+      "description": ["Group ansible release"],
+      "groupName": "ansible version",
+      "matchDatasources": ["pypi"],
+      "matchPackagePatterns": [
+        "ansible/ansible",
+        "ansible-core",
+        "ansible/ansible-lint"
+      ]
+    },
+    {
+      "description": ["Custom versioning for k3s-io/k3s"],
+      "matchDatasources": ["github-releases"],
+      "versioning": "regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(?<compatibility>\\+k3s)(?<build>\\d+)$",
+      "matchPackagePatterns": ["k3s-io/k3s"]
+    },
+    {
+      "description": ["Custom versioning for kubernetes-sigs/external-dns"],
+      "matchDatasources": ["github-releases"],
+      "versioning": "regex:^external-dns-helm-chart-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)",
+      "matchPackagePatterns": ["kubernetes-sigs/external-dns"]
+    },
+    {
+      "description": ["Custom versioning for scaleway/helm-charts"],
+      "matchDatasources": ["github-releases"],
+      "versioning": "regex:^scaleway-certmanager-webhook-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)",
+      "matchPackagePatterns": ["scaleway/helm-charts"]
+    },
+    {
+      "description": ["Custom versioning for argoproj/argo-helm"],
+      "matchDatasources": ["github-releases"],
+      "versioning": "regex:^argo-cd-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)",
+      "matchPackagePatterns": ["argoproj/argo-helm"]
+    },
+    {
+      "description": ["Custom versioning for prometheus-community/helm-charts"],
+      "matchDatasources": ["github-releases"],
+      "versioning": "regex:^prometheus-operator-crds-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
+      "matchPackagePatterns": ["prometheus-community/helm-charts"]
+    },
+    {
+      "description": ["Custom versioning for kubernetes/kubectl"],
+      "matchDatasources": ["github-releases"],
+      "versioning": "regex:^kubernetes-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
+      "matchPackagePatterns": ["kubernetes/kubectl"]
+    },
+    {
+      "description": ["Custom versioning for PowerDNS/pdns auth"],
+      "matchDatasources": ["github-tags"],
+      "versioning": "regex:^auth-(?<major>\\d+)\\.(?<minor>\\d+)\\.?(?<patch>\\d+)?-?(?<compatibility>\\S+)?$",
+      "matchCurrentValue": "/^auth/",
+      "matchPackagePatterns": ["PowerDNS/pdns"]
+    },
+    {
+      "description": ["Custom versioning for PowerDNS/pdns rec"],
+      "matchDatasources": ["github-tags"],
+      "versioning": "regex:^rec-(?<major>\\d+)\\.(?<minor>\\d+)\\.?(?<patch>\\d+)?-?(?<compatibility>\\S+)?$",
+      "matchCurrentValue": "/^rec/",
+      "matchPackagePatterns": ["PowerDNS/pdns"]
+    },
+    {
+      "description": ["Custom versioning for PowerDNS/pdns dnsdist"],
+      "matchDatasources": ["github-tags"],
+      "versioning": "regex:^dnsdist-(?<major>\\d+)\\.(?<minor>\\d+)\\.?(?<patch>\\d+)?-?(?<compatibility>\\S+)?$",
+      "matchCurrentValue": "/^dnsdist/",
+      "matchPackagePatterns": ["PowerDNS/pdns"]
+    },
+    {
+      "description": ["Custom versioning for projects/kea"],
+      "matchDatasources": ["github-releases"],
+      "versioning": "regex:^Kea-(?<major>\\d+)\\.(?<minor>\\d+)(\\.(\\d+))?$",
+      "matchPackagePatterns": ["projects/kea"]
+    }
+  ]
+}

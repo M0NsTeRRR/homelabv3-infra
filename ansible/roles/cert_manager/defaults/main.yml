@@ -1,5 +1,5 @@
 ---
-# datasource=github-tags depName=cert-manager/cert-manager
+# renovate: datasource=github-releases depName=cert-manager/cert-manager
 cert_manager_chart_version: "v1.15.0"
 cert_manager_force_install: false
 cert_manager_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
