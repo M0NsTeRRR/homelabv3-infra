@@ -2,6 +2,10 @@
 strategy:
   type: RollingUpdate
 
+config:
+  persistence:
+    enabled: false
+
 extraEnv:
   - name: TZ
     value: Europe/Paris

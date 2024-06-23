@@ -2,11 +2,15 @@
 strategy:
   type: RollingUpdate
 
+config:
+  persistence:
+    enabled: false
+
 extraEnv:
   - name: TZ
     value: Europe/Paris
   - name: RADARR__APP__INSTANCENAME
-    value: Bazarr
+    value: Razarr
   - name: RADARR__APP__THEME
     value: dark
   - name: RADARR__AUTH__METHOD
