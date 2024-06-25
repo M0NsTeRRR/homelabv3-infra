@@ -1,4 +1,7 @@
 ---
+podAnnotations:
+  reloader.stakater.com/auto: "true"
+
 strategy:
   type: RollingUpdate
 
