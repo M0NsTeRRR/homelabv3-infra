@@ -12,14 +12,13 @@ control_plane:
 environment:
   QW_DISABLE_TELEMETRY: 1
 
-config:
-  storage:
-    extraEnvFrom:
-      - secretRef:
-          name: quickwit-bucket
-      - configMapRef:
-          name: quickwit-bucket
+environmentFrom:
+  - secretRef:
+      name: quickwit-bucket
+  - configMapRef:
+      name: quickwit-bucket
 
+config:
   metastore_uri: "s3://$(BUCKET_HOST):$(BUCKET_PORT)/$(BUCKET_NAME)"
   default_index_root_uri: "s3://$(BUCKET_HOST):$(BUCKET_PORT)/$(BUCKET_NAME)"
 
