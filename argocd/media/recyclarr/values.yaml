@@ -1,0 +1,19 @@
+---
+strategy:
+  type: RollingUpdate
+
+extraEnv:
+  - name: TZ
+    value: Europe/Paris
+extraEnvFrom:
+  - secretRef:
+      name: recyclarr-vault
+volumes:
+  - name: &volume-config recyclarr
+    configMap:
+      name: recyclarr
+volumeMounts:
+  - name: *volume-config
+    mountPath: /config/recyclarr.yml
+    subPath: recyclarr.yml
+    readOnly: true

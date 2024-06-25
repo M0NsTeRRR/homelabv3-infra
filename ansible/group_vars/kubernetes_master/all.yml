@@ -162,6 +162,14 @@ vault_policies:
       - path: secret/data/homelab/prod/sonarr
         capabilities:
           - read
+  - name: recyclarr
+    rules:
+      - path: secret/data/homelab/prod/sonarr
+        capabilities:
+          - read
+      - path: secret/data/homelab/prod/radarr
+        capabilities:
+          - read
   - name: qbittorrent
     rules:
       - path: secret/data/homelab/prod/qbittorrent
@@ -309,6 +317,12 @@ public_vault_datas:
       bound_service_account_names: sonarr-vault
       bound_service_account_namespaces: sonarr
       policies: sonarr
+      ttl: 1h
+  - path: auth/kubernetes/role/recyclarr
+    data:
+      bound_service_account_names: recyclarr-vault
+      bound_service_account_namespaces: recyclarr
+      policies: recyclarr
       ttl: 1h
 vault_datas: "{{ public_vault_datas + secret_vault_datas }}"
 external_secrets_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
