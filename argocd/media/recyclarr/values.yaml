@@ -1,6 +1,6 @@
 ---
-strategy:
-  type: RollingUpdate
+jobAnnotations:
+  reloader.stakater.com/auto: "true"
 
 extraEnv:
   - name: TZ
