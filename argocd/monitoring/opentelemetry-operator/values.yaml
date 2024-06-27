@@ -1,0 +1,11 @@
+---
+manager:
+  collectorImage:
+    repository: "otel/opentelemetry-collector-contrib"
+  createRbacPermissions: true
+  serviceMonitor:
+    enabled: true
+  prometheusRule:
+    enabled: true
+    defaultRules:
+      enabled: true

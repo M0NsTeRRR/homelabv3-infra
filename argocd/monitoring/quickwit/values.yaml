@@ -1,0 +1,54 @@
+searcher:
+  replicaCount: 1
+indexer:
+  replicaCount: 1
+metastore:
+  replicaCount: 1
+janitor:
+  enabled: true
+control_plane:
+  enabled: true
+
+environment:
+  QW_DISABLE_TELEMETRY: 1
+
+environmentFrom:
+  - secretRef:
+      name: quickwit-bucket
+  - configMapRef:
+      name: quickwit-bucket
+
+config:
+  storage:
+    s3:
+      region: eu-west1
+      endpoint: http://${BUCKET_HOST}/${BUCKET_NAME}
+
+  indexer:
+    enable_otlp_endpoint: true
+
+service:
+  ipFamilyPolicy: "PreferDualStack"
+
+serviceMonitor:
+  enabled: true
+
+prometheusRule:
+  enabled: true
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: "vault"
+    cert-manager.io/private-key-algorithm: "RSA"
+    cert-manager.io/private-key-size: "4096"
+  hosts:
+    - host: quickwit.unicornafk.fr
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  className: "ingress-internal"
+  tls:
+    - secretName: quickwit.unicornafk.fr
+      hosts:
+        - quickwit.unicornafk.fr

@@ -2,9 +2,9 @@
 apiVersion: objectbucket.io/v1alpha1
 kind: ObjectBucketClaim
 metadata:
-  name: mimir-bucket
+  name: quickwit-bucket
 spec:
-  bucketName: mimir
+  bucketName: quickwit
   storageClassName: ceph-bucket
   additionalConfig:
-    maxSize: "100G"
+    maxSize: "200G"

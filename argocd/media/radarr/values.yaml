@@ -13,7 +13,7 @@ extraEnv:
   - name: TZ
     value: Europe/Paris
   - name: RADARR__APP__INSTANCENAME
-    value: Razarr
+    value: Radarr
   - name: RADARR__APP__THEME
     value: dark
   - name: RADARR__AUTH__METHOD

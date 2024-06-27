@@ -15,7 +15,7 @@ volumeMounts:
     readOnly: true
   - name: *volume-mtls
     mountPath: /mtls/client
-    readOnly: trues/client
+    readOnly: true
 extraEnv:
   - name: MODE
     value: http

@@ -10,5 +10,5 @@ helmCharts:
   releaseName: flaresolverr
   namespace: *namespace
   repo: https://helm-charts.adminafk.fr
-  version: 0.2.7
+  version: 0.2.8
   valuesFile: values.yaml

@@ -3,7 +3,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: prometheus-blackbox-exporter-icmp
-  labels:
+  labels: &labels
     app.kubernetes.io/name: prometheus-blackbox-exporter
     app.kubernetes.io/instance: prometheus-blackbox-exporter
   annotations:

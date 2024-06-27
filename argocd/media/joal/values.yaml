@@ -1,7 +1,4 @@
 ---
-strategy:
-  type: RollingUpdate
-
 volumes:
   - name: &volume-config joal-config
     configMap:
@@ -13,6 +10,6 @@ volumeMounts:
     subPath: config.json
     readOnly: true
   - name: *volume-config
-    mountPath: /data/clients/qbittorrent-4.6.4.client
+    mountPath: /data/clients/qbittorrent-4.6.5.client
     subPath: torrent.client
     readOnly: true

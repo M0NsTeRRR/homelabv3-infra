@@ -1,0 +1,73 @@
+---
+apiVersion: opentelemetry.io/v1alpha1
+kind: OpenTelemetryCollector
+metadata:
+  name: collector
+spec:
+  mode: daemonset
+  targetAllocator:
+    allocationStrategy: "per-node"
+    enabled: true
+    prometheusCR:
+      enabled: true
+  config: |
+    receivers:
+      k8s_events: null
+      otlp:
+        protocols:
+          grpc: null
+          http: null
+      prometheus:
+        config:
+          scrape_configs:
+            - job_name: otel-collector
+                metric_relabel_configs:
+                  - action: labeldrop
+                    regex: (id|name)
+                    replacement: $$1
+                  - action: labelmap
+                    regex: label_(.+)
+                    replacement: $$1
+                scrape_interval: 10s
+                static_configs:
+                  - targets:
+                      - 0.0.0.0:8888
+    exporters:
+      otlp/prometheus:
+        endpoint: http://victoria-metrics-victoria-metrics-single-server.victoria-metrics.svc.cluster.local:8428
+      otlp/quickwit:
+        endpoint: http://quickwit-indexer.quickwit.svc.cluster.local:7281
+    processors:
+      batch:
+        send_batch_max_size: 10000
+        timeout: 200ms
+      memory_limiter:
+        check_interval: 1s
+        limit_mib: 4000
+        spike_limit_mib: 800
+    service:
+      pipelines:
+        logs:
+          exporters:
+            - otlp/quickwit
+          processors:
+            - memory_limiter
+            - batch
+          receivers:
+            - otlp
+        metrics:
+          exporters:
+            - otlp/prometheus
+          processors:
+            - memory_limiter
+            - batch
+          receivers:
+            - otlp
+        traces:
+          exporters:
+            - otlp/quickwit
+          processors:
+            - memory_limiter
+            - batch
+          receivers:
+            - otlp

@@ -8,7 +8,7 @@ data:
       "minUploadRate" : 1000,
       "maxUploadRate" : 1000,
       "simultaneousSeed" : 5,
-      "client" : "qbittorrent-4.6.4.client",
+      "client" : "qbittorrent-4.6.5.client",
       "keepTorrentWithZeroLeechers" : true,
       "uploadRatioTarget": -1.0
     }
@@ -25,7 +25,7 @@ data:
       "peerIdGenerator": {
           "algorithm": {
               "type": "REGEX",
-              "pattern": "-qB4640-[A-Za-z0-9_~\\(\\)\\!\\.\\*-]{12}"
+              "pattern": "-qB4650-[A-Za-z0-9_~\\(\\)\\!\\.\\*-]{12}"
           },
           "refreshOn": "NEVER",
           "shouldUrlEncode": false
@@ -38,7 +38,7 @@ data:
       "numwant": 200,
       "numwantOnStop": 0,
       "requestHeaders": [
-          { "name": "User-Agent", "value": "qBittorrent/4.6.4" },
+          { "name": "User-Agent", "value": "qBittorrent/4.6.5" },
           { "name": "Accept-Encoding", "value": "gzip" },
           { "name": "Connection", "value": "close" }
       ]
