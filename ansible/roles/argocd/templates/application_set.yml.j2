@@ -34,6 +34,7 @@ spec:
         syncOptions:
           - CreateNamespace=true
           - ServerSideApply=true
+          - ServerSideDiff=true
       # fix: https://github.com/argoproj/argo-cd/issues/13585
       ignoreDifferences:
       - group: storage.k8s.io
