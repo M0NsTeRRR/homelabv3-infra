@@ -10,6 +10,8 @@ spec:
     enabled: true
     prometheusCR:
       enabled: true
+    serviceAccount: targetallocator
+  serviceAccount: collector
   config:
     receivers:
       k8s_events: null

@@ -6,8 +6,10 @@ kind: Kustomization
 namespace: opentelemetry-operator
 
 resources:
-  - manifests/01_daemonset.yaml
-  - manifests/02_autoinstrumentation.yaml
+  - manifests/01_rbac_collector.yaml
+  - manifests/02_rbac_allocator.yaml
+  - manifests/03_daemonset.yaml
+  - manifests/04_autoinstrumentation.yaml
 
 helmCharts:
 - name: opentelemetry-operator
