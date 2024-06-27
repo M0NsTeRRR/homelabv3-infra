@@ -16,6 +16,9 @@ extraVolumeMounts:
 serviceMonitor:
   enabled: true
 
+service:
+  ipFamilyPolicy: PreferDualStack
+
 admin:
   existingSecret: grafana-vault
   userKey: ADMIN_USER
