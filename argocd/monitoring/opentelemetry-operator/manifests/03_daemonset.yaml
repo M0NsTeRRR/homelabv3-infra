@@ -62,12 +62,10 @@ spec:
           http:
             endpoint: ${env:K8S_POD_IP}:4318
       prometheus:
-        config:
-          scrape_configs: []
         target_allocator:
           endpoint: http://collector-targetallocator
           interval: 30s
-          collector_id: "${POD_NAME}"
+          collector_id: "${env:POD_NAME}"
     exporters:
       logging:
         verbosity: detailed
