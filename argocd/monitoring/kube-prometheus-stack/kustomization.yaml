@@ -13,5 +13,5 @@ helmCharts:
   releaseName: kube-prometheus-stack
   namespace: *namespace
   repo: https://prometheus-community.github.io/helm-charts
-  version: 60.5.0
+  version: 61.0.0
   valuesFile: values.yaml
