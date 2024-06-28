@@ -118,7 +118,7 @@ dashboards:
     Go-runtime:
       gnetId: 13240
       revision: 2
-      datasource: &datasource prometheus
+      datasource: &datasource victoria-metrics
     Traefik:
       gnetId: 17347
       revision: 8
