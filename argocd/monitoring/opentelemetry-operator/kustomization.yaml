@@ -8,7 +8,7 @@ namespace: opentelemetry-operator
 resources:
   - manifests/01_rbac_collector.yaml
   - manifests/02_rbac_allocator.yaml
-  - manifests/03_daemonset.yaml
+  - manifests/03_collector.yaml
   - manifests/04_autoinstrumentation.yaml
 
 helmCharts:

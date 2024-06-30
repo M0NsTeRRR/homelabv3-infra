@@ -42,7 +42,7 @@ spec:
     receivers:
       filelog:
         exclude:
-        - /var/log/pods/default_release-name-opentelemetry-collector*_*/opentelemetry-collector/*.log
+        - /var/log/pods/opentelemetry-operator_collector-collector*_*/*/*.log
         include:
         - /var/log/pods/*/*/*.log
         include_file_name: false
@@ -54,7 +54,6 @@ spec:
         retry_on_failure:
           enabled: true
         start_at: end
-      k8s_events: null
       otlp:
         protocols:
           grpc:
@@ -63,18 +62,26 @@ spec:
             endpoint: ${env:K8S_POD_IP}:4318
       prometheus:
         config:
-          scrape_configs: []
+          scrape_configs:
+            - job_name: "otel-collector"
+              scrape_interval: 5s
+              static_configs:
+                - targets: [ '0.0.0.0:8888' ]
         target_allocator:
           endpoint: http://collector-targetallocator
           interval: 30s
-          collector_id: "${POD_NAME}"
+          collector_id: "${env:POD_NAME}"
     exporters:
       logging:
         verbosity: detailed
-      otlp/prometheus:
-        endpoint: http://victoria-metrics-victoria-metrics-single-server.victoria-metrics.svc.cluster.local:8428
+      prometheusremotewrite/victoriametrics:
+        endpoint: http://victoria-metrics-victoria-metrics-single-server.victoria-metrics-single.svc.cluster.local:8428/api/v1/push
+        tls:
+          insecure: true
       otlp/quickwit:
         endpoint: http://quickwit-indexer.quickwit.svc.cluster.local:7281
+        tls:
+          insecure: true
     extensions:
       health_check:
         endpoint: ${env:K8S_POD_IP}:13133
@@ -129,15 +136,17 @@ spec:
             - memory_limiter
             - batch
           receivers:
+            - filelog
             - otlp
         metrics:
           exporters:
-            - otlp/prometheus
+            - prometheusremotewrite/victoriametrics
             - logging
           processors:
             - memory_limiter
             - batch
           receivers:
+            - prometheus
             - otlp
         traces:
           exporters:

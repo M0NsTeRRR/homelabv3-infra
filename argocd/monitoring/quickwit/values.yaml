@@ -22,7 +22,11 @@ config:
   storage:
     s3:
       region: eu-west1
-      endpoint: http://${BUCKET_HOST}/${BUCKET_NAME}
+      flavor: minio
+      endpoint: http://${BUCKET_HOST}
+
+  metastore_uri: s3://${BUCKET_NAME}/indexes
+  default_index_root_uri: s3://${BUCKET_NAME}/indexes
 
   indexer:
     enable_otlp_endpoint: true

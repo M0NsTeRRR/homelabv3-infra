@@ -51,8 +51,6 @@ grafana.ini:
     token_url: "https://sso.unicornafk.fr/application/o/token/"
     api_url: "https://sso.unicornafk.fr/application/o/userinfo/"
     role_attribute_path: contains(groups, 'Grafana Admins') && 'Admin' || contains(groups, 'Grafana Editors') && 'Editor' || contains(groups, 'Grafana Viewers') && 'Viewer'
-  plugins:
-    allow_loading_unsigned_plugins: victoriametrics-datasource
 
 alerting:
   contactpoints.yaml:
@@ -76,29 +74,6 @@ alerting:
 plugins:
   - grafana-piechart-panel
   - quickwit-quickwit-datasource
-
-extraInitContainers:
-  - name: "load-vm-ds-plugin"
-    image: "curlimages/curl:latest"
-    command: ["/bin/sh"]
-    workingDir: "/var/lib/grafana"
-    securityContext:
-      runAsUser: 472
-      runAsNonRoot: true
-      runAsGroup: 472
-    args:
-     - "-c"
-     - |
-       set -ex
-       mkdir -p /var/lib/grafana/plugins/
-       ver=$(curl -s https://api.github.com/repos/VictoriaMetrics/grafana-datasource/releases/latest | grep -oE 'v[0-9]+\.[0-9]+\.[0-9]+' | head -1)
-       curl -L https://github.com/VictoriaMetrics/grafana-datasource/releases/download/$ver/victoriametrics-datasource-$ver.tar.gz -o /var/lib/grafana/plugins/plugin.tar.gz
-       tar -xf /var/lib/grafana/plugins/plugin.tar.gz -C /var/lib/grafana/plugins/
-       rm /var/lib/grafana/plugins/plugin.tar.gz
-    volumeMounts:
-      # For grafana-operator users, change `name: storage` to `name: grafana-data`
-      - name: storage
-        mountPath: /var/lib/grafana
 
 dashboardProviders:
   dashboardproviders.yaml:
