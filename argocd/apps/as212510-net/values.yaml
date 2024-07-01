@@ -1,12 +1,9 @@
 ---
 podAnnotations:
   reloader.stakater.com/auto: "true"
-extraEnv:
-  - name: AS212510_NET_ASN
-    value: "212510"
-  - name: AS212510_NET_MIKROTIK_BGPFIREWALLADDRESSLISTV6
-    value: "bgp-networks"
 extraEnvFrom:
+  - configMapRef:
+      name: as212510-net
   - secretRef:
       name: as212510-net-vault
 ingress:

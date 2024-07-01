@@ -9,30 +9,9 @@ config:
   persistence:
     enabled: false
 
-extraEnv:
-  - name: TZ
-    value: Europe/Paris
-  - name: SONARR__APP__INSTANCENAME
-    value: Sonarr
-  - name: SONARR__APP__THEME
-    value: dark
-  - name: SONARR__AUTH__METHOD
-    value: External
-  - name: SONARR__AUTH__REQUIRED
-    value: DisabledForLocalAddresses
-  - name: SONARR__LOG__DBENABLED
-    value: "False"
-  - name: SONARR__LOG__LEVEL
-    value: info
-  - name: SONARR__POSTGRES__HOST
-    value: "sonarr-cluster-rw"
-  - name: SONARR__POSTGRES__PORT
-    value: "5432"
-  - name: SONARR__POSTGRES__MAINDB
-    value: sonarr
-  - name: SONARR__LOG__ANALYTICSENABLED
-    value: "False"
 extraEnvFrom:
+  - configMapRef:
+      name: sonarr
   - secretRef:
       name: sonarr-vault
 volumes:

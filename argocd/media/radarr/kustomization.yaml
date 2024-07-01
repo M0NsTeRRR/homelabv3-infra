@@ -7,8 +7,9 @@ namespace: &namespace radarr
 
 resources:
   - manifests/01_external_secret.yaml
-  - manifests/02_pvc.yaml
-  - manifests/03_postgres.yaml
+  - manifests/02_configmap.yaml
+  - manifests/03_pvc.yaml
+  - manifests/04_postgres.yaml
 
 helmCharts:
 - name: radarr

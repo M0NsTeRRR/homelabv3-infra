@@ -7,7 +7,8 @@ namespace: &namespace prowlarr
 
 resources:
   - manifests/01_external_secret.yaml
-  - manifests/02_postgres.yaml
+  - manifests/02_configmap.yaml
+  - manifests/03_postgres.yaml
 
 helmCharts:
 - name: prowlarr

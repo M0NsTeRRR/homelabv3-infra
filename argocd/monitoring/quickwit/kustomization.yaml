@@ -3,16 +3,17 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: quickwit
+namespace: &namespace quickwit
 
 resources:
-  - manifests/01_bucket.yaml
-  - manifests/02_datasource.yaml
+  - manifests/01_configmap.yaml
+  - manifests/02_bucket.yaml
+  - manifests/03_datasource.yaml
 
 helmCharts:
 - name: quickwit
   releaseName: quickwit
-  namespace: quickwit
+  namespace: *namespace
   repo: https://helm.quickwit.io
   version: 0.6.1
   valuesFile: values.yaml

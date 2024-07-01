@@ -7,12 +7,13 @@ namespace: &namespace qbittorrent
 
 resources:
   - manifests/01_external_secret.yaml
-  - manifests/02_pvc.yaml
+  - manifests/02_configmap.yaml
+  - manifests/03_pvc.yaml
 
 helmCharts:
 - name: qbittorrent
   releaseName: qbittorrent
   namespace: *namespace
   repo: https://helm-charts.adminafk.fr
-  version: 0.4.4
+  version: 0.4.5
   valuesFile: values.yaml

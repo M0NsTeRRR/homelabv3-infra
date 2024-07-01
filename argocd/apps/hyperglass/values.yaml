@@ -2,17 +2,16 @@
 podAnnotations:
   reloader.stakater.com/auto: "true"
 
-extraEnv:
-  - name: HYPERGLASS_REDIS_HOST
-    value: "hyperglass-valkey-master"
 extraEnvFrom:
+  - configMapRef:
+      name: hyperglass
   - secretRef:
       name: &secret-ref hyperglass-vault
 
 volumes:
-  - name: &volume-config hyperglass
+  - name: &volume-config hyperglass-files
     configMap:
-      name: hyperglass
+      name: hyperglass-files
   - name: &volume-devices hyperglass-devices
     secret:
       secretName: hyperglass-devices-vault

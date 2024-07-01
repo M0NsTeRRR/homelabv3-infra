@@ -3,7 +3,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: victoria-metrics
+namespace: &namespace victoria-metrics
 
 resources:
   - manifests/01_datasource.yaml
@@ -11,7 +11,7 @@ resources:
 helmCharts:
 - name: victoria-metrics-single
   releaseName: victoria-metrics
-  namespace: victoria-metrics
+  namespace: *namespace
   repo: https://victoriametrics.github.io/helm-charts/
   version: 0.9.22
   valuesFile: values.yaml

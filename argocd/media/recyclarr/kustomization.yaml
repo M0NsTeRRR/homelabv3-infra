@@ -7,12 +7,12 @@ namespace: &namespace recyclarr
 
 resources:
   - manifests/01_external_secret.yaml
-  - manifests/02_config.yaml
+  - manifests/02_configmap.yaml
 
 helmCharts:
 - name: recyclarr
   releaseName: recyclarr
   namespace: *namespace
   repo: https://helm-charts.adminafk.fr
-  version: 0.1.7
+  version: 0.1.8
   valuesFile: values.yaml

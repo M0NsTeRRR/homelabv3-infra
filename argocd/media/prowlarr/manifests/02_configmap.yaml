@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prowlarr
+data:
+  TZ: "Europe/Paris"
+  PROWLARR__APP__INSTANCENAME: Prowlarr
+  PROWLARR__APP__THEME: dark
+  PROWLARR__AUTH__METHOD: External
+  PROWLARR__AUTH__REQUIRED: DisabledForLocalAddresses
+  PROWLARR__LOG__DBENABLED: "False"
+  PROWLARR__LOG__LEVEL: info
+  PROWLARR__LOG__ANALYTICSENABLED: "False"
+  PROWLARR__POSTGRES__HOST: "prowlarr-cluster-rw"
+  PROWLARR__POSTGRES__PORT: "5432"
+  PROWLARR__POSTGRES__MAINDB: "prowlarr"

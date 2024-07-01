@@ -1,7 +1,11 @@
 ---
-extraEnv:
-  - name: TZ
-    value: Europe/Paris
+podAnnotations:
+  reloader.stakater.com/auto: "true"
+
+extraEnvFrom:
+  - configMapRef:
+      name: jellyseerr
+
 ingress:
   enabled: true
   annotations:

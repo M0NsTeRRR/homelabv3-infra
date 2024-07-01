@@ -1,7 +1,15 @@
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: hyperglass
+data:
+  HYPERGLASS_REDIS_HOST: "hyperglass-valkey-master"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hyperglass-files
 data:
   config.yaml: |-
     org_name: AS212510

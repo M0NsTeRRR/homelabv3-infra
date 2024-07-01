@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: joal-config
+  name: joal-files
 data:
   config.json: >-
     {

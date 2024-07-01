@@ -1,8 +1,11 @@
 ---
+podAnnotations:
+  reloader.stakater.com/auto: "true"
+
 volumes:
-  - name: &volume-config joal-config
+  - name: &volume-config joal-files
     configMap:
-      name: joal-config
+      name: joal-files
 
 volumeMounts:
   - name: *volume-config

@@ -1,8 +1,17 @@
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: recyclarr
 data:
+  TZ: "Europe/Paris"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: recyclarr-files
+data:
+  TZ: "Europe/Paris"
   recyclarr.yml: |-
     # yaml-language-server: $schema=https://raw.githubusercontent.com/recyclarr/recyclarr/master/schemas/config-schema.json
 

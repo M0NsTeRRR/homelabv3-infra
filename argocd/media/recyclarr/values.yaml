@@ -2,14 +2,13 @@
 jobAnnotations:
   reloader.stakater.com/auto: "true"
 
-extraEnv:
-  - name: TZ
-    value: Europe/Paris
 extraEnvFrom:
+  - configMapRef:
+      name: recyclarr
   - secretRef:
       name: recyclarr-vault
 volumes:
-  - name: &volume-config recyclarr
+  - name: &volume-config recyclarr-files
     configMap:
       name: recyclarr
 volumeMounts:

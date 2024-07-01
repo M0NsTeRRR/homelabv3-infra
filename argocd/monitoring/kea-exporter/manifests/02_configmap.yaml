@@ -1,0 +1,24 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kea-exporter
+data:
+  MODE: "http"
+  CLIENT_CERT: "/mtls/client/tls.crt"
+  CLIENT_KEY: "/mtls/client/tls.key"
+  REQUESTS_CA_BUNDLE: "/etc/ssl/certs/homelab.crt"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kea-exporter-dns1
+data:
+  TARGETS: https://dhcp2.unicornafk.fr:8000
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kea-exporter-dns2
+data:
+  TARGETS: https://dhcp1.unicornafk.fr:8000

@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: as212510-net
+data:
+  AS212510_NET_ASN: "212510"
+  AS212510_NET_MIKROTIK_BGPFIREWALLADDRESSLISTV6: "bgp-networks"

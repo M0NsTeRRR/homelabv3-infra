@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sonarr
+data:
+  TZ: "Europe/Paris"
+  SONARR__APP__INSTANCENAME: Sonarr
+  SONARR__APP__THEME: dark
+  SONARR__AUTH__METHOD: External
+  SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
+  SONARR__LOG__DBENABLED: "False"
+  SONARR__LOG__LEVEL: info
+  SONARR__LOG__ANALYTICSENABLED: "False"
+  SONARR__POSTGRES__HOST: "sonarr-cluster-rw"
+  SONARR__POSTGRES__PORT: "5432"
+  SONARR__POSTGRES__MAINDB: "sonarr"

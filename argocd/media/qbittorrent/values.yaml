@@ -5,18 +5,15 @@ podAnnotations:
 strategy:
   type: RollingUpdate
 
-extraEnv:
-- name: QBT_BitTorrent__Session__MaxActiveDownloads
-  value: "5"
-- name: QBT_BitTorrent__Session__MaxActiveTorrents
-  value: "10"
-- name: QBT_BitTorrent__Session__MaxActiveUploads
-  value: "5"
-- name: QBT_Preferences__WebUI__Password_PBKDF2
-  valueFrom:
-    secretKeyRef:
-      key: PASSWORD_PBKF2
-      name: qbittorrent-vault 
+config:
+  persistence:
+    enabled: false
+
+extraEnvFrom:
+  - configMapRef:
+      name: qbittorrent
+  - secretRef:
+      name: qbittorrent-vault
 volumes:
   - name: &volume-data data
     persistentVolumeClaim:
@@ -26,21 +23,8 @@ volumeMounts:
     mountPath: /downloads
     subPath: downloads
 gluetun:
-  extraEnv:
-    - name: FIREWALL_INPUT_PORTS
-      value: "80,6881"
-    - name: FIREWALL_OUTBOUND_SUBNETS
-      value: "10.0.0.0/8"
-    - name: VPN_SERVICE_PROVIDER
-      value: "custom"
-    - name: VPN_TYPE
-      value: "wireguard"
-    - name: VPN_PORT_FORWARDING_PROVIDER
-      value: "protonvpn"
-    - name: VPN_PORT_FORWARDING
-      value: "on"
-    - name: DNS_KEEP_NAMESERVER
-      value: "on"
   extraEnvFrom:
+    - configMapRef:
+        name: gluetun
     - secretRef:
         name: gluetun-vault

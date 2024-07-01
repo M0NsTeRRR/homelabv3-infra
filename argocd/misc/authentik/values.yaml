@@ -1,18 +1,10 @@
 global:
-  env:
-    - name: AUTHENTIK_DISABLE_STARTUP_ANALYTICS
-      value: "true"
-    - name: AUTHENTIK_DISABLE_UPDATE_CHECK
-      value: "true"
-    - name: AUTHENTIK_ERROR_REPORTING__ENABLED
-      value: "false"
-    - name: AUTHENTIK_POSTGRESQL__HOST
-      value: "authentik-cluster-rw"
-    - name: AUTHENTIK_POSTGRESQL__SSLMODE
-      value: verify-ca
-    - name: AUTHENTIK_POSTGRESQL__SSLROOTCERT
-      value: /etc/ssl/certs/homelab.crt
+  podAnnotations:
+    reloader.stakater.com/auto: "true"
+
   envFrom:
+    - configMapRef:
+        name: authentik
     - secretRef:
         name: authentik-vault
   volumes:

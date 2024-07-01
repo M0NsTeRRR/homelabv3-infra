@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: radarr
+data:
+  TZ: "Europe/Paris"
+  RADARR__APP__INSTANCENAME: Radarr
+  RADARR__APP__THEME: dark
+  RADARR__AUTH__METHOD: External
+  RADARR__AUTH__REQUIRED: DisabledForLocalAddresses
+  RADARR__LOG__DBENABLED: "False"
+  RADARR__LOG__LEVEL: info
+  RADARR__LOG__ANALYTICSENABLED: "False"
+  RADARR__POSTGRES__HOST: "radarr-cluster-rw"
+  RADARR__POSTGRES__PORT: "5432"
+  RADARR__POSTGRES__MAINDB: "radarr"

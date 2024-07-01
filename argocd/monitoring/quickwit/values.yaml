@@ -9,10 +9,12 @@ janitor:
 control_plane:
   enabled: true
 
-environment:
-  QW_DISABLE_TELEMETRY: 1
+podAnnotations:
+  reloader.stakater.com/auto: "true"
 
 environmentFrom:
+  - configMapRef:
+      name: quickwit-env
   - secretRef:
       name: quickwit-bucket
   - configMapRef:

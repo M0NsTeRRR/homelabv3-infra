@@ -9,29 +9,8 @@ config:
   persistence:
     enabled: false
 
-extraEnv:
-  - name: TZ
-    value: Europe/Paris
-  - name: PROWLARR__APP__INSTANCENAME
-    value: Prowlarr
-  - name: PROWLARR__APP__THEME
-    value: dark
-  - name: PROWLARR__AUTH__METHOD
-    value: External
-  - name: PROWLARR__AUTH__REQUIRED
-    value: DisabledForLocalAddresses
-  - name: PROWLARR__LOG__DBENABLED
-    value: "False"
-  - name: PROWLARR__LOG__LEVEL
-    value: info
-  - name: PROWLARR__POSTGRES__HOST
-    value: "prowlarr-cluster-rw"
-  - name: PROWLARR__POSTGRES__PORT
-    value: "5432"
-  - name: PROWLARR__POSTGRES__MAINDB
-    value: prowlarr
-  - name: PROWLARR__LOG__ANALYTICSENABLED
-    value: "False"
 extraEnvFrom:
+  - configMapRef:
+      name: prowlarr
   - secretRef:
       name: prowlarr-vault

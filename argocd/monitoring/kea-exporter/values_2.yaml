@@ -16,17 +16,11 @@ volumeMounts:
   - name: *volume-mtls
     mountPath: /mtls/client
     readOnly: true
-extraEnv:
-  - name: MODE
-    value: http
-  - name: TARGETS
-    value: https://dhcp2.unicornafk.fr:8000
-  - name: CLIENT_CERT
-    value: /mtls/client/tls.crt
-  - name: CLIENT_KEY
-    value: /mtls/client/tls.key
-  - name: REQUESTS_CA_BUNDLE
-    value: /etc/ssl/certs/homelab.crt
+extraEnvFrom:
+  - configMapRef:
+      name: kea-exporter
+  - configMapRef:
+      name: kea-exporter-dns1
 serviceMonitor:
   enabled: true
   metricRelabelings:

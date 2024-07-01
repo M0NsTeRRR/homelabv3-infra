@@ -11,11 +11,10 @@ volumeMounts:
     subPath: ca.crt
     readOnly: true
 extraEnvFrom:
+  - configMapRef:
+      name: prometheus-pve-exporter
   - secretRef:
       name: prometheus-pve-exporter-vault
-extraEnv:
-  - name: REQUESTS_CA_BUNDLE
-    value: /etc/ssl/certs/homelab.crt
 serviceMonitor:
   enabled: true
 prometheusRule:
