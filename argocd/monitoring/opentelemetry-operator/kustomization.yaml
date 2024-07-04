@@ -16,5 +16,5 @@ helmCharts:
   releaseName: opentelemetry-operator
   namespace: *namespace
   repo: https://open-telemetry.github.io/opentelemetry-helm-charts
-  version: 0.63.1
+  version: 0.63.2
   valuesFile: values.yaml
