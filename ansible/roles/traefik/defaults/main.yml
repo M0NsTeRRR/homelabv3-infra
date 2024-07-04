@@ -1,6 +1,6 @@
 ---
 # renovate: datasource=github-releases depName=traefik/traefik
-traefik_version: "v3.0.3"
+traefik_version: "v3.0.4"
 # renovate: datasource=github-releases depName=traefik/traefik-helm-chart
 traefik_chart_version: "v28.3.0"
 traefik_force_install: false
