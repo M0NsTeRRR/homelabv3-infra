@@ -10,7 +10,7 @@ extraEnvFrom:
 volumes:
   - name: &volume-config recyclarr-files
     configMap:
-      name: recyclarr
+      name: recyclarr-files
 volumeMounts:
   - name: *volume-config
     mountPath: /config/recyclarr.yml
