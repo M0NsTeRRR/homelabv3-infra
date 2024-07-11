@@ -33,6 +33,10 @@ config:
   indexer:
     enable_otlp_endpoint: true
 
+  retention:
+    period: 60 days
+    schedule: daily
+
 service:
   ipFamilyPolicy: "PreferDualStack"
 
