@@ -1,0 +1,10 @@
+---
+- name: Restart otelcol-contrib
+  ansible.builtin.systemd_service:
+    name: otelcol-contrib
+    state: restarted
+
+- name: Enable otelcol-contrib
+  ansible.builtin.systemd_service:
+    name: otelcol-contrib
+    enabled: true

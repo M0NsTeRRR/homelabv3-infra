@@ -1,29 +1,28 @@
 ---
-grafana_agent_flow_node_name: "{{ hostvars[inventory_hostname].hostname[:-1] }}"
-grafana_agent_flow_cert_filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}-fullchain.crt"
-grafana_agent_flow_key_filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}.key"
-grafana_agent_flow_extra_scrape:
+opentelemetry_collector_cert_filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}-fullchain.crt"
+opentelemetry_collector_key_filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}.key"
+opentelemetry_collector_extra_scrape:
   - name: pdns_auth
     targets:
-      - address: 127.0.0.1:8081
+      - 127.0.0.1:8081
     basic_auth:
       username: "supervision"
       password: "{{ powerdns_authoritative_webserver_password }}"
   - name: pdns_rec
     targets:
-      - address: 127.0.0.1:8082
+      - 127.0.0.1:8082
     basic_auth:
       username: "supervision"
       password: "{{ powerdns_recursor_webserver_password }}"
   - name: dnsdist
     targets:
-      - address: 127.0.0.1:8083
+      - 127.0.0.1:8083
     basic_auth:
       username: ""
       password: "{{ dnsdist_api_key }}"
   - name: caddy
     targets:
-      - address: localhost:2019
+      - localhost:2019
     basic_auth:
       username: "{{ caddy_metrics_basic_auth.username }}"
       password: "{{ caddy_metrics_basic_auth.password }}"
@@ -279,11 +278,11 @@ lego_certificates:
     destinations:
       - { path: /etc/caddy/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: caddy, group: caddy }
       - { path: /etc/dnsdist/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: _dnsdist, group: _dnsdist }
-      - { path: /etc/grafana-agent-flow/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: grafana-agent-flow, group: grafana-agent-flow }
+      - { path: /etc/otelcol/ssl, filename: "{{ inventory_hostname }}", owner: otel, group: otel }
     systemd_services:
       - { name: caddy, state: restarted }
       - { name: dnsdist, state: restarted }
-      - { name: grafana-agent-flow, state: restarted }
+      - { name: otelcol, state: restarted }
 
 caddy_auto_https: "disable_certs"
 caddy_configuration:

@@ -1,0 +1,86 @@
+---
+- name: Open port 13133
+  community.general.ufw:
+    direction: in
+    rule: allow
+    port: "13133"
+    proto: tcp
+    comment: "opentelemetry collector (ansible_managed)"
+
+- name: Add otelcol-contrib group
+  ansible.builtin.group:
+    name: otelcol-contrib
+    system: true
+    state: present
+
+- name: Add otelcol-contrib user
+  ansible.builtin.user:
+    name: otelcol-contrib
+    system: true
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: otel
+
+- name: Check if opentelemetry collector is already installed
+  ansible.builtin.stat:
+    path: /usr/bin/otelcol-contrib
+  register: opentelemetry_collector_install
+
+- name: Detect machine architecture
+  ansible.builtin.set_fact:
+    opentelemetry_collector_arch: "{% if ansible_architecture == 'x86_64' %}amd64{% else %}arm64{% endif %}"
+
+- name: "Download opentelemetry collector version {{ opentelemetry_collector_version }}"
+  ansible.builtin.get_url:
+    url: "https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/{{ opentelemetry_collector_version }}/otelcol-contrib_{{ opentelemetry_collector_version[1:] }}_linux_{{ opentelemetry_collector_arch }}.deb"
+    checksum: sha256:https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/{{ opentelemetry_collector_version }}/opentelemetry-collector-releases_otelcol-contrib_checksums.txt
+    dest: /tmp/opentelemetry-collector.deb
+    owner: root
+    group: root
+    mode: "0600"
+  when: not opentelemetry_collector_install.stat.exists or opentelemetry_collector_force_install
+
+- name: Install opentelemetry collector
+  ansible.builtin.apt:
+    deb: /tmp/opentelemetry-collector.deb
+  when: not opentelemetry_collector_install.stat.exists or opentelemetry_collector_force_install
+  notify:
+    - Enable otelcol-contrib
+    - Restart otelcol-contrib
+
+- name: Create opentelemetry collector required folders
+  ansible.builtin.file:
+    name: /etc/otelcol-contrib/ssl
+    state: directory
+    owner: otelcol-contrib
+    group: otelcol-contrib
+    mode: "0700"
+
+- name: Add CA cert
+  ansible.builtin.copy:
+    src: "{{ opentelemetry_collector_local_path_ca_certificate }}"
+    dest: /etc/otelcol-contrib/ssl/ca.crt
+    owner: otelcol-contrib
+    group: otelcol-contrib
+    mode: "0640"
+  notify: Restart otelcol-contrib
+
+- name: Configure opentelemetry collector
+  ansible.builtin.template:
+    src: config.yaml.j2
+    dest: /etc/otelcol-contrib/config.yaml
+    owner: otelcol-contrib
+    group: otelcol-contrib
+    mode: "0640"
+    validate: otelcol-contrib validate --config=file:%s
+  notify: Restart otelcol-contrib
+
+- name: Set runrestic acl to access backup files
+  ansible.posix.acl:
+    path: /var/log
+    entity: otelcol-contrib
+    etype: user
+    permissions: rX
+    recursive: true
+    default: true
+    state: present

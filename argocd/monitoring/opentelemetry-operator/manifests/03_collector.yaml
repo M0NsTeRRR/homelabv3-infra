@@ -73,7 +73,7 @@ spec:
           collector_id: "${env:POD_NAME}"
     exporters:
       logging:
-        verbosity: detailed
+        verbosity: normal
       prometheusremotewrite/victoriametrics:
         endpoint: http://victoria-metrics-victoria-metrics-single-server.victoria-metrics-single.svc.cluster.local:8428/api/v1/push
         tls:
@@ -94,7 +94,6 @@ spec:
         check_interval: 1s
         limit_mib: 4000
         spike_limit_mib: 800
-
     service:
       telemetry:
         metrics:

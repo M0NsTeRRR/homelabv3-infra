@@ -18,6 +18,7 @@
     - pam
     - fail2ban
     - ca_certificates
+    - node_exporter
   pre_tasks:
     - name: Update and upgrade all packages
       ansible.builtin.apt:

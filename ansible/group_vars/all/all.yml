@@ -31,12 +31,11 @@ vault_unseal_nodes:
   - https:vault-1:8200
   - https:vault-2:8200
 
-grafana_agent_flow_node_name: "{{ inventory_hostname }}"
-grafana_agent_flow_local_path_ca_certificate: "{{ ca_certificates_local_path_ca_certificate }}"
-grafana_agent_flow_cert_filename: "{{ inventory_hostname }}-fullchain.crt"
-grafana_agent_flow_key_filename: "{{ inventory_hostname }}.key"
-grafana_agent_flow_prometheus_url: "https://mimir.unicornafk.fr/api/v1/push"
-grafana_agent_flow_loki_url: "https://loki.unicornafk.fr/loki/api/v1/push"
+opentelemetry_collector_local_path_ca_certificate: "{{ ca_certificates_local_path_ca_certificate }}"
+opentelemetry_collector_cert_filename: "{{ inventory_hostname }}-fullchain.crt"
+opentelemetry_collector_key_filename: "{{ inventory_hostname }}.key"
+opentelemetry_collector_metrics_prometheus_url: "https://victoria-metrics.unicornafk.fr/api/v1/push"
+opentelemetry_collector_logs_otlp_url: "https://quickwit.unicornafk.fr:443"
 
 lego_account_email: "{{ monitoring_email }}"
 lego_acme_url: "{{ vault_url }}/v1/pki/acme/directory"
