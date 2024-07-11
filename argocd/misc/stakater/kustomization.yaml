@@ -10,5 +10,5 @@ helmCharts:
   releaseName: stakater
   namespace: *namespace
   repo: https://stakater.github.io/stakater-charts
-  version: 1.0.115
+  version: 1.0.116
   valuesFile: values.yaml
