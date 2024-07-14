@@ -6,7 +6,7 @@ metadata:
 spec:
   mode: daemonset
   targetAllocator:
-    allocationStrategy: "per-node"
+    allocationStrategy: "consistent-hashing"
     enabled: true
     prometheusCR:
       enabled: true
@@ -54,6 +54,20 @@ spec:
         retry_on_failure:
           enabled: true
         start_at: end
+      receiver_creator/k8s_ingress:
+        watch_observers: [k8s_observer]
+        receivers:
+          prometheus_simple:
+            rule: type == "k8s.ingress"
+            config:
+              endpoint: "http://blackbox-exporter-prometheus-blackbox-exporter.blackbox-exporter.svc:9115"
+              metrics_path: "/probe"
+              params:
+                module: [http_2xx]
+                target: '`scheme`://`endpoint`:`port`'
+              collection_interval: 5s
+            resource_attributes:
+              service.name: '`endpoint`'
       otlp:
         protocols:
           grpc:
@@ -67,29 +81,6 @@ spec:
               scrape_interval: 5s
               static_configs:
                 - targets: [ '0.0.0.0:8888' ]
-            - job_name: "blackbox"
-              scrape_interval: 5s
-              sample_limit: 10000
-              metrics_path: /probe
-              params:
-                module: [http_2xx]
-              kubernetes_sd_configs:
-                - role: ingress
-              relabel_configs:
-                - source_labels: [__meta_kubernetes_ingress_scheme,__address__,__meta_kubernetes_ingress_path]
-                  regex: (.+);(.+);(.+)
-                  replacement: $${1}://$${2}$${3}
-                  target_label: __param_target
-                - target_label: __address__
-                  replacement: blackbox-exporter-prometheus-blackbox-exporter.blackbox-exporter.svc:9115
-                - source_labels: [__param_target]
-                  target_label: instance
-                - action: labelmap
-                  regex: __meta_kubernetes_ingress_label_(.+)
-                - source_labels: [__meta_kubernetes_namespace]
-                  target_label: kubernetes_namespace
-                - source_labels: [__meta_kubernetes_ingress_name]
-                  target_label: kubernetes_name
         target_allocator:
           endpoint: http://collector-targetallocator
           interval: 30s
@@ -109,6 +100,10 @@ spec:
       health_check:
         endpoint: ${env:K8S_POD_IP}:13133
       memory_ballast: {}
+      k8s_observer:
+        auth_type: serviceAccount
+        node: ${env:K8S_NODE_NAME}
+        observe_ingresses: true
     processors:
       batch:
         send_batch_max_size: 10000
@@ -121,11 +116,12 @@ spec:
     service:
       telemetry:
         metrics:
-          level: detailed
+          level: normal
           address: 0.0.0.0:8888
       extensions:
         - health_check
         - memory_ballast
+        - k8s_observer
       pipelines:
         logs:
           exporters:
@@ -147,6 +143,7 @@ spec:
             - memory_limiter
             - batch
           receivers:
+            - receiver_creator/k8s_ingress
             - prometheus
             - otlp
         traces:
