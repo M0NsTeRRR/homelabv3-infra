@@ -31,11 +31,12 @@ vault_unseal_nodes:
   - https:vault-1:8200
   - https:vault-2:8200
 
-opentelemetry_collector_local_path_ca_certificate: "{{ ca_certificates_local_path_ca_certificate }}"
-opentelemetry_collector_cert_filename: "{{ inventory_hostname }}-fullchain.crt"
-opentelemetry_collector_key_filename: "{{ inventory_hostname }}.key"
-opentelemetry_collector_metrics_prometheus_url: "https://victoria-metrics.unicornafk.fr/api/v1/push"
-opentelemetry_collector_logs_otlp_url: "https://quickwit.unicornafk.fr:443"
+alloy_node_name: "{{ inventory_hostname }}"
+alloy_local_path_ca_certificate: "{{ ca_certificates_local_path_ca_certificate }}"
+alloy_cert_filename: "{{ inventory_hostname }}-fullchain.crt"
+alloy_key_filename: "{{ inventory_hostname }}.key"
+alloy_metric_prometheus_url: "https://victoria-metrics.unicornafk.fr/api/v1/push"
+alloy_log_otlp_url: "https://quickwit.unicornafk.fr"
 
 lego_account_email: "{{ monitoring_email }}"
 lego_acme_url: "{{ vault_url }}/v1/pki/acme/directory"

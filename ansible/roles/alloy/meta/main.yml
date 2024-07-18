@@ -1,8 +1,8 @@
 ---
 galaxy_info:
-  role_name: opentelemetry_collector
+  role_name: alloy
   author: Ludovic Ortega
-  description: Install and configure opentelemetry_collector
+  description: Install and configure alloy
   license: CeCILL
   min_ansible_version: "2.17.1"
   platforms:

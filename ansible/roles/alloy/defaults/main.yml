@@ -1,0 +1,18 @@
+---
+# alloy_version:
+alloy_package_state: latest
+alloy_node_name: "node01"
+alloy_local_path_ca_certificate: "ca.crt"
+alloy_cert_filename: "example.fr.crt"
+alloy_key_filename: "example.fr.key"
+alloy_metric_prometheus_url: "https://prometheus/api/v1/push"
+alloy_log_otlp_url: "https://loki/loki/api/v1/push"
+alloy_extra_scrape: []
+
+# alloy_extra_scrape:
+#   - name: nginx
+#     # optional default to /metrics
+#     metrics_path: /stats
+#     targets:
+#       - address: localhost
+#         instance: www.example.fr

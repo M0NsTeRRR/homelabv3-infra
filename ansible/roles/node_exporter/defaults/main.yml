@@ -1,4 +1,0 @@
----
-# datasource=github-tags depName=prometheus/node_exporter
-node_exporter_version: 1.8.1
-node_exporter_force_install: false

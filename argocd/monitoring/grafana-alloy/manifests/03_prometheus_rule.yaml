@@ -1,0 +1,25 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: dnsdist-alerts
+spec:
+  groups:
+    - name: DnsdistAlerts
+      rules:
+        - alert: DnsdistDown
+          expr: up{job=~".*dnsdist"} != 1
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            description: 'Dnsdist instance {{$labels.instance}} from job {{$labels.job}} is down.'
+            summary: Dnsdist instance down.
+        - alert: DnsdistBackendDown
+          expr: dnsdist_server_status != 1
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            description: 'Dnsdist instance {{$labels.instance}} backend {{$labels.server}} from job {{$labels.job}} is down.'
+            summary: Dnsdist Backend instance down.

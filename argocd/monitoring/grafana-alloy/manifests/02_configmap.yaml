@@ -1,0 +1,201 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: grafana-alloy-config
+data:
+  config: |
+    logging {
+      level  = "info"
+      format = "logfmt"
+    }
+
+    // remote write
+    prometheus.remote_write "victoriametrics" {
+      endpoint {
+        url = "http://victoria-metrics-victoria-metrics-single-server.victoria-metrics-single.svc.cluster.local:8428/api/v1/push"
+      }
+    }
+
+    otelcol.exporter.otlp "log" {
+      client {
+        endpoint = "quickwit-indexer.quickwit.svc.cluster.local:7281"
+        tls {
+          insecure = true
+        }
+      }
+    }
+
+    // discovery
+    prometheus.exporter.self "agent" {}
+
+    discovery.kubernetes "ingresses" {
+      role = "ingress"
+    }
+
+    discovery.kubernetes "pods" {
+      role = "pod"
+    }
+
+    discovery.relabel "ingresses" {
+      targets = discovery.kubernetes.ingresses.targets
+
+      rule {
+        source_labels = ["__address__"]
+        target_label  = "__param_target"
+        action        = "replace"
+      }
+
+      rule {
+        source_labels = ["__param_target"]
+        target_label  = "instance"
+        action        = "replace"
+      }
+
+      rule {
+        source_labels = ["__param_target"]
+        target_label  = "target"
+        action        = "replace"
+      }
+
+      rule {
+        replacement = "http_2xx"
+        target_label  = "__param_module"
+      }
+
+      rule {
+        replacement = "/probe"
+        target_label  = "__metrics_path__"
+      }
+
+      rule {
+        replacement = "blackbox-exporter-prometheus-blackbox-exporter.blackbox-exporter.svc:9115"
+        target_label  = "__address__"
+      }
+    }
+
+    discovery.relabel "logs" {
+      targets = discovery.kubernetes.pods.targets
+
+      rule {
+        source_labels = ["__meta_kubernetes_namespace"]
+        target_label  = "namespace"
+      }
+
+      rule {
+        source_labels = ["__meta_kubernetes_pod_container_name"]
+        target_label  = "container"
+      }
+
+      rule {
+        source_labels = ["__meta_kubernetes_pod_name"]
+        target_label  = "pod"
+      }
+
+      rule {
+        source_labels = ["__meta_kubernetes_pod_node_name"]
+        action = "keep"
+        regex = env("HOSTNAME")
+      }
+
+      rule {
+        source_labels = ["__meta_kubernetes_namespace"]
+        action = "drop"
+        regex = "grafana-agent"
+      }
+
+      rule {
+        source_labels = ["__meta_kubernetes_pod_uid", "__meta_kubernetes_pod_container_name"]
+        target_label  = "__path__"
+        separator     = "/"
+        replacement   = "/var/log/pods/*$1/*.log"
+      }
+    }
+
+    // prometheus scrape
+    prometheus.scrape "agent" {
+      targets    = prometheus.exporter.self.agent.targets
+      forward_to = [prometheus.remote_write.victoriametrics.receiver]
+      clustering {
+        enabled = true
+      }
+      scrape_interval = "30s"
+      scrape_timeout  = "5s"
+    }
+
+    // scrape external agent
+    prometheus.scrape "external_agent" {
+      targets = [
+        {"__scheme__" = "https", "__address__" = "dns1.unicornafk.fr:12345", "instance" = "dns1.unicornafk.fr"},
+        {"__scheme__" = "https", "__address__" = "dns2.unicornafk.fr:12345", "instance" = "dns2.unicornafk.fr"},
+        {"__scheme__" = "https", "__address__" = "dhcp1.unicornafk.fr:12345", "instance" = "dhcp1.unicornafk.fr"},
+        {"__scheme__" = "https", "__address__" = "dhcp2.unicornafk.fr:12345", "instance" = "dhcp2.unicornafk.fr"},
+        {"__scheme__" = "https", "__address__" = "vpn.unicornafk.fr:12345", "instance" = "vpn.unicornafk.fr"},
+      ]
+      forward_to = [prometheus.remote_write.victoriametrics.receiver]
+      tls_config {
+        cert_file = "/mtls/client/tls.crt"
+        key_file  = "/mtls/client/tls.key"
+      }
+      clustering {
+        enabled = true
+      }
+      scrape_interval = "30s"
+      scrape_timeout  = "5s"
+    }
+
+    prometheus.scrape "blackbox_ingresses" {
+      targets    = discovery.relabel.ingresses.output
+      forward_to = [prometheus.remote_write.victoriametrics.receiver]
+      clustering {
+        enabled = true
+      }
+      scrape_interval = "30s"
+      scrape_timeout  = "5s"
+    }
+
+    prometheus.operator.servicemonitors "servicemonitors" {
+      forward_to = [prometheus.remote_write.victoriametrics.receiver]
+      clustering {
+        enabled = true
+      }
+      scrape {
+        default_scrape_interval = "30s"
+        default_scrape_timeout  = "5s"
+      }
+    }
+
+    prometheus.operator.podmonitors "podmonitors" {
+      forward_to = [prometheus.remote_write.victoriametrics.receiver]
+      clustering {
+        enabled = true
+      }
+      scrape {
+        default_scrape_interval = "30s"
+        default_scrape_timeout  = "5s"
+      }
+    }
+
+    // loki source
+    loki.source.journal "read"  {
+      forward_to    = [otelcol.receiver.loki.converter.receiver]
+    }
+
+    loki.source.kubernetes "pods" {
+      targets    = discovery.relabel.logs.output
+      forward_to = [otelcol.receiver.loki.converter.receiver]
+      clustering {
+        enabled = true
+      }
+    }
+
+    loki.source.kubernetes_events "events" {
+      log_format = "json"
+      forward_to = [otelcol.receiver.loki.converter.receiver]
+    }
+
+    otelcol.receiver.loki "converter" {
+      output {
+        logs = [otelcol.exporter.otlp.log.input]
+      }
+    }

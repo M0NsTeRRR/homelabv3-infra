@@ -1,0 +1,90 @@
+---
+- name: Open port 12345
+  community.general.ufw:
+    direction: in
+    rule: allow
+    port: "12345"
+    proto: tcp
+    comment: "alloy (ansible_managed)"
+
+- name: Add alloy group
+  ansible.builtin.group:
+    name: alloy
+    system: true
+    state: present
+
+- name: Add alloy user
+  ansible.builtin.user:
+    name: alloy
+    system: true
+    create_home: false
+    shell: /usr/sbin/nologin
+    group: alloy
+
+- name: Add Grafana apt signing key
+  ansible.builtin.get_url:
+    url: https://apt.grafana.com/gpg.key
+    dest: /etc/apt/keyrings/grafana.asc
+    owner: root
+    group: root
+    mode: "0644"
+
+- name: Add Grafana apt repository
+  ansible.builtin.copy:
+    content: |
+      deb [signed-by=/etc/apt/keyrings/grafana.asc] https://apt.grafana.com stable main
+    dest: /etc/apt/sources.list.d/grafana.list
+    owner: root
+    group: root
+    mode: "0640"
+
+- name: Install alloy
+  ansible.builtin.apt:
+    name: "alloy{% if alloy_version is defined %}={{ alloy_version }}{% endif %}"
+    update_cache: true
+    state: "{{ alloy_package_state }}"
+  notify: Enable alloy
+
+- name: Create alloy required folders
+  ansible.builtin.file:
+    name: /etc/alloy/ssl
+    state: directory
+    owner: alloy
+    group: alloy
+    mode: "0700"
+
+- name: Fix perms on /var/lib/alloy folder
+  ansible.builtin.file:
+    name: /var/lib/alloy
+    owner: alloy
+    group: alloy
+    recurse: true
+    state: directory
+
+- name: Add CA cert
+  ansible.builtin.copy:
+    src: "{{ alloy_local_path_ca_certificate }}"
+    dest: /etc/alloy/ssl/ca.crt
+    owner: alloy
+    group: alloy
+    mode: "0640"
+  notify: Restart alloy
+
+- name: Configure alloy env variables
+  ansible.builtin.template:
+    src: alloy.j2
+    dest: /etc/default/alloy
+    owner: root
+    group: root
+    mode: "0644"
+  notify: Restart alloy
+
+- name: Configure alloy
+  ansible.builtin.template:
+    src: config.alloy.j2
+    dest: /etc/alloy/config.alloy
+    owner: alloy
+    group: alloy
+    mode: "0640"
+    validate: /usr/bin/alloy fmt %s
+  notify: Restart alloy

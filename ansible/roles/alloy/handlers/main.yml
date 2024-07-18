@@ -1,0 +1,10 @@
+---
+- name: Restart alloy
+  ansible.builtin.systemd_service:
+    name: alloy
+    state: restarted
+
+- name: Enable alloy
+  ansible.builtin.systemd_service:
+    name: alloy
+    enabled: true
