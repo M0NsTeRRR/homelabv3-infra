@@ -24,6 +24,7 @@ vault_datas: []
 # DNS.3 = *.vault.svc
 # DNS.4 = *.vault.svc.cluster.local
 # IP.1 = 127.0.0.1
+# IP.2 = ::1
 
 # vault injector certificate subject alt name
 # DNS.1 = vault-agent-injector-svc
