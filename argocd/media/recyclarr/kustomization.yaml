@@ -14,5 +14,5 @@ helmCharts:
   releaseName: recyclarr
   namespace: *namespace
   repo: https://helm-charts.adminafk.fr
-  version: 0.1.9
+  version: 0.1.10
   valuesFile: values.yaml
