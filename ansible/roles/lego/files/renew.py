@@ -100,19 +100,27 @@ def main():
         print(f"certificate {config['certificate']['domain']} created")
     elif renewed:
         print(f"certificate {config['certificate']['domain']} renewed")
-
-    if created or renewed:
-        for destination in config["destinations"]:
-            for cert_type in [("crt", 0o640,), ("key", 0o600,)]:
-                dest_cert = os.path.join(destination["path"], f"{destination['filename']}{'-fullchain' if cert_type[0] == 'crt' else ''}.{cert_type[0]}")
+    else:
+        print(f"Certificate {config['certificate']['domain']} is still valid")
+    
+    need_systemd_service_update = False
+    
+    for destination in config["destinations"]:
+        for cert_type in [("crt", 0o640,), ("key", 0o600,)]:
+            dest_cert = os.path.join(destination["path"], f"{destination['filename']}{'-fullchain' if cert_type[0] == 'crt' else ''}.{cert_type[0]}")
+            dest_cert_exists = os.path.isfile(dest_cert)
+            if not dest_cert_exists or created or renewed:
+                need_systemd_service_update = True
                 shutil.copy2(
                     os.path.join(base_folder, "certificates", f"{config['certificate']['domain']}.{cert_type[0]}"),
                     dest_cert
                 )
                 shutil.chown(dest_cert, destination["owner"], destination["group"])
                 os.chmod(dest_cert, cert_type[1])
-            print(f"certificate copied to {destination['path']}")
+                print(f"certificate copied to {dest_cert}")
 
+    if need_systemd_service_update or created or renewed:
+        # need to rework this part properly to restart affected service only
         for systemd_service in config["systemd_services"]:
             if systemd_service["state"] == "started":
                 state = "start"
@@ -125,8 +133,7 @@ def main():
                 print(p_service.stderr)
             else:
                 print(f"service {systemd_service['name']} {systemd_service['state']}")
-    else:
-        print(f"Certificate {config['certificate']['domain']} is still valid")
+
 
 if __name__ == "__main__":
     main()
