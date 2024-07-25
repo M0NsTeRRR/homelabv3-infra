@@ -5,6 +5,7 @@ metadata:
   name: authentik-cluster
 spec:
   instances: 1
+  enablePDB: false
 
   primaryUpdateStrategy: unsupervised
 

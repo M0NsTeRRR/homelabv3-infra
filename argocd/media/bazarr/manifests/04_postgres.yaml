@@ -5,6 +5,7 @@ metadata:
   name: bazarr-cluster
 spec:
   instances: 1
+  enablePDB: false
 
   primaryUpdateStrategy: unsupervised
 
