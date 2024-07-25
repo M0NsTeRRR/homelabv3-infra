@@ -10,5 +10,5 @@ helmCharts:
   releaseName: kured
   namespace: *namespace
   repo: https://kubereboot.github.io/charts
-  version: 5.4.5
+  version: 5.5.0
   valuesFile: values.yaml
