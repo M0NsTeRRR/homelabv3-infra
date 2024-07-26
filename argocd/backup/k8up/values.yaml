@@ -1,8 +1,0 @@
-k8up:
-  timezone: "Europe/Paris"
-replicaCount: 3
-metrics:
-  service:
-    ipFamilyPolicy: "PreferDualStack"
-  serviceMonitor:
-    enabled: true

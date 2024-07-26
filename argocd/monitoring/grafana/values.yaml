@@ -150,9 +150,9 @@ dashboards:
       datasource:
         - name: DS_PROMETHEUS
           value: *datasource
-    K8up:
-      gnetId: 20166
-      revision: 4
+    Volsync:
+      gnetId: 21356
+      revision: 2
       datasource:
         - name: DS_PROMETHEUS
           value: *datasource
