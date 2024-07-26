@@ -1,6 +1,6 @@
 ---
 # renovate: datasource=github-releases depName=metallb/metallb
-metallb_chart_version: "v0.14.7"
+metallb_chart_version: "v0.14.8"
 metallb_force_install: false
 metallb_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
 
