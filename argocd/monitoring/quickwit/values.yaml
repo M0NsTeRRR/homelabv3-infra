@@ -41,20 +41,3 @@ serviceMonitor:
 
 prometheusRule:
   enabled: true
-
-ingress:
-  enabled: true
-  annotations:
-    cert-manager.io/cluster-issuer: "vault"
-    cert-manager.io/private-key-algorithm: "RSA"
-    cert-manager.io/private-key-size: "4096"
-  hosts:
-    - host: quickwit.unicornafk.fr
-      paths:
-        - path: /
-          pathType: ImplementationSpecific
-  className: "ingress-internal"
-  tls:
-    - secretName: quickwit.unicornafk.fr
-      hosts:
-        - quickwit.unicornafk.fr
