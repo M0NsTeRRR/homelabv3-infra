@@ -11,7 +11,7 @@ data:
     datasources:
     - name: quickwit
       type: quickwit-quickwit-datasource
-      url: http://quickwit-indexer.quickwit.svc.cluster.local:7280/api/v1
+      url: http://quickwit-searcher.quickwit.svc.cluster.local:7280/api/v1
       access: proxy
       jsonData:
         index: 'otel-logs-v0_7'
