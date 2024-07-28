@@ -1,4 +1,3 @@
----
 kubeProxyReplacement: true
 routingMode: native
 tunnel: disabled
@@ -10,10 +9,12 @@ enableIPv6Masquerade: true
 loadBalancer:
   mode: dsr
   acceleration: native
-k8sServiceHost: "{{ (cilium_service_hosts[0] | split('/'))[0] }}"
+k8sServiceHost: "{{ cilium_service_host }}"
 k8sServicePort: 6443
 policyEnforcementMode: default
 policyAuditMode: false
+gatewayAPI:
+  enabled: true
 hostFirewall:
   enabled: true
 extraConfig:
@@ -27,8 +28,8 @@ ipam:
   operator:
     clusterPoolIPv4PodCIDRList: "{{ cilium_cluster_cidr_ipv4 }}"
     clusterPoolIPv6PodCIDRList: "{{ cilium_cluster_cidr_ipv6 }}"
-    clusterPoolIPv4MaskSize: "{{ cilium_cluster_pool_ipv4_mask }}"
-    clusterPoolIPv6MaskSize: "{{ cilium_cluster_pool_ipv6_mask }}"
+    clusterPoolIPv4MaskSize: {{ cilium_cluster_pool_ipv4_mask }}
+    clusterPoolIPv6MaskSize: {{ cilium_cluster_pool_ipv6_mask }}
 prometheus:
   enabled: true
   serviceMonitor:

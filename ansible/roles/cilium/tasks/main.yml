@@ -13,6 +13,17 @@
     cilium_is_installed: "{% if 'status' in cilium_info %}true{% else %}false{% endif %}"
   delegate_to: localhost
 
+- name: Install kubernetes gateway-api CRDs
+  ansible.builtin.include_tasks: install_gateway_api_crds.yml
+  run_once: true
+  with_items:
+    - standard/gateway.networking.k8s.io_gatewayclasses
+    - standard/gateway.networking.k8s.io_gateways
+    - standard/gateway.networking.k8s.io_httproutes
+    - standard/gateway.networking.k8s.io_referencegrants
+    - standard/gateway.networking.k8s.io_grpcroutes
+    - experimental/gateway.networking.k8s.io_tlsroutes
+
 - name: Add cilium helm repo
   kubernetes.core.helm_repository:
     name: cilium

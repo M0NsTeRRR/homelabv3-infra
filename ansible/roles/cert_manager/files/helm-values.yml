@@ -1,3 +1,5 @@
+extraArgs:
+  - enable-gateway-api
 serviceIPFamilyPolicy: "PreferDualStack"
 webhook:
   networkPolicy:
