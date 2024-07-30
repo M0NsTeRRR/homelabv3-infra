@@ -14,7 +14,7 @@ metadata:
   name: gluetun
 data:
   FIREWALL_INPUT_PORTS: "80,6881"
-  FIREWALL_OUTBOUND_SUBNETS: "10.0.0.0/8"
+  FIREWALL_OUTBOUND_SUBNETS: "10.0.0.0/8,2001:cafe:42:0::/64"
   VPN_SERVICE_PROVIDER: "custom"
   VPN_TYPE: "wireguard"
   VPN_PORT_FORWARDING_PROVIDER: "protonvpn"
