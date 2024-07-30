@@ -161,7 +161,7 @@ data:
               # Subs
               - 07a32f77690263bb9fda1842db7e273f # VOSTFR
               - 84f0acbda9c0c9de783894fb66df25aa # FanSUB
-            quality_profiles:
+            assign_scores_to:
               - name: VOSTFR-WEB-2160p
               - name: VOSTFR-WEB-1080p
 
@@ -388,6 +388,6 @@ data:
               - c9fd353f8f5f1baf56dc601c4cb29920  # PCOK
               - e36a0ba1bc902b26ee40818a1d59b8bd  # PMTP
               - c2863d2a50c9acad1fb50e53ece60817  # STAN
-            quality_profiles:
+            assign_scores_to:
               - name: FR Remux + WEB 2160p (VOSTFR)
               - name: FR Remux + WEB 1080p (VOSTFR)
