@@ -1,5 +1,5 @@
 ---
 # renovate: datasource=github-releases depName=external-secrets/external-secrets
-external_secrets_chart_version: "v0.9.20"
+external_secrets_chart_version: "v0.10.0"
 external_secrets_force_install: false
 external_secrets_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
