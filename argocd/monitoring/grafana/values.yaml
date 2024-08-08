@@ -152,7 +152,7 @@ dashboards:
           value: *datasource
     Volsync:
       gnetId: 21356
-      revision: 2
+      revision: 3
       datasource:
         - name: DS_PROMETHEUS
           value: *datasource
