@@ -15,5 +15,5 @@ helmCharts:
   releaseName: qbittorrent
   namespace: *namespace
   repo: https://helm-charts.adminafk.fr
-  version: 0.4.6
+  version: 0.5.0
   valuesFile: values.yaml
