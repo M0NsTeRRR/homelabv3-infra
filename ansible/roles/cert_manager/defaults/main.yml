@@ -1,6 +1,6 @@
 ---
 # renovate: datasource=github-releases depName=cert-manager/cert-manager
-cert_manager_chart_version: "v1.15.2"
+cert_manager_chart_version: "v1.15.3"
 cert_manager_force_install: false
 cert_manager_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
 cert_manager_vault_service_account: cert-manager-vault
