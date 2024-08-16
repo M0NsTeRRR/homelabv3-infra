@@ -2,7 +2,7 @@
 # renovate: datasource=github-releases depName=traefik/traefik
 traefik_version: "v3.1.2"
 # renovate: datasource=github-releases depName=traefik/traefik-helm-chart
-traefik_chart_version: "v30.0.2"
+traefik_chart_version: "v30.1.0"
 traefik_force_install: false
 traefik_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
 traefik_external_ips: []
