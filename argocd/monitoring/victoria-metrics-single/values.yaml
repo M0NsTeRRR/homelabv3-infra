@@ -1,6 +1,8 @@
 server:
   persistentVolume:
     size: 100Gi
+  service:
+    ipFamilyPolicy: "PreferDualStack"
   ingress:
     enabled: true
     annotations:
