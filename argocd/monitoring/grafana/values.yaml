@@ -126,7 +126,7 @@ dashboards:
       datasource: *datasource
     Ceph-cluster:
       gnetId: 2842
-      revision: 17
+      revision: 18
       datasource: *datasource
     Ceph-osd-single:
       gnetId: 5336
