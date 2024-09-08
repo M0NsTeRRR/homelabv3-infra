@@ -1,9 +1,16 @@
 ---
 volumes:
+  - name: &volume-ca ca-certs
+    configMap:
+      name: homelab-ca
   - name: &volume-data data
     persistentVolumeClaim:
       claimName: media-storage
 volumeMounts:
+  - name: *volume-ca
+    mountPath: /etc/ssl/certs/homelab.crt
+    subPath: ca.crt
+    readOnly: true
   - name: *volume-data
     mountPath: /movies
     subPath: movies
