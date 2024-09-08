@@ -41,15 +41,15 @@ grafana.ini:
   server:
     root_url: "https://%(domain)s/"
   auth:
-    signout_redirect_url: "{{ oidc_issuer_url }}/application/o/grafana/end-session/"
+    signout_redirect_url: "https://sso.unicornafk.fr/application/o/grafana/end-session/"
     oauth_auto_login: false
   auth.generic_oauth:
     name: authentik
     enabled: true
     scopes: "openid profile email"
-    auth_url: "{{ oidc_issuer_url }}/application/o/authorize/"
-    token_url: "{{ oidc_issuer_url }}/application/o/token/"
-    api_url: "{{ oidc_issuer_url }}/application/o/userinfo/"
+    auth_url: "https://sso.unicornafk.fr/application/o/authorize/"
+    token_url: "https://sso.unicornafk.fr/application/o/token/"
+    api_url: "https://sso.unicornafk.fr/application/o/userinfo/"
     role_attribute_path: contains(groups, 'Grafana Admins') && 'Admin' || contains(groups, 'Grafana Editors') && 'Editor' || contains(groups, 'Grafana Viewers') && 'Viewer'
 
 alerting:
