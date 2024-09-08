@@ -62,8 +62,8 @@ configs:
       connectors:
       - config:
           issuer: {{ argocd_oidc_issuer_url }}
-          clientID: $argocd-vault:OAUTH_CLIENT_ID
-          clientSecret: $argocd-vault:OAUTH_CLIENT_SECRET
+          clientID: $dex.authentik.clientSecret
+          clientSecret: $dex.authentik.clientID
           insecureEnableGroups: true
           scopes:
             - openid

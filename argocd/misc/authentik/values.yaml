@@ -11,7 +11,7 @@ global:
     - name: &volume-ca ca-certs
       configMap:
         name: homelab-ca
-    - name: &volume-bluprint homelab-blueprint
+    - name: &volume-blueprint homelab-blueprint
       secret:
         secretName: blueprint-vault
         items:
@@ -22,7 +22,7 @@ global:
       mountPath: /etc/ssl/certs/homelab.crt
       subPath: ca.crt
       readOnly: true
-    - name: *volume-bluprint
+    - name: *volume-blueprint
       mountPath: /blueprints/custom/homelab.yaml
       subPath: homelab.yaml
       readOnly: true
