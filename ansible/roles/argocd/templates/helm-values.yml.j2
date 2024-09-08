@@ -52,6 +52,12 @@ global:
   deploymentAnnotations:
     reloader.stakater.com/auto: "true"
 
+dex:
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+
 configs:
   params:
     server.insecure: true
