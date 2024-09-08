@@ -359,7 +359,7 @@ external_dns_vault_secrets:
 external_dns_vault_ca: "{{ kubernetes_homelab_ca_config_map }}"
 external_dns_vault_role: external-dns-external
 argocd_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
-argocd_oidc_issuer_url: https://sso.unicornafk.fr/application/o/argocd/
+argocd_oidc_issuer_url: "{{ oidc_issuer_url }}/application/o/argocd/"
 argocd_hostname: argocd.unicornafk.fr
 argocd_ingress_cluster_issuer: vault
 argocd_ingress_class: ingress-internal
