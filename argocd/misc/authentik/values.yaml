@@ -11,20 +11,10 @@ global:
     - name: &volume-ca ca-certs
       configMap:
         name: homelab-ca
-    - name: &volume-blueprint homelab-blueprint
-      secret:
-        secretName: blueprint-vault
-        items:
-          - key: homelab.yaml
-            path: homelab.yaml
   volumeMounts:
     - name: *volume-ca
       mountPath: /etc/ssl/certs/homelab.crt
       subPath: ca.crt
-      readOnly: true
-    - name: *volume-blueprint
-      mountPath: /blueprints/custom/homelab.yaml
-      subPath: homelab.yaml
       readOnly: true
 redis:
   enabled: true
