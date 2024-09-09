@@ -2,7 +2,6 @@
 manager:
   collectorImage:
     repository: "otel/opentelemetry-collector-contrib"
-    tag: 0.108.0
   prometheusRule:
     enabled: true
     defaultRules:
