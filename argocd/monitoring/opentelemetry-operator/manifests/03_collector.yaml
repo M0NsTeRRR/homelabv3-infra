@@ -99,7 +99,6 @@ spec:
     extensions:
       health_check:
         endpoint: ${env:K8S_POD_IP}:13133
-      memory_ballast: {}
       k8s_observer:
         auth_type: serviceAccount
         node: ${env:K8S_NODE_NAME}
@@ -120,7 +119,6 @@ spec:
           address: 0.0.0.0:8888
       extensions:
         - health_check
-        - memory_ballast
         - k8s_observer
       pipelines:
         logs:
