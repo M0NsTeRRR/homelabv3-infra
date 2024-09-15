@@ -6,7 +6,7 @@ metadata:
 spec:
   mode: daemonset
   targetAllocator:
-    allocationStrategy: "consistent-hashing"
+    allocationStrategy: "per-node"
     enabled: true
     prometheusCR:
       enabled: true
