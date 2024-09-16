@@ -77,7 +77,7 @@ cephObjectStores:
     storageClass:
       enabled: true
       name: ceph-bucket
-      reclaimPolicy: Delete
+      reclaimPolicy: Retain
       volumeBindingMode: "Immediate"
       # see https://github.com/rook/rook/blob/master/Documentation/Storage-Configuration/Object-Storage-RGW/ceph-object-bucket-claim.md#storageclass for available configuration
       parameters:
@@ -126,7 +126,7 @@ cephFileSystems:
       name: ceph-filesystem
       # (Optional) specify a data pool to use, must be the name of one of the data pools above, 'data0' by default
       pool: data0
-      reclaimPolicy: Delete
+      reclaimPolicy: Retain
       allowVolumeExpansion: true
       volumeBindingMode: "Immediate"
       mountOptions: []
