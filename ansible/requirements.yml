@@ -9,6 +9,6 @@ collections:
   - name: community.crypto
     version: "2.22.0"
   - name: community.postgresql
-    version: "3.5.0"
+    version: "3.6.1"
   - name: kubernetes.core
     version: "5.0.0"
