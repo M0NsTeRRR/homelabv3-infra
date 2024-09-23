@@ -68,7 +68,6 @@ extensions:
       cert_file: /etc/otelcol-contrib/ssl/{{ opentelemetry_collector_cert_filename }}
       key_file: /etc/otelcol-contrib/ssl/{{ opentelemetry_collector_key_filename }}
       ca_file: /etc/otelcol-contrib/ssl/ca.crt
-  memory_ballast: {}
 processors:
   batch:
     send_batch_max_size: 10000
@@ -97,7 +96,6 @@ service:
       address: 127.0.0.1:8888
   extensions:
     - health_check
-    - memory_ballast
   pipelines:
     logs:
       exporters:
