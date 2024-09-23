@@ -172,9 +172,9 @@ powerdns_authoritative_records:
     rdns: true
   - hostname: nas.unicornafk.fr.
     a:
-      - 192.168.50.42
+      - 192.168.50.41
     aaaa:
-      - 2a0c:b641:02c0:150::42
+      - 2a0c:b641:02c0:150::41
     rdns: true
   - hostname: grandstream.unicornafk.fr.
     a:
