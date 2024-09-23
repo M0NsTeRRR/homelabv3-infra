@@ -75,7 +75,7 @@ def main():
     p_lego = run_lego(config, base_folder, lego_json_file)
 
     # if ACME account is invalid retry one time (in case of ACME unregistration)
-    if p_lego.returncode != 0 and "Use 'run' to register a new account" in p_lego.stderr:
+    if p_lego.returncode != 0 and "Use 'run' to register a new account" in str(p_lego.stderr):
         print("Delete lego json file and retry renew")
         p_delete = subprocess.run(["rm", "-f", lego_json_file], stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
         if p_delete.returncode != 0:
