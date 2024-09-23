@@ -278,11 +278,11 @@ lego_certificates:
     destinations:
       - { path: /etc/caddy/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: caddy, group: caddy }
       - { path: /etc/dnsdist/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: _dnsdist, group: _dnsdist }
-      - { path: /etc/otelcol/ssl, filename: "{{ inventory_hostname }}", owner: otel, group: otel }
+      - { path: /etc/otelcol-contrib/ssl, filename: "{{ inventory_hostname }}", owner: otelcol-contrib, group: otelcol-contrib }
     systemd_services:
       - { name: caddy, state: restarted }
       - { name: dnsdist, state: restarted }
-      - { name: otelcol, state: restarted }
+      - { name: otelcol-contrib, state: restarted }
 
 caddy_auto_https: "disable_certs"
 caddy_configuration:

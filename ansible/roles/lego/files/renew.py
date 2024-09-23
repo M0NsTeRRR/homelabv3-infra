@@ -27,7 +27,7 @@ def get_lego_params(config, lego_json_file):
         additionnal_params.append(config["general"]["days"])
     else:
         additionnal_params.append("run")
-        
+
     return additionnal_params
 
 def run_lego(config, base_folder, lego_json_file):
@@ -73,7 +73,7 @@ def main():
             sys.exit(p_http.returncode)
 
     p_lego = run_lego(config, base_folder, lego_json_file)
-    
+
     # if ACME account is invalid retry one time (in case of ACME unregistration)
     if p_lego.returncode != 0 and "Use 'run' to register a new account" in p_lego.stderr:
         print("Delete lego json file and retry renew")
@@ -102,9 +102,9 @@ def main():
         print(f"certificate {config['certificate']['domain']} renewed")
     else:
         print(f"Certificate {config['certificate']['domain']} is still valid")
-    
+
     need_systemd_service_update = False
-    
+
     for destination in config["destinations"]:
         for cert_type in [("crt", 0o640,), ("key", 0o600,)]:
             dest_cert = os.path.join(destination["path"], f"{destination['filename']}{'-fullchain' if cert_type[0] == 'crt' else ''}.{cert_type[0]}")

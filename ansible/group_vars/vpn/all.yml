@@ -10,9 +10,9 @@ lego_certificates:
   - domain: "{{ inventory_hostname }}"
     san: []
     destinations:
-      - { path: /etc/grafana-agent-flow/ssl, filename: "{{ inventory_hostname }}", owner: grafana-agent-flow, group: grafana-agent-flow }
+      - { path: /etc/otelcol-contrib/ssl, filename: "{{ inventory_hostname }}", owner: otelcol-contrib, group: otelcol-contrib }
     systemd_services:
-      - { name: grafana-agent-flow, state: restarted }
+      - { name: otelcol-contrib, state: restarted }
 
 self_signed_cert_list:
   - common_name: "{{ inventory_hostname }}"

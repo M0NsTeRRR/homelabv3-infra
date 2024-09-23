@@ -207,11 +207,11 @@ lego_certificates:
     san: []
     destinations:
       - { path: /etc/kea/ssl, filename: "{{ inventory_hostname }}", owner: _kea, group: _kea }
-      - { path: /etc/otelcol/ssl, filename: "{{ inventory_hostname }}", owner: otel, group: otel }
+      - { path: /etc/otelcol-contrib/ssl, filename: "{{ inventory_hostname }}", owner: otelcol-contrib, group: otelcol-contrib }
     systemd_services:
       - { name: isc-kea-dhcp4-server, state: restarted }
       - { name: isc-kea-dhcp6-server, state: restarted }
-      - { name: otelcol, state: restarted }
+      - { name: otelcol-contrib, state: restarted }
 
 self_signed_cert_list:
   - common_name: "{{ inventory_hostname }}"
