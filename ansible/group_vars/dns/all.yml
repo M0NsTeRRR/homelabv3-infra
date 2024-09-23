@@ -274,7 +274,10 @@ lego_webserver_proxified: true
 lego_webserver_port: 20222
 lego_certificates:
   - domain: "{{ hostvars[inventory_hostname].hostname[:-1] }}"
-    san: []
+    san:
+      - "{{ ansible_default_ipv4.address }}"
+      # - "{{ ansible_default_ipv6.address }}"
+      # ACME IPv6 doesn't work for now https://github.com/hashicorp/vault/issues/28480
     destinations:
       - { path: /etc/caddy/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: caddy, group: caddy }
       - { path: /etc/dnsdist/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: _dnsdist, group: _dnsdist }
