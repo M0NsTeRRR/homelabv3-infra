@@ -13,5 +13,5 @@ helmCharts:
   releaseName: joal
   namespace: *namespace
   repo: https://helm-charts.adminafk.fr
-  version: 0.2.3
+  version: 0.3.0
   valuesFile: values.yaml
