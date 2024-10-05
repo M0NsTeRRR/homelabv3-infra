@@ -3,6 +3,10 @@ manager:
   include_meta: False
   max_workers: 5
 
+processors:
+  ownership:
+    class: octodns.processor.ownership.OwnershipProcessor
+
 providers:
   config:
     class: octodns.provider.yaml.YamlProvider
@@ -20,8 +24,12 @@ zones:
       - config
     targets:
       - scaleway
+    processors:
+      - ownership
   adminafk.fr.:
     sources:
       - config
     targets:
       - scaleway
+    processors:
+      - ownership
