@@ -1,5 +1,5 @@
 [build-system]
-requires = ["wheel==0.44.0", "setuptools==75.1.0"]
+requires = ["wheel==0.44.0", "setuptools==75.2.0"]
 
 [project]
 name = "homelabv3_infra"
