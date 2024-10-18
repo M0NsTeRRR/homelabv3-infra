@@ -11,7 +11,7 @@ ansible = [
     "ansible-lint==24.9.2",
     "dnspython==2.7.0",
     "netaddr==1.3.0",
-    "cryptography==43.0.1",
+    "cryptography==43.0.3",
     "passlib==1.7.4",
     "requests==2.32.3",
     "kubernetes==31.0.0",
