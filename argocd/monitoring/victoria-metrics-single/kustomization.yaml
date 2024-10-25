@@ -13,5 +13,5 @@ helmCharts:
   releaseName: victoria-metrics
   namespace: *namespace
   repo: https://victoriametrics.github.io/helm-charts/
-  version: 0.12.2
+  version: 0.12.3
   valuesFile: values.yaml
