@@ -4,5 +4,5 @@ kind: L2Advertisement
 metadata:
   name: private
 spec:
-  ipaddresspools:
+  ipAddressPools:
     - private
