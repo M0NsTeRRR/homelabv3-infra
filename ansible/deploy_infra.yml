@@ -75,7 +75,7 @@
         - infra/ingress-internal
         - infra/ingress-external
         - storage/rook-operator
-        - storage/rook-cluster
+        - storage/rook-ceph-cluster
         - infra/cert-manager
         - infra/trust-manager
       delegate_to: localhost
