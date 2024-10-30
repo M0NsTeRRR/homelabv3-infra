@@ -14,5 +14,5 @@ helmCharts:
   releaseName: trust-manager
   namespace: *namespace
   repo: https://charts.jetstack.io
-  version: 0.12.0
+  version: v0.13.0
   valuesFile: values.yaml
