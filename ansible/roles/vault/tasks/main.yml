@@ -13,44 +13,24 @@
     vault_is_installed: "{% if 'status' in vault_info %}true{% else %}false{% endif %}"
   delegate_to: localhost
 
-- name: Create vault namespace
-  kubernetes.core.k8s:
-    definition: "{{ lookup('ansible.builtin.file', 'namespace.yml') | from_yaml }}"
-    kubeconfig: "{{ vault_localhost_kubeconfig_path }}"
-    validate_certs: true
-    state: present
-  delegate_to: localhost
-
 - name: Create kubernetes secrets with vault certificates
   kubernetes.core.k8s:
-    definition: "{{ lookup('ansible.builtin.template', 'secret.yml.j2') | from_yaml }}"
+    definition: "{{ lookup('ansible.builtin.template', 'secret.yml.j2') | from_yaml_all }}"
     wait: true
     kubeconfig: "{{ vault_localhost_kubeconfig_path }}"
     validate_certs: true
     state: present
   delegate_to: localhost
 
-- name: Add hashicorp helm repo
-  kubernetes.core.helm_repository:
-    name: hashicorp
-    repo_url: https://helm.releases.hashicorp.com
+- name: "Install vault"
+  kubernetes.core.k8s:
+    definition: "{{ lookup('kubernetes.core.kustomize', dir=vault_kustomize_folder_path, enable_helm=True) }}"
+    wait: true
+    wait_timeout: 300
     kubeconfig: "{{ vault_localhost_kubeconfig_path }}"
     validate_certs: true
   delegate_to: localhost
-
-- name: Deploy vault chart
-  kubernetes.core.helm:
-    name: vault
-    chart_ref: hashicorp/vault
-    chart_version: "{{ vault_chart_version[1:] }}"
-    release_namespace: vault
-    create_namespace: true
-    release_values: "{{ lookup('ansible.builtin.template', 'helm-values.yml.j2') | from_yaml }}"
-    update_repo_cache: true
-    kubeconfig: "{{ vault_localhost_kubeconfig_path }}"
-    validate_certs: true
-  delegate_to: localhost
-  when: not vault_is_installed or vault_force_install
+  when: not vault_is_installed
 
 - name: "Wait pod vault-{{ item }}"
   kubernetes.core.k8s_info:

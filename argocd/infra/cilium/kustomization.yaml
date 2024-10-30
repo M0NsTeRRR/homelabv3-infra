@@ -1,0 +1,17 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: &namespace cilium
+
+resources:
+
+
+helmCharts:
+- name: cilium
+  releaseName: cilium
+  namespace: *namespace
+  repo: https://helm.cilium.io/
+  version: 1.16.3
+  valuesFile: values.yaml

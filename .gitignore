@@ -26,3 +26,5 @@ vault.json.secrets
 inventory.proxmox.yml
 # Doc
 .cache
+# argocd
+argocd/**/charts/
