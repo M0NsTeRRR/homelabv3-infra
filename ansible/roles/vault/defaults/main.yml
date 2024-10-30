@@ -1,9 +1,5 @@
 ---
-# renovate: datasource=github-releases depName=hashicorp/vault
-vault_version: "v1.18.0"
-# renovate: datasource=github-releases depName=hashicorp/vault-helm
-vault_chart_version: "v0.28.1"
-vault_force_install: false
+vault_kustomize_folder_path: "../argocd/infra/vault"
 vault_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
 vault_url: "https://vault.example.fr:8200"
 vault_root_token: "token"
@@ -12,7 +8,8 @@ vault_ca_path: /etc/ssl/certs/test.pem
 vault_init_output_file_path: "/tmp/vault_init.json"
 vault_replicas: 3
 vault_ca_filename: "/tmp/ca.crt"
-vault_loadbalancer_ips: []
+vault_cert_filename: "/tmp/client.crt"
+vault_key_filename: "/tmp/client.key"
 vault_auth_methods: []
 vault_secrets_engine: []
 vault_policies: []

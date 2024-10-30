@@ -59,50 +59,47 @@
 - name: Deploy kubernetes services
   hosts: kubernetes_master[0]
   become: true
-  roles:
-    - prometheus_operator_crds
-    - cilium
-    - metallb
-    - external_secrets
-    - role: traefik
-    - role: traefik
-      vars:
-        traefik_external_ips:
-          - 192.168.10.101
-          - 2a0c:b641:2c0:110::101
-        traefik_namespace: ingress-internal
-        traefik_default_ingress_class: true
-        traefik_ingress_class_name: ingress-internal
-        traefik_create_prometheus_rule: false
-    - rook_operator
-    - rook_cluster
-    - cert_manager
-    - trust_manager
-    - vault
-    - cert_manager_scaleway
-    - role: external_dns
-    - role: external_dns
-      vars:
-        external_dns_namespace: "external-dns-internal"
-        external_dns_provider: pdns
-        external_dns_txt_owner_id: homelab.kubernetes
-        external_dns_domain_filters: "{{ local_domains }}"
-        external_dns_envs:
-          EXTERNAL_DNS_INGRESS_CLASS: ingress-internal
-          EXTERNAL_DNS_DEFAULT_TARGETS: |-
-            |-
-            {{ "192.168.10.101" | indent(6, true) }}
-            {{ "2a0c:b641:2c0:110::101" | indent(6, true) }}
-        external_dns_ca: "{{ kubernetes_homelab_ca_config_map }}"
-        external_dns_vault_secrets:
-          - key: secret/data/homelab/prod/external_dns/internal
-            property: EXTERNAL_DNS_PDNS_SERVER
-          - key: secret/data/homelab/prod/external_dns/internal
-            property: EXTERNAL_DNS_PDNS_API_KEY
-        external_dns_vault_ca: "{{ kubernetes_homelab_ca_config_map }}"
-        external_dns_vault_role: external-dns-internal
-        external_dns_create_prometheus_rule: false
-    - argocd
+  tasks:
+    - name: "Install kubernetes base infra first part"
+      kubernetes.core.k8s:
+        definition: "{{ lookup('kubernetes.core.kustomize', dir='../argocd/' + item, enable_helm=True) }}"
+        wait: true
+        wait_timeout: 300
+        kubeconfig: "{{ kubernetes_localhost_kubeconfig_path }}"
+        validate_certs: true
+      with_items:
+        - monitoring/prometheus-operator-crds
+        - infra/cilium
+        - infra/metallb
+        - infra/external-secrets
+        - infra/ingress-internal
+        - infra/ingress-external
+        - storage/rook-operator
+        - storage/rook-cluster
+        - infra/cert-manager
+        - infra/trust-manager
+      delegate_to: localhost
+
+    - name: Install vault
+      ansible.builtin.include_role:
+        name: vault
+
+    - name: "Install kubernetes base infra last part"
+      kubernetes.core.k8s:
+        definition: "{{ lookup('kubernetes.core.kustomize', dir='../argocd/' + item, enable_helm=True) }}"
+        wait: true
+        wait_timeout: 300
+        kubeconfig: "{{ kubernetes_localhost_kubeconfig_path }}"
+        validate_certs: true
+      with_items:
+        - infra/cert-manager-scaleway
+        - infra/external-dns-internal
+        - infra/external-dns-external
+      delegate_to: localhost
+
+    - name: Install argocd
+      ansible.builtin.include_role:
+        name: argocd
 
 - name: Configure Vault unseal
   hosts: dns,vpn

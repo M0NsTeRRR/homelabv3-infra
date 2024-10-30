@@ -23,8 +23,6 @@
   ansible.builtin.copy:
     content: "{{ vault_init_parsed | to_nice_json }}"
     dest: "{{ vault_init_output_file_path }}"
-    owner: "{{ ansible_user }}"
-    group: "{{ ansible_user }}"
     mode: "0600"
   delegate_to: localhost
 

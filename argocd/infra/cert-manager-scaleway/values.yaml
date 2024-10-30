@@ -1,0 +1,4 @@
+secret:
+  externalSecretName: "cert-manager-scaleway-secret"
+service:
+  ipFamilyPolicy: "PreferDualStack"

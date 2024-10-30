@@ -1,0 +1,18 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: &namespace trust-manager
+
+resources:
+  - manifests/01_prometheus_rule.yaml
+  - manifests/02_certificate.yaml
+
+helmCharts:
+- name: trust-manager
+  releaseName: trust-manager
+  namespace: *namespace
+  repo: https://charts.jetstack.io
+  version: 0.12.0
+  valuesFile: values.yaml
