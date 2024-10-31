@@ -28,7 +28,7 @@ octodns = [
     "octodns_scaleway==0.0.4"
 ]
 documentation = [
-    "mkdocs-material[imaging]==9.5.42",
+    "mkdocs-material[imaging]==9.5.43",
     "pytz==2024.2"
 ]
 
