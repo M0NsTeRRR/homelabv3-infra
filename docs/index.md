@@ -29,12 +29,8 @@ To start, I would like to thank all maintainers and contributors to open source 
     * [ ] Kubernetes node firewalling
     * [ ] Kubernetes policies rules
 - Monitoring/Logging/Alerting :
-    * [ ] Kea DHCP (need Docker image, PR created https://github.com/mweinelt/kea-exporter/pull/40)
     * [ ] Alerting system
 - Security :
     * [ ] Crowdsec
     * [ ] CSP policy
     * [ ] Implement systemd-resolved dnssec validation (DS record not supported by my current registrar)
-- Misc :
-    * [ ] Autounseal vault (issue opened to support kubernetes proxy verb https://github.com/lrstanley/vault-unseal/issues/41)
-    * [ ] Fix DHCPv6

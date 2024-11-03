@@ -17,7 +17,7 @@ Execute the following steps :
 
 1. SSH to a proxmox node
 2. Run `pvenode acme account register default <email_acount>`
-3. Choose option 3 as we are using a custom endpoint
+3. Choose option 2 as we are using a custom endpoint
 4. Type your `<vault_acme_url>` and don't use external account binding.
 5. Configure ACME hostname `pvenode config set --acme domains="<proxmox_domains>"`
 6. Order a certificate `pvenode acme cert order`
