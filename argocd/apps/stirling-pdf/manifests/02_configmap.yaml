@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: stirling-pdf
+data:
+  DOCKER_ENABLE_SECURITY: "true"
+  SECURITY_ENABLELOGIN: "true"
+  SECURITY_OAUTH2_ENABLED: "true"
+  SECURITY_OAUTH2_AUTOCREATEUSER: "true"
+  SECURITY_OAUTH2_ISSUER: "https://sso.unicornafk.fr/application/o/stirling-pdf"
+  PUID: "1000"
+  PGID: "1000"
+  UMASK: "022"
+  SYSTEM_DEFAULTLOCALE: en-US
+  SYSTEM_MAXFILESIZE: "100"
+  METRICS_ENABLED: "true"
+  SYSTEM_GOOGLEVISIBILITY: "false"

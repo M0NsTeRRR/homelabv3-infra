@@ -151,6 +151,11 @@ vault_policies:
       - path: secret/data/homelab/prod/gluetun
         capabilities:
           - read
+  - name: stirling-pdf
+    rules:
+      - path: secret/data/homelab/prod/stirling-pdf
+        capabilities:
+          - read
 public_vault_datas:
   - path: pki/config/ca
     data:
@@ -296,6 +301,12 @@ public_vault_datas:
       bound_service_account_names: recyclarr-vault
       bound_service_account_namespaces: recyclarr
       policies: recyclarr
+      ttl: 1h
+  - path: auth/kubernetes/role/stirling-pdf
+    data:
+      bound_service_account_names: stirling-pdf-vault
+      bound_service_account_namespaces: stirling-pdf
+      policies: stirling-pdf
       ttl: 1h
 vault_datas: "{{ public_vault_datas + secret_vault_datas }}"
 argocd_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"

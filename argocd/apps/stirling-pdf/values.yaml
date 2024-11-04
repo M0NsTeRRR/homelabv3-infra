@@ -1,0 +1,32 @@
+---
+podAnnotations:
+  reloader.stakater.com/auto: "true"
+
+EnvFrom:
+  - configMapRef:
+      name: homepage
+  - secretRef:
+      name: homepage-vault
+
+service:
+  ipFamilyPolicy: "PreferDualStack"
+
+serviceMonitor:
+  enabled: true
+
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: "vault"
+    cert-manager.io/private-key-algorithm: "RSA"
+    cert-manager.io/private-key-size: "4096"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Other
+    gethomepage.dev/name: Stirling-PDF
+    gethomepage.dev/description: PDF Manager
+  hosts:
+    - name: homepage.unicornafk.fr
+      path: /
+      tls: true
+      tlsSecret: homepage.unicornafk.fr-tls
+  ingressClassName: ingress-internal
