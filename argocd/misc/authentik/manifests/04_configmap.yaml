@@ -14,7 +14,7 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: authentik-icons
+  name: authentik-images
 data:
   unicornafk.svg: >-
    <?xml version="1.0" encoding="UTF-8"?><svg id="Calque_1"

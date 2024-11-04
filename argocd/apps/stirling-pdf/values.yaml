@@ -2,7 +2,7 @@
 podAnnotations:
   reloader.stakater.com/auto: "true"
 
-EnvFrom:
+envFrom:
   - configMapRef:
       name: homepage
   - secretRef:

@@ -10,6 +10,9 @@ volumes:
   - name: &volume-config homepage-configs
     configMap:
       name: homepage-configs
+  - name: &volume-images images
+    configMap:
+      name: homepage-images
 volumeMounts:
   - name: *volume-config
     mountPath: /app/config/settings.yaml
@@ -42,6 +45,14 @@ volumeMounts:
   - name: *volume-config
     mountPath: /app/config/custom.js
     subPath: custom.js
+    readOnly: true
+  - name: *volume-images
+    mountPath: /app/public/images/unicornafk.svg
+    subPath: unicornafk.svg
+    readOnly: true
+  - name: *volume-images
+    mountPath: /app/public/images/background.svg
+    subPath: background.svg
     readOnly: true
 
 ingress:

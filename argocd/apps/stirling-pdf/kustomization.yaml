@@ -10,7 +10,7 @@ resources:
   - manifests/02_configmap.yaml
 
 helmCharts:
-- name: stirling-pdf
+- name: stirling-pdf-chart
   releaseName: stirling-pdf
   namespace: *namespace
   repo: https://docs.stirlingpdf.com/Stirling-PDF/
