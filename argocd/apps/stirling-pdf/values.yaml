@@ -25,8 +25,8 @@ ingress:
     gethomepage.dev/name: Stirling-PDF
     gethomepage.dev/description: PDF Manager
   hosts:
-    - name: homepage.unicornafk.fr
+    - name: pdf.unicornafk.fr
       path: /
       tls: true
-      tlsSecret: homepage.unicornafk.fr-tls
+      tlsSecret: pdf.unicornafk.fr-tls
   ingressClassName: ingress-internal
