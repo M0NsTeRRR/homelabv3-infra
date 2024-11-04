@@ -1,0 +1,75 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage
+data:
+  TZ: "Europe/Paris"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage-configs
+data:
+  settings.yaml: |-
+    title: Unicornafk Dashboard
+    theme: dark
+    language: en
+    headerStyle: clean
+    hideVersion: true
+    statusStyle: dot
+    layout:
+      Infrastructure:
+        style: row
+        columns: 4
+        icon: mdi-server
+      ASN:
+        style: row
+        columns: 4
+        icon: mdi-mixcloud
+      Media:
+        style: row
+        columns: 4
+        icon: mdi-movie
+      Home:
+        style: row
+        columns: 4
+        icon: mdi-home
+      Other:
+        style: row
+        columns: 4
+        icon: mdi-linux
+  bookmarks.yaml: |-
+    ---
+  services.yaml: |-
+    ---
+    - Infrastructure:
+      - Server1:
+          href: https://server1.unicornafk.fr:8006
+          icon: proxmox.png
+          description: Proxmox
+      - Server2:
+          href: https://server2.unicornafk.fr:8006
+          icon: proxmox.png
+          description: Proxmox
+      - Server3:
+          href: https://server3.unicornafk.fr:8006
+          icon: proxmox.png
+          description: Proxmox
+      - NAS:
+          href: https://nas.unicornafk.fr
+          icon: truenas.png
+          description: Truenas
+    - Home:
+      - HomeAssistant:
+          href: https://home-assistant.unicornafk.fr
+          icon: home-assistant.png
+          description: Home Assistant
+  widgets.yaml: |-
+    ---
+  kubernetes.yaml: |-
+    mode: cluster
+  docker.yaml: |-
+    ---
+  custom.css: ""
+  custom.js: ""

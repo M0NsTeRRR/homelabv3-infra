@@ -10,6 +10,10 @@ ingress:
   enabled: true
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: ASN
+    gethomepage.dev/name: AS212510.net website
+    gethomepage.dev/description: AS212510.net website
   hosts:
     - host: &host as212510.net
       paths:

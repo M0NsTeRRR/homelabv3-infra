@@ -1,0 +1,17 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: &namespace homepage
+
+resources:
+  - manifests/01_configmap.yaml
+
+helmCharts:
+- name: homepage
+  releaseName: homepage
+  namespace: *namespace
+  repo: https://helm-charts.adminafk.fr
+  version: 0.1.1
+  valuesFile: values.yaml

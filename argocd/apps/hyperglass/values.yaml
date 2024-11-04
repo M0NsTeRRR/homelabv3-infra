@@ -54,6 +54,10 @@ ingress:
   enabled: true
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: ASN
+    gethomepage.dev/name: Hyperglass
+    gethomepage.dev/description: Looking glass
   hosts:
     - host: &host lg.as212510.net
       paths:

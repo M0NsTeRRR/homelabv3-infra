@@ -124,6 +124,11 @@ ui:
   serviceIPFamilyPolicy: "PreferDualStack"
   annotations:
     metallb.universe.tf/loadBalancerIPs: 192.168.10.102,2a0c:b641:2c0:110::102
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Infrastructure
+    gethomepage.dev/name: Vault
+    gethomepage.dev/description: Identity-based secrets management
+    gethomepage.dev/icon: vault.png
 
 serverTelemetry:
   serviceMonitor:

@@ -37,6 +37,11 @@ server:
       cert-manager.io/cluster-issuer: "vault"
       cert-manager.io/private-key-algorithm: "RSA"
       cert-manager.io/private-key-size: "4096"
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/group: Infrastructure
+      gethomepage.dev/name: Authentik
+      gethomepage.dev/description: Identity Provider
+      gethomepage.dev/icon: authentik.png
     hosts:
       - &host sso.unicornafk.fr
     paths:

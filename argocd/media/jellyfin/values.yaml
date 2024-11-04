@@ -26,6 +26,11 @@ ingress:
     cert-manager.io/cluster-issuer: "vault"
     cert-manager.io/private-key-algorithm: "RSA"
     cert-manager.io/private-key-size: "4096"
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Media
+    gethomepage.dev/name: Jellyfin
+    gethomepage.dev/description: Media System
+    gethomepage.dev/icon: jellyfin.png
   hosts:
     - host: &host jellyfin.unicornafk.fr
       paths:
