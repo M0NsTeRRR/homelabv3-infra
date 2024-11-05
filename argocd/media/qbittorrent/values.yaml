@@ -10,8 +10,6 @@ config:
     enabled: false
 
 extraEnvFrom:
-  - configMapRef:
-      name: qbittorrent
   - secretRef:
       name: qbittorrent-vault
 volumes:
