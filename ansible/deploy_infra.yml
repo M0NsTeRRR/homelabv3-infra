@@ -74,6 +74,7 @@
         - infra/external-secrets
         - infra/ingress-internal
         - infra/ingress-external
+        - backup/external-snapshotter
         - storage/rook-operator
         - storage/rook-ceph-cluster
         - infra/cert-manager
