@@ -11,3 +11,4 @@ helmCharts:
   namespace: *namespace
   repo: https://backube.github.io/helm-charts/
   version: 0.10.0
+  valuesFile: values.yaml
