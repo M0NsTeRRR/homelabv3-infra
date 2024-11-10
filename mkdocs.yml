@@ -116,3 +116,5 @@ nav:
     - Proxmox ACME: guide/proxmox_acme/index.md
     - proxmox-exporter: guide/proxmox_exporter/index.md
     - snmp-exporter: guide/snmp_exporter/index.md
+    - truenas: guide/truenas/index.md
+    - s3: guide/s3/index.md
