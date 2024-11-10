@@ -157,6 +157,15 @@ spec:
       params:
         module: *module
         target:
+          - https://nas.unicornafk.fr:9002
+      path: *path
+      port: *port
+      scrapeTimeout: *scrape-timeout
+    - honorLabels: *honor-labels
+      relabelings: *relabelings
+      params:
+        module: *module
+        target:
           - https://vault.unicornafk.fr
       path: *path
       port: *port
