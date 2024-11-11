@@ -1,0 +1,40 @@
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: db-backup
+spec:
+  sourcePVC: bazarr-cluster-1
+  trigger:
+    # At 0 minutes past the hour, every 6 hours
+    schedule: "0 */6 * * *"
+  restic:
+    pruneIntervalDays: 14
+    repository: backup-vault
+    retain:
+      hourly: 1
+      daily: 4
+      weekly: 2
+      monthly: 4
+      yearly: 1
+    copyMethod: Snapshot
+    customCA:
+      key: ca.crt
+      secretName: homelab-ca
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: db-restore
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    repository: backup-vault
+    destinationPVC: bazarr-cluster-1
+    copyMethod: Snapshot
+    customCA:
+      key: ca.crt
+      secretName: homelab-ca
+    cleanupCachePVC: true
+    cleanupTempPVC: true
