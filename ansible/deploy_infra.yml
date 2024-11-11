@@ -60,6 +60,29 @@
   hosts: kubernetes_master[0]
   become: true
   tasks:
+    - name: Create required k8s namespace
+      kubernetes.core.k8s:
+        api_version: v1
+        kind: Namespace
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - prometheus-operator-crds
+        - cilium
+        - metallb-system
+        - external-secrets
+        - ingress-internal
+        - ingress-external
+        - external-snapshotter
+        - rook-ceph
+        - rook-ceph-cluster
+        - cert-manager
+        - trust-manager
+        - vault
+        - cert-manager-scaleway
+        - external-dns-internal
+        - external-dns-external
+
     - name: "Install kubernetes base infra first part"
       kubernetes.core.k8s:
         definition: "{{ lookup('kubernetes.core.kustomize', dir='../argocd/' + item, enable_helm=True) }}"
@@ -75,7 +98,7 @@
         - infra/ingress-internal
         - infra/ingress-external
         - backup/external-snapshotter
-        - storage/rook-operator
+        - storage/rook-ceph
         - storage/rook-ceph-cluster
         - infra/cert-manager
         - infra/trust-manager
