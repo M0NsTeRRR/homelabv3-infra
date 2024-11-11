@@ -5,9 +5,6 @@ kind: Kustomization
 
 namespace: &namespace cilium
 
-resources:
-
-
 helmCharts:
 - name: cilium
   releaseName: cilium
