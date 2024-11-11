@@ -67,7 +67,7 @@
     },
     {
       "description": ["Custom versioning for kubernetes/kubectl"],
-      "matchDatasources": ["github-releases"],
+      "matchDatasources": ["github-tags"],
       "versioning": "regex:^kubernetes-(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)$",
       "matchPackagePatterns": ["kubernetes/kubectl"]
     },
