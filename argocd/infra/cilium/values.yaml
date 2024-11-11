@@ -1,6 +1,5 @@
 kubeProxyReplacement: true
 routingMode: native
-tunnel: disabled
 autoDirectNodeRoutes: true
 ipv4NativeRoutingCIDR: "10.42.0.0/16"
 ipv6NativeRoutingCIDR: "2001:cafe:42:0::/96"
