@@ -2,8 +2,6 @@ node-name: {{ k3s_nodename }}
 
 data-dir: /var/lib/rancher/k3s
 
-embedded-registry: true
-
 {% if inventory_hostname != groups[k3s_master_group][0] %}token-file: /var/lib/rancher/k3s/server/node-token{% endif %}
 
 {% if inventory_hostname != groups[k3s_master_group][0] %}
