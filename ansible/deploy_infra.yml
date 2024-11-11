@@ -70,6 +70,7 @@
         kubeconfig: "{{ kubernetes_localhost_kubeconfig_path }}"
         validate_certs: true
       with_items:
+        - gateway-api-crds
         - prometheus-operator-crds
         - cilium
         - metallb-system
@@ -95,6 +96,7 @@
         kubeconfig: "{{ kubernetes_localhost_kubeconfig_path }}"
         validate_certs: true
       with_items:
+        - infra/gateway-api-crds
         - monitoring/prometheus-operator-crds
         - infra/cilium
         - infra/metallb-system
