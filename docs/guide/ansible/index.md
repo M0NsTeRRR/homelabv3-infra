@@ -42,6 +42,8 @@ ansible-playbook <PLAYBOOK>
 
 !!! info "KUBECONFIG environment variable is hardcoded to `/home/vscode/.kube/homelab` in `.devcontainer/Dockerfile` and context is set to `default` in `.devcontainer/postCreateCommand.sh`"
 
+!!! bug "Pyyaml does not support [YAML 1.2 core schema](https://github.com/yaml/pyyaml/issues/486), it's why `prometheus-operator-crds` must be manually applied for now"
+
 ??? question "How to execute only a part of an ansible playbook ?"
     * Filter by hosts
 
