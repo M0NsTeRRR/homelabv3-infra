@@ -192,7 +192,7 @@ dashboards:
           value: *datasource
     Powerdns-recursor:
       gnetId: 20448
-      revision: 1
+      revision: 2
       datasource:
         - name: DS_PROMETHEUS
           value: *datasource
