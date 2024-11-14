@@ -100,7 +100,7 @@ dashboards:
       datasource: *datasource
     Argocd-operational:
       gnetId: 19993
-      revision: 2
+      revision: 3
       datasource:
         - name: DS_PROMETHEUS
           value: *datasource
