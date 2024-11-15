@@ -13,5 +13,5 @@ helmCharts:
   releaseName: homepage
   namespace: *namespace
   repo: https://helm-charts.adminafk.fr
-  version: 0.1.1
+  version: 0.1.2
   valuesFile: values.yaml
