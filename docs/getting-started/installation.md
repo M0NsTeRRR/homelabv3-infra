@@ -26,7 +26,7 @@
     python3 -m venv venv
     source venv/bin/activate
     python3 -m pip install --upgrade pip
-    pip install '.[ansible,terraform,octodns,documentation]'
+    pip install '.[just,ansible,terraform,octodns,documentation]'
     ```
 
     !!! info

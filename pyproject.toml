@@ -6,6 +6,9 @@ name = "homelabv3_infra"
 version = "0.0.1"
 
 [project.optional-dependencies]
+just = [
+    "rust-just==1.36.0"
+]
 ansible = [
     "ansible-core==2.18.0",
     "ansible-lint==24.10.0",

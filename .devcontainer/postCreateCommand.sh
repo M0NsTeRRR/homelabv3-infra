@@ -9,7 +9,10 @@ sudo cp ssl/*.crt /usr/local/share/ca-certificates
 sudo update-ca-certificates
 
 # install python packages
-pip install '.[ansible,terraform,octodns,documentation]'
+pip install '.[just,ansible,terraform,octodns,documentation]'
+
+# Setup bash completion
+just --completions bash >> /home/vscode/.bashrc
 
 # setup packer
 packer init packer/templates/ubuntu

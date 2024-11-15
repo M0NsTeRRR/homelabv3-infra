@@ -60,76 +60,15 @@
   hosts: kubernetes_master[0]
   become: true
   tasks:
-    - name: Create required k8s namespace
-      kubernetes.core.k8s:
-        api_version: v1
-        kind: Namespace
-        name: "{{ item }}"
-        wait: true
-        wait_timeout: 300
-        kubeconfig: "{{ kubernetes_localhost_kubeconfig_path }}"
-        validate_certs: true
-      with_items:
-        - gateway-api-crds
-        - prometheus-operator-crds
-        - cilium
-        - metallb-system
-        - external-secrets
-        - ingress-internal
-        - ingress-external
-        - external-snapshotter
-        - rook-ceph
-        - rook-ceph-cluster
-        - cert-manager
-        - trust-manager
-        - vault
-        - cert-manager-scaleway
-        - external-dns-internal
-        - external-dns-external
-      delegate_to: localhost
-
-    - name: "Install kubernetes base infra first part"
-      kubernetes.core.k8s:
-        definition: "{{ lookup('kubernetes.core.kustomize', dir='../argocd/' + item, enable_helm=True) }}"
-        wait: true
-        wait_timeout: 300
-        kubeconfig: "{{ kubernetes_localhost_kubeconfig_path }}"
-        validate_certs: true
-      with_items:
-        - infra/gateway-api-crds
-        - monitoring/prometheus-operator-crds
-        - infra/cilium
-        - infra/metallb-system
-        - infra/external-secrets
-        - infra/ingress-internal
-        - infra/ingress-external
-        - backup/external-snapshotter
-        - storage/rook-ceph
-        - storage/rook-ceph-cluster
-        - infra/cert-manager
-        - infra/trust-manager
-      delegate_to: localhost
-
     - name: Install vault
       ansible.builtin.include_role:
         name: vault
-
-    - name: "Install kubernetes base infra last part"
-      kubernetes.core.k8s:
-        definition: "{{ lookup('kubernetes.core.kustomize', dir='../argocd/' + item, enable_helm=True) }}"
-        wait: true
-        wait_timeout: 300
-        kubeconfig: "{{ kubernetes_localhost_kubeconfig_path }}"
-        validate_certs: true
-      with_items:
-        - infra/cert-manager-scaleway
-        - infra/external-dns-internal
-        - infra/external-dns-external
-      delegate_to: localhost
+      tags: vault
 
     - name: Install argocd
       ansible.builtin.include_role:
         name: argocd
+      tags: argocd
 
 - name: Configure Vault unseal
   hosts: dns,vpn

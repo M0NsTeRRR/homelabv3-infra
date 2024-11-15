@@ -57,7 +57,8 @@
 				"redhat.vscode-yaml",
 				"github.vscode-github-actions",
 				"donjayamanne.githistory",
-				"eamodio.gitlens"
+				"eamodio.gitlens",
+				"nefrob.vscode-just-syntax"
 			]
 		}
 	}

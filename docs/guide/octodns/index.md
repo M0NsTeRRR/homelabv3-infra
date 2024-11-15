@@ -10,6 +10,8 @@
 
 ## Usage
 
+You should not normally use it by hand it's running in a Github action.
+
 Configuration is stored in `octodns` folder.
 
 `SCALEWAY_SECRET_KEY` represents the API token to manage your DNS zone

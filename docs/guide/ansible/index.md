@@ -14,6 +14,10 @@ Distributions :
 
 ## Usage
 
+### Just
+
+`just --list` and looks for ansible group recipes.
+
 ### List of playbooks
 
 | Playbook                           | Description                                                          |

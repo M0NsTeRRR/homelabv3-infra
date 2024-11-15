@@ -108,6 +108,7 @@ nav:
     - Packer: guide/packer/index.md
     - Terraform: guide/terraform/index.md
     - Ansible: guide/ansible/index.md
+    - Kubernetes: guide/kubernetes/index.md
     - Argocd: guide/argocd/index.md
     - Octodns: guide/octodns/index.md
     - Renovatebot: guide/renovatebot/index.md
