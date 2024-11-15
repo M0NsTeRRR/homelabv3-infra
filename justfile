@@ -35,7 +35,7 @@ kubernetes_base:
     cd {{ argocd_dir }}/storage/rook-ceph-cluster && kubectl kustomize --enable-helm | kubectl create -f -
     cd {{ argocd_dir }}/infra/cert-manager && kubectl kustomize --enable-helm | kubectl create -f -
     cd {{ argocd_dir }}/infra/trust-manager && kubectl kustomize --enable-helm | kubectl create -f -
-    cd {{ argocd_dir }} && kubectl kustomize --enable-helm | kubectl create -f -
+    cd {{ argocd_dir }}/infra/vault && kubectl kustomize --enable-helm | kubectl create -f -
     cd {{ ansible_dir }} && ansible-playbook deploy_infra.yml --limit kubernetes_master\[0\] --tags vault
     cd {{ argocd_dir }}infra/cert-manager-scaleway && kubectl kustomize --enable-helm | kubectl create -f -
     cd {{ argocd_dir }}infra/external-dns-internal && kubectl kustomize --enable-helm | kubectl create -f -
