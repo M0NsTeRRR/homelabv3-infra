@@ -18,5 +18,5 @@ Configuration is stored in `octodns` folder.
 
 ```sh
 export SCALEWAY_SECRET_KEY=<SCALEWAY_SECRET_KEY>
-octodns-sync --config-file=./octodns/config.yaml --doit
+octodns-sync --config-file=./octodns/config.yaml --doit --force
 ```
