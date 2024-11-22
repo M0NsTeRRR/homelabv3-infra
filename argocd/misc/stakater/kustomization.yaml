@@ -9,6 +9,6 @@ helmCharts:
 - name: reloader
   releaseName: stakater
   namespace: *namespace
-  repo: https://stakater.github.io/stakater-charts
+  repo: oci://ghcr.io/stakater/charts
   version: 1.2.0
   valuesFile: values.yaml

@@ -13,7 +13,7 @@ helmCharts:
 - name: &kea-helm-chart-name kea-exporter
   releaseName: kea1-exporter
   namespace: *namespace
-  repo: &kea-helm-chart-repo https://helm-charts.adminafk.fr
+  repo: &kea-helm-chart-repo oci://ghcr.io/m0nsterrr/helm-charts
   version: 0.2.6
   valuesFile: values_1.yaml
 - name: *kea-helm-chart-name

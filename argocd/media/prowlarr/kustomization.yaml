@@ -14,6 +14,6 @@ helmCharts:
 - name: prowlarr
   releaseName: prowlarr
   namespace: *namespace
-  repo: https://helm-charts.adminafk.fr
+  repo: oci://ghcr.io/m0nsterrr/helm-charts
   version: 0.8.0
   valuesFile: values.yaml

@@ -12,6 +12,6 @@ helmCharts:
 - name: cloudnative-pg
   releaseName: cnpg
   namespace: *namespace
-  repo: https://cloudnative-pg.github.io/charts
+  repo: oci://ghcr.io/cloudnative-pg/charts
   version: 0.22.1
   valuesFile: values.yaml

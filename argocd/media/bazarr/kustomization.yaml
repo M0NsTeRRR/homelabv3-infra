@@ -16,6 +16,6 @@ helmCharts:
 - name: bazarr
   releaseName: bazarr
   namespace: *namespace
-  repo: https://helm-charts.adminafk.fr
+  repo: oci://ghcr.io/m0nsterrr/helm-charts
   version: 0.4.3
   valuesFile: values.yaml

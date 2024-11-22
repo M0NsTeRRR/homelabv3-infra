@@ -12,6 +12,6 @@ helmCharts:
 - name: external-secrets
   releaseName: external-secrets
   namespace: *namespace
-  repo: https://charts.external-secrets.io
+  repo: oci://ghcr.io/external-secrets/charts
   version: 0.10.6
   valuesFile: values.yaml
