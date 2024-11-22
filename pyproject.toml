@@ -7,7 +7,7 @@ version = "0.0.1"
 
 [project.optional-dependencies]
 just = [
-    "rust-just==1.36.0"
+    "rust-just==1.37.0"
 ]
 ansible = [
     "ansible-core==2.18.0",
