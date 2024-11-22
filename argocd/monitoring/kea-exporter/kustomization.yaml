@@ -14,11 +14,11 @@ helmCharts:
   releaseName: kea1-exporter
   namespace: *namespace
   repo: &kea-helm-chart-repo https://helm-charts.adminafk.fr
-  version: 0.2.5
+  version: 0.2.6
   valuesFile: values_1.yaml
 - name: *kea-helm-chart-name
   releaseName: kea2-exporter
   namespace: *namespace
   repo: *kea-helm-chart-repo
-  version: 0.2.5
+  version: 0.2.6
   valuesFile: values_2.yaml
