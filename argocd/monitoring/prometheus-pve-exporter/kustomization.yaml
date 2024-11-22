@@ -16,5 +16,5 @@ helmCharts:
   releaseName: prometheus-pve-exporter
   namespace: *namespace
   repo: https://helm-charts.adminafk.fr
-  version: 0.2.14
+  version: 0.2.15
   valuesFile: values.yaml
