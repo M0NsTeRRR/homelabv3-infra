@@ -13,5 +13,5 @@ helmCharts:
   releaseName: jellyseerr
   namespace: *namespace
   repo: https://helm-charts.adminafk.fr
-  version: 1.1.0
+  version: 1.1.1
   valuesFile: values.yaml
