@@ -33,6 +33,7 @@ prometheus:
   enabled: true
   serviceMonitor:
     enabled: true
+    trustCRDsExist: true
 dashboards:
   enabled: true
 operator:
