@@ -23,21 +23,21 @@ ansible_kubernetes:
 
 [group('kubernetes')]
 kubernetes_base:
-    cd {{ argocd_dir }}/infra/gateway-api-crds && kubectl kustomize --enable-helm | kubectl create -f -
-    cd {{ argocd_dir }}/monitoring/prometheus-operator-crds && kubectl kustomize --enable-helm | kubectl create -f -
-    cd {{ argocd_dir }}/infra/cilium && kubectl kustomize --enable-helm | kubectl create -f -
-    cd {{ argocd_dir }}/infra/metallb-system && kubectl kustomize --enable-helm | kubectl create -f -
-    cd {{ argocd_dir }}/infra/external-secrets && kubectl kustomize --enable-helm | kubectl create -f -
-    cd {{ argocd_dir }}/infra/ingress-internal && kubectl kustomize --enable-helm | kubectl create -f -
-    cd {{ argocd_dir }}/infra/ingress-external && kubectl kustomize --enable-helm | kubectl create -f -
-    cd {{ argocd_dir }}/backup/external-snapshotter && kubectl kustomize --enable-helm | kubectl create -f -
-    cd {{ argocd_dir }}/storage/rook-ceph && kubectl kustomize --enable-helm | kubectl create -f -
-    cd {{ argocd_dir }}/storage/rook-ceph-cluster && kubectl kustomize --enable-helm | kubectl create -f -
-    cd {{ argocd_dir }}/infra/cert-manager && kubectl kustomize --enable-helm | kubectl create -f -
-    cd {{ argocd_dir }}/infra/trust-manager && kubectl kustomize --enable-helm | kubectl create -f -
-    cd {{ argocd_dir }}/infra/vault && kubectl kustomize --enable-helm | kubectl create -f -
+    cd {{ argocd_dir }}/infra/gateway-api-crds && kustomize build --enable-helm | kubectl apply --server-side -f -
+    cd {{ argocd_dir }}/monitoring/prometheus-operator-crds && kustomize build --enable-helm | kubectl apply --server-side -f -
+    cd {{ argocd_dir }}/infra/cilium && kustomize build --enable-helm | kubectl apply --server-side -f -
+    cd {{ argocd_dir }}/infra/metallb-system && kustomize build --enable-helm | kubectl apply --server-side -f -
+    cd {{ argocd_dir }}/infra/external-secrets && kustomize build --enable-helm | kubectl apply --server-side -f -
+    cd {{ argocd_dir }}/infra/ingress-internal && kustomize build --enable-helm | kubectl apply --server-side -f -
+    cd {{ argocd_dir }}/infra/ingress-external && kustomize build --enable-helm | kubectl apply --server-side -f -
+    cd {{ argocd_dir }}/backup/external-snapshotter && kustomize build --enable-helm | kubectl apply --server-side -f -
+    cd {{ argocd_dir }}/storage/rook-ceph && kustomize build --enable-helm | kubectl apply --server-side -f -
+    cd {{ argocd_dir }}/storage/rook-ceph-cluster && kustomize build --enable-helm | kubectl apply --server-side -f -
+    cd {{ argocd_dir }}/infra/cert-manager && kustomize build --enable-helm | kubectl apply --server-side -f -
+    cd {{ argocd_dir }}/infra/trust-manager && kustomize build --enable-helm | kubectl apply --server-side -f -
+    cd {{ argocd_dir }}/infra/vault && kustomize build --enable-helm | kubectl apply --server-side -f -
     cd {{ ansible_dir }} && ansible-playbook deploy_infra.yml --limit kubernetes_master\[0\] --tags vault
-    cd {{ argocd_dir }}infra/cert-manager-scaleway && kubectl kustomize --enable-helm | kubectl create -f -
-    cd {{ argocd_dir }}infra/external-dns-internal && kubectl kustomize --enable-helm | kubectl create -f -
-    cd {{ argocd_dir }}infra/external-dns-external && kubectl kustomize --enable-helm | kubectl create -f -
+    cd {{ argocd_dir }}infra/cert-manager-scaleway && kustomize build --enable-helm | kubectl apply --server-side -f -
+    cd {{ argocd_dir }}infra/external-dns-internal && kustomize build --enable-helm | kubectl apply --server-side -f -
+    cd {{ argocd_dir }}infra/external-dns-external && kustomize build --enable-helm | kubectl apply --server-side -f -
     cd {{ ansible_dir }} && ansible-playbook deploy_infra.yml --limit kubernetes_master\[0\] --tags argocd

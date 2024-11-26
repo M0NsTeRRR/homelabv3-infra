@@ -9,7 +9,7 @@ sudo cp ssl/*.crt /usr/local/share/ca-certificates
 sudo update-ca-certificates
 
 # install python packages
-pip install '.[just,ansible,terraform,octodns,documentation]'
+uv sync --all-extras
 
 # Setup bash completion
 just --completions bash >> /home/vscode/.bashrc

@@ -6,9 +6,7 @@
 
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	"features": {
-        "ghcr.io/devcontainers/features/python:1": {
-            "version": "3.12"
-        },
+        "ghcr.io/va-h/devcontainers-features/uv:1": {},
         "ghcr.io/devcontainers-contrib/features/packer-asdf:2": {
             // datasource=github-tags depName=hashicorp/packer
             "version": "1.11.2"
@@ -21,7 +19,8 @@
         },
         "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
             "version": "latest"
-        }
+        },
+		"ghcr.io/rio/features/kustomize:1": {}
     },
 
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.

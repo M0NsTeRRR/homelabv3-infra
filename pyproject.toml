@@ -1,39 +1,68 @@
-[build-system]
-requires = ["wheel==0.45.0", "setuptools==75.6.0"]
-
 [project]
 name = "homelabv3_infra"
-version = "0.0.1"
+version = "0.0.0"
+description = "Homelab management infrastructure (Packer / Terraform / Ansible / Octodns / Argocd) "
+readme = "README.md"
+authors = [
+    {name = "Ludovic Ortega", email = "ludovic.ortega@adminafk.fr"}
+]
+keywords = [
+    "kubernetes",
+    "ansible",
+    "packer",
+    "terraform",
+    "selfhosted",
+    "homelab",
+    "terragrunt",
+    "argocd"
+]
+classifiers = [
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Operating System :: OS Independent",
+    "License :: OSI Approved :: CEA CNRS Inria Logiciel Libre License, version 2.1 (CeCILL-2.1)",
+    "Topic :: Utilities",
+]
+
+requires-python = ">=3.12,<4.0.0"
+
+[project.urls]
+Homepage = "https://github.com/M0NsTeRRR/homelabv3-infra"
+Repository = "https://github.com/M0NsTeRRR/homelabv3-infra"
+Issues = "https://github.com/M0NsTeRRR/homelabv3-infra/issues"
+Funding = "https://ko-fi.com/ludovicortega"
 
 [project.optional-dependencies]
 just = [
-    "rust-just==1.37.0"
+    "rust-just~=1.37.0"
 ]
 ansible = [
-    "ansible-core==2.18.0",
-    "ansible-lint==24.10.0",
-    "dnspython==2.7.0",
-    "netaddr==1.3.0",
-    "cryptography==43.0.3",
-    "passlib==1.7.4",
+    "ansible-core~=2.18.0",
+    "ansible-lint~=24.10.0",
+    "dnspython~=2.7.0",
+    "netaddr~=1.3.0",
+    "cryptography~=43.0.3",
+    "passlib~=1.7.4",
     # https://foss.heptapod.net/python-libs/passlib/-/issues/190
-    "bcrypt==4.0.1",
-    "requests==2.32.3",
-    "kubernetes==31.0.0",
-    "PyYAML==6.0.2",
-    "jsonpatch==1.33"
+    "bcrypt~=4.0.1",
+    "requests~=2.32.3",
+    "kubernetes~=31.0.0",
+    "PyYAML~=6.0.2",
+    "jsonpatch~=1.33"
 ]
 terraform = [
-    "paramiko==3.5.0"
+    "paramiko~=3.5.0"
 ]
 octodns = [
-    "octodns==1.10.0",
-    "octodns_scaleway==0.0.4"
+    "octodns~=1.10.0",
+    "octodns_scaleway~=0.0.4",
+    "octodns-powerdns~=0.0.7"
 ]
 documentation = [
-    "mkdocs-material[imaging]==9.5.45",
-    "pytz==2024.2"
+    "mkdocs-material[imaging]~=9.5.45",
+    "pytz~=2024.2"
 ]
 
-[tool.setuptools.packages.find]
-include = [""]
+[tool.uv]
+package = false

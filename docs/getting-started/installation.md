@@ -13,20 +13,18 @@
 
 1. Install (versions are pinned in configuration files)
 
+    * [Uv](https://docs.astral.sh/uv/getting-started/installation/)
     * [Packer](https://developer.hashicorp.com/packer/install)
     * [Terraform](https://developer.hashicorp.com/terraform/install)
     * [Terragrunt](https://terragrunt.gruntwork.io/docs/getting-started/install/)
     * [Kubectl](https://kubernetes.io/docs/tasks/tools/)
+    * [Kustomize](https://kubectl.docs.kubernetes.io/installation/kustomize/)
     * [Helm](https://helm.sh/docs/intro/install/)
 
 2. Setup python
 
     ```sh
-    apt install python3-venv
-    python3 -m venv venv
-    source venv/bin/activate
-    python3 -m pip install --upgrade pip
-    pip install '.[just,ansible,terraform,octodns,documentation]'
+    uv --sync-extras
     ```
 
     !!! info
