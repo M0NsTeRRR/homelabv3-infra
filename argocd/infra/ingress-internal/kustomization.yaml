@@ -13,6 +13,6 @@ helmCharts:
 - name: traefik
   releaseName: ingress-internal
   namespace: *namespace
-  repo: oci://ghcr.io/traefik/helm/traefik
+  repo: oci://ghcr.io/traefik/helm
   version: 33.0.0
   valuesFile: values.yaml
