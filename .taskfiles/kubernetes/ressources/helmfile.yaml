@@ -86,7 +86,7 @@ releases:
   - name: external-secrets
     namespace: external-secrets
     chart: oci://ghcr.io/external-secrets/charts/external-secrets
-    version: 0.10.7
+    version: 0.11.0
     values: ["../../../argocd/infra/external-secrets/values.yaml"]
     needs: ["ingress-internal/ingress-internal"]
     hooks:
