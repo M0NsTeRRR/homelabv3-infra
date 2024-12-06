@@ -25,4 +25,4 @@ jobs:
         run: |
           cd ansible
           sed -i '/vault_password_file/d' ansible.cfg
-          ansible-lint
+          uv run ansible-lint

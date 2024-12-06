@@ -10,6 +10,7 @@ on:
 
 env:
   SCALEWAY_SECRET_KEY: ${{ secrets.SCALEWAY_SECRET_KEY }}
+  POWERDNS_API_KEY: ${{ secrets.POWERDNS_API_KEY }}
 
 jobs:
   octodns-lint:
@@ -26,22 +27,13 @@ jobs:
         run: uv sync --extra octodns
       - name: Validate octodns config
         run: |
-          octodns-validate --config-file=./octodns/internal/config.yaml --all
-          octodns-validate --config-file=./octodns/external/config.yaml --all
+          uv run octodns-validate --config-file=./octodns/internal/config.yaml --all
+          uv run octodns-validate --config-file=./octodns/external/config.yaml --all
   octodns-deploy:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
     needs: [octodns-lint]
-    steps:
-      - uses: actions/checkout@v4
-      - name: Set up Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.x"
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install '.[octodns]'     
+    steps: 
       - name: Apply octodns config
         run: |
-          octodns-sync --config-file=./octodns/external/config.yaml --doit --force
+          uv run octodns-sync --config-file=./octodns/external/config.yaml --doit --force
