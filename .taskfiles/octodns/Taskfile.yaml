@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+---
+version: "3"
+
+tasks:
+  internal:
+    desc: Setup internal records
+    cmd: octodns-sync --config-file=./internal/config.yaml --doit --force
+  external:
+    desc: Setup external records
+    cmd: octodns-sync --config-file=./external/config.yaml --doit --force

@@ -34,9 +34,6 @@ Issues = "https://github.com/M0NsTeRRR/homelabv3-infra/issues"
 Funding = "https://ko-fi.com/ludovicortega"
 
 [project.optional-dependencies]
-just = [
-    "rust-just~=1.37.0"
-]
 ansible = [
     "ansible-core~=2.18.0",
     "ansible-lint~=24.10.0",

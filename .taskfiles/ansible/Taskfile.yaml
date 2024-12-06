@@ -1,0 +1,20 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+---
+version: "3"
+
+tasks:
+  dhcp:
+    desc: Setup DHCP servers
+    cmd: ansible-playbook deploy_infra.yml --limit dhcp
+  dns:
+    desc: Setup DNS servers
+    cmd: ansible-playbook deploy_infra.yml --limit dns
+  status:
+    desc: Setup Status app
+    cmd: ansible-playbook deploy_infra.yml --limit status
+  vpn:
+    desc: Setup VPN
+    cmd: ansible-playbook deploy_infra.yml --limit vpn
+  vault:
+    desc: Setup vault
+    cmd: ansible-playbook deploy_infra.yml --limit vault

@@ -14,9 +14,9 @@ Distributions :
 
 ## Usage
 
-### Just
+### Task
 
-`just --list` and looks for ansible group recipes.
+`task --list` and looks for ansible group tasks.
 
 ### List of playbooks
 

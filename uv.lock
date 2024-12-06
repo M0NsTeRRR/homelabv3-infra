@@ -56,7 +56,7 @@ dependencies = [
     { name = "rich", marker = "platform_system != 'Windows'" },
     { name = "ruamel-yaml", marker = "platform_system != 'Windows'" },
     { name = "subprocess-tee", marker = "platform_system != 'Windows'" },
-    { name = "wcmatch", marker = "platform_system != 'Windows'" },
+    { name = "wcmatch", marker = "platform_system != 'Windows' and python_full_version >= '3.12' and python_full_version < '4.0.0'" },
     { name = "yamllint", marker = "platform_system != 'Windows'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/7b/2a/5f85804b10cfda961c27d6ea110327e53e43d667fc5d071faa3017f948ad/ansible_lint-24.10.0.tar.gz", hash = "sha256:59b396bcd9be734f9ae40796e9660c267ae85f1f13e47811fd8abdc6aaffea5c", size = 537358 }
@@ -394,9 +394,6 @@ documentation = [
     { name = "mkdocs-material", extra = ["imaging"], marker = "platform_system != 'Windows'" },
     { name = "pytz", marker = "platform_system != 'Windows'" },
 ]
-just = [
-    { name = "rust-just", marker = "platform_system != 'Windows'" },
-]
 octodns = [
     { name = "octodns", marker = "platform_system != 'Windows'" },
     { name = "octodns-powerdns", marker = "platform_system != 'Windows'" },
@@ -425,7 +422,6 @@ requires-dist = [
     { name = "pytz", marker = "extra == 'documentation'", specifier = "~=2024.2" },
     { name = "pyyaml", marker = "extra == 'ansible'", specifier = "~=6.0.2" },
     { name = "requests", marker = "extra == 'ansible'", specifier = "~=2.32.3" },
-    { name = "rust-just", marker = "extra == 'just'", specifier = "~=1.37.0" },
 ]
 
 [[package]]
@@ -1107,7 +1103,7 @@ name = "ruamel-yaml"
 version = "0.18.6"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "ruamel-yaml-clib", marker = "python_full_version < '3.13' and platform_python_implementation == 'CPython' and platform_system != 'Windows'" },
+    { name = "ruamel-yaml-clib", marker = "python_full_version < '3.13' and platform_python_implementation == 'CPython' and platform_system != 'Windows' and python_full_version >= '3.12' and python_full_version < '4.0.0'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/29/81/4dfc17eb6ebb1aac314a3eb863c1325b907863a1b8b1382cdffcb6ac0ed9/ruamel.yaml-0.18.6.tar.gz", hash = "sha256:8b27e6a217e786c6fbe5634d8f3f11bc63e0f80f6a5890f28863d9c45aac311b", size = 143362 }
 wheels = [
@@ -1132,26 +1128,6 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/e2/a9/28f60726d29dfc01b8decdb385de4ced2ced9faeb37a847bd5cf26836815/ruamel.yaml.clib-0.2.12-cp313-cp313-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:96777d473c05ee3e5e3c3e999f5d23c6f4ec5b0c38c098b3a5229085f74236c6", size = 701785 },
     { url = "https://files.pythonhosted.org/packages/84/7e/8e7ec45920daa7f76046578e4f677a3215fe8f18ee30a9cb7627a19d9b4c/ruamel.yaml.clib-0.2.12-cp313-cp313-musllinux_1_1_i686.whl", hash = "sha256:3bc2a80e6420ca8b7d3590791e2dfc709c88ab9152c00eeb511c9875ce5778bf", size = 693017 },
     { url = "https://files.pythonhosted.org/packages/c5/b3/d650eaade4ca225f02a648321e1ab835b9d361c60d51150bac49063b83fa/ruamel.yaml.clib-0.2.12-cp313-cp313-musllinux_1_1_x86_64.whl", hash = "sha256:e188d2699864c11c36cdfdada94d781fd5d6b0071cd9c427bceb08ad3d7c70e1", size = 741270 },
-]
-
-[[package]]
-name = "rust-just"
-version = "1.37.0"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/4d/99/270565a23ce16051f1e2074506e21295c5f734b10b106903904f7bca392c/rust_just-1.37.0.tar.gz", hash = "sha256:2fc3236d08dd3c6f16adaa426e09904fde7943835fb58671e7860138a03789ed", size = 1381220 }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/d4/1a/28c87a8fbfed3f8d1c810062e9e1e60bac16461c86e27b74a45b78aa3971/rust_just-1.37.0-py3-none-macosx_10_12_x86_64.whl", hash = "sha256:53fc9730233fbb27ac78a8012fcdb6b0dd064a9a63fb851b887b367e716d5e31", size = 1731621 },
-    { url = "https://files.pythonhosted.org/packages/4b/2a/31ffab4ee508b9cd9980e4aff4676e4562262f79ef10b60c79b70cd85eb8/rust_just-1.37.0-py3-none-macosx_11_0_arm64.whl", hash = "sha256:2e10630bc68de9e7db89012e8a8a29d7f2311ca8f00951fd4db3b3d63cae14a1", size = 1611493 },
-    { url = "https://files.pythonhosted.org/packages/38/f8/3555de47ddcaaec87dbf6921558ab97228bc7ecf62aa39988756f063af32/rust_just-1.37.0-py3-none-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:6357fc2e25fe271cb0b9e5446ce3a417d621e56ae3805cafe96e235292dd8798", size = 1736331 },
-    { url = "https://files.pythonhosted.org/packages/78/41/83fac2fd052095a0051b5a5e2aefc7352333a6215d6db80c4979e3513fb7/rust_just-1.37.0-py3-none-manylinux_2_17_armv7l.manylinux2014_armv7l.whl", hash = "sha256:4004500d0244af3eee2736ede081b783e76787619ce6bddb265d21983c04142d", size = 1747868 },
-    { url = "https://files.pythonhosted.org/packages/bf/e9/d6acbedad4ce57664ac6090b8243910f90901f673dba83870d0a432969a2/rust_just-1.37.0-py3-none-manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:98692aa3feaca52ec6b56af51d123e836c1ec329a0a5f199523601059f8d85b3", size = 1867122 },
-    { url = "https://files.pythonhosted.org/packages/f2/a3/d8f814329eff5e20050e29a7ce776e3ebb79d53728f5c47c328c2d1cdbf7/rust_just-1.37.0-py3-none-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:f7cba06d475654700ecbed766374a0c1648166f98b5c738262d0093200916f60", size = 1923495 },
-    { url = "https://files.pythonhosted.org/packages/a4/7f/e19caf8e006dd80f395c1156ffec48dbba8ec62b6452bf859c8af55842f8/rust_just-1.37.0-py3-none-manylinux_2_17_s390x.manylinux2014_s390x.whl", hash = "sha256:2ea38b99c3212784b8e074ee3dafcb83c83a6f9d5062ab519d167ff6c2e1d2cd", size = 2362260 },
-    { url = "https://files.pythonhosted.org/packages/56/63/8a3a66a2399ded683535737daf264fdf95825209764c6b9a4c32d5f92b8e/rust_just-1.37.0-py3-none-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:f0071bb78ca4f7198a8cdff8727b987b1e4c922fb15f243e546246e5250faf41", size = 1857159 },
-    { url = "https://files.pythonhosted.org/packages/7a/f5/5b27069e56e71ec944b52d16e528a8a0392c31db48980b7d2ec75b68f715/rust_just-1.37.0-py3-none-musllinux_1_2_aarch64.whl", hash = "sha256:531fb52f1d21febe7ed6bb2059a06e9bc31289596bcde0ad964ede05c7d68ea9", size = 1747765 },
-    { url = "https://files.pythonhosted.org/packages/c8/5e/7403339a91f057681042a66de759e960df11ad289dd47d8e2fd4f82348e9/rust_just-1.37.0-py3-none-musllinux_1_2_armv7l.whl", hash = "sha256:59d0ecf3523338ba9e0e286179dfde3a7458be81a7ec72265a903b7bdc9084d5", size = 1775121 },
-    { url = "https://files.pythonhosted.org/packages/48/58/f5624f31ae51db3b056d8d69cad12f7b09b35064ace1df7b093e82ecc098/rust_just-1.37.0-py3-none-musllinux_1_2_i686.whl", hash = "sha256:40b505c95e5ae98ccdcb088eeabb9641a35e6007d57e49c6e4718926af6e98cd", size = 1868402 },
-    { url = "https://files.pythonhosted.org/packages/ad/f7/2877f657c611b111b995298eda7e2310b6cb0a5b78c3fe8c55508ac3dec6/rust_just-1.37.0-py3-none-musllinux_1_2_x86_64.whl", hash = "sha256:564b1618fe5a3c5234b6f2d7ff85e4955fe9c6e16a44d981cc12499067d038e3", size = 1918847 },
 ]
 
 [[package]]

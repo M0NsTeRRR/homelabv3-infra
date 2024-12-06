@@ -12,13 +12,16 @@ sudo update-ca-certificates
 uv sync --all-extras
 
 # Setup bash completion
-just --completions bash >> /home/vscode/.bashrc
+task --completion bash >> /home/vscode/.bashrc
 
 # setup packer
 packer init packer/templates/ubuntu
 
 # setup ansible
 ansible-galaxy install -r ansible/requirements.yml
+
+# install helm plugins
+helm plugin install https://github.com/databus23/helm-diff
 
 # use default context
 kubectl config use-context default

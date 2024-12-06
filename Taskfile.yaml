@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+---
+version: "3"
+
+vars:
+  ansible_dir: "{{.TASKDIR}}/ansible"
+  argocd_dir: "{{.TASKDIR}}/argocd"
+  octodns_dir: "{{.TASKDIR}}/octodns"
+
+includes:
+  octodns:
+    taskfile: .taskfiles/octodns
+    dir: "{{.octodns_dir}}"
+  ansible:
+    taskfile: .taskfiles/ansible
+    dir: "{{.ansible_dir}}"
+  kubernetes:
+    taskfile: .taskfiles/kubernetes
+
+tasks:
+  default: task -l

@@ -26,7 +26,8 @@ jobs:
         run: uv sync --extra octodns
       - name: Validate octodns config
         run: |
-          octodns-validate --config-file=./octodns/config.yaml --all
+          octodns-validate --config-file=./octodns/internal/config.yaml --all
+          octodns-validate --config-file=./octodns/external/config.yaml --all
   octodns-deploy:
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
@@ -43,4 +44,4 @@ jobs:
           pip install '.[octodns]'     
       - name: Apply octodns config
         run: |
-          octodns-sync --config-file=./octodns/config.yaml --doit --force
+          octodns-sync --config-file=./octodns/external/config.yaml --doit --force

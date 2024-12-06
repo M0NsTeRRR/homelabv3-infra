@@ -10,13 +10,26 @@
 
 ## Usage
 
+### Internal
+
+Configuration is stored in `octodns/internal` folder.
+
+`POWERDNS_API_KEY` represents the API token to manage your DNS zone
+
+```sh
+export POWERDNS_API_KEY=<POWERDNS_API_KEY>
+octodns-sync --config-file=./octodns/internal/config.yaml --doit --force
+```
+
+### External
+
 You should not normally use it by hand it's running in a Github action.
 
-Configuration is stored in `octodns` folder.
+Configuration is stored in `octodns/external` folder.
 
 `SCALEWAY_SECRET_KEY` represents the API token to manage your DNS zone
 
 ```sh
 export SCALEWAY_SECRET_KEY=<SCALEWAY_SECRET_KEY>
-octodns-sync --config-file=./octodns/config.yaml --doit --force
+octodns-sync --config-file=./octodns/external/config.yaml --doit --force
 ```

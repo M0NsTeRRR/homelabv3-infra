@@ -6,6 +6,6 @@
 
 ## Usage
 
-### Just
+### Task
 
-Use `just --list` to find Kubernetes group recipes for deploying the base infrastructure until ArgoCD can take over.
+Use `task --list` to find Kubernetes group recipes for deploying the base infrastructure until ArgoCD can take over.

@@ -22,11 +22,14 @@ kube-controller-manager-arg:
 - "node-cidr-mask-size-ipv6={{ (k3s_service_cidr_ipv6 | split('/'))[1] }}"
 kube-scheduler-arg:
 - "bind-address=0.0.0.0"
+{% if k3s_issuer_url and k3s_issuer_url %}
 kube-apiserver-arg:
 - "oidc-issuer-url={{ k3s_issuer_url }}"
 - "oidc-client-id={{ k3s_client_id }}"
 - "oidc-username-claim=email"
 - "oidc-groups-claim=groups"
+{% endif %}
+
 
 etcd-expose-metrics: true
 

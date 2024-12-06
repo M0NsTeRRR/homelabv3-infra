@@ -14,12 +14,14 @@
 1. Install (versions are pinned in configuration files)
 
     * [Uv](https://docs.astral.sh/uv/getting-started/installation/)
+    * [Task](https://taskfile.dev/installation/)
     * [Packer](https://developer.hashicorp.com/packer/install)
     * [Terraform](https://developer.hashicorp.com/terraform/install)
     * [Terragrunt](https://terragrunt.gruntwork.io/docs/getting-started/install/)
     * [Kubectl](https://kubernetes.io/docs/tasks/tools/)
     * [Kustomize](https://kubectl.docs.kubernetes.io/installation/kustomize/)
     * [Helm](https://helm.sh/docs/intro/install/)
+    * [Helmfile](https://helmfile.readthedocs.io/en/latest/#installation)
 
 2. Setup python
 
@@ -50,4 +52,10 @@
     ```sh
     cd terraform/prod
     terragrunt run-all init
+    ```
+
+6. Install helm plugins
+
+    ```sh
+    helm plugin install https://github.com/databus23/helm-diff
     ```

@@ -10,26 +10,23 @@ processors:
 providers:
   config:
     class: octodns.provider.yaml.YamlProvider
-    directory: ./octodns
+    directory: ./octodns/internal
     default_ttl: 3600
     enforce_order: True
-  scaleway:
-    class: octodns_scaleway.ScalewayProvider
-    token: env/SCALEWAY_SECRET_KEY
-    create_zone: False
+  powerdns:
+    class: octodns_powerdns.PowerDnsProvider
+    host: dns1.unicornafk.fr
+    port: 443
+    api_key: env/POWERDNS_API_KEY
+    scheme: https
+    ssl_verify: true
+    notify: true
 
 zones:
-  as212510.net.:
+  unicornafk.fr.:
     sources:
       - config
     targets:
-      - scaleway
-    processors:
-      - ownership
-  adminafk.fr.:
-    sources:
-      - config
-    targets:
-      - scaleway
+      - powerdns
     processors:
       - ownership
