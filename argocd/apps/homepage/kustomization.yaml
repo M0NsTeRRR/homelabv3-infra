@@ -13,5 +13,5 @@ helmCharts:
   releaseName: homepage
   namespace: *namespace
   repo: oci://ghcr.io/m0nsterrr/helm-charts
-  version: 0.1.5
+  version: 1.0.0
   valuesFile: values.yaml
