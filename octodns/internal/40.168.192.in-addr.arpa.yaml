@@ -1,0 +1,12 @@
+"1":
+  - type: PTR
+    value: sw1.unicornafk.fr.
+"2":
+  - type: PTR
+    value: sw2.unicornafk.fr.
+"12":
+  - type: PTR
+    value: server2.unicornafk.fr.
+"13":
+  - type: PTR
+    value: server3.unicornafk.fr.
