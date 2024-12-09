@@ -35,240 +35,30 @@ dnsdist_doh_proxified: true
 powerdns_recursor_zones: '{{ local_domains }}'
 powerdns_recursor_reverse_zones: '{{ reverse_zones }}'
 
-powerdns_authoritative_rname: "{{ admin_email | replace('@', '.') }}."
 powerdns_authoritative_api_base_url: "https://{{ ansible_default_ipv4.address }}"
 powerdns_authoritative_ca_path: "{{ ca_certificates_local_path_ca_certificate }}"
 powerdns_authoritative_domains: '{{ local_domains }}'
-powerdns_authoritative_subdomains: '{{ subdomains }}'
 powerdns_authoritative_reverse_zones: '{{ reverse_zones }}'
-powerdns_authoritative_records:
-  - caa: "unicornafk.fr"
-  - caa: "letsencrypt.org"
-  - caa: "sectigo.com"
-  - hostname: rr1.unicornafk.fr.
-    a:
-      - 192.168.5.13
-    aaaa:
-      - 2a0c:b641:02c0:105::d
-    rdns: true
-  - hostname: rr2.unicornafk.fr.
-    a:
-      - 192.168.5.17
-    aaaa:
-      - 2a0c:b641:02c0:105::11
-    rdns: true
-  - hostname: r1.unicornafk.fr.
-    a:
-      - 192.168.6.1
-    aaaa:
-      - 2a0c:b641:02c0:106::1
-    sshfp:
-      - algorithm: 1
-        type: 2
-        fingerprint: 28e4f34e715bcde2b6628f53397e40889f8a87894651ba79e01d7745bad11679
-    rdns: true
-  - hostname: r2.unicornafk.fr.
-    a:
-      - 192.168.6.3
-    aaaa:
-      - 2a0c:b641:02c0:106::3
-    sshfp:
-      - algorithm: 4
-        type: 2
-        fingerprint: 33a3f4d1970bfa6bd85305adf23c437d8fd2b2b2b30aaaf9653d303733148dce
-    rdns: true
-  - hostname: dns1.unicornafk.fr.
-    a:
-      - 192.168.10.21
-    aaaa:
-      - 2a0c:b641:02c0:110::21
-    rdns: true
-  - hostname: dns2.unicornafk.fr.
-    a:
-      - 192.168.10.22
-    aaaa:
-      - 2a0c:b641:02c0:110::22
-    rdns: true
-  - hostname: kubernetes.unicornafk.fr.
-    a:
-      - 192.168.10.80
-    aaaa:
-      - 2a0c:b641:02c0:110::80
-  - hostname: vault.unicornafk.fr.
-    a:
-      - 192.168.10.102
-    aaaa:
-      - 2a0c:b641:02c0:110::102
-    rdns: true
-  - hostname: ap1.unicornafk.fr.
-    a:
-      - 192.168.20.51
-    aaaa:
-      - 2a0c:b641:02c0:120::51
-    rdns: true
-  - hostname: home-assistant.unicornafk.fr.
-    a:
-      - 192.168.20.33
-    aaaa:
-      - 2a0c:b641:02c0:120::33
-    rdns: true
-  - hostname: sw1.unicornafk.fr.
-    a:
-      - 192.168.40.1
-    aaaa:
-      - 2a0c:b641:02c0:140::1
-    sshfp:
-      - algorithm: 1
-        type: 2
-        fingerprint: F537A260E2626BFEC959303F0F786F3BC986152E48A0E26C68499C0E79C27797
-    rdns: true
-  - hostname: sw2.unicornafk.fr.
-    a:
-      - 192.168.40.2
-    aaaa:
-      - 2a0c:b641:02c0:140::2
-    rdns: true
-    sshfp:
-      - algorithm: 4
-        type: 2
-        fingerprint: 9d461559cfc1477546741a862a09d4b23f27fb42b135de1480593c26c3166a5d
-  - hostname: server.unicornafk.fr.
-    a:
-      - 192.168.40.11
-      - 192.168.40.12
-      - 192.168.40.13
-    aaaa:
-      - 2a0c:b641:02c0:140::11
-      - 2a0c:b641:02c0:140::12
-      - 2a0c:b641:02c0:140::13
-  - hostname: server1.unicornafk.fr.
-    a:
-      - 192.168.40.11
-    aaaa:
-      - 2a0c:b641:02c0:140::11
-    sshfp:
-      - algorithm: 4
-        type: 2
-        fingerprint: 4fe77c8ae1c13f6cccfc46184a7acb44ee7cb169b8c8dc3cd684a32502ff8a1a
-  - hostname: server2.unicornafk.fr.
-    a:
-      - 192.168.40.12
-    aaaa:
-      - 2a0c:b641:02c0:140::12
-    sshfp:
-      - algorithm: 4
-        type: 2
-        fingerprint: 04f32228d7ba8e7a1ccae96d2517824e65b674225d9424668b5d553e1f576859
-    rdns: true
-  - hostname: server3.unicornafk.fr.
-    a:
-      - 192.168.40.13
-    aaaa:
-      - 2a0c:b641:02c0:140::13
-    sshfp:
-      - algorithm: 4
-        type: 2
-        fingerprint: 2e8775fb4f5fc9433cdecb1375ab75b0c6e48f69fa3c1c36de6e800761aecd1d
-    rdns: true
-  - hostname: nas.unicornafk.fr.
-    a:
-      - 192.168.50.41
-    aaaa:
-      - 2a0c:b641:02c0:150::41
-    rdns: true
-  - hostname: grandstream.unicornafk.fr.
-    a:
-      - 192.168.50.81
-    aaaa:
-      - 2a0c:b641:02c0:150::81
-    rdns: true
-  - hostname: samsung-tv.unicornafk.fr.
-    a:
-      - 192.168.50.91
-    aaaa:
-      - 2a0c:b641:02c0:150::91
-    rdns: true
-  - hostname: nvidia-shield.unicornafk.fr.
-    a:
-      - 192.168.50.92
-    aaaa:
-      - 2a0c:b641:02c0:150::92
-    rdns: true
-  - hostname: hs110-rack1.unicornafk.fr.
-    a:
-      - 192.168.50.101
-    rdns: true
-  - hostname: hs110-rack2.unicornafk.fr.
-    a:
-      - 192.168.50.102
-    rdns: true
-  - hostname: hs110-chambre1.unicornafk.fr.
-    a:
-      - 192.168.50.103
-    rdns: true
-  - hostname: meross-tireuse.unicornafk.fr.
-    a:
-      - 192.168.50.104
-    rdns: true
-  - hostname: meross-monsieur-cuisine.unicornafk.fr.
-    a:
-      - 192.168.50.105
-    rdns: true
-  - hostname: xiaomi-bulb-chambre1.unicornafk.fr.
-    a:
-      - 192.168.50.111
-    rdns: true
-  - hostname: xiaomi-vaccum.unicornafk.fr.
-    a:
-      - 192.168.50.112
-    rdns: true
-  - hostname: xiaomi-bulb-salon.unicornafk.fr.
-    a:
-      - 192.168.50.113
-    rdns: true
-  - hostname: xiaomi-light-bar.unicornafk.fr.
-    a:
-      - 192.168.50.114
-    rdns: true
-  - hostname: xiaomi-led-chambre1.unicornafk.fr.
-    a:
-      - 192.168.50.115
-    rdns: true
-  - hostname: xiaomi-led-bar.unicornafk.fr.
-    a:
-      - 192.168.50.116
-    rdns: true
-  - hostname: xiaomi-lamp-salon.unicornafk.fr.
-    a:
-      - 192.168.50.117
-    rdns: true
-  - hostname: xiaomi-lamp-cuisine.unicornafk.fr.
-    a:
-      - 192.168.50.118
-    rdns: true
-  - hostname: xiaomi-bulb-entree.unicornafk.fr.
-    a:
-      - 192.168.50.119
-    rdns: true
-  - hostname: monitor01.unicornafk.fr.
-    a:
-      - 192.168.50.120
-    aaaa:
-      - 2a0c:b641:02c0:150::120
-    rdns: true
-  - hostname: monitor02.unicornafk.fr.
-    a:
-      - 192.168.50.121
-    aaaa:
-      - 2a0c:b641:02c0:150::121
-    rdns: true
-  # CNAME
-  - hostname: ntp1.unicornafk.fr.
-    cname: dhcp1.unicornafk.fr.
-    rdns: false
-  - hostname: ntp2.unicornafk.fr.
-    cname: dhcp2.unicornafk.fr.
-    rdns: false
+
+self_signed_cert_list:
+  - common_name: "{{ hostvars[inventory_hostname].hostname[:-1] }}"
+    country: "{{ country }}"
+    organization: "{{ organization }}"
+    ca_cert_local_path: "{{ ca_certificates_local_path_ca_certificate }}"
+    intermediate_cert_local_path: "{{ certs_dir_role_path }}intermediate/homelab/homelab.crt"
+    intermediate_private_local_path: "{{ certs_dir_role_path }}intermediate/homelab/homelab.key"
+    intermediate_private_passphrase: "{{ ca_private_passphrase }}"
+    cert_remote_folder: "{{ lego_certificates[0].destinations }}"
+    ownca_not_after: +30d
+    upload_key: true
+    generate_pkcs12: false
+    subject_alt_name:
+      - "IP:{{ ansible_default_ipv4.address }}"
+      - "IP:{{ ansible_default_ipv6.address }}"
+      - "email:{{ admin_email }}"
+    systemd_services: "{{ lego_certificates[0].systemd_services }}"
+    force_renew: false
+    tlsa: []
 
 lego_webserver_proxified: true
 lego_webserver_port: 20222
@@ -302,23 +92,3 @@ caddy_configuration:
     http:
       - handle: /.well-known/acme-challenge/*
         reverse_proxy: "127.0.0.1:{{ lego_webserver_port }}"
-
-self_signed_cert_list:
-  - common_name: "{{ hostvars[inventory_hostname].hostname[:-1] }}"
-    country: "{{ country }}"
-    organization: "{{ organization }}"
-    ca_cert_local_path: "{{ ca_certificates_local_path_ca_certificate }}"
-    intermediate_cert_local_path: "{{ certs_dir_role_path }}intermediate/homelab/homelab.crt"
-    intermediate_private_local_path: "{{ certs_dir_role_path }}intermediate/homelab/homelab.key"
-    intermediate_private_passphrase: "{{ ca_private_passphrase }}"
-    cert_remote_folder: "{{ lego_certificates[0].destinations }}"
-    ownca_not_after: +30d
-    upload_key: true
-    generate_pkcs12: false
-    subject_alt_name:
-      - "IP:{{ ansible_default_ipv4.address }}"
-      - "IP:{{ ansible_default_ipv6.address }}"
-      - "email:{{ admin_email }}"
-    systemd_services: "{{ lego_certificates[0].systemd_services }}"
-    force_renew: false
-    tlsa: []

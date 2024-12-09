@@ -1,5 +1,6 @@
 ---
 manager:
+  auto_arpa: true
   include_meta: False
   max_workers: 5
 
@@ -26,6 +27,83 @@ zones:
   unicornafk.fr.:
     sources:
       - config
+    targets:
+      - powerdns
+    processors:
+      - ownership
+  5.168.192.in-addr.arpa.:
+    sources:
+      - auto-arpa
+    targets:
+      - powerdns
+    processors:
+      - ownership
+  10.168.192.in-addr.arpa.:
+    sources:
+      - auto-arpa
+    targets:
+      - powerdns
+    processors:
+      - ownership
+  20.168.192.in-addr.arpa.:
+    sources:
+      - auto-arpa
+    targets:
+      - powerdns
+    processors:
+      - ownership
+  40.168.192.in-addr.arpa.:
+    sources:
+      - auto-arpa
+    targets:
+      - powerdns
+    processors:
+      - ownership
+  50.168.192.in-addr.arpa.:
+    sources:
+      - auto-arpa
+    targets:
+      - powerdns
+    processors:
+      - ownership
+  5.0.1.0.0.c.2.0.1.4.6.b.c.0.a.2.ip6.arpa.:
+    sources:
+      - auto-arpa
+    targets:
+      - powerdns
+    processors:
+      - ownership
+  6.0.1.0.0.c.2.0.1.4.6.b.c.0.a.2.ip6.arpa.:
+    sources:
+      - auto-arpa
+    targets:
+      - powerdns
+    processors:
+      - ownership
+  0.1.1.0.0.c.2.0.1.4.6.b.c.0.a.2.ip6.arpa.:
+    sources:
+      - auto-arpa
+    targets:
+      - powerdns
+    processors:
+      - ownership
+  0.2.1.0.0.c.2.0.1.4.6.b.c.0.a.2.ip6.arpa.:
+    sources:
+      - auto-arpa
+    targets:
+      - powerdns
+    processors:
+      - ownership
+  0.4.1.0.0.c.2.0.1.4.6.b.c.0.a.2.ip6.arpa.:
+    sources:
+      - auto-arpa
+    targets:
+      - powerdns
+    processors:
+      - ownership
+  0.5.1.0.0.c.2.0.1.4.6.b.c.0.a.2.ip6.arpa.:
+    sources:
+      - auto-arpa
     targets:
       - powerdns
     processors:

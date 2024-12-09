@@ -3,9 +3,15 @@
 version: "3"
 
 tasks:
-  internal:
-    desc: Setup internal records
-    cmd: octodns-sync --config-file=./internal/config.yaml --doit --force
-  external:
-    desc: Setup external records
-    cmd: octodns-sync --config-file=./external/config.yaml --doit --force
+  validate-internal:
+    desc: Validate internal records
+    cmd: octodns-validate --config-file=./octodns/internal/config.yaml --all
+  sync-internal:
+    desc: Sync internal records
+    cmd: octodns-sync --config-file=./octodns/internal/config.yaml --doit --force
+  validate-external:
+    desc: Validate external records
+    cmd: octodns-validate --config-file=./octodns/external/config.yaml --all
+  sync-external:
+    desc: Sync external records
+    cmd: octodns-sync --config-file=./octodns/external/config.yaml --doit --force

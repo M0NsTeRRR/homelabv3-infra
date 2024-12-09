@@ -1,8 +1,8 @@
-'':
+"":
 #  - type: NS
 #    values:
-#      - 'ns0.dom.scw.cloud.'
-#      - 'ns1.dom.scw.cloud.'
+#      - "ns0.dom.scw.cloud."
+#      - "ns1.dom.scw.cloud."
   - type: CAA
     values:
       - flags: 0
@@ -50,14 +50,14 @@ status:
     value: vps1.adminafk.fr.
 vpn:
   - type: A
-    value: '82.65.135.80'
+    value: "82.65.135.80"
   - type: AAAA
-    value: '2a0c:b641:2c0:110::70'
+    value: "2a0c:b641:2c0:110::70"
 vps1:
   - type: A
-    value: '141.145.215.178'
+    value: "141.145.215.178"
   - type: AAAA
-    value: '2603:c027:c000:c200::10'
+    value: "2603:c027:c000:c200::10"
   - type: SSHFP
     value:
       algorithm: 4

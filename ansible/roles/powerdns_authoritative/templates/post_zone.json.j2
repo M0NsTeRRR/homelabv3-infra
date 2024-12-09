@@ -1,17 +1,10 @@
 {
 	"name": "{{ item }}.",
-	"kind": "{% if inventory_hostname == ansible_play_hosts_all[0] %}Master{% else %}Slave{% endif %}",
-	{% if inventory_hostname != ansible_play_hosts_all[0] %}"masters": ["{{ hostvars[ansible_play_hosts_all[0]].ansible_default_ipv4.address | default(hostvars[ansible_play_hosts_all[0]].ansible_all_ipv4_addresses[0]) }}", "{{ hostvars[ansible_play_hosts_all[0]].ansible_default_ipv6.address | default(hostvars[ansible_play_hosts_all[0]].ansible_all_ipv6_addresses[0]) }}"],{% endif %}
-	{% if inventory_hostname == ansible_play_hosts_all[0] %}"dnssec": true,{% endif %}
-	{% if inventory_hostname == ansible_play_hosts_all[0] %}"presigned": true,{% endif %}
-	{% if inventory_hostname == ansible_play_hosts_all[0] %}"soa_edit_api" : "INCREASE",{% endif %}
-	{#
-	"{% if inventory_hostname == ansible_play_hosts_all[0] %}master_tsig_key_ids{% else %}slave_tsig_key_ids{% endif %}": [
-		{% for tsig_key in powerdns_authoritative_tsig_keys %}
-		"{{ tsig_key.name }}"{% if not loop.last %},{% endif %}
-		{% endfor %}
-	],
-	#}{% if inventory_hostname == ansible_play_hosts_all[0] %}
+	"kind": "Master",
+	"masters": ["{{ hostvars[ansible_play_hosts_all[0]].ansible_default_ipv4.address | default(hostvars[ansible_play_hosts_all[0]].ansible_all_ipv4_addresses[0]) }}", "{{ hostvars[ansible_play_hosts_all[0]].ansible_default_ipv6.address | default(hostvars[ansible_play_hosts_all[0]].ansible_all_ipv6_addresses[0]) }}"],{% endif %}
+	"dnssec": true,
+	"presigned": true,
+	"soa_edit_api" : "INCREASE",
 	"rrsets": [
 		{
 			"name": "{{ item }}.",
@@ -21,5 +14,5 @@
 			"ttl": "3600",
 			"type": "SOA"
 		}
-	]{% endif %}
+	]
 }

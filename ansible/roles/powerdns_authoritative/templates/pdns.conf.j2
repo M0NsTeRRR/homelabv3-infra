@@ -17,15 +17,3 @@ webserver-password={{ powerdns_authoritative_webserver_password }}
 webserver-port=8081
 webserver-allow-from=127.0.0.1
 version-string=anonymous
-{% if inventory_hostname == ansible_play_hosts_all[0] %}
-primary=yes
-{% else %}
-secondary=yes
-{% endif %}
-
-disable-axfr=no
-{% if inventory_hostname == ansible_play_hosts_all[0] %}
-allow-axfr-ips=127.0.0.0/8,::1/128
-only-notify=0.0.0.0/0, ::/0, !{{ ansible_default_ipv4.address | default(ansible_all_ipv4_addresses[0]) }}/32, !{{ ansible_default_ipv6.address | default(ansible_all_ipv6_addresses[0]) }}/128
-{% endif %}
-trusted-notification-proxy=127.0.0.0/8,::1/128

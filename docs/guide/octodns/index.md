@@ -18,7 +18,7 @@ Configuration is stored in `octodns/internal` folder.
 
 ```sh
 export POWERDNS_API_KEY=<POWERDNS_API_KEY>
-octodns-sync --config-file=./octodns/internal/config.yaml --doit --force
+task octodns:sync-internal
 ```
 
 ### External
@@ -31,5 +31,5 @@ Configuration is stored in `octodns/external` folder.
 
 ```sh
 export SCALEWAY_SECRET_KEY=<SCALEWAY_SECRET_KEY>
-octodns-sync --config-file=./octodns/external/config.yaml --doit --force
+task octodns:sync-external
 ```
