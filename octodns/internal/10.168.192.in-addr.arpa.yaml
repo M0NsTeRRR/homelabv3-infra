@@ -1,9 +1,0 @@
-"21":
-  - type: PTR
-    value: dns1.unicornafk.fr.
-"22":
-  - type: PTR
-    value: dns2.unicornafk.fr.
-"102":
-  - type: PTR
-    value: vault.unicornafk.fr.
