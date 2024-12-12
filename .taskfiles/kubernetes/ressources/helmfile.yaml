@@ -79,7 +79,7 @@ releases:
   - name: ingress-internal
     namespace: ingress-internal
     chart: oci://ghcr.io/traefik/helm/traefik
-    version: 33.1.0
+    version: 33.2.0
     values: ["../../../argocd/infra/ingress-internal/values.yaml"]
     needs: ["metallb-system/metallb"]
 
