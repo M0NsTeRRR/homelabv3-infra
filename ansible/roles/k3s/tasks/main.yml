@@ -60,7 +60,7 @@
 - name: Flush handlers on first master only
   ansible.builtin.meta: flush_handlers
   run_once: true
-  when: groups[k3s_master_group][0] == inventory_hostname
+  when: groups[k3s_ansible_master_group][0] == inventory_hostname
 
 - name: Wait token file generation
   ansible.builtin.stat:
@@ -70,14 +70,14 @@
   retries: 60
   delay: 1
   run_once: true
-  delegate_to: "{{ groups[k3s_master_group][0] }}"
+  delegate_to: "{{ groups[k3s_ansible_master_group][0] }}"
 
 - name: Get k3s token file from first master
   ansible.builtin.slurp:
     src: /var/lib/rancher/k3s/server/node-token
   register: k3s_token
-  delegate_to: "{{ groups[k3s_master_group][0] }}"
-  when: groups[k3s_master_group][0] != inventory_hostname
+  delegate_to: "{{ groups[k3s_ansible_master_group][0] }}"
+  when: groups[k3s_ansible_master_group][0] != inventory_hostname
 
 - name: Create k3s token file on other nodes
   ansible.builtin.copy:
@@ -86,7 +86,7 @@
     owner: root
     group: root
     mode: "0600"
-  when: groups[k3s_master_group][0] != inventory_hostname
+  when: groups[k3s_ansible_master_group][0] != inventory_hostname
   notify: Restart k3s.service
 
 - name: Fetch kubeconfig file
@@ -95,7 +95,7 @@
     dest: "{{ k3s_localhost_kubeconfig_path }}"
     flat: true
   run_once: true
-  when: groups[k3s_master_group][0] == inventory_hostname and (not k3s_install.stat.exists or k3s_force_install)
+  when: groups[k3s_ansible_master_group][0] == inventory_hostname and (not k3s_install.stat.exists or k3s_force_install)
 
 - name: Fix perms on kubeconfig
   ansible.builtin.file:
@@ -106,7 +106,7 @@
     state: file
   delegate_to: localhost
   run_once: true
-  when: groups[k3s_master_group][0] == inventory_hostname and (not k3s_install.stat.exists or k3s_force_install)
+  when: groups[k3s_ansible_master_group][0] == inventory_hostname and (not k3s_install.stat.exists or k3s_force_install)
 
 - name: Replace localhost url with remote server url
   ansible.builtin.lineinfile:
@@ -119,7 +119,7 @@
   delegate_to: localhost
   become: false
   run_once: true
-  when: groups[k3s_master_group][0] == inventory_hostname and (not k3s_install.stat.exists or k3s_force_install)
+  when: groups[k3s_ansible_master_group][0] == inventory_hostname and (not k3s_install.stat.exists or k3s_force_install)
 
 - name: Flush handlers
   ansible.builtin.meta: flush_handlers

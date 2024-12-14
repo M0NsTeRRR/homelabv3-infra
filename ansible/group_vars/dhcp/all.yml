@@ -1,6 +1,6 @@
 ---
-kea_dhcp_group: dhcp
-kea_dhcp_dns_group: dns
+kea_dhcp_ansible_group: dhcp
+kea_dhcp_dns_ansible_group: dns
 kea_dhcp_dns_domains: "{{ local_domains }}"
 kea_dhcp_local_path_ca_certificate: "{{ ca_certificates_local_path_ca_certificate }}"
 kea_dhcp_ca_filename: "ca.crt"

@@ -16,8 +16,8 @@ kea_dhcp_local_path_ca_certificate: "/tmp/ca.crt"
 kea_dhcp_ca_filename: "ca.crt"
 kea_dhcp_cert_filename: "example.fr.crt"
 kea_dhcp_key_filename: "example.fr.key"
-kea_dhcp_group: dhcp
-kea_dhcp_dns_group: dns
+kea_dhcp_ansible_group: dhcp
+kea_dhcp_dns_ansible_group: dns
 kea_dhcp_dns_domains: []
 kea_dhcp_ipv4_subnets: []
 kea_dhcp_ipv6_subnets: []

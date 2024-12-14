@@ -20,7 +20,7 @@ Restart=always
 RestartSec=10
 ExecStartPre=/bin/sh -xc '! /usr/bin/systemctl is-enabled --quiet nm-cloud-setup.service'
 ExecStart=/usr/local/bin/k3s \
-    {% if inventory_hostname in groups[k3s_master_group] %}server{% else %}agent{% endif %}
+    {% if inventory_hostname in groups[k3s_ansible_master_group] %}server{% else %}agent{% endif %}
 
 [Install]
 WantedBy=multi-user.target

@@ -26,7 +26,7 @@
                             {% for host in ansible_play_hosts %}{
                                 "name": "{{ host }}",
                                 "url": "https://[{{ lookup('dig', host, 'qtype=AAAA' )}}]:8080/",
-                                "role": "{% if groups[kea_dhcp_group][0] == host %}primary{% else %}standby{% endif %}",
+                                "role": "{% if groups[kea_dhcp_ansible_group][0] == host %}primary{% else %}standby{% endif %}",
                                 "auto-failover": true
                             }{% if not loop.last %},{% endif %}
                             {% endfor %}
@@ -70,7 +70,7 @@
         "option-data": [
             {
                 "name": "dns-servers",
-                "data": "{% for host in groups[kea_dhcp_dns_group] %}{{ hostvars[host].ipv6 }}{% if not loop.last %},{% endif %}{% endfor %}"
+                "data": "{% for host in groups[kea_dhcp_dns_ansible_group] %}{{ hostvars[host].ipv6 }}{% if not loop.last %},{% endif %}{% endfor %}"
             },
             {
                 "name": "domain-search",
