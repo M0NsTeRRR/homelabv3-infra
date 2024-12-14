@@ -1,0 +1,164 @@
+ap1:
+  - type: A
+    value: "192.168.20.51"
+  - type: AAAA
+    value: "2a0c:b641:02c0:120::51"
+dns1:
+  - type: A
+    value: "192.168.10.21"
+  - type: AAAA
+    value: "2a0c:b641:02c0:110::21"
+dns2:
+  - type: A
+    value: "192.168.10.22"
+  - type: AAAA
+    value: "2a0c:b641:02c0:110::22"
+grandstream:
+  - type: A
+    value: "192.168.50.81"
+  - type: AAAA
+    value: "2a0c:b641:02c0:150::81"
+home-assistant:
+  - type: A
+    value: "192.168.20.33"
+  - type: AAAA
+    value: "2a0c:b641:02c0:120::33"
+hs110-chambre1:
+  - type: A
+    value: "192.168.50.103"
+hs110-rack1:
+  - type: A
+    value: "192.168.50.101"
+hs110-rack2:
+  - type: A
+    value: "192.168.50.102"
+kubernetes:
+  - type: A
+    value: "192.168.10.80"
+  - type: AAAA
+    value: "2a0c:b641:02c0:110::80"
+meross-monsieur-cuisine:
+  - type: A
+    value: "192.168.50.105"
+meross-tireuse:
+  - type: A
+    value: "192.168.50.104"
+monitor01:
+  - type: A
+    value: "192.168.50.120"
+  - type: AAAA
+    value: "2a0c:b641:02c0:150::120"
+monitor02:
+  - type: A
+    value: "192.168.50.121"
+  - type: AAAA
+    value: "2a0c:b641:02c0:150::121"
+nas:
+  - type: A
+    value: "192.168.50.41"
+  - type: AAAA
+    value: "2a0c:b641:02c0:150::41"
+ntp1:
+  - type: CNAME
+    value: dhcp1.unicornafk.fr.
+ntp2:
+  - type: CNAME
+    value: dhcp2.unicornafk.fr.
+nvidia-shield:
+  - type: A
+    value: "192.168.50.92"
+  - type: AAAA
+    value: "2a0c:b641:02c0:150::92"
+r1:
+  - type: A
+    value: "192.168.6.1"
+  - type: AAAA
+    value: "2a0c:b641:02c0:106::1"
+r2:
+  - type: A
+    value: "192.168.6.3"
+  - type: AAAA
+    value: "2a0c:b641:02c0:106::3"
+rr1:
+  - type: A
+    value: "192.168.5.13"
+  - type: AAAA
+    value: "2a0c:b641:02c0:105::d"
+rr2:
+  - type: A
+    value: "192.168.5.17"
+  - type: AAAA
+    value: "2a0c:b641:02c0:105::11"
+samsung-tv:
+  - type: A
+    value: "192.168.50.91"
+  - type: AAAA
+    value: "2a0c:b641:02c0:150::91"
+server:
+  - type: A
+    value:
+      - "192.168.40.11"
+      - "192.168.40.12"
+      - "192.168.40.13"
+  - type: AAAA
+    value:
+      - "2a0c:b641:02c0:140::11"
+      - "2a0c:b641:02c0:140::12"
+      - "2a0c:b641:02c0:140::13"
+server1:
+  - type: A
+    value: "192.168.40.11"
+  - type: AAAA
+    value: "2a0c:b641:02c0:140::11"
+server2:
+  - type: A
+    value: "192.168.40.12"
+  - type: AAAA
+    value: "2a0c:b641:02c0:140::12"
+server3:
+  - type: A
+    value: "192.168.40.13"
+  - type: AAAA
+    value: "2a0c:b641:02c0:140::13"
+sw1:
+  - type: A
+    value: "192.168.40.1"
+  - type: AAAA
+    value: "2a0c:b641:02c0:140::1"
+sw2:
+  - type: A
+    value: "192.168.40.2"
+  - type: AAAA
+    value: "2a0c:b641:02c0:140::2"
+vault:
+  - type: A
+    value: "192.168.10.102"
+  - type: AAAA
+    value: "2a0c:b641:02c0:110::102"
+xiaomi-bulb-chambre1:
+  - type: A
+    value: "192.168.50.111"
+xiaomi-bulb-entree:
+  - type: A
+    value: "192.168.50.119"
+xiaomi-bulb-salon:
+  - type: A
+    value: "192.168.50.113"
+xiaomi-lamp-cuisine:
+  - type: A
+    value: "192.168.50.118"
+xiaomi-lamp-salon:
+  - type: A
+    value: "192.168.50.117"
+xiaomi-led-bar:
+  - type: A
+    value: "192.168.50.116"
+xiaomi-led-chambre1:
+  - type: A
+    value: "192.168.50.115"
+xiaomi-light-bar:
+  - type: A
+    value: "192.168.50.114"
+xiaomi-vaccum:
+  - type: A
+    value: "192.168.50.112"

@@ -18,7 +18,6 @@ variable "ssh_username" {
   default = "lortega"
 }
 
-
 variable "ssh_password" {
   type    = string
   default = "ludovic"
