@@ -16,7 +16,7 @@ providers:
     enforce_order: True
   powerdns:
     class: octodns_powerdns.PowerDnsProvider
-    host: dns1.unicornafk.fr
+    host: 192.168.10.21
     port: 443
     api_key: env/POWERDNS_API_KEY
     scheme: https

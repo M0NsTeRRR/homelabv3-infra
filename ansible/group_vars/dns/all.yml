@@ -37,7 +37,8 @@ powerdns_recursor_reverse_zones: '{{ reverse_zones }}'
 
 powerdns_authoritative_api_base_url: "https://{{ ansible_default_ipv4.address }}"
 powerdns_authoritative_ca_path: "{{ ca_certificates_local_path_ca_certificate }}"
-powerdns_authoritative_domains: '{{ local_domains }}'
+powerdns_authoritative_rname: "{{ admin_email | replace('@', '.') }}."
+powerdns_authoritative_domains: '{{ local_domains + subdomains }}'
 powerdns_authoritative_reverse_zones: '{{ reverse_zones }}'
 
 self_signed_cert_list:

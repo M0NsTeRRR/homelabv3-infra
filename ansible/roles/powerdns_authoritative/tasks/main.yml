@@ -96,7 +96,6 @@
       Content-Type: application/json
       X-Api-Key: "{{ powerdns_authoritative_api_key }}"
     ca_path: "{{ powerdns_authoritative_ca_path }}"
-  when: inventory_hostname == ansible_play_hosts_all[0]
   delegate_to: localhost
   register: powerdns_authoritative_restart
   until: powerdns_authoritative_restart.status == 200
@@ -105,4 +104,4 @@
 
 - name: Create zones and reverse zones
   ansible.builtin.include_tasks: provision_zones.yml
-  when: inventory_hostname == ansible_play_hosts_all[0]
+  with_items: "{{ powerdns_authoritative_domains + powerdns_authoritative_reverse_zones }}"
