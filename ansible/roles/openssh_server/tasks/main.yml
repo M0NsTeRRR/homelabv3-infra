@@ -13,11 +13,11 @@
     update_cache: true
     state: "{{ openssh_server_package_state }}"
   notify:
-    - Enable sshd
+    - Enable ssh
     - Daemon-reload
-    - Restart sshd
+    - Restart ssh
 
-- name: Configure sshd
+- name: Configure ssh
   ansible.builtin.template:
     src: sshd_config.j2
     dest: /etc/ssh/sshd_config
@@ -25,4 +25,4 @@
     group: root
     mode: "0600"
     validate: /usr/sbin/sshd -t -c %s
-  notify: Restart sshd
+  notify: Restart ssh

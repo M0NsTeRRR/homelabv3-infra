@@ -1,14 +1,14 @@
 ---
-- name: Restart sshd
+- name: Restart ssh
   ansible.builtin.systemd_service:
-    name: sshd
+    name: ssh
     state: restarted
 
 - name: Daemon-reload
   ansible.builtin.systemd_service:
     daemon_reload: true
 
-- name: Enable sshd
+- name: Enable ssh
   ansible.builtin.systemd_service:
-    name: sshd
+    name: ssh
     enabled: true
