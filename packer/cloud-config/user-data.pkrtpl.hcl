@@ -13,17 +13,19 @@ autoinstall:
     - qemu-guest-agent
     - cloud-init
   ssh:
-    install-server: yes
+    install-server: true
     authorized-keys: []
-    allow-pw: no
+    allow-pw: false
   storage:
     layout:
       name: direct
   user-data:
-    system_info:
-      default_user:
-        name: ${build_username}
+    users:
+      - name: ${build_username}
         gecos:  ${build_fullname}
+        groups:
+          - sudo
         hashed_passwd: ${build_password_encrypted}
+        lock_passwd: false
         ssh_authorized_keys:
           - ${build_authorized_key}

@@ -47,11 +47,13 @@ source "proxmox-iso" "ubuntu" {
     "/meta-data" = file("../../cloud-config/meta-data")
     "/user-data" = templatefile("../../cloud-config/user-data.pkrtpl.hcl", { build_fullname = var.ssh_fullname, build_username = var.ssh_username, build_password_encrypted = var.ssh_password_encrypted, build_authorized_key = file(var.ssh_autorized_key_file_path) })
   }
-  iso_checksum     = local.iso_checksum
-  iso_url          = local.iso_url
-  iso_storage_pool = "local"
-  iso_download_pve = false
-  unmount_iso      = true
+  boot_iso {
+    iso_checksum     = local.iso_checksum
+    iso_url          = local.iso_url
+    iso_storage_pool = "local"
+    unmount          = true
+    iso_download_pve = false
+  }
   machine          = "q35"
   network_adapters {
     bridge   = "vmbr0"

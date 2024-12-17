@@ -5,6 +5,7 @@ venv
 *.egg-info
 # packer
 packer_cache/
+downloaded_iso_path/
 # terraform
 .terraform*
 .terragrunt-cache
