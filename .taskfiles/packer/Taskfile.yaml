@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+---
+version: "3"
+
+tasks:
+  init:
+    desc: Run packer init
+    cmd: packer init templates/ubuntu
+  ubuntu:
+    desc: Create ubuntu packer template
+    requires:
+      vars:
+        - PROXMOX_PASSWORD
+    cmd: packer build -var 'proxmox_password={{.PROXMOX_PASSWORD}}' -timestamp-ui templates/ubuntu

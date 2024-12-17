@@ -14,10 +14,6 @@ Distributions :
 
 ## Usage
 
-### Task
-
-`task --list` and looks for ansible group tasks.
-
 ### List of playbooks
 
 | Playbook                           | Description                                                          |

@@ -95,10 +95,13 @@ Packer use 8888/tcp port for this HTTP server.
 
 `PROXMOX_PASSWORD` represents the proxmox password used for HTTP API
 
+Init plugins
+
 ```sh
-cd packer
-packer build \
-  -var "proxmox_password=<PROXMOX_PASSWORD>" \
-  -timestamp-ui \
-  templates/ubuntu
+uv run task packer:init
+```
+
+Generate ubuntu template
+```sh
+uv run task packer:ubuntu
 ```

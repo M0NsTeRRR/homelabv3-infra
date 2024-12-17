@@ -3,15 +3,19 @@
 version: "3"
 
 vars:
+  packer_dir: "{{.TASKDIR}}/packer"
   ansible_dir: "{{.TASKDIR}}/ansible"
   argocd_dir: "{{.TASKDIR}}/argocd"
 
 includes:
-  octodns:
-    taskfile: .taskfiles/octodns
+  packer:
+    taskfile: .taskfiles/packer
+    dir: "{{.packer_dir}}"
   ansible:
     taskfile: .taskfiles/ansible
     dir: "{{.ansible_dir}}"
+  octodns:
+    taskfile: .taskfiles/octodns
   kubernetes:
     taskfile: .taskfiles/kubernetes
 
