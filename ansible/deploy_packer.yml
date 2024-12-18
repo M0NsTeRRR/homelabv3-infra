@@ -98,5 +98,5 @@
     - name: "Update password of {{ ansible_ssh_user }}"
       ansible.builtin.user:
         name: "{{ ansible_ssh_user }}"
-        password: "{{ main_password | password_hash('sha512') }}"
+        password: "{{ main_password | ansible.builtin.password_hash('sha512') }}"
         update_password: always
