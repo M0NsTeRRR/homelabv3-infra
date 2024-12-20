@@ -24,9 +24,6 @@ repositories:
   - name: jetstack
     url: https://charts.jetstack.io
 
-  - name: cilium
-    url: https://helm.cilium.io
-
   - name: hashicorp
     url: https://helm.releases.hashicorp.com
 
