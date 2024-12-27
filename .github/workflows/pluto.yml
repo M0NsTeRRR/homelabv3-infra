@@ -11,6 +11,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Download Pluto
-        uses: FairwindsOps/pluto/github-action@v5.20.3
+        uses: FairwindsOps/pluto/github-action@v5.21.0
       - name: Pluto detect-files
         run: pluto detect-files -d argocd/
