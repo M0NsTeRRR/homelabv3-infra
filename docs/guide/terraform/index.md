@@ -43,6 +43,7 @@ Fill `account.hcl` based on `account.example`.
 
 ```sh
 cd terraform/prod
+terragrunt run-all init
 terragrunt run-all apply
 ```
 

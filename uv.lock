@@ -1,10 +1,10 @@
 version = 1
 requires-python = ">=3.12, <4.0.0"
 resolution-markers = [
-    "platform_system != 'Windows'",
+    "sys_platform != 'win32'",
 ]
 supported-markers = [
-    "platform_system != 'Windows'",
+    "sys_platform != 'win32'",
 ]
 
 [[package]]
@@ -12,11 +12,11 @@ name = "ansible-compat"
 version = "24.10.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "ansible-core", marker = "platform_system != 'Windows'" },
-    { name = "jsonschema", marker = "platform_system != 'Windows'" },
-    { name = "packaging", marker = "platform_system != 'Windows'" },
-    { name = "pyyaml", marker = "platform_system != 'Windows'" },
-    { name = "subprocess-tee", marker = "platform_system != 'Windows'" },
+    { name = "ansible-core", marker = "sys_platform != 'win32'" },
+    { name = "jsonschema", marker = "sys_platform != 'win32'" },
+    { name = "packaging", marker = "sys_platform != 'win32'" },
+    { name = "pyyaml", marker = "sys_platform != 'win32'" },
+    { name = "subprocess-tee", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/59/f9/c48f3a140e3afad144a720f5c29aa8b34087926b2e2fc8778d4d4b5b6323/ansible_compat-24.10.0.tar.gz", hash = "sha256:0ad873e0dae8b2de79bc33ced813d6c92c716c4d7b82f9a4693e1fd57f43776e", size = 81818 }
 wheels = [
@@ -28,11 +28,11 @@ name = "ansible-core"
 version = "2.18.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cryptography", marker = "platform_system != 'Windows'" },
-    { name = "jinja2", marker = "platform_system != 'Windows'" },
-    { name = "packaging", marker = "platform_system != 'Windows'" },
-    { name = "pyyaml", marker = "platform_system != 'Windows'" },
-    { name = "resolvelib", marker = "platform_system != 'Windows'" },
+    { name = "cryptography", marker = "sys_platform != 'win32'" },
+    { name = "jinja2", marker = "sys_platform != 'win32'" },
+    { name = "packaging", marker = "sys_platform != 'win32'" },
+    { name = "pyyaml", marker = "sys_platform != 'win32'" },
+    { name = "resolvelib", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/fd/5e/0d5a28caca8fc598b199f3710fffc010a6094dfabcf38f7f3c0abb50451a/ansible_core-2.18.0.tar.gz", hash = "sha256:87fbebbfe8d961e9b153e84b4438ba3a327dbfdcd4ad05a6065d9ff5d9d02e7b", size = 3064903 }
 wheels = [
@@ -44,19 +44,19 @@ name = "ansible-lint"
 version = "24.12.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "ansible-compat", marker = "platform_system != 'Windows'" },
-    { name = "ansible-core", marker = "platform_system != 'Windows'" },
-    { name = "black", marker = "platform_system != 'Windows'" },
-    { name = "filelock", marker = "platform_system != 'Windows'" },
-    { name = "importlib-metadata", marker = "platform_system != 'Windows'" },
-    { name = "jsonschema", marker = "platform_system != 'Windows'" },
-    { name = "packaging", marker = "platform_system != 'Windows'" },
-    { name = "pathspec", marker = "platform_system != 'Windows'" },
-    { name = "pyyaml", marker = "platform_system != 'Windows'" },
-    { name = "ruamel-yaml", marker = "platform_system != 'Windows'" },
-    { name = "subprocess-tee", marker = "platform_system != 'Windows'" },
-    { name = "wcmatch", marker = "platform_system != 'Windows'" },
-    { name = "yamllint", marker = "platform_system != 'Windows'" },
+    { name = "ansible-compat", marker = "sys_platform != 'win32'" },
+    { name = "ansible-core", marker = "sys_platform != 'win32'" },
+    { name = "black", marker = "sys_platform != 'win32'" },
+    { name = "filelock", marker = "sys_platform != 'win32'" },
+    { name = "importlib-metadata", marker = "sys_platform != 'win32'" },
+    { name = "jsonschema", marker = "sys_platform != 'win32'" },
+    { name = "packaging", marker = "sys_platform != 'win32'" },
+    { name = "pathspec", marker = "sys_platform != 'win32'" },
+    { name = "pyyaml", marker = "sys_platform != 'win32'" },
+    { name = "ruamel-yaml", marker = "sys_platform != 'win32'" },
+    { name = "subprocess-tee", marker = "sys_platform != 'win32'" },
+    { name = "wcmatch", marker = "sys_platform != 'win32'" },
+    { name = "yamllint", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/7d/52/131fdc2305536a6482265dc2de01279cbb138716e86ead5c3d8357430695/ansible_lint-24.12.2.tar.gz", hash = "sha256:f636309c4e7f724fc1a544df529c4c2354f54cf35ede11d750366afb1158a464", size = 548046 }
 wheels = [
@@ -103,11 +103,11 @@ name = "black"
 version = "24.10.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "click", marker = "platform_system != 'Windows'" },
-    { name = "mypy-extensions", marker = "platform_system != 'Windows'" },
-    { name = "packaging", marker = "platform_system != 'Windows'" },
-    { name = "pathspec", marker = "platform_system != 'Windows'" },
-    { name = "platformdirs", marker = "platform_system != 'Windows'" },
+    { name = "click", marker = "sys_platform != 'win32'" },
+    { name = "mypy-extensions", marker = "sys_platform != 'win32'" },
+    { name = "packaging", marker = "sys_platform != 'win32'" },
+    { name = "pathspec", marker = "sys_platform != 'win32'" },
+    { name = "platformdirs", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/d8/0d/cc2fb42b8c50d80143221515dd7e4766995bd07c56c9a3ed30baf080b6dc/black-24.10.0.tar.gz", hash = "sha256:846ea64c97afe3bc677b761787993be4991810ecc7a4a937816dd6bddedc4875", size = 645813 }
 wheels = [
@@ -143,7 +143,7 @@ name = "cairocffi"
 version = "1.7.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cffi", marker = "platform_system != 'Windows'" },
+    { name = "cffi", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/70/c5/1a4dc131459e68a173cbdab5fad6b524f53f9c1ef7861b7698e998b837cc/cairocffi-1.7.1.tar.gz", hash = "sha256:2e48ee864884ec4a3a34bfa8c9ab9999f688286eb714a15a43ec9d068c36557b", size = 88096 }
 wheels = [
@@ -155,11 +155,11 @@ name = "cairosvg"
 version = "2.7.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cairocffi", marker = "platform_system != 'Windows'" },
-    { name = "cssselect2", marker = "platform_system != 'Windows'" },
-    { name = "defusedxml", marker = "platform_system != 'Windows'" },
-    { name = "pillow", marker = "platform_system != 'Windows'" },
-    { name = "tinycss2", marker = "platform_system != 'Windows'" },
+    { name = "cairocffi", marker = "sys_platform != 'win32'" },
+    { name = "cssselect2", marker = "sys_platform != 'win32'" },
+    { name = "defusedxml", marker = "sys_platform != 'win32'" },
+    { name = "pillow", marker = "sys_platform != 'win32'" },
+    { name = "tinycss2", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/d5/e6/ec5900b724e3c44af7f6f51f719919137284e5da4aabe96508baec8a1b40/CairoSVG-2.7.1.tar.gz", hash = "sha256:432531d72347291b9a9ebfb6777026b607563fd8719c46ee742db0aef7271ba0", size = 8399085 }
 wheels = [
@@ -180,7 +180,7 @@ name = "cffi"
 version = "1.17.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pycparser", marker = "platform_system != 'Windows'" },
+    { name = "pycparser", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/fc/97/c783634659c2920c3fc70419e3af40972dbaf758daa229a7d6ea6135c90d/cffi-1.17.1.tar.gz", hash = "sha256:1c39c6016c32bc48dd54561950ebd6836e1670f2ae46128f67cf49e789c52824", size = 516621 }
 wheels = [
@@ -262,7 +262,7 @@ name = "cryptography"
 version = "44.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cffi", marker = "platform_python_implementation != 'PyPy' and platform_system != 'Windows'" },
+    { name = "cffi", marker = "platform_python_implementation != 'PyPy' and sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/91/4c/45dfa6829acffa344e3967d6006ee4ae8be57af746ae2eba1c431949b32c/cryptography-44.0.0.tar.gz", hash = "sha256:cd4e834f340b4293430701e772ec543b0fbe6c2dea510a5286fe0acabe153a02", size = 710657 }
 wheels = [
@@ -289,8 +289,8 @@ name = "cssselect2"
 version = "0.7.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "tinycss2", marker = "platform_system != 'Windows'" },
-    { name = "webencodings", marker = "platform_system != 'Windows'" },
+    { name = "tinycss2", marker = "sys_platform != 'win32'" },
+    { name = "webencodings", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/e7/fc/326cb6f988905998f09bb54a3f5d98d4462ba119363c0dfad29750d48c09/cssselect2-0.7.0.tar.gz", hash = "sha256:1ccd984dab89fc68955043aca4e1b03e0cf29cad9880f6e28e3ba7a74b14aa5a", size = 35888 }
 wheels = [
@@ -347,7 +347,7 @@ name = "ghp-import"
 version = "2.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "python-dateutil", marker = "platform_system != 'Windows'" },
+    { name = "python-dateutil", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/d9/29/d40217cbe2f6b1359e00c6c307bb3fc876ba74068cbab3dde77f03ca0dc4/ghp-import-2.1.0.tar.gz", hash = "sha256:9c535c4c61193c2df8871222567d7fd7e5014d835f97dc7b7439069e2413d343", size = 10943 }
 wheels = [
@@ -359,9 +359,9 @@ name = "google-auth"
 version = "2.36.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cachetools", marker = "platform_system != 'Windows'" },
-    { name = "pyasn1-modules", marker = "platform_system != 'Windows'" },
-    { name = "rsa", marker = "platform_system != 'Windows'" },
+    { name = "cachetools", marker = "sys_platform != 'win32'" },
+    { name = "pyasn1-modules", marker = "sys_platform != 'win32'" },
+    { name = "rsa", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/6a/71/4c5387d8a3e46e3526a8190ae396659484377a73b33030614dd3b28e7ded/google_auth-2.36.0.tar.gz", hash = "sha256:545e9618f2df0bcbb7dcbc45a546485b1212624716975a1ea5ae8149ce769ab1", size = 268336 }
 wheels = [
@@ -375,29 +375,29 @@ source = { virtual = "." }
 
 [package.optional-dependencies]
 ansible = [
-    { name = "ansible-core", marker = "platform_system != 'Windows'" },
-    { name = "ansible-lint", marker = "platform_system != 'Windows'" },
-    { name = "bcrypt", marker = "platform_system != 'Windows'" },
-    { name = "cryptography", marker = "platform_system != 'Windows'" },
-    { name = "dnspython", marker = "platform_system != 'Windows'" },
-    { name = "jsonpatch", marker = "platform_system != 'Windows'" },
-    { name = "kubernetes", marker = "platform_system != 'Windows'" },
-    { name = "netaddr", marker = "platform_system != 'Windows'" },
-    { name = "passlib", marker = "platform_system != 'Windows'" },
-    { name = "pyyaml", marker = "platform_system != 'Windows'" },
-    { name = "requests", marker = "platform_system != 'Windows'" },
+    { name = "ansible-core", marker = "sys_platform != 'win32'" },
+    { name = "ansible-lint", marker = "sys_platform != 'win32'" },
+    { name = "bcrypt", marker = "sys_platform != 'win32'" },
+    { name = "cryptography", marker = "sys_platform != 'win32'" },
+    { name = "dnspython", marker = "sys_platform != 'win32'" },
+    { name = "jsonpatch", marker = "sys_platform != 'win32'" },
+    { name = "kubernetes", marker = "sys_platform != 'win32'" },
+    { name = "netaddr", marker = "sys_platform != 'win32'" },
+    { name = "passlib", marker = "sys_platform != 'win32'" },
+    { name = "pyyaml", marker = "sys_platform != 'win32'" },
+    { name = "requests", marker = "sys_platform != 'win32'" },
 ]
 documentation = [
-    { name = "mkdocs-material", extra = ["imaging"], marker = "platform_system != 'Windows'" },
-    { name = "pytz", marker = "platform_system != 'Windows'" },
+    { name = "mkdocs-material", extra = ["imaging"], marker = "sys_platform != 'win32'" },
+    { name = "pytz", marker = "sys_platform != 'win32'" },
 ]
 octodns = [
-    { name = "octodns", marker = "platform_system != 'Windows'" },
-    { name = "octodns-powerdns", marker = "platform_system != 'Windows'" },
-    { name = "octodns-scaleway", marker = "platform_system != 'Windows'" },
+    { name = "octodns", marker = "sys_platform != 'win32'" },
+    { name = "octodns-powerdns", marker = "sys_platform != 'win32'" },
+    { name = "octodns-scaleway", marker = "sys_platform != 'win32'" },
 ]
 terraform = [
-    { name = "paramiko", marker = "platform_system != 'Windows'" },
+    { name = "paramiko", marker = "sys_platform != 'win32'" },
 ]
 
 [package.metadata]
@@ -435,7 +435,7 @@ name = "importlib-metadata"
 version = "8.5.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "zipp", marker = "platform_system != 'Windows'" },
+    { name = "zipp", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/cd/12/33e59336dca5be0c398a7482335911a33aa0e20776128f038019f1a95f1b/importlib_metadata-8.5.0.tar.gz", hash = "sha256:71522656f0abace1d072b9e5481a48f07c138e00f079c38c8f883823f9c26bd7", size = 55304 }
 wheels = [
@@ -447,7 +447,7 @@ name = "jinja2"
 version = "3.1.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "markupsafe", marker = "platform_system != 'Windows'" },
+    { name = "markupsafe", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/ed/55/39036716d19cab0747a5020fc7e907f362fbf48c984b14e62127f7e68e5d/jinja2-3.1.4.tar.gz", hash = "sha256:4a3aee7acbbe7303aede8e9648d13b8bf88a429282aa6122a993f0ac800cb369", size = 240245 }
 wheels = [
@@ -459,7 +459,7 @@ name = "jsonpatch"
 version = "1.33"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "jsonpointer", marker = "platform_system != 'Windows'" },
+    { name = "jsonpointer", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/42/78/18813351fe5d63acad16aec57f94ec2b70a09e53ca98145589e185423873/jsonpatch-1.33.tar.gz", hash = "sha256:9fcd4009c41e6d12348b4a0ff2563ba56a2923a7dfee731d004e212e1ee5030c", size = 21699 }
 wheels = [
@@ -480,10 +480,10 @@ name = "jsonschema"
 version = "4.23.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "attrs", marker = "platform_system != 'Windows'" },
-    { name = "jsonschema-specifications", marker = "platform_system != 'Windows'" },
-    { name = "referencing", marker = "platform_system != 'Windows'" },
-    { name = "rpds-py", marker = "platform_system != 'Windows'" },
+    { name = "attrs", marker = "sys_platform != 'win32'" },
+    { name = "jsonschema-specifications", marker = "sys_platform != 'win32'" },
+    { name = "referencing", marker = "sys_platform != 'win32'" },
+    { name = "rpds-py", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/38/2e/03362ee4034a4c917f697890ccd4aec0800ccf9ded7f511971c75451deec/jsonschema-4.23.0.tar.gz", hash = "sha256:d71497fef26351a33265337fa77ffeb82423f3ea21283cd9467bb03999266bc4", size = 325778 }
 wheels = [
@@ -495,7 +495,7 @@ name = "jsonschema-specifications"
 version = "2024.10.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "referencing", marker = "platform_system != 'Windows'" },
+    { name = "referencing", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/10/db/58f950c996c793472e336ff3655b13fbcf1e3b359dcf52dcf3ed3b52c352/jsonschema_specifications-2024.10.1.tar.gz", hash = "sha256:0f38b83639958ce1152d02a7f062902c41c8fd20d558b0c34344292d417ae272", size = 15561 }
 wheels = [
@@ -507,17 +507,17 @@ name = "kubernetes"
 version = "31.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "certifi", marker = "platform_system != 'Windows'" },
-    { name = "durationpy", marker = "platform_system != 'Windows'" },
-    { name = "google-auth", marker = "platform_system != 'Windows'" },
-    { name = "oauthlib", marker = "platform_system != 'Windows'" },
-    { name = "python-dateutil", marker = "platform_system != 'Windows'" },
-    { name = "pyyaml", marker = "platform_system != 'Windows'" },
-    { name = "requests", marker = "platform_system != 'Windows'" },
-    { name = "requests-oauthlib", marker = "platform_system != 'Windows'" },
-    { name = "six", marker = "platform_system != 'Windows'" },
-    { name = "urllib3", marker = "platform_system != 'Windows'" },
-    { name = "websocket-client", marker = "platform_system != 'Windows'" },
+    { name = "certifi", marker = "sys_platform != 'win32'" },
+    { name = "durationpy", marker = "sys_platform != 'win32'" },
+    { name = "google-auth", marker = "sys_platform != 'win32'" },
+    { name = "oauthlib", marker = "sys_platform != 'win32'" },
+    { name = "python-dateutil", marker = "sys_platform != 'win32'" },
+    { name = "pyyaml", marker = "sys_platform != 'win32'" },
+    { name = "requests", marker = "sys_platform != 'win32'" },
+    { name = "requests-oauthlib", marker = "sys_platform != 'win32'" },
+    { name = "six", marker = "sys_platform != 'win32'" },
+    { name = "urllib3", marker = "sys_platform != 'win32'" },
+    { name = "websocket-client", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/7e/bd/ffcd3104155b467347cd9b3a64eb24182e459579845196b3a200569c8912/kubernetes-31.0.0.tar.gz", hash = "sha256:28945de906c8c259c1ebe62703b56a03b714049372196f854105afe4e6d014c0", size = 916096 }
 wheels = [
@@ -579,18 +579,18 @@ name = "mkdocs"
 version = "1.6.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "click", marker = "platform_system != 'Windows'" },
-    { name = "ghp-import", marker = "platform_system != 'Windows'" },
-    { name = "jinja2", marker = "platform_system != 'Windows'" },
-    { name = "markdown", marker = "platform_system != 'Windows'" },
-    { name = "markupsafe", marker = "platform_system != 'Windows'" },
-    { name = "mergedeep", marker = "platform_system != 'Windows'" },
-    { name = "mkdocs-get-deps", marker = "platform_system != 'Windows'" },
-    { name = "packaging", marker = "platform_system != 'Windows'" },
-    { name = "pathspec", marker = "platform_system != 'Windows'" },
-    { name = "pyyaml", marker = "platform_system != 'Windows'" },
-    { name = "pyyaml-env-tag", marker = "platform_system != 'Windows'" },
-    { name = "watchdog", marker = "platform_system != 'Windows'" },
+    { name = "click", marker = "sys_platform != 'win32'" },
+    { name = "ghp-import", marker = "sys_platform != 'win32'" },
+    { name = "jinja2", marker = "sys_platform != 'win32'" },
+    { name = "markdown", marker = "sys_platform != 'win32'" },
+    { name = "markupsafe", marker = "sys_platform != 'win32'" },
+    { name = "mergedeep", marker = "sys_platform != 'win32'" },
+    { name = "mkdocs-get-deps", marker = "sys_platform != 'win32'" },
+    { name = "packaging", marker = "sys_platform != 'win32'" },
+    { name = "pathspec", marker = "sys_platform != 'win32'" },
+    { name = "pyyaml", marker = "sys_platform != 'win32'" },
+    { name = "pyyaml-env-tag", marker = "sys_platform != 'win32'" },
+    { name = "watchdog", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/bc/c6/bbd4f061bd16b378247f12953ffcb04786a618ce5e904b8c5a01a0309061/mkdocs-1.6.1.tar.gz", hash = "sha256:7b432f01d928c084353ab39c57282f29f92136665bdd6abf7c1ec8d822ef86f2", size = 3889159 }
 wheels = [
@@ -602,9 +602,9 @@ name = "mkdocs-get-deps"
 version = "0.2.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "mergedeep", marker = "platform_system != 'Windows'" },
-    { name = "platformdirs", marker = "platform_system != 'Windows'" },
-    { name = "pyyaml", marker = "platform_system != 'Windows'" },
+    { name = "mergedeep", marker = "sys_platform != 'win32'" },
+    { name = "platformdirs", marker = "sys_platform != 'win32'" },
+    { name = "pyyaml", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/98/f5/ed29cd50067784976f25ed0ed6fcd3c2ce9eb90650aa3b2796ddf7b6870b/mkdocs_get_deps-0.2.0.tar.gz", hash = "sha256:162b3d129c7fad9b19abfdcb9c1458a651628e4b1dea628ac68790fb3061c60c", size = 10239 }
 wheels = [
@@ -616,17 +616,17 @@ name = "mkdocs-material"
 version = "9.5.46"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "babel", marker = "platform_system != 'Windows'" },
-    { name = "colorama", marker = "platform_system != 'Windows'" },
-    { name = "jinja2", marker = "platform_system != 'Windows'" },
-    { name = "markdown", marker = "platform_system != 'Windows'" },
-    { name = "mkdocs", marker = "platform_system != 'Windows'" },
-    { name = "mkdocs-material-extensions", marker = "platform_system != 'Windows'" },
-    { name = "paginate", marker = "platform_system != 'Windows'" },
-    { name = "pygments", marker = "platform_system != 'Windows'" },
-    { name = "pymdown-extensions", marker = "platform_system != 'Windows'" },
-    { name = "regex", marker = "platform_system != 'Windows'" },
-    { name = "requests", marker = "platform_system != 'Windows'" },
+    { name = "babel", marker = "sys_platform != 'win32'" },
+    { name = "colorama", marker = "sys_platform != 'win32'" },
+    { name = "jinja2", marker = "sys_platform != 'win32'" },
+    { name = "markdown", marker = "sys_platform != 'win32'" },
+    { name = "mkdocs", marker = "sys_platform != 'win32'" },
+    { name = "mkdocs-material-extensions", marker = "sys_platform != 'win32'" },
+    { name = "paginate", marker = "sys_platform != 'win32'" },
+    { name = "pygments", marker = "sys_platform != 'win32'" },
+    { name = "pymdown-extensions", marker = "sys_platform != 'win32'" },
+    { name = "regex", marker = "sys_platform != 'win32'" },
+    { name = "requests", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/79/f1/3efdd8f000e497e9a13ba9429d4fdeb0d87f0f876bebd7d8613ff86a8910/mkdocs_material-9.5.46.tar.gz", hash = "sha256:ae2043f4238e572f9a40e0b577f50400d6fc31e2fef8ea141800aebf3bd273d7", size = 3910723 }
 wheels = [
@@ -635,8 +635,8 @@ wheels = [
 
 [package.optional-dependencies]
 imaging = [
-    { name = "cairosvg", marker = "platform_system != 'Windows'" },
-    { name = "pillow", marker = "platform_system != 'Windows'" },
+    { name = "cairosvg", marker = "sys_platform != 'win32'" },
+    { name = "pillow", marker = "sys_platform != 'win32'" },
 ]
 
 [[package]]
@@ -689,12 +689,12 @@ name = "octodns"
 version = "1.10.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "dnspython", marker = "platform_system != 'Windows'" },
-    { name = "fqdn", marker = "platform_system != 'Windows'" },
-    { name = "idna", marker = "platform_system != 'Windows'" },
-    { name = "natsort", marker = "platform_system != 'Windows'" },
-    { name = "python-dateutil", marker = "platform_system != 'Windows'" },
-    { name = "pyyaml", marker = "platform_system != 'Windows'" },
+    { name = "dnspython", marker = "sys_platform != 'win32'" },
+    { name = "fqdn", marker = "sys_platform != 'win32'" },
+    { name = "idna", marker = "sys_platform != 'win32'" },
+    { name = "natsort", marker = "sys_platform != 'win32'" },
+    { name = "python-dateutil", marker = "sys_platform != 'win32'" },
+    { name = "pyyaml", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/78/19/db4cd71a837bcd32b22b6f3217152bc8ede26a44380ad4423c7f3a0c14cb/octodns-1.10.0.tar.gz", hash = "sha256:6270781fabf5b4ea7ac5d3286a2082fdd3418599d4667e5b8416b96f8d3e62d6", size = 577646 }
 wheels = [
@@ -706,8 +706,8 @@ name = "octodns-powerdns"
 version = "0.0.7"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "octodns", marker = "platform_system != 'Windows'" },
-    { name = "requests", marker = "platform_system != 'Windows'" },
+    { name = "octodns", marker = "sys_platform != 'win32'" },
+    { name = "requests", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/53/5d/e0489fc64bb63ac0824582494413d8854cbaa902607373b83f5a648b13c9/octodns_powerdns-0.0.7.tar.gz", hash = "sha256:6ff12c6c2fbe21be3389353e9975744aaf472606ed4b6f35bdb8d5673be1fcd0", size = 15999 }
 wheels = [
@@ -719,8 +719,8 @@ name = "octodns-scaleway"
 version = "0.0.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "octodns", marker = "platform_system != 'Windows'" },
-    { name = "requests", marker = "platform_system != 'Windows'" },
+    { name = "octodns", marker = "sys_platform != 'win32'" },
+    { name = "requests", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/04/3b/bcb0dab989673e3119f6d44381af1369786fa0ab06f1b0d3c93f724a300b/octodns-scaleway-0.0.4.tar.gz", hash = "sha256:7c7f71b8282e5433e9b4f1c8c43502045af54a46d35f74a7f64376dbccfa560f", size = 8909 }
 wheels = [
@@ -750,9 +750,9 @@ name = "paramiko"
 version = "3.5.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "bcrypt", marker = "platform_system != 'Windows'" },
-    { name = "cryptography", marker = "platform_system != 'Windows'" },
-    { name = "pynacl", marker = "platform_system != 'Windows'" },
+    { name = "bcrypt", marker = "sys_platform != 'win32'" },
+    { name = "cryptography", marker = "sys_platform != 'win32'" },
+    { name = "pynacl", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/1b/0f/c00296e36ff7485935b83d466c4f2cf5934b84b0ad14e81796e1d9d3609b/paramiko-3.5.0.tar.gz", hash = "sha256:ad11e540da4f55cedda52931f1a3f812a8238a7af7f62a60de538cd80bb28124", size = 1704305 }
 wheels = [
@@ -824,7 +824,7 @@ name = "pyasn1-modules"
 version = "0.4.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pyasn1", marker = "platform_system != 'Windows'" },
+    { name = "pyasn1", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/1d/67/6afbf0d507f73c32d21084a79946bfcfca5fbc62a72057e9c23797a737c9/pyasn1_modules-0.4.1.tar.gz", hash = "sha256:c28e2dbf9c06ad61c71a075c7e0f9fd0f1b0bb2d2ad4377f240d33ac2ab60a7c", size = 310028 }
 wheels = [
@@ -854,8 +854,8 @@ name = "pymdown-extensions"
 version = "10.12"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "markdown", marker = "platform_system != 'Windows'" },
-    { name = "pyyaml", marker = "platform_system != 'Windows'" },
+    { name = "markdown", marker = "sys_platform != 'win32'" },
+    { name = "pyyaml", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/d8/0b/32f05854cfd432e9286bb41a870e0d1a926b72df5f5cdb6dec962b2e369e/pymdown_extensions-10.12.tar.gz", hash = "sha256:b0ee1e0b2bef1071a47891ab17003bfe5bf824a398e13f49f8ed653b699369a7", size = 840790 }
 wheels = [
@@ -867,7 +867,7 @@ name = "pynacl"
 version = "1.5.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "cffi", marker = "platform_system != 'Windows'" },
+    { name = "cffi", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/a7/22/27582568be639dfe22ddb3902225f91f2f17ceff88ce80e4db396c8986da/PyNaCl-1.5.0.tar.gz", hash = "sha256:8ac7448f09ab85811607bdd21ec2464495ac8b7c66d146bf545b0f08fb9220ba", size = 3392854 }
 wheels = [
@@ -885,7 +885,7 @@ name = "python-dateutil"
 version = "2.9.0.post0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "six", marker = "platform_system != 'Windows'" },
+    { name = "six", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/66/c0/0c8b6ad9f17a802ee498c46e004a0eb49bc148f2fd230864601a86dcf6db/python-dateutil-2.9.0.post0.tar.gz", hash = "sha256:37dd54208da7e1cd875388217d5e00ebd4179249f90fb72437e91a35459a0ad3", size = 342432 }
 wheels = [
@@ -928,7 +928,7 @@ name = "pyyaml-env-tag"
 version = "0.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pyyaml", marker = "platform_system != 'Windows'" },
+    { name = "pyyaml", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/fb/8e/da1c6c58f751b70f8ceb1eb25bc25d524e8f14fe16edcce3f4e3ba08629c/pyyaml_env_tag-0.1.tar.gz", hash = "sha256:70092675bda14fdec33b31ba77e7543de9ddc88f2e5b99160396572d11525bdb", size = 5631 }
 wheels = [
@@ -940,8 +940,8 @@ name = "referencing"
 version = "0.35.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "attrs", marker = "platform_system != 'Windows'" },
-    { name = "rpds-py", marker = "platform_system != 'Windows'" },
+    { name = "attrs", marker = "sys_platform != 'win32'" },
+    { name = "rpds-py", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/99/5b/73ca1f8e72fff6fa52119dbd185f73a907b1989428917b24cff660129b6d/referencing-0.35.1.tar.gz", hash = "sha256:25b42124a6c8b632a425174f24087783efb348a6f1e0008e63cd4466fedf703c", size = 62991 }
 wheels = [
@@ -987,10 +987,10 @@ name = "requests"
 version = "2.32.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "certifi", marker = "platform_system != 'Windows'" },
-    { name = "charset-normalizer", marker = "platform_system != 'Windows'" },
-    { name = "idna", marker = "platform_system != 'Windows'" },
-    { name = "urllib3", marker = "platform_system != 'Windows'" },
+    { name = "certifi", marker = "sys_platform != 'win32'" },
+    { name = "charset-normalizer", marker = "sys_platform != 'win32'" },
+    { name = "idna", marker = "sys_platform != 'win32'" },
+    { name = "urllib3", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/63/70/2bf7780ad2d390a8d301ad0b550f1581eadbd9a20f896afe06353c2a2913/requests-2.32.3.tar.gz", hash = "sha256:55365417734eb18255590a9ff9eb97e9e1da868d4ccd6402399eaf68af20a760", size = 131218 }
 wheels = [
@@ -1002,8 +1002,8 @@ name = "requests-oauthlib"
 version = "2.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "oauthlib", marker = "platform_system != 'Windows'" },
-    { name = "requests", marker = "platform_system != 'Windows'" },
+    { name = "oauthlib", marker = "sys_platform != 'win32'" },
+    { name = "requests", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/42/f2/05f29bc3913aea15eb670be136045bf5c5bbf4b99ecb839da9b422bb2c85/requests-oauthlib-2.0.0.tar.gz", hash = "sha256:b3dffaebd884d8cd778494369603a9e7b58d29111bf6b41bdc2dcd87203af4e9", size = 55650 }
 wheels = [
@@ -1054,7 +1054,7 @@ name = "rsa"
 version = "4.9"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pyasn1", marker = "platform_system != 'Windows'" },
+    { name = "pyasn1", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/aa/65/7d973b89c4d2351d7fb232c2e452547ddfa243e93131e7cfa766da627b52/rsa-4.9.tar.gz", hash = "sha256:e38464a49c6c85d7f1351b0126661487a7e0a14a50f1675ec50eb34d4f20ef21", size = 29711 }
 wheels = [
@@ -1066,7 +1066,7 @@ name = "ruamel-yaml"
 version = "0.18.6"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "ruamel-yaml-clib", marker = "python_full_version < '3.13' and platform_python_implementation == 'CPython' and platform_system != 'Windows'" },
+    { name = "ruamel-yaml-clib", marker = "python_full_version < '3.13' and platform_python_implementation == 'CPython' and sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/29/81/4dfc17eb6ebb1aac314a3eb863c1325b907863a1b8b1382cdffcb6ac0ed9/ruamel.yaml-0.18.6.tar.gz", hash = "sha256:8b27e6a217e786c6fbe5634d8f3f11bc63e0f80f6a5890f28863d9c45aac311b", size = 143362 }
 wheels = [
@@ -1118,7 +1118,7 @@ name = "tinycss2"
 version = "1.4.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "webencodings", marker = "platform_system != 'Windows'" },
+    { name = "webencodings", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/7a/fd/7a5ee21fd08ff70d3d33a5781c255cbe779659bd03278feb98b19ee550f4/tinycss2-1.4.0.tar.gz", hash = "sha256:10c0972f6fc0fbee87c3edb76549357415e94548c1ae10ebccdea16fb404a9b7", size = 87085 }
 wheels = [
@@ -1160,7 +1160,7 @@ name = "wcmatch"
 version = "10.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "bracex", marker = "platform_system != 'Windows'" },
+    { name = "bracex", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/41/ab/b3a52228538ccb983653c446c1656eddf1d5303b9cb8b9aef6a91299f862/wcmatch-10.0.tar.gz", hash = "sha256:e72f0de09bba6a04e0de70937b0cf06e55f36f37b3deb422dfaf854b867b840a", size = 115578 }
 wheels = [
@@ -1190,8 +1190,8 @@ name = "yamllint"
 version = "1.35.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "pathspec", marker = "platform_system != 'Windows'" },
-    { name = "pyyaml", marker = "platform_system != 'Windows'" },
+    { name = "pathspec", marker = "sys_platform != 'win32'" },
+    { name = "pyyaml", marker = "sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/da/06/d8cee5c3dfd550cc0a466ead8b321138198485d1034130ac1393cc49d63e/yamllint-1.35.1.tar.gz", hash = "sha256:7a003809f88324fd2c877734f2d575ee7881dd9043360657cc8049c809eba6cd", size = 134583 }
 wheels = [

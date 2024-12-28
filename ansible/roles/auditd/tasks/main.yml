@@ -18,12 +18,3 @@
     mode: "0640"
   notify:
     - Restart auditd
-
-- name: Forward auditd logs to local rsyslog
-  ansible.builtin.lineinfile:
-    dest: "/etc/audit/audit.rules"
-    regexp: "^(# )?active"
-    line: "active = yes"
-    state: "present"
-  notify:
-    - Restart auditd
