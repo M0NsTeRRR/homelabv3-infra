@@ -5,6 +5,9 @@ kind: Kustomization
 
 namespace: &namespace vault
 
+resources:
+  - manifests/01_vault_cluster_issuer.yaml
+
 helmCharts:
 - name: vault
   releaseName: vault

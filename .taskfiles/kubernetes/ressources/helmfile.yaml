@@ -115,7 +115,7 @@ releases:
     chart: jetstack/cert-manager
     version: v1.16.2
     values: ["../../../argocd/infra/cert-manager/values.yaml"]
-    needs: ["rook-ceph-cluster/rook-ceph-cluster"]
+    needs: ["rook-ceph/rook-ceph"]
     hooks:
       - events: ["postsync"]
         showlogs: true
@@ -145,28 +145,20 @@ releases:
           - "{{`{{ .Release.Namespace }}`}}"
           - "-f"
           - "../../../argocd/infra/trust-manager/manifests"
-
-  - name: vault
-    namespace: vault
-    chart: hashicorp/vault
-    version: 0.29.1
-    values: ["../../../argocd/infra/vault/values.yaml"]
-    needs: ["trust-manager/trust-manager"]
-    hooks:
       - events: ["postsync"]
         showlogs: true
         command: "/bin/sh"
         args:
           - "-ec"
           - |
-            cd ../../../ansible && ansible-playbook deploy_infra.yml --limit kubernetes_master\[0\] --tags vault
+            cd ../../../ansible && ansible-playbook deploy_infra.yml --limit "kubernetes_master[0]" --tags vault
 
   - name: cert-manager-scaleway
     namespace: cert-manager-scaleway
     chart: scaleway/scaleway-certmanager-webhook
     version: 0.4.0
     values: ["../../../argocd/infra/cert-manager-scaleway/values.yaml"]
-    needs: ["vault/vault"]
+    needs: ["trust-manager/trust-manager"]
     hooks:
       - events: ["presync"]
         showlogs: true
@@ -202,4 +194,4 @@ releases:
         args:
           - "-ec"
           - |
-            cd ../../../ansible && ansible-playbook deploy_infra.yml --limit kubernetes_master\[0\] --tags argocd
+            cd ../../../ansible && ansible-playbook deploy_infra.yml --limit "kubernetes_master[0]" --tags argocd
