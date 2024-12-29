@@ -93,7 +93,7 @@ releases:
         args:
           - "-ec"
           - |
-            kubectl create namespace {{`{{ .Release.Namespace }}`}} --dry-run=client -o yaml | kubectl apply -f -
+            kubectl create namespace external-snapshotter --dry-run=client -o yaml | kubectl apply -f -
             cd ../../../argocd/backup/external-snapshotter && kustomize build | kubectl apply --server-side -f -
 
   - name: rook-ceph
