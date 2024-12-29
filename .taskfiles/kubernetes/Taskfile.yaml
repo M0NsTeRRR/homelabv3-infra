@@ -12,4 +12,4 @@ tasks:
     desc: Bootstrap kubernetes cluster
     cmds:
       - task: setup-kubernetes
-      - cmd: helmfile apply -f {{.TASKFILE_DIR}}/ressources/helmfile.yaml --quiet --skip-diff-on-install --suppress-diff
+      - cmd: helmfile apply -f {{.TASKFILE_DIR}}/ressources/helmfile.yaml --skip-diff-on-install --suppress-diff
