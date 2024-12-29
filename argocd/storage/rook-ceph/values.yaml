@@ -1,4 +1,5 @@
 csi:
+  enableLiveness: true
   serviceMonitor:
     enabled: true
   csiRBDProvisionerResource: |
