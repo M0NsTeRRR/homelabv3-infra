@@ -1,3 +1,5 @@
+crds:
+  enabled: true
 extraArgs:
   - enable-gateway-api
 serviceIPFamilyPolicy: "PreferDualStack"
