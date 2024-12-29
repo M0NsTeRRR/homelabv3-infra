@@ -45,7 +45,7 @@ releases:
         args:
           - "-ec"
           - |
-            kubectl create namespace gateway-api-crds --dry-run=client -o yaml | kubectl apply -f -
+            kubectl create namespace {{`{{ .Release.Namespace }}`}} --dry-run=client -o yaml | kubectl apply -f -
             cd ../../../argocd/infra/gateway-api-crds && kustomize build | kubectl apply --server-side -f -
 
   - name: cilium
@@ -93,7 +93,7 @@ releases:
         args:
           - "-ec"
           - |
-            kubectl create namespace external-snapshotter --dry-run=client -o yaml | kubectl apply -f -
+            kubectl create namespace {{`{{ .Release.Namespace }}`}} --dry-run=client -o yaml | kubectl apply -f -
             cd ../../../argocd/backup/external-snapshotter && kustomize build | kubectl apply --server-side -f -
 
   - name: rook-ceph
@@ -162,14 +162,12 @@ releases:
     hooks:
       - events: ["presync"]
         showlogs: true
-        command: "kubectl"
+        command: "/bin/sh"
         args:
-          - "apply"
-          - "--server-side"
-          - "-n"
-          - "{{`{{ .Release.Namespace }}`}}"
-          - "-f"
-          - "../../../argocd/infra/cert-manager-scaleway/manifests"
+          - "-ec"
+          - |
+            kubectl create namespace {{`{{ .Release.Namespace }}`}} --dry-run=client -o yaml | kubectl apply -f -
+            kubectl apply --server-side -n {{`{{ .Release.Namespace }}`}} -f ../../../argocd/infra/cert-manager-scaleway/manifests
 
   - name: external-dns-internal
     namespace: external-dns-internal
@@ -180,14 +178,12 @@ releases:
     hooks:
       - events: ["presync"]
         showlogs: true
-        command: "kubectl"
+        command: "/bin/sh"
         args:
-          - "apply"
-          - "--server-side"
-          - "-n"
-          - "{{`{{ .Release.Namespace }}`}}"
-          - "-f"
-          - "../../../argocd/infra/external-dns-internal/manifests"
+          - "-ec"
+          - |
+            kubectl create namespace {{`{{ .Release.Namespace }}`}} --dry-run=client -o yaml | kubectl apply -f -
+            kubectl apply --server-side -n {{`{{ .Release.Namespace }}`}} -f ../../../argocd/infra/external-dns-internal/manifests
       - events: ["postsync"]
         showlogs: true
         command: "/bin/sh"

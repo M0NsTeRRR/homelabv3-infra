@@ -42,9 +42,6 @@ server:
     accessMode: ReadWriteOnce
     annotations: {}
 
-  image:
-    tag: "1.18.0"
-
   service:
     ipFamilyPolicy: "PreferDualStack"
 
