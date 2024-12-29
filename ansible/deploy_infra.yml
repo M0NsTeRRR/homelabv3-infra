@@ -59,15 +59,10 @@
 - name: Deploy kubernetes services
   hosts: kubernetes_master[0]
   become: true
-  tasks:
-    - name: Install vault
-      ansible.builtin.include_role:
-        name: vault
+  roles:
+    - role: vault
       tags: vault
-
-    - name: Install argocd
-      ansible.builtin.include_role:
-        name: argocd
+    - role: argocd
       tags: argocd
 
 - name: Configure Vault unseal
