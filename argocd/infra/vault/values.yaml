@@ -46,13 +46,9 @@ server:
     ipFamilyPolicy: "PreferDualStack"
 
   readinessProbe:
-    httpGet:
-      scheme: HTTPS
-      path: "/v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204"
+    path: "/v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204"
   livenessProbe:
-    httpGet:
-      scheme: HTTPS
-      path: "/v1/sys/health?standbyok=true"
+    path: "/v1/sys/health?standbyok=true"
     initialDelaySeconds: 60
 
   auditStorage:
