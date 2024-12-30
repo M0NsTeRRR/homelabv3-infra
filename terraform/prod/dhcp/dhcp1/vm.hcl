@@ -1,5 +1,5 @@
 locals {
-  target_node = "server3"
+  target_node = "server1"
   vm_hostname = "dhcp1"
   vm_tags     = ["ansible_managed", "dhcp"]
 
