@@ -6,10 +6,10 @@
 
 ## ACME DNS Challenge with vault PKI and PDNS
 
-1) Install acme.sh
-2) Create Truenas API Key
-3) Install CA certificate in Truenas
-4) export below variables
+1. Install acme.sh
+2. Create Truenas API Key
+3. Install CA certificate in Truenas
+4. export below variables
 
 ```bash
 # PDNS
@@ -24,6 +24,6 @@ export DEPLOY_TRUENAS_APIKEY=<TO_REPLACE>
 export DEPLOY_TRUENAS_SCHEME=https
 ```
 
-5) Register ACME server `./acme.sh --set-default-ca --server <vault_acme_url>` (in my case `https://vault.unicornafk.fr:8200/v1/pki/acme/directory`)
-6) Register DNS issuer `./acme.sh --issue --dns dns_pdns -d <truenas_fqdn> --ca-bundle ../ca.crt --dnssleep 30 --insecure --deploy --deploy-hook truenas`
-7) Setup systemd timer unit
+5. Register ACME server `./acme.sh --set-default-ca --server <vault_acme_url>` (in my case `https://vault.unicornafk.fr:8200/v1/pki/acme/directory`)
+6. Register DNS issuer `./acme.sh --issue --dns dns_pdns -d <truenas_fqdn> --ca-bundle ../ca.crt --dnssleep 30 --insecure --deploy --deploy-hook truenas`
+7. Setup systemd timer unit
