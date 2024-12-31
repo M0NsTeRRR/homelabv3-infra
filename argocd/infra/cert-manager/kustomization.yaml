@@ -7,6 +7,7 @@ namespace: &namespace cert-manager
 
 resources:
   - manifests/01_prometheus_rule.yaml
+  - manifests/02_vault_cluster_issuer.yaml
 
 helmCharts:
 - name: cert-manager

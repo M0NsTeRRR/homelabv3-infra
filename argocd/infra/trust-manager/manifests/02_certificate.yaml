@@ -2,7 +2,6 @@ apiVersion: trust.cert-manager.io/v1alpha1
 kind: Bundle
 metadata:
   name: homelab-ca
-  namespace: trust-manager
 spec:
   sources:
     - inLine: |

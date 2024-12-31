@@ -190,7 +190,7 @@ public_vault_datas:
   - path: auth/kubernetes/role/cert-manager
     data:
       bound_service_account_names: cert-manager-vault
-      bound_service_account_namespaces: cert-manager
+      bound_service_account_namespaces: vault
       audience: "vault://vault"
       policies: pki
       ttl: 1m
