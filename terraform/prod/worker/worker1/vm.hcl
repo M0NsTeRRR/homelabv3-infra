@@ -4,7 +4,7 @@ locals {
   vm_tags     = ["ansible_managed", "kubernetes", "kubernetes_worker"]
 
   cores  = 8
-  memory = 20480
+  memory = 32768
 
   disk = {
     storage = "SSD1"
