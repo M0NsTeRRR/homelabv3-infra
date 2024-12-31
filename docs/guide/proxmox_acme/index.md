@@ -23,3 +23,5 @@ Execute the following steps :
 6. Order a certificate `pvenode acme cert order`
 
 !!! info "Repeat step `5` to `6` on each server as step `1` to `4` need to be run only the first time on one node."
+
+!!! info "If you need to delete a registered account when the ACME Server is not available `/etc/pve/priv/acme/default`"
