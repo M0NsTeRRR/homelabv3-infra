@@ -1,28 +1,33 @@
 ---
-podAnnotations:
-  reloader.stakater.com/auto: "true"
+qbittorrent:
+  podAnnotations:
+    reloader.stakater.com/auto: "true"
 
-strategy:
-  type: RollingUpdate
+  strategy:
+    type: RollingUpdate
 
-config:
-  persistence:
-    enabled: false
+  config:
+    persistence:
+      enabled: false
 
-extraEnvFrom:
-  - secretRef:
-      name: qbittorrent-vault
-volumes:
-  - name: &volume-data data
-    persistentVolumeClaim:
-      claimName: media-storage
-volumeMounts:
-  - name: *volume-data
-    mountPath: /downloads
-    subPath: downloads
-gluetun:
   extraEnvFrom:
-    - configMapRef:
-        name: gluetun
     - secretRef:
-        name: gluetun-vault
+        name: qbittorrent-vault
+  volumes:
+    - name: &volume-data data
+      persistentVolumeClaim:
+        claimName: media-storage
+  volumeMounts:
+    - name: *volume-data
+      mountPath: /downloads
+      subPath: downloads
+  gluetun:
+    extraEnvFrom:
+      - configMapRef:
+          name: gluetun
+      - secretRef:
+          name: gluetun-vault
+
+genericDevicePlugin:
+  serviceMonitor:
+    enabled: true
