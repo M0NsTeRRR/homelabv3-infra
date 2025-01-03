@@ -14,6 +14,11 @@ spec:
 
   storage:
     size: 2Gi
+    pvcTemplate:
+      dataSourceRef:
+        apiGroup: volsync.backube
+        kind: ReplicationDestination
+        name: db-restore
 
   bootstrap:
     initdb:

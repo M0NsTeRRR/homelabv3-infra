@@ -18,6 +18,13 @@ spec:
       monthly: 4
       yearly: 1
     copyMethod: Snapshot
+    cacheCapacity: 2Gi
+    volumeSnapshotClassName: csi-ceph-blockpool
+    storageClassName: ceph-block
+    moverSecurityContext:
+      runAsUser: &uid 65534
+      runAsGroup: *uid
+      fsGroup: *uid
     customCA:
       key: ca.crt
       secretName: homelab-ca
@@ -32,9 +39,15 @@ spec:
   restic:
     repository: backup-vault
     destinationPVC: bazarr-cluster-1
-    copyMethod: Snapshot
+    copyMethod: Direct
+    accessModes: ["ReadWriteOnce"]
+    cleanupCachePVC: true
+    cleanupTempPVC: true
+    storageClassName: ceph-block
+    moverSecurityContext:
+      runAsUser: &uid 65534
+      runAsGroup: *uid
+      fsGroup: *uid
     customCA:
       key: ca.crt
       secretName: homelab-ca
-    cleanupCachePVC: true
-    cleanupTempPVC: true
