@@ -120,6 +120,11 @@ vault_policies:
       - path: secret/data/homelab/prod/bazarr
         capabilities:
           - read
+  - name: jellyseerr
+    rules:
+      - path: secret/data/homelab/prod/jellyseerr
+        capabilities:
+          - read
   - name: prowlarr
     rules:
       - path: secret/data/homelab/prod/prowlarr
@@ -277,6 +282,12 @@ public_vault_datas:
       bound_service_account_names: bazarr-vault
       bound_service_account_namespaces: bazarr
       policies: bazarr
+      ttl: 1h
+  - path: auth/kubernetes/role/jellyseerr
+    data:
+      bound_service_account_names: jellyseerr-vault
+      bound_service_account_namespaces: jellyseerr
+      policies: jellyseerr
       ttl: 1h
   - path: auth/kubernetes/role/prowlarr
     data:

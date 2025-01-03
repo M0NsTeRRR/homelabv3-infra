@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jellyseerr
+data:
+  TZ: "Europe/Paris"
+  DB_TYPE: postgres
+  DB_HOST: "jellyseerr-cluster-rw"
+  DB_PORT: "5432"
+  DB_NAME: jellyseerr
+  DB_LOG_QUERIES: "false"

@@ -5,6 +5,8 @@ podAnnotations:
 extraEnvFrom:
   - configMapRef:
       name: jellyseerr
+  - secretRef:
+      name: jellyseerr-vault
 
 ingress:
   enabled: true

@@ -6,7 +6,9 @@ kind: Kustomization
 namespace: &namespace jellyseerr
 
 resources:
-  - manifests/01_configmap.yaml
+  - manifests/01_external_secret.yaml
+  - manifests/02_configmap.yaml
+  - manifests/03_postgres.yaml
 
 helmCharts:
 - name: jellyseerr
