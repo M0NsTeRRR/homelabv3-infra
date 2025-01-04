@@ -8,7 +8,7 @@
         "(^|/)kustomization.ya?ml$"
       ],
       "matchStrings": [
-        "https:\/\/raw\\.githubusercontent\\.com\/(?<depName>[^\/]*\/[^\/]*)\/(?<currentValue>.*?)\/",
+        "https:\/\/raw\\.githubusercontent\\.com\/v?(?<depName>[^\/]*\/[^\/]*)\/(?<currentValue>.*?)\/",
         "https:\/\/github\\.com\/(?<depName>[^\/]*\/[^\/]*)\/releases\/download\/.*(?<currentValue>\\d+.\\d+.\\d+)\/"
       ],
       "datasourceTemplate": "github-releases",
