@@ -22,11 +22,17 @@ qbittorrent:
       mountPath: /downloads
       subPath: downloads
   gluetun:
+    enabled: true
     extraEnvFrom:
       - configMapRef:
           name: gluetun
       - secretRef:
           name: gluetun-vault
+
+  prometheusQbittorrentExporter:
+    enabled: true
+    serviceMonitor:
+      enabled: true
 
 genericDevicePlugin:
   serviceMonitor:
