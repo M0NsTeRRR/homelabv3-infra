@@ -86,7 +86,7 @@ spec:
           interval: 30s
           collector_id: "${env:POD_NAME}"
     exporters:
-      logging:
+      debug:
         verbosity: normal
       prometheusremotewrite/victoriametrics:
         endpoint: http://victoria-metrics-victoria-metrics-single-server.victoria-metrics-single.svc.cluster.local:8428/api/v1/push
@@ -124,7 +124,7 @@ spec:
         logs:
           exporters:
             - otlp/quickwit
-            - logging
+            - debug
           processors:
             - k8sattributes/default
             - memory_limiter
@@ -135,7 +135,7 @@ spec:
         metrics:
           exporters:
             - prometheusremotewrite/victoriametrics
-            - logging
+            - debug
           processors:
             - k8sattributes/default
             - memory_limiter
@@ -147,7 +147,7 @@ spec:
         traces:
           exporters:
             - otlp/quickwit
-            - logging
+            - debug
           processors:
             - k8sattributes/default
             - memory_limiter
