@@ -9,6 +9,7 @@ resources:
   - manifests/01_external_secret.yaml
   - manifests/02_configmap.yaml
   - manifests/03_postgres.yaml
+  - manifests/04_volsync.yaml
 
 helmCharts:
 - name: jellyseerr

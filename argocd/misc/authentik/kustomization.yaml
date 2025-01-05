@@ -10,6 +10,7 @@ resources:
   - manifests/02_certificate.yaml
   - manifests/03_postgres.yaml
   - manifests/04_configmap.yaml
+  - manifests/05_volsync.yaml
 
 helmCharts:
 - name: authentik

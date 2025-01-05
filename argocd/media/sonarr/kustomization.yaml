@@ -10,6 +10,7 @@ resources:
   - manifests/02_configmap.yaml
   - manifests/03_pvc.yaml
   - manifests/04_postgres.yaml
+  - manifests/05_volsync.yaml
 
 helmCharts:
 - name: sonarr

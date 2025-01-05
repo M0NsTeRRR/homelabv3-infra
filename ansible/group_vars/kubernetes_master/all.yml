@@ -120,6 +120,11 @@ vault_policies:
       - path: secret/data/homelab/prod/bazarr
         capabilities:
           - read
+  - name: jellyfin
+    rules:
+      - path: secret/data/homelab/prod/jellyfin
+        capabilities:
+          - read
   - name: jellyseerr
     rules:
       - path: secret/data/homelab/prod/jellyseerr
@@ -282,6 +287,12 @@ public_vault_datas:
       bound_service_account_names: bazarr-vault
       bound_service_account_namespaces: bazarr
       policies: bazarr
+      ttl: 1h
+  - path: auth/kubernetes/role/jellyfin
+    data:
+      bound_service_account_names: jellyfin-vault
+      bound_service_account_namespaces: jellyfin
+      policies: jellyfin
       ttl: 1h
   - path: auth/kubernetes/role/jellyseerr
     data:
