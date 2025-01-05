@@ -12,6 +12,10 @@ spec:
 
   enableSuperuserAccess: false
 
+  certificates:
+    serverTLSSecret: authentik-postgres-cert
+    serverCASecret: authentik-postgres-cert
+
   storage:
     size: 10Gi
     pvcTemplate:
