@@ -10,10 +10,11 @@ parameters:
   csi.storage.k8s.io/node-stage-secret-namespace: csi-driver-smb
 volumeBindingMode: Immediate
 mountOptions:
+  - vers=3.0
   - dir_mode=0777
   - file_mode=0777
-  - uid=1001
-  - gid=1001
+  - uid=3000
+  - gid=3000
   - noperm
   - mfsymlinks
   - cache=strict

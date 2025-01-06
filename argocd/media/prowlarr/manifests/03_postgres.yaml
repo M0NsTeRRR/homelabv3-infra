@@ -29,6 +29,5 @@ spec:
       dataChecksums: true
       encoding: UTF8
 
-
   monitoring:
     enablePodMonitor: true
