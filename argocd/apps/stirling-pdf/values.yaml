@@ -2,11 +2,11 @@
 podAnnotations:
   reloader.stakater.com/auto: "true"
 
-envFrom:
+envsFrom:
   - configMapRef:
-      name: homepage
+      name: stirling-pdf
   - secretRef:
-      name: homepage-vault
+      name: stirling-pdf-vault
 
 service:
   ipFamilyPolicy: "PreferDualStack"
