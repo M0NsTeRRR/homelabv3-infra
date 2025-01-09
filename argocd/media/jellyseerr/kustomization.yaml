@@ -7,9 +7,10 @@ namespace: &namespace jellyseerr
 
 resources:
   - manifests/01_external_secret.yaml
-  - manifests/02_configmap.yaml
-  - manifests/03_postgres.yaml
-  - manifests/04_volsync.yaml
+  - manifests/02_certificate.yaml
+  - manifests/03_configmap.yaml
+  - manifests/04_postgres.yaml
+  - manifests/05_volsync.yaml
 
 helmCharts:
 - name: jellyseerr

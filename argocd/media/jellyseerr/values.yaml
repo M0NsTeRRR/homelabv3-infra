@@ -8,6 +8,16 @@ extraEnvFrom:
   - secretRef:
       name: jellyseerr-vault
 
+volumes:
+  - name: &volume-ca ca-certs
+    configMap:
+      name: homelab-ca
+volumeMounts:
+  - name: *volume-ca
+    mountPath: /etc/ssl/certs/homelab.crt
+    subPath: ca.crt
+    readOnly: true
+
 ingress:
   enabled: true
   annotations:

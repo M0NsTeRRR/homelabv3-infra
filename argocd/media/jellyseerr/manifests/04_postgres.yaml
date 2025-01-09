@@ -12,6 +12,10 @@ spec:
 
   enableSuperuserAccess: false
 
+  certificates:
+    serverTLSSecret: jellyseerr-postgres-cert
+    serverCASecret: jellyseerr-postgres-cert
+
   storage:
     size: 2Gi
     pvcTemplate:

@@ -7,5 +7,6 @@ data:
   DB_TYPE: postgres
   DB_HOST: "jellyseerr-cluster-rw"
   DB_PORT: "5432"
+  DB_SSL_CA: "/etc/ssl/certs/homelab.crt"
   DB_NAME: jellyseerr
   DB_LOG_QUERIES: "false"
