@@ -6,6 +6,7 @@
     "replacements:k8s-registry-move",
     ":automergePr",
     ":automergePatch",
+    ":automergeDigest",
     ":disableRateLimiting",
     ":dependencyDashboard",
     ":semanticCommits",
