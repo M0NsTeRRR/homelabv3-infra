@@ -3,20 +3,31 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: prometheus-snmp-exporter
-  labels: &labels
+  labels: &common-labels
     app.kubernetes.io/name: prometheus-snmp-exporter
     app.kubernetes.io/instance: prometheus-snmp-exporter
   annotations:
     ignore-check.kube-linter.io/dangling-servicemonitor: "helm service"
 spec:
+  jobLabel: prometheus-snmp-exporter
+  selector:
+    matchLabels: *common-labels
   endpoints:
-    - honorLabels: &honor-labels true
+    - &default-endpoint
+      honorLabels: true
+      path: /snmp
+      port: http
+      scrapeTimeout: 10s
       metricRelabelings:
         - action: replace
-          replacement: r1.unicornafk.fr
           sourceLabels:
             - instance
           targetLabel: instance
+
+    - <<: *default-endpoint
+      metricRelabelings:
+        - <<: *default-endpoint
+          replacement: r1.unicornafk.fr
       params:
         module:
           - mikrotik
@@ -24,16 +35,11 @@ spec:
           - 192.168.6.1
         auth:
           - homelab_aes
-      path: &path /snmp
-      port: &port http
-      scrapeTimeout: &scrape-timeout 10s
-    - honorLabels: true
+
+    - <<: *default-endpoint
       metricRelabelings:
-        - action: replace
+        - <<: *default-endpoint
           replacement: sw1.unicornafk.fr
-          sourceLabels:
-            - instance
-          targetLabel: instance
       params:
         module:
           - brocade
@@ -41,16 +47,11 @@ spec:
           - 192.168.10.1
         auth:
           - homelab_aes
-      path: *path
-      port: *port
-      scrapeTimeout: *scrape-timeout
-    - honorLabels: true
+
+    - <<: *default-endpoint
       metricRelabelings:
-        - action: replace
+        - <<: *default-endpoint
           replacement: sw2.unicornafk.fr
-          sourceLabels:
-            - instance
-          targetLabel: instance
       params:
         module:
           - brocade
@@ -58,26 +59,3 @@ spec:
           - 192.168.40.2
         auth:
           - homelab_aes
-      path: *path
-      port: *port
-      scrapeTimeout: *scrape-timeout
-    - honorLabels: true
-      metricRelabelings:
-        - action: replace
-          replacement: nas.unicornafk.fr
-          sourceLabels:
-            - instance
-          targetLabel: instance
-      params:
-        module:
-          - qnap
-        target:
-          - 192.168.50.42
-        auth:
-          - homelab_des
-      path: *path
-      port: *port
-      scrapeTimeout: *scrape-timeout
-  jobLabel: prometheus-snmp-exporter
-  selector:
-    matchLabels: *labels

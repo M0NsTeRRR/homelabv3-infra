@@ -3,68 +3,67 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: prometheus-pve-exporter-cluster
-  labels: &labels
+  labels: &common-labels
     app.kubernetes.io/name: prometheus-pve-exporter
     app.kubernetes.io/instance: prometheus-pve-exporter
   annotations:
     ignore-check.kube-linter.io/dangling-servicemonitor: "helm service"
 spec:
+  jobLabel: prometheus-pve-exporter
+  selector:
+    matchLabels: *common-labels
   endpoints:
-    # Get node metrics
-    - honorLabels: &honor-labels true
-      relabelings: &relabelings
-      - action: replace
-        sourceLabels:
-          - __param_target
-        targetLabel: instance
+    - &default-endpoint
+      honorLabels: true
+      path: /pve
+      port: http
+      scrapeTimeout: 5s
+      relabelings:
+        - action: replace
+          sourceLabels:
+            - __param_target
+          targetLabel: instance
+
+    - <<: *default-endpoint
       params:
-        module: &module
+        module:
           - default
-        cluster: &cluster
+        cluster:
           - "0"
-        node: &node
+        node:
           - "1"
         target:
           - server1.unicornafk.fr
-      path: &path /pve
-      port: &port http
-      scrapeTimeout: &scrape-timeout 5s
-    - honorLabels: *honor-labels
-      relabelings: *relabelings
+
+    - <<: *default-endpoint
       params:
-        module: *module
-        cluster: *cluster
-        node: *node
+        module:
+          - default
+        cluster:
+          - "0"
+        node:
+          - "1"
         target:
           - server2.unicornafk.fr
-      path: *path
-      port: *port
-      scrapeTimeout: *scrape-timeout
-    - honorLabels: *honor-labels
-      relabelings: *relabelings
+
+    - <<: *default-endpoint
       params:
-        module: *module
-        cluster: *cluster
-        node: *node
+        module:
+          - default
+        cluster:
+          - "0"
+        node:
+          - "1"
         target:
           - server3.unicornafk.fr
-      path: *path
-      port: *port
-      scrapeTimeout: *scrape-timeout
-    # Get cluster metrics
-    - honorLabels: *honor-labels
-      relabelings: *relabelings
+
+    - <<: *default-endpoint
       params:
-        module: *module
+        module:
+          - default
         cluster:
           - "1"
         node:
           - "0"
         target:
           - server.unicornafk.fr
-      path: *path
-      port: *port
-      scrapeTimeout: *scrape-timeout
-  jobLabel: prometheus-pve-exporter
-  selector:
-    matchLabels: *labels
