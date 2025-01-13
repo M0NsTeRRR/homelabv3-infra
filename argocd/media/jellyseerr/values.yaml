@@ -8,6 +8,10 @@ extraEnvFrom:
   - secretRef:
       name: jellyseerr-vault
 
+config:
+  persistence:
+    volumeName: "jellyseerr-chart-config"
+
 volumes:
   - name: &volume-ca ca-certs
     configMap:
