@@ -4,8 +4,11 @@ deployment:
     reloader.stakater.com/auto: "true"
 ports:
   web:
-    redirectTo:
-      port: websecure
+    redirections:
+      entryPoint:
+        to: websecure
+        scheme: https
+        permanent: true
     middlewares:
       - ingress-external-security@kubernetescrd
   websecure:
