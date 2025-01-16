@@ -15,5 +15,5 @@ helmCharts:
   releaseName: quickwit
   namespace: *namespace
   repo: https://helm.quickwit.io
-  version: 0.7.8
+  version: 0.7.9
   valuesFile: values.yaml
