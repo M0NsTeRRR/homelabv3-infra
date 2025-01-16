@@ -14,6 +14,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Scan repo with kube-linter
-        uses: stackrox/kube-linter-action@v1.0.5
+        uses: stackrox/kube-linter-action@v1.0.6
         with:
           directory: argocd
