@@ -14,5 +14,5 @@ helmCharts:
   releaseName: stirling-pdf
   namespace: *namespace
   repo: https://stirling-tools.github.io/Stirling-PDF-chart
-  version: 1.3.2
+  version: 1.4.0
   valuesFile: values.yaml
