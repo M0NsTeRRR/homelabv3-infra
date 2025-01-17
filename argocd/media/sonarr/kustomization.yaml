@@ -17,5 +17,5 @@ helmCharts:
   releaseName: sonarr
   namespace: *namespace
   repo: oci://ghcr.io/m0nsterrr/helm-charts
-  version: 1.0.1
+  version: 2.0.0
   valuesFile: values.yaml
