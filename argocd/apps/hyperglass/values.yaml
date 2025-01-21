@@ -38,7 +38,6 @@ volumeMounts:
     readOnly: true
 
 valkey:
-  enabled: true
   auth:
     enabled: true
     existingSecret: *secret-ref
