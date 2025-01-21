@@ -19,9 +19,8 @@ service:
     metallb.universe.tf/loadBalancerIPs: 192.168.10.101,2a0c:b641:2c0:110::101
   ipFamilyPolicy: PreferDualStack
 providers:
-  kubernetesIngress:
-    publishedService:
-      enabled: true
+  kubernetesCRD:
+    ingressClass: ingress-external
 ingressClass:
   enabled: true
   isDefaultClass: true
