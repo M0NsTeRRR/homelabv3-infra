@@ -6,6 +6,9 @@ injector:
   enabled: false
 
 server:
+  image:
+    tag: "1.18.3"
+
   networkPolicy:
     enabled: false
 
