@@ -211,6 +211,7 @@ lego_certificates:
     systemd_services:
       - { name: isc-kea-dhcp4-server, state: restarted }
       - { name: isc-kea-dhcp6-server, state: restarted }
+      - { name: isc-kea-ctrl-agent, state: restarted }
       - { name: otelcol-contrib, state: restarted }
 
 self_signed_cert_list:
