@@ -4,7 +4,7 @@ kind: Cluster
 metadata:
   name: jellyseerr-cluster
 spec:
-  imageName: ghcr.io/cloudnative-pg/postgresql:17.2@sha256:bd862903f459f10db8f2ab59289693dd239c7f7b87012ea3476a19e6f5fb8ade
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.2@sha256:931e5ff8ed96d0b378d3e33186d9e4a06996bf1b3bbd57eb2f6b540fff535f99
 
   primaryUpdateStrategy: unsupervised
   instances: 1
