@@ -347,7 +347,7 @@ argocd_notifiers:
       headers:
         - name: Content-Type
           value: application/json
-      url: "https://discord.com"
+      url: $DISCORD_WEBHOOK_URL
 argocd_subscriptions:
   - recipients:
       - discord
@@ -409,7 +409,6 @@ argocd_templates:
   template.notify-discord-created: |
     webhook:
       discord:
-        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
         method: POST
         {% raw %}
         body: |
@@ -427,7 +426,6 @@ argocd_templates:
   template.notify-discord-deleted: |
     webhook:
       discord:
-        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
         method: POST
         {% raw %}
         body: |
@@ -444,7 +442,6 @@ argocd_templates:
   template.notify-discord-deployed: |
     webhook:
       discord:
-        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
         method: POST
         {% raw %}
         body: |
@@ -476,7 +473,6 @@ argocd_templates:
   template.notify-discord-degraded: |
     webhook:
       discord:
-        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
         method: POST
         {% raw %}
         body: |
@@ -508,7 +504,6 @@ argocd_templates:
   template.notify-discord-failed: |
     webhook:
       discord:
-        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
         method: POST
         {% raw %}
         body: |
@@ -544,7 +539,6 @@ argocd_templates:
   template.notify-discord-running: |
     webhook:
       discord:
-        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
         method: POST
         {% raw %}
         body: |
@@ -576,7 +570,6 @@ argocd_templates:
   template.notify-discord-unknown: |
     webhook:
       discord:
-        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
         method: POST
         {% raw %}
         body: |
@@ -608,7 +601,6 @@ argocd_templates:
   template.notify-discord-succeeded: |
     webhook:
       discord:
-        path: "{{ argocd_discord_webhook_path_url }}?wait=true"
         method: POST
         {% raw %}
         body: |
