@@ -4,7 +4,7 @@ kind: Cluster
 metadata:
   name: prowlarr-cluster
 spec:
-  imageName: ghcr.io/cloudnative-pg/postgresql:17.2@sha256:931e5ff8ed96d0b378d3e33186d9e4a06996bf1b3bbd57eb2f6b540fff535f99
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.2@sha256:b17d21f8ec36add9b3c0ea3fb354d05f62a8fddf8ba65ae94e63ba77bc42202e
 
   primaryUpdateStrategy: unsupervised
   instances: 1
