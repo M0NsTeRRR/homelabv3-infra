@@ -166,6 +166,11 @@ vault_policies:
       - path: secret/data/homelab/prod/stirling-pdf
         capabilities:
           - read
+  - name: actualbudget
+    rules:
+      - path: secret/data/homelab/prod/actualbudget
+        capabilities:
+          - read
 public_vault_datas:
   - path: pki/config/ca
     data:
@@ -330,6 +335,12 @@ public_vault_datas:
       bound_service_account_namespaces: stirling-pdf
       policies: stirling-pdf
       ttl: 1h
+  - path: auth/kubernetes/role/actualbudget
+    data:
+      bound_service_account_names: actualbudget-vault
+      bound_service_account_namespaces: actualbudget
+      policies: actualbudget
+      ttl: 1h
 vault_datas: "{{ public_vault_datas + secret_vault_datas }}"
 argocd_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 argocd_oidc_issuer_url: "{{ oidc_issuer_url }}/application/o/argocd/"
@@ -344,10 +355,10 @@ argocd_repositories:
     url: https://github.com/M0NsTeRRR/homelabv3-infra
 argocd_notifiers:
   service.webhook.discord: |
-      headers:
-        - name: Content-Type
-          value: application/json
-      url: $DISCORD_WEBHOOK_URL
+    headers:
+      - name: Content-Type
+        value: application/json
+    url: $DISCORD_WEBHOOK_URL
 argocd_subscriptions:
   - recipients:
       - discord

@@ -10,7 +10,7 @@ extraEnvFrom:
 
 config:
   persistence:
-    volumeName: "jellyseerr-chart-config"
+    volumeName: jellyseerr-chart-config
 
 volumes:
   - name: &volume-ca ca-certs
