@@ -58,7 +58,7 @@ octodns = [
 ]
 documentation = [
     "mkdocs-material[imaging]~=9.6.1",
-    "pytz~=2024.2"
+    "pytz~=2025.1"
 ]
 
 [tool.uv]
