@@ -31,6 +31,4 @@ To start, I would like to thank all maintainers and contributors to open source 
 - Monitoring/Logging/Alerting :
     * [ ] Alerting system
 - Security :
-    * [ ] Crowdsec
-    * [ ] CSP policy
     * [ ] Implement systemd-resolved dnssec validation (DS record not supported by my current registrar)

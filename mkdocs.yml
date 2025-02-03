@@ -8,7 +8,7 @@ copyright: Copyright © Ludovic Ortega, 2023
 edit_uri: edit/main/docs/
 extra:
   social:
-    - icon: fontawesome/brands/github 
+    - icon: fontawesome/brands/github
       link: https://github.com/M0NsTeRRR
     - icon: fontawesome/brands/x-twitter
       link: https://twitter.com/MoNsTeRRR_CSGO
@@ -28,7 +28,7 @@ theme:
     # Palette toggle for light mode
     - media: "(prefers-color-scheme: light)"
       primary: deep purple
-      scheme: default 
+      scheme: default
       toggle:
         icon: material/brightness-7
         name: Switch to dark mode
@@ -96,26 +96,26 @@ plugins:
 
 nav:
   - Home:
-    - index.md
-    - Architecture: home/architecture.md
-    - Choices: home/choices.md
+      - index.md
+      - Architecture: home/architecture.md
+      - Choices: home/choices.md
   - Getting started:
-    - Introduction: getting-started/index.md
-    - Installation: getting-started/installation.md
-    - Upgrade: getting-started/upgrade.md
+      - Introduction: getting-started/index.md
+      - Installation: getting-started/installation.md
+      - Upgrade: getting-started/upgrade.md
   - Guide:
-    - Introduction: guide/index.md
-    - Packer: guide/packer/index.md
-    - Terraform: guide/terraform/index.md
-    - Ansible: guide/ansible/index.md
-    - Kubernetes: guide/kubernetes/index.md
-    - Argocd: guide/argocd/index.md
-    - Octodns: guide/octodns/index.md
-    - Renovatebot: guide/renovatebot/index.md
-    - DNS Blocklist: guide/dns_blocklist/index.md
-    - CI/CD: guide/ci_cd/index.md
-    - Proxmox ACME: guide/proxmox_acme/index.md
-    - proxmox-exporter: guide/proxmox_exporter/index.md
-    - snmp-exporter: guide/snmp_exporter/index.md
-    - truenas: guide/truenas/index.md
-    - s3: guide/s3/index.md
+      - Introduction: guide/index.md
+      - Packer: guide/packer/index.md
+      - Terraform: guide/terraform/index.md
+      - Ansible: guide/ansible/index.md
+      - Kubernetes: guide/kubernetes/index.md
+      - Argocd: guide/argocd/index.md
+      - Octodns: guide/octodns/index.md
+      - Renovatebot: guide/renovatebot/index.md
+      - DNS Blocklist: guide/dns_blocklist/index.md
+      - CI/CD: guide/ci_cd/index.md
+      - Proxmox ACME: guide/proxmox_acme/index.md
+      - Proxmox-exporter: guide/proxmox_exporter/index.md
+      - Snmp-exporter: guide/snmp_exporter/index.md
+      - Truenas: guide/truenas/index.md
+      - S3: guide/s3/index.md
