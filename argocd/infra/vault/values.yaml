@@ -7,7 +7,7 @@ injector:
 
 server:
   image:
-    tag: "1.18.3"
+    tag: "1.18.5"
 
   networkPolicy:
     enabled: false
