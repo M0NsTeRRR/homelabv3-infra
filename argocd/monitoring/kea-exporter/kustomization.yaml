@@ -14,11 +14,11 @@ helmCharts:
   releaseName: kea1-exporter
   namespace: *namespace
   repo: &kea-helm-chart-repo oci://ghcr.io/m0nsterrr/helm-charts
-  version: 2.0.0
+  version: 2.0.1
   valuesFile: values_1.yaml
 - name: *kea-helm-chart-name
   releaseName: kea2-exporter
   namespace: *namespace
   repo: *kea-helm-chart-repo
-  version: 2.0.0
+  version: 2.0.1
   valuesFile: values_2.yaml
