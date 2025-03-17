@@ -12,8 +12,11 @@ jobs:
   kubernetes-lint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
       - name: Scan repo with kube-linter
-        uses: stackrox/kube-linter-action@v1.0.6
+        uses: stackrox/kube-linter-action@15786eefcc8f5441d767d923b108abe5f7dd8882 # v1.0.6
         with:
           directory: argocd

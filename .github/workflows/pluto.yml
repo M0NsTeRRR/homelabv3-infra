@@ -9,8 +9,11 @@ jobs:
   pluto:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
       - name: Download Pluto
-        uses: FairwindsOps/pluto/github-action@v5.21.3
+        uses: FairwindsOps/pluto/github-action@282bddb2e5a1e8a9398da41a896367995cee97ff # v5.21.3
       - name: Pluto detect-files
         run: pluto detect-files -d argocd/
