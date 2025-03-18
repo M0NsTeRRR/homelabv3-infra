@@ -1,21 +1,19 @@
 ---
 name: Renovatebot check
-
 on:
   push:
     paths:
       - .github/renovate.json5
       - .github/workflows/renovatebot-check.yml
   pull_request:
-
-env:
-  LOG_LEVEL: info
-
+permissions: {}
 jobs:
   renovatebot-lint:
+    name: Lint
     runs-on: ubuntu-latest
-    env:
-      RENOVATE_CONFIG_FILE: .github/renovate.json5
+    permissions:
+      contents: read
+      pull-requests: read
     steps:
       - name: Checkout code
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -23,3 +21,6 @@ jobs:
           persist-credentials: false
       - name: Check renovate config
         run: npx -p renovate renovate-config-validator
+        env:
+          RENOVATE_CONFIG_FILE: .github/renovate.json5
+          LOG_LEVEL: info

@@ -1,20 +1,19 @@
 ---
 name: Octodns
-
 on:
   push:
     paths:
       - octodns/**
       - .github/workflows/octodns.yml
   pull_request:
-
-env:
-  SCALEWAY_SECRET_KEY: ${{ secrets.SCALEWAY_SECRET_KEY }}
-  POWERDNS_API_KEY: ${{ secrets.POWERDNS_API_KEY }}
-
+permissions: {}
 jobs:
   octodns-lint:
+    name: Lint
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
     steps:
       - name: Checkout code
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -32,10 +31,17 @@ jobs:
         run: |
           uv run octodns-validate --config-file=./octodns/internal/config.yaml --all
           uv run octodns-validate --config-file=./octodns/external/config.yaml --all
+        env:
+          SCALEWAY_SECRET_KEY: fake_token
+          POWERDNS_API_KEY: fake_token
   octodns-deploy:
-    runs-on: ubuntu-latest
+    name: Deploy
     if: github.ref == 'refs/heads/main'
     needs: [octodns-lint]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
     steps:
       - name: Checkout code
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -52,3 +58,6 @@ jobs:
       - name: Apply octodns config
         run: |
           uv run octodns-sync --config-file=./octodns/external/config.yaml --doit --force
+        env:
+          SCALEWAY_SECRET_KEY: ${{ secrets.SCALEWAY_SECRET_KEY }}
+          POWERDNS_API_KEY: ${{ secrets.POWERDNS_API_KEY }}
