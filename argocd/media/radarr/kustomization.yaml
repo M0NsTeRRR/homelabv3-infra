@@ -17,5 +17,5 @@ helmCharts:
   releaseName: radarr
   namespace: *namespace
   repo: oci://ghcr.io/m0nsterrr/helm-charts
-  version: 2.2.2
+  version: 2.2.3
   valuesFile: values.yaml
