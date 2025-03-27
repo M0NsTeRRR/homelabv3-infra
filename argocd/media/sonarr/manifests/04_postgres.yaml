@@ -4,7 +4,7 @@ kind: Cluster
 metadata:
   name: sonarr-cluster
 spec:
-  imageName: ghcr.io/cloudnative-pg/postgresql:17.4@sha256:4ebb83ad6701cf90cd16f4c0b502676238ffdb1169bf27c5ae60e9a5bdc7b925
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.4@sha256:84bc07f2c73f4f5473774e6502c5b1ca2d11ae87e4ca5445c646c0d80d2792ec
 
   primaryUpdateStrategy: unsupervised
   instances: 1
