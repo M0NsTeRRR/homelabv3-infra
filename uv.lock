@@ -1,4 +1,5 @@
 version = 1
+revision = 1
 requires-python = ">=3.12, <4.0.0"
 resolution-markers = [
     "sys_platform != 'win32'",
@@ -9,7 +10,7 @@ supported-markers = [
 
 [[package]]
 name = "ansible-compat"
-version = "24.10.0"
+version = "25.1.5"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "ansible-core", marker = "sys_platform != 'win32'" },
@@ -18,9 +19,9 @@ dependencies = [
     { name = "pyyaml", marker = "sys_platform != 'win32'" },
     { name = "subprocess-tee", marker = "sys_platform != 'win32'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/59/f9/c48f3a140e3afad144a720f5c29aa8b34087926b2e2fc8778d4d4b5b6323/ansible_compat-24.10.0.tar.gz", hash = "sha256:0ad873e0dae8b2de79bc33ced813d6c92c716c4d7b82f9a4693e1fd57f43776e", size = 81818 }
+sdist = { url = "https://files.pythonhosted.org/packages/66/79/198116bddfa79a05b02f64d617865e5cf1b982f7f25be993ec6efd95d174/ansible_compat-25.1.5.tar.gz", hash = "sha256:1dd35c21ba0301c93b19fe2bb3aa2caa2a630a05373a103adcc2621465f8da6a", size = 88395 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/fc/c5/3419d575ebc4b3bf0cadb4a78715476077ce221626a1cf7539fd6faf41f9/ansible_compat-24.10.0-py3-none-any.whl", hash = "sha256:0415bcd82f7d84e5b344c03439154c1f16576809dc3a523b81178354c86ae5a1", size = 24211 },
+    { url = "https://files.pythonhosted.org/packages/c9/98/59c5083b22320f8d9b8c18d82492b56f82141a184c035799c54916b813f3/ansible_compat-25.1.5-py3-none-any.whl", hash = "sha256:066c280b02e12eedcacfb3390a3e459c4d325bb9971f86bd6486b25d1d1f161d", size = 25871 },
 ]
 
 [[package]]
@@ -41,7 +42,7 @@ wheels = [
 
 [[package]]
 name = "ansible-lint"
-version = "25.1.0"
+version = "25.2.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "ansible-compat", marker = "sys_platform != 'win32'" },
@@ -53,14 +54,15 @@ dependencies = [
     { name = "packaging", marker = "sys_platform != 'win32'" },
     { name = "pathspec", marker = "sys_platform != 'win32'" },
     { name = "pyyaml", marker = "sys_platform != 'win32'" },
+    { name = "referencing", marker = "sys_platform != 'win32'" },
     { name = "ruamel-yaml", marker = "sys_platform != 'win32'" },
     { name = "subprocess-tee", marker = "sys_platform != 'win32'" },
     { name = "wcmatch", marker = "sys_platform != 'win32'" },
     { name = "yamllint", marker = "sys_platform != 'win32'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/b0/02/8cd89ee6ab005e06f41a84a90dc405444ab4f264aadf2d4b5e6c3b5be28d/ansible_lint-25.1.0.tar.gz", hash = "sha256:e4d657578a8354832a84a1d5a2b9225a78b9c5fefa8880506b7fa0347d6b5f7e", size = 549384 }
+sdist = { url = "https://files.pythonhosted.org/packages/fd/6a/275426480d8d76ccd334085f7e04ef53bacafd7b99e192ec508ca1498c7c/ansible_lint-25.2.1.tar.gz", hash = "sha256:ec4b1fcfa8bef13f547feefa22ea6864defd902b3a267ef8f4c5341976f45ff1", size = 556461 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/8b/51/ee2bf667f8260e3e3a36f765b7e558f0f0834db2c0aa1f86d8aae01cc5c6/ansible_lint-25.1.0-py3-none-any.whl", hash = "sha256:9553b2aee124999b2005140bf27619793910454fcf2381e25ceb5b21f7384eed", size = 311015 },
+    { url = "https://files.pythonhosted.org/packages/76/aa/4f0d4948dcf5a7c434e6eac63d98d43938bba0a5ba56ef3556ef33f0208c/ansible_lint-25.2.1-py3-none-any.whl", hash = "sha256:d3993cb7b5705d381edc26bf74c2c06edd10f8479bcd8ada0647364ef6ae88c8", size = 314523 },
 ]
 
 [[package]]
@@ -403,7 +405,7 @@ terraform = [
 [package.metadata]
 requires-dist = [
     { name = "ansible-core", marker = "extra == 'ansible'", specifier = "~=2.18.0" },
-    { name = "ansible-lint", marker = "extra == 'ansible'", specifier = "~=25.1.0" },
+    { name = "ansible-lint", marker = "extra == 'ansible'", specifier = "~=25.2.1" },
     { name = "bcrypt", marker = "extra == 'ansible'", specifier = "~=4.0.1" },
     { name = "cryptography", marker = "extra == 'ansible'", specifier = "~=44.0.0" },
     { name = "dnspython", marker = "extra == 'ansible'", specifier = "~=2.7.0" },
@@ -420,6 +422,7 @@ requires-dist = [
     { name = "pyyaml", marker = "extra == 'ansible'", specifier = "~=6.0.2" },
     { name = "requests", marker = "extra == 'ansible'", specifier = "~=2.32.3" },
 ]
+provides-extras = ["ansible", "terraform", "octodns", "documentation"]
 
 [[package]]
 name = "idna"
@@ -937,15 +940,16 @@ wheels = [
 
 [[package]]
 name = "referencing"
-version = "0.35.1"
+version = "0.36.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "attrs", marker = "sys_platform != 'win32'" },
     { name = "rpds-py", marker = "sys_platform != 'win32'" },
+    { name = "typing-extensions", marker = "python_full_version < '3.13' and sys_platform != 'win32'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/99/5b/73ca1f8e72fff6fa52119dbd185f73a907b1989428917b24cff660129b6d/referencing-0.35.1.tar.gz", hash = "sha256:25b42124a6c8b632a425174f24087783efb348a6f1e0008e63cd4466fedf703c", size = 62991 }
+sdist = { url = "https://files.pythonhosted.org/packages/2f/db/98b5c277be99dd18bfd91dd04e1b759cad18d1a338188c936e92f921c7e2/referencing-0.36.2.tar.gz", hash = "sha256:df2e89862cd09deabbdba16944cc3f10feb6b3e6f18e902f7cc25609a34775aa", size = 74744 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/b7/59/2056f61236782a2c86b33906c025d4f4a0b17be0161b63b70fd9e8775d36/referencing-0.35.1-py3-none-any.whl", hash = "sha256:eda6d3234d62814d1c64e305c1331c9a3a6132da475ab6382eaa997b21ee75de", size = 26684 },
+    { url = "https://files.pythonhosted.org/packages/c1/b1/3baf80dc6d2b7bc27a95a67752d0208e410351e3feb4eb78de5f77454d8d/referencing-0.36.2-py3-none-any.whl", hash = "sha256:e8699adbbf8b5c7de96d8ffa0eb5c158b3beafce084968e2ea8bb08c6794dcd0", size = 26775 },
 ]
 
 [[package]]
@@ -1123,6 +1127,15 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/7a/fd/7a5ee21fd08ff70d3d33a5781c255cbe779659bd03278feb98b19ee550f4/tinycss2-1.4.0.tar.gz", hash = "sha256:10c0972f6fc0fbee87c3edb76549357415e94548c1ae10ebccdea16fb404a9b7", size = 87085 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/e6/34/ebdc18bae6aa14fbee1a08b63c015c72b64868ff7dae68808ab500c492e2/tinycss2-1.4.0-py3-none-any.whl", hash = "sha256:3a49cf47b7675da0b15d0c6e1df8df4ebd96e9394bb905a5775adb0d884c5289", size = 26610 },
+]
+
+[[package]]
+name = "typing-extensions"
+version = "4.13.1"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/76/ad/cd3e3465232ec2416ae9b983f27b9e94dc8171d56ac99b345319a9475967/typing_extensions-4.13.1.tar.gz", hash = "sha256:98795af00fb9640edec5b8e31fc647597b4691f099ad75f469a2616be1a76dff", size = 106633 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/df/c5/e7a0b0f5ed69f94c8ab7379c599e6036886bffcde609969a5325f47f1332/typing_extensions-4.13.1-py3-none-any.whl", hash = "sha256:4b6cf02909eb5495cfbc3f6e8fd49217e6cc7944e145cdda8caa3734777f9e69", size = 45739 },
 ]
 
 [[package]]
