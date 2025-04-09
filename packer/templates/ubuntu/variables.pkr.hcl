@@ -61,7 +61,7 @@ variable "distribution" {
 
 variable "version" {
   type    = string
-  default = "24.04.1"
+  default = "24.04.2"
 }
 
 variable "vm_ip" {
