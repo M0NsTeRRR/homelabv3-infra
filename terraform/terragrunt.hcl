@@ -1,5 +1,5 @@
 terraform_version_constraint  = "v1.11.4"
-terragrunt_version_constraint = "v0.77.20"
+terragrunt_version_constraint = "v0.77.22"
 
 locals {
   account_vars = read_terragrunt_config(find_in_parent_folders("account.hcl"))
