@@ -20,6 +20,6 @@ jobs:
         with:
           persist-credentials: false
       - name: Scan repo with kube-linter
-        uses: stackrox/kube-linter-action@15786eefcc8f5441d767d923b108abe5f7dd8882 # v1.0.6
+        uses: stackrox/kube-linter-action@87802a2f4e01abebb3ee3c67a3002fea71f6eae5 # v1.0.7
         with:
           directory: argocd
