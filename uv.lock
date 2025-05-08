@@ -414,7 +414,7 @@ requires-dist = [
     { name = "mkdocs-material", extras = ["imaging"], marker = "extra == 'documentation'", specifier = "~=9.6.1" },
     { name = "netaddr", marker = "extra == 'ansible'", specifier = "~=1.3.0" },
     { name = "octodns", marker = "extra == 'octodns'", specifier = "~=1.11.0" },
-    { name = "octodns-powerdns", marker = "extra == 'octodns'", specifier = "~=0.0.7" },
+    { name = "octodns-powerdns", marker = "extra == 'octodns'", specifier = "~=1.0.0" },
     { name = "octodns-scaleway", marker = "extra == 'octodns'", specifier = "~=0.0.4" },
     { name = "paramiko", marker = "extra == 'terraform'", specifier = "~=3.5.0" },
     { name = "passlib", marker = "extra == 'ansible'", specifier = "~=1.7.4" },
@@ -706,15 +706,15 @@ wheels = [
 
 [[package]]
 name = "octodns-powerdns"
-version = "0.0.7"
+version = "1.0.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "octodns", marker = "sys_platform != 'win32'" },
     { name = "requests", marker = "sys_platform != 'win32'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/53/5d/e0489fc64bb63ac0824582494413d8854cbaa902607373b83f5a648b13c9/octodns_powerdns-0.0.7.tar.gz", hash = "sha256:6ff12c6c2fbe21be3389353e9975744aaf472606ed4b6f35bdb8d5673be1fcd0", size = 15999, upload-time = "2024-08-28T16:29:37.147Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/4b/85/b0197ec3b027523395b6a4a2610e221789e71a030e169a69392fedbe1883/octodns_powerdns-1.0.0.tar.gz", hash = "sha256:096625dcd2778cf26f4a1f8616fc28cb2a85cf503c2d78fe6c8438d3eef89462", size = 15637, upload-time = "2025-05-04T20:45:38.889Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/5d/79/0895f562f71bfb4d189ceedbd50c929f26e6090a83ee3734d150021fe022/octodns_powerdns-0.0.7-py3-none-any.whl", hash = "sha256:a72ab04c296d1a924e0c4c31b4277f90384c1172f5ba129f76ff87670f26a021", size = 10185, upload-time = "2024-08-28T16:29:36.142Z" },
+    { url = "https://files.pythonhosted.org/packages/47/21/c325f18bf88e44b9d0c00b4c4e08ad121e214860aff538c3fd90a5fe7d17/octodns_powerdns-1.0.0-py3-none-any.whl", hash = "sha256:f13c2bb82e419a405e21514f62595de3fef604f01d4a5b01002b5a94e7c000f7", size = 10086, upload-time = "2025-05-04T20:45:37.568Z" },
 ]
 
 [[package]]

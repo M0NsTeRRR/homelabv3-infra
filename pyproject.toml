@@ -54,7 +54,7 @@ terraform = [
 octodns = [
     "octodns~=1.11.0",
     "octodns_scaleway~=0.0.4",
-    "octodns-powerdns~=0.0.7"
+    "octodns-powerdns~=1.0.0"
 ]
 documentation = [
     "mkdocs-material[imaging]~=9.6.1",
