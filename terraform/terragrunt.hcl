@@ -1,4 +1,4 @@
-terraform_version_constraint  = "v1.11.4"
+terraform_version_constraint  = "v1.12.0"
 terragrunt_version_constraint = "v0.78.4"
 
 locals {
