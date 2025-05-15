@@ -51,7 +51,7 @@ releases:
   - name: cilium
     namespace: cilium
     chart: cilium/cilium
-    version: 1.17.3
+    version: 1.17.4
     values: ["../../../argocd/infra/cilium/values.yaml"]
     needs: ["prometheus-operator-crds/prometheus-operator-crds"]
 
