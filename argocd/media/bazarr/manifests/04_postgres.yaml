@@ -4,7 +4,7 @@ kind: Cluster
 metadata:
   name: bazarr-cluster
 spec:
-  imageName: ghcr.io/cloudnative-pg/postgresql:17.4@sha256:3c0ba08ea353c9705a755c113e4ae395be76553e0ed68076e5410cb09b9d17d9
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.5@sha256:a584c18aa3d292b5bec7d0bce76b26edcd0a53555adbf607d14b145191a7b7fd
 
   primaryUpdateStrategy: unsupervised
   instances: 1
