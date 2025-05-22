@@ -37,6 +37,11 @@ kubernetes:
     value: "192.168.10.80"
   - type: AAAA
     value: "2a0c:b641:02c0:110::80"
+kvm1:
+  - type: A
+    value: "192.168.30.51"
+  - type: AAAA
+    value: "2a0c:b641:02c0:130::51"
 meross-monsieur-cuisine:
   - type: A
     value: "192.168.50.105"

@@ -1,0 +1,13 @@
+"":
+  #  - type: NS
+  #    values:
+  #      - "ns0.dom.scw.cloud."
+  #      - "ns1.dom.scw.cloud."
+  - type: CAA
+    values:
+      - flags: 0
+        tag: issue
+        value: sectigo.com
+      - flags: 0
+        tag: issue
+        value: letsencrypt.org

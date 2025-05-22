@@ -33,3 +33,10 @@ zones:
       - scaleway
     processors:
       - ownership
+  unicornafk.fr.:
+    sources:
+      - config
+    targets:
+      - scaleway
+    processors:
+      - ownership

@@ -27,15 +27,38 @@
 _dmarc:
   - type: TXT
     value: v=DMARC1\; p=reject\; aspf=s\; adkim=s\; rua=mailto:security@adminafk.fr\; ruf=mailto:security@adminafk.fr\;
+_dmarc.mail:
+  - type: TXT
+    value: v=DMARC1\; p=quarantine\; pct=100\; adkim=s\; aspf=s
 _github-pages-challenge-M0NsTeRRR:
   - type: TXT
     value: 3d8e8d04a6f41d4c7308cb45b236e9
+dkim02._domainkey.mail:
+  - type: CNAME
+    value: dkim02._domainkey.alias.proton.me.
+dkim03._domainkey.mail:
+  - type: CNAME
+    value: dkim03._domainkey.alias.proton.me.
+dkim._domainkey.mail:
+  - type: CNAME
+    value: dkim._domainkey.alias.proton.me.
 helm-charts:
   - type: CNAME
     value: m0nsterrr.github.io.
 homelab:
   - type: CNAME
     value: m0nsterrr.github.io.
+mail:
+  - type: MX
+    values:
+      - exchange: mx1.alias.proton.me.
+        preference: 10
+      - exchange: mx2.alias.proton.me.
+        preference: 20
+  - type: TXT
+    values:
+      - v=spf1 include:alias.proton.me ~all
+      - pm-verification=yuyfheverurgzmbazlhozhmfuptbzw
 openpgpkey:
   - type: CNAME
     value: wkd.keys.openpgp.org.
