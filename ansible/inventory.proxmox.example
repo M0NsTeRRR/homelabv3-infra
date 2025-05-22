@@ -1,5 +1,5 @@
 ---
-plugin: community.general.proxmox
+plugin: community.proxmox.proxmox
 url: https://server1.unicornafk.fr:8006
 user: root@pam
 password:
