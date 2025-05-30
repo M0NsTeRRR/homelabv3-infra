@@ -12,9 +12,6 @@ tasks:
   status:
     desc: Setup Status app
     cmd: ansible-playbook deploy_infra.yml --limit status
-  vpn:
-    desc: Setup VPN
-    cmd: ansible-playbook deploy_infra.yml --limit vpn
   vault:
     desc: Setup vault
     cmd: ansible-playbook deploy_infra.yml --limit vault

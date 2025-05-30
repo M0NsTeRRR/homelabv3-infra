@@ -33,12 +33,6 @@
     - kea_dhcp
     - ntp
 
-- name: Configure VPN server
-  hosts: vpn
-  become: true
-  roles:
-    - wireguard
-
 - name: Configure kubernetes
   hosts: kubernetes
   become: true
@@ -66,7 +60,7 @@
       tags: argocd
 
 - name: Configure Vault unseal
-  hosts: dns,vpn
+  hosts: dns
   become: true
   roles:
     - vault_unseal

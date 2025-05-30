@@ -78,7 +78,7 @@ vpn:
   - type: A
     value: "82.65.135.80"
   - type: AAAA
-    value: "2a0c:b641:2c0:110::70"
+    value: "2a0c:b641:2c0:106::1"
 vps1:
   - type: A
     value: "141.145.215.178"

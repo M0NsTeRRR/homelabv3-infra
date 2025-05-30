@@ -1,6 +1,7 @@
 # Architecture
 
 ### Networking
+
 I'm running my own AS for my IPv6 stack registered as [AS212510](https://as212510.net)  
 
 - [Openfactory](https://www.openfactory.net/) free BGP Tunnel, thanks to them :heart:
@@ -14,7 +15,8 @@ I'm running my own AS for my IPv6 stack registered as [AS212510](https://as21251
 
 ### Cloud providers
 
-- [Scaleway](https://www.scaleway.com/en/) for S3 and domains
+- [Scaleway](https://www.scaleway.com/en/) for domains
+- [Infomaniak](https://www.infomaniak.com/en) for S3
 - [Proton](https://proton.me/en) for emails, VPN
 - [Oracle](https://www.oracle.com/) for VPS
 
