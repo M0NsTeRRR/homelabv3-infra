@@ -9,7 +9,7 @@ collections:
   - name: community.crypto
     version: "2.26.2"
   - name: community.postgresql
-    version: "4.0.1"
+    version: "4.1.0"
   - name: community.proxmox
     version: "0.1.0"
   - name: kubernetes.core
