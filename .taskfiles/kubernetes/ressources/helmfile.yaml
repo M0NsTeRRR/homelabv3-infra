@@ -99,7 +99,7 @@ releases:
   - name: rook-ceph
     namespace: rook-ceph
     chart: rook-ceph/rook-ceph
-    version: v1.17.3
+    version: v1.17.4
     values: ["../../../argocd/storage/rook-ceph/values.yaml"]
     needs: ["external-secrets/external-secrets"]
 
