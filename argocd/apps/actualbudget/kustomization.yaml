@@ -14,5 +14,5 @@ helmCharts:
     releaseName: actualbudget
     namespace: *namespace
     repo: oci://ghcr.io/m0nsterrr/helm-charts
-    version: 1.4.0
+    version: 1.5.0
     valuesFile: values.yaml
