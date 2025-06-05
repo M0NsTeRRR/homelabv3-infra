@@ -58,7 +58,7 @@ releases:
   - name: metallb
     namespace: metallb-system
     chart: metallb/metallb
-    version: 0.14.9
+    version: 0.15.2
     values: ["../../../argocd/infra/metallb-system/values.yaml"]
     needs: ["cilium/cilium"]
     hooks:
