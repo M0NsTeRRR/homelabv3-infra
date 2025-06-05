@@ -15,9 +15,6 @@ repositories:
   - name: cilium
     url: https://helm.cilium.io
 
-  - name: metallb
-    url: https://metallb.github.io/metallb
-
   - name: rook-ceph
     url: https://charts.rook.io/release
 
@@ -57,8 +54,8 @@ releases:
 
   - name: metallb
     namespace: metallb-system
-    chart: metallb/metallb
-    version: 0.14.9
+    chart: oci://quay.io/metallb/chart/metallb
+    version: 0.15.2
     values: ["../../../argocd/infra/metallb-system/values.yaml"]
     needs: ["cilium/cilium"]
     hooks:
