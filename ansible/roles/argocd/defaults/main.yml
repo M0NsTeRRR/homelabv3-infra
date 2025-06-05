@@ -2,7 +2,7 @@
 # renovate: datasource=github-releases depName=argoproj/argo-cd
 argocd_version: "v3.0.5"
 # renovate: datasource=github-releases depName=argoproj/argo-helm
-argocd_chart_github_tag: "argo-cd-8.0.13"
+argocd_chart_github_tag: "argo-cd-8.0.14"
 argocd_chart_version: "{{ argocd_chart_github_tag | replace('argo-cd-', '') }}"
 argocd_force_install: false
 argocd_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
