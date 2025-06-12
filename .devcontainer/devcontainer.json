@@ -15,7 +15,7 @@
 		},
 		"ghcr.io/devcontainers/features/terraform:1": {
 			// datasource=github-tags depName=hashicorp/terraform
-			"version": "v1.12.1",
+			"version": "v1.12.2",
 			// datasource=github-tags depName=gruntwork-io/terragrunt
 			"terragrunt": "v0.81.5"
 		},
