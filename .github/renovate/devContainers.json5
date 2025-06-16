@@ -9,6 +9,7 @@
         'datasource=(?<datasource>\\S*)[\\s]+depName=(?<depName>\\S*)[\\s]+"\\w+":[\\s]+"(?<currentValue>[a-zA-Z0-9-_.]+)"'
       ],
       "versioningTemplate": 'regex:^v?(?<major>\\d+)\\.(?<minor>\\d+)\\.?(?<patch>\\d+)?-?(?<compatibility>\\S+)?$',
+      "extractVersion": "^v?(?<version>.*)$",
     },
   ]
 }
