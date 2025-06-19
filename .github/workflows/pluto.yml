@@ -18,6 +18,6 @@ jobs:
         with:
           persist-credentials: false
       - name: Download Pluto
-        uses: FairwindsOps/pluto/github-action@36af4af118b8c9b218e329d020926051159fee61 # v5.21.7
+        uses: FairwindsOps/pluto/github-action@a2cd5c3a6161456c00b3105411493b0900d4da0e # v5.21.8
       - name: Pluto detect-files
         run: pluto detect-files -d argocd/
