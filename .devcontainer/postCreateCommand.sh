@@ -15,5 +15,9 @@ ansible-galaxy install -r ansible/requirements.yml
 # install helm plugins
 helm plugin install https://github.com/databus23/helm-diff
 
+# nixos fix
+# see https://github.com/microsoft/vscode-remote-release/issues/11024
+git config --global gpg.program "/usr/bin/gpg"
+
 # source venv
 source .venv/bin/activate
