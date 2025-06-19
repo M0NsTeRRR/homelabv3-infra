@@ -10,5 +10,5 @@ helmCharts:
   releaseName: stakater
   namespace: *namespace
   repo: oci://ghcr.io/stakater/charts
-  version: 2.1.3
+  version: 2.1.4
   valuesFile: values.yaml
