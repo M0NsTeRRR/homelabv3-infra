@@ -15,5 +15,5 @@ helmCharts:
   releaseName: prometheus-snmp-exporter
   namespace: *namespace
   repo: oci://ghcr.io/prometheus-community/charts
-  version: 9.4.0
+  version: 9.5.0
   valuesFile: values.yaml
