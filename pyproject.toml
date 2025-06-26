@@ -52,7 +52,7 @@ terraform = [
     "paramiko~=3.5.0"
 ]
 octodns = [
-    "octodns~=1.11.0",
+    "octodns~=1.12.0",
     "octodns_scaleway~=0.0.4",
     "octodns-powerdns~=1.0.0"
 ]
