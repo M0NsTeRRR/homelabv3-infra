@@ -1,6 +1,6 @@
 ---
 # renovate: datasource=github-tags depName=PowerDNS/pdns
-powerdns_authoritative_repo_version: "auth-4.9.5"
+powerdns_authoritative_repo_version: "auth-4.9.6"
 # powerdns_authoritative_version:
 powerdns_authoritative_repository_key: FD380FBB
 powerdns_authoritative_package_state: latest
