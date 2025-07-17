@@ -13,5 +13,5 @@ helmCharts:
   releaseName: kube-prometheus-stack
   namespace: *namespace
   repo: oci://ghcr.io/prometheus-community/charts
-  version: 75.9.0
+  version: 75.11.0
   valuesFile: values.yaml
