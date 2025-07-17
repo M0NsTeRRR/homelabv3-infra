@@ -4,7 +4,7 @@ galaxy_info:
   author: Ludovic Ortega
   description: Install and configure fail2ban
   license: CeCILL
-  min_ansible_version: "2.18.6"
+  min_ansible_version: "2.18.7"
   platforms:
     - name: Ubuntu
       versions:
