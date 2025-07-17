@@ -18,5 +18,5 @@ helmCharts:
   releaseName: jellyseerr
   namespace: *namespace
   repo: oci://ghcr.io/fallenbagel/jellyseerr
-  version: 2.6.0
+  version: 2.6.1
   valuesFile: values.yaml
