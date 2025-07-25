@@ -10,5 +10,5 @@ helmCharts:
   releaseName: prometheus-smartctl-exporter
   namespace: *namespace
   repo: oci://ghcr.io/prometheus-community/charts
-  version: 0.15.3
+  version: 0.15.4
   valuesFile: values.yaml
