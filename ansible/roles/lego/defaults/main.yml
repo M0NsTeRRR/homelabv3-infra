@@ -1,6 +1,6 @@
 ---
 # renovate: datasource=github-releases depName=go-acme/lego
-lego_version: 4.25.1
+lego_version: 4.25.2
 lego_force_install: false
 lego_webserver_port: 80
 lego_webserver_proxified: true
