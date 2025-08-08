@@ -103,7 +103,7 @@ releases:
   - name: rook-ceph-cluster
     namespace: rook-ceph-cluster
     chart: rook-ceph/rook-ceph-cluster
-    version: v1.17.6
+    version: v1.17.7
     values: ["../../../argocd/storage/rook-ceph-cluster/values.yaml"]
     needs: ["rook-ceph/rook-ceph"]
 
