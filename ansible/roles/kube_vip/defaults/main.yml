@@ -1,6 +1,6 @@
 ---
 # renovate: datasource=github-releases depName=kube-vip/kube-vip
-kube_vip_version: "v0.9.2"
+kube_vip_version: "v1.0.0"
 kube_vip_force_install: false
 kube_vip_master_group: master
 kube_vip_namespace: kube-vip
