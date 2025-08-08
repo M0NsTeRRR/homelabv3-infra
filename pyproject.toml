@@ -49,7 +49,7 @@ ansible = [
     "jsonpatch~=1.33"
 ]
 terraform = [
-    "paramiko~=3.5.0"
+    "paramiko~=4.0.0"
 ]
 octodns = [
     "octodns~=1.12.0",
