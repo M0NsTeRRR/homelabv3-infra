@@ -6,9 +6,9 @@ kind: Kustomization
 namespace: &namespace volsync
 
 helmCharts:
-- name: volsync
-  releaseName: volsync
-  namespace: *namespace
-  repo: https://backube.github.io/helm-charts/
-  version: 0.13.0
-  valuesFile: values.yaml
+  - name: volsync
+    releaseName: volsync
+    namespace: *namespace
+    repo: https://backube.github.io/helm-charts/
+    version: 0.13.0
+    valuesFile: values.yaml

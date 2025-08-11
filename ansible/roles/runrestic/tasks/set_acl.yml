@@ -2,7 +2,7 @@
 - name: Get stats of backup file
   ansible.builtin.stat:
     path: "{{ item }}"
-  register: backup_file
+  register: runrestic_backup_file
 
 - name: Set runrestic acl to access backup files
   ansible.posix.acl:
@@ -11,6 +11,6 @@
     etype: user
     permissions: rX
     recursive: true
-    default: "{{ backup_file.stat.isdir }}"
+    default: "{{ runrestic_backup_file.stat.isdir }}"
     state: present
   no_log: true

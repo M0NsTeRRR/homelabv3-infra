@@ -34,23 +34,23 @@
 - name: Check if vault-unseal is already installed
   ansible.builtin.stat:
     path: /usr/local/bin/vault-unseal
-  register: vault_unseal
+  register: vault_unseal_install
 
 - name: Detect machine architecture
   ansible.builtin.set_fact:
-    arch: "{% if ansible_architecture == 'aarch64' %}arm64{% else %}amd64{% endif %}"
-  when: not vault_unseal.stat.exists or vault_unseal_force_install
+    vault_unseal_arch: "{% if ansible_architecture == 'aarch64' %}arm64{% else %}amd64{% endif %}"
+  when: not vault_unseal_install.stat.exists or vault_unseal_force_install
 
 - name: Download last version of vault-unseal
   ansible.builtin.get_url:
-    url: "https://github.com/M0NsTeRRR/vault-unseal/releases/download/{{ vault_unseal_version }}/vault-unseal_linux_{{ arch }}"
+    url: "https://github.com/M0NsTeRRR/vault-unseal/releases/download/{{ vault_unseal_version }}/vault-unseal_linux_{{ vault_unseal_arch }}"
     checksum: "sha256:https://github.com/M0NsTeRRR/vault-unseal/releases/download/{{ vault_unseal_version }}/vault-unseal_checksums.txt"
     dest: /usr/local/bin/vault-unseal
     owner: vault-unseal
     group: vault-unseal
     mode: "0700"
   notify: Restart vault-unseal.service
-  when: not vault_unseal.stat.exists or vault_unseal_force_install
+  when: not vault_unseal_install.stat.exists or vault_unseal_force_install
 
 - name: Create vault-unseal configuration
   ansible.builtin.template:

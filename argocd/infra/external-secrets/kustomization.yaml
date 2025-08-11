@@ -9,9 +9,9 @@ resources:
   - manifests/01_prometheus_rule.yaml
 
 helmCharts:
-- name: external-secrets
-  releaseName: external-secrets
-  namespace: *namespace
-  repo: oci://ghcr.io/external-secrets/charts
-  version: 0.19.1
-  valuesFile: values.yaml
+  - name: external-secrets
+    releaseName: external-secrets
+    namespace: *namespace
+    repo: oci://ghcr.io/external-secrets/charts
+    version: 0.19.1
+    valuesFile: values.yaml

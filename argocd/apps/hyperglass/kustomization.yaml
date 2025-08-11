@@ -10,9 +10,9 @@ resources:
   - manifests/02_configmap.yaml
 
 helmCharts:
-- name: hyperglass
-  releaseName: hyperglass
-  namespace: *namespace
-  repo: oci://ghcr.io/m0nsterrr/helm-charts
-  version: 3.0.4
-  valuesFile: values.yaml
+  - name: hyperglass
+    releaseName: hyperglass
+    namespace: *namespace
+    repo: oci://ghcr.io/m0nsterrr/helm-charts
+    version: 3.0.4
+    valuesFile: values.yaml

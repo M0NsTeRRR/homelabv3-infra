@@ -43,4 +43,3 @@ ingress:
         - *host
       secretName: jellyseerr.unicornafk.fr-tls
   ingressClassName: ingress-internal
-  

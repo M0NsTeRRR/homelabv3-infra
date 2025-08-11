@@ -13,9 +13,9 @@ resources:
   - manifests/05_volsync.yaml
 
 helmCharts:
-- name: authentik
-  releaseName: authentik
-  namespace: *namespace
-  repo: oci://ghcr.io/goauthentik/helm-charts
-  version: 2025.6.4
-  valuesFile: values.yaml
+  - name: authentik
+    releaseName: authentik
+    namespace: *namespace
+    repo: oci://ghcr.io/goauthentik/helm-charts
+    version: 2025.6.4
+    valuesFile: values.yaml

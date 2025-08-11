@@ -10,9 +10,9 @@ resources:
   - manifests/02_configmap.yaml
 
 helmCharts:
-- name: stirling-pdf-chart
-  releaseName: stirling-pdf
-  namespace: *namespace
-  repo: https://stirling-tools.github.io/Stirling-PDF-chart
-  version: 2.1.0
-  valuesFile: values.yaml
+  - name: stirling-pdf-chart
+    releaseName: stirling-pdf
+    namespace: *namespace
+    repo: https://stirling-tools.github.io/Stirling-PDF-chart
+    version: 2.1.0
+    valuesFile: values.yaml

@@ -16,22 +16,22 @@
 - name: Check if lego is already installed
   ansible.builtin.stat:
     path: /usr/local/bin/lego
-  register: lego
+  register: lego_install
 
 - name: Detect machine architecture
   ansible.builtin.set_fact:
-    arch: "{% if ansible_architecture == 'aarch64' %}arm64{% else %}amd64{% endif %}"
-  when: not lego.stat.exists or lego_force_install
+    lego_arch: "{% if ansible_architecture == 'aarch64' %}arm64{% else %}amd64{% endif %}"
+  when: not lego_install.stat.exists or lego_force_install
 
 - name: Download last version of lego
   ansible.builtin.get_url:
-    url: "https://github.com/go-acme/lego/releases/download/v{{ lego_version }}/lego_v{{ lego_version }}_{{ ansible_system | lower }}_{{ arch }}.tar.gz"
+    url: "https://github.com/go-acme/lego/releases/download/v{{ lego_version }}/lego_v{{ lego_version }}_{{ ansible_system | lower }}_{{ lego_arch }}.tar.gz"
     checksum: "sha256:https://github.com/go-acme/lego/releases/download/v{{ lego_version }}/lego_{{ lego_version }}_checksums.txt"
     dest: /tmp/lego.tar.gz
     owner: root
     group: root
     mode: "0700"
-  when: not lego.stat.exists or lego_force_install
+  when: not lego_install.stat.exists or lego_force_install
 
 - name: Extract latest binary of lego
   ansible.builtin.unarchive:
@@ -41,7 +41,7 @@
     group: root
     mode: "0700"
     remote_src: true
-  when: not lego.stat.exists or lego_force_install
+  when: not lego_install.stat.exists or lego_force_install
 
 - name: Copy lego binary to /usr/local/bin
   ansible.builtin.copy:
@@ -52,7 +52,7 @@
     mode: "0700"
     remote_src: true
   notify: Restart lego.service
-  when: not lego.stat.exists or lego_force_install
+  when: not lego_install.stat.exists or lego_force_install
 
 - name: Copy lego renew script
   ansible.builtin.copy:

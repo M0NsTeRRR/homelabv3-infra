@@ -6,9 +6,9 @@ kind: Kustomization
 namespace: &namespace kured
 
 helmCharts:
-- name: kured
-  releaseName: kured
-  namespace: *namespace
-  repo: https://kubereboot.github.io/charts
-  version: 5.6.2
-  valuesFile: values.yaml
+  - name: kured
+    releaseName: kured
+    namespace: *namespace
+    repo: https://kubereboot.github.io/charts
+    version: 5.6.2
+    valuesFile: values.yaml

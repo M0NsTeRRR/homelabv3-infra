@@ -10,9 +10,9 @@ resources:
   - manifests/02_certificate.yaml
 
 helmCharts:
-- name: trust-manager
-  releaseName: trust-manager
-  namespace: *namespace
-  repo: https://charts.jetstack.io
-  version: v0.18.0
-  valuesFile: values.yaml
+  - name: trust-manager
+    releaseName: trust-manager
+    namespace: *namespace
+    repo: https://charts.jetstack.io
+    version: v0.18.0
+    valuesFile: values.yaml

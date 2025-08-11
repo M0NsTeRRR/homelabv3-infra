@@ -57,7 +57,8 @@
 				"github.vscode-github-actions",
 				"donjayamanne.githistory",
 				"eamodio.gitlens",
-				"task.vscode-task"
+				"task.vscode-task",
+				"EditorConfig.EditorConfig"
 			]
 		}
 	},

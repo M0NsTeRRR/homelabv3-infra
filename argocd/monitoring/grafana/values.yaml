@@ -77,16 +77,16 @@ plugins:
 
 dashboardProviders:
   dashboardproviders.yaml:
-   apiVersion: 1
-   providers:
-   - name: 'default'
-     orgId: 1
-     folder: ''
-     type: file
-     disableDeletion: false
-     allowUiUpdates: true
-     options:
-       path: /var/lib/grafana/dashboards
+    apiVersion: 1
+    providers:
+      - name: "default"
+        orgId: 1
+        folder: ""
+        type: file
+        disableDeletion: false
+        allowUiUpdates: true
+        options:
+          path: /var/lib/grafana/dashboards
 
 dashboards:
   default:

@@ -10,9 +10,9 @@ resources:
   - manifests/02_security_headers.yaml
 
 helmCharts:
-- name: traefik
-  releaseName: ingress-external
-  namespace: *namespace
-  repo: oci://ghcr.io/traefik/helm
-  version: 37.0.0
-  valuesFile: values.yaml
+  - name: traefik
+    releaseName: ingress-external
+    namespace: *namespace
+    repo: oci://ghcr.io/traefik/helm
+    version: 37.0.0
+    valuesFile: values.yaml

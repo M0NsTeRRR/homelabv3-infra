@@ -10,8 +10,8 @@ resources:
   - manifests/02_storage_class.yaml
 
 helmCharts:
-- name: csi-driver-smb
-  releaseName: csi-driver-smb
-  namespace: *namespace
-  repo: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
-  version: 1.18.0
+  - name: csi-driver-smb
+    releaseName: csi-driver-smb
+    namespace: *namespace
+    repo: https://raw.githubusercontent.com/kubernetes-csi/csi-driver-smb/master/charts
+    version: 1.18.0

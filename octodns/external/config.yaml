@@ -1,6 +1,6 @@
 ---
 manager:
-  include_meta: False
+  include_meta: false
   max_workers: 5
 
 processors:
@@ -12,11 +12,11 @@ providers:
     class: octodns.provider.yaml.YamlProvider
     directory: ./octodns/external
     default_ttl: 3600
-    enforce_order: True
+    enforce_order: true
   scaleway:
     class: octodns_scaleway.ScalewayProvider
     token: env/SCALEWAY_SECRET_KEY
-    create_zone: False
+    create_zone: false
 
 zones:
   as212510.net.:

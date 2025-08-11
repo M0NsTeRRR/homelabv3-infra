@@ -10,9 +10,9 @@ resources:
   - manifests/02_vault_cluster_issuer.yaml
 
 helmCharts:
-- name: cert-manager
-  releaseName: cert-manager
-  namespace: *namespace
-  repo: https://charts.jetstack.io
-  version: v1.18.2
-  valuesFile: values.yaml
+  - name: cert-manager
+    releaseName: cert-manager
+    namespace: *namespace
+    repo: https://charts.jetstack.io
+    version: v1.18.2
+    valuesFile: values.yaml

@@ -11,9 +11,9 @@ resources:
   - manifests/03_pvc.yaml
 
 helmCharts:
-- name: qbittorrent
-  releaseName: qbittorrent
-  namespace: *namespace
-  repo: oci://ghcr.io/m0nsterrr/helm-charts
-  version: 5.1.2
-  valuesFile: values.yaml
+  - name: qbittorrent
+    releaseName: qbittorrent
+    namespace: *namespace
+    repo: oci://ghcr.io/m0nsterrr/helm-charts
+    version: 5.1.2
+    valuesFile: values.yaml

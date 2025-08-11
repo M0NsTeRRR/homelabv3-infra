@@ -10,9 +10,9 @@ resources:
   - manifests/02_configmap.yaml
 
 helmCharts:
-- name: recyclarr
-  releaseName: recyclarr
-  namespace: *namespace
-  repo: oci://ghcr.io/m0nsterrr/helm-charts
-  version: 1.0.3
-  valuesFile: values.yaml
+  - name: recyclarr
+    releaseName: recyclarr
+    namespace: *namespace
+    repo: oci://ghcr.io/m0nsterrr/helm-charts
+    version: 1.0.3
+    valuesFile: values.yaml

@@ -9,9 +9,9 @@ resources:
   - manifests/01_external_secret.yaml
 
 helmCharts:
-- name: grafana
-  releaseName: grafana
-  namespace: *namespace
-  repo: oci://ghcr.io/grafana/helm-charts
-  version: 9.3.1
-  valuesFile: values.yaml
+  - name: grafana
+    releaseName: grafana
+    namespace: *namespace
+    repo: oci://ghcr.io/grafana/helm-charts
+    version: 9.3.1
+    valuesFile: values.yaml

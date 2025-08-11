@@ -9,9 +9,9 @@ resources:
   - manifests/01_datasource.yaml
 
 helmCharts:
-- name: victoria-metrics-single
-  releaseName: victoria-metrics
-  namespace: *namespace
-  repo: oci://ghcr.io/victoriametrics/helm-charts
-  version: 0.24.2
-  valuesFile: values.yaml
+  - name: victoria-metrics-single
+    releaseName: victoria-metrics
+    namespace: *namespace
+    repo: oci://ghcr.io/victoriametrics/helm-charts
+    version: 0.24.2
+    valuesFile: values.yaml

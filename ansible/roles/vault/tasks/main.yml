@@ -39,8 +39,8 @@
     namespace: vault
     kubeconfig: "{{ vault_localhost_kubeconfig_path }}"
     validate_certs: true
-  register: result
-  until: result.resources[0].status.phase == "Running"
+  register: vault_result
+  until: vault_result.resources[0].status.phase == "Running"
   retries: 5
   delay: 30
   delegate_to: localhost

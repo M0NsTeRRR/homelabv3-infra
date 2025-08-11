@@ -11,9 +11,9 @@ resources:
   - manifests/03_prometheus_rule.yaml
 
 helmCharts:
-- name: prometheus-snmp-exporter
-  releaseName: prometheus-snmp-exporter
-  namespace: *namespace
-  repo: oci://ghcr.io/prometheus-community/charts
-  version: 9.6.2
-  valuesFile: values.yaml
+  - name: prometheus-snmp-exporter
+    releaseName: prometheus-snmp-exporter
+    namespace: *namespace
+    repo: oci://ghcr.io/prometheus-community/charts
+    version: 9.6.2
+    valuesFile: values.yaml

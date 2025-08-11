@@ -27,7 +27,7 @@ data:
         #   type: series
         delete_old_custom_formats: true
         replace_existing_custom_formats: true
-        
+
         quality_profiles:
           - name: VOSTFR-WEB-2160p
             reset_unmatched_scores:

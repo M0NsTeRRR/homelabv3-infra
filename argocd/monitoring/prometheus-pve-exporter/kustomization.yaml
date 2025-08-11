@@ -12,9 +12,9 @@ resources:
   - manifests/04_prometheus_rule.yaml
 
 helmCharts:
-- name: prometheus-pve-exporter
-  releaseName: prometheus-pve-exporter
-  namespace: *namespace
-  repo: oci://ghcr.io/m0nsterrr/helm-charts
-  version: 2.0.6
-  valuesFile: values.yaml
+  - name: prometheus-pve-exporter
+    releaseName: prometheus-pve-exporter
+    namespace: *namespace
+    repo: oci://ghcr.io/m0nsterrr/helm-charts
+    version: 2.0.6
+    valuesFile: values.yaml

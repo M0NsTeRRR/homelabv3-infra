@@ -6,9 +6,9 @@ kind: Kustomization
 namespace: &namespace flaresolverr
 
 helmCharts:
-- name: flaresolverr
-  releaseName: flaresolverr
-  namespace: *namespace
-  repo: oci://ghcr.io/m0nsterrr/helm-charts
-  version: 2.0.4
-  valuesFile: values.yaml
+  - name: flaresolverr
+    releaseName: flaresolverr
+    namespace: *namespace
+    repo: oci://ghcr.io/m0nsterrr/helm-charts
+    version: 2.0.4
+    valuesFile: values.yaml

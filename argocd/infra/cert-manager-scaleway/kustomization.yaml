@@ -10,9 +10,9 @@ resources:
   - manifests/02_letsencrypt_cluster_issuer.yaml
 
 helmCharts:
-- name: scaleway-certmanager-webhook
-  releaseName: cert-manager-scaleway
-  namespace: *namespace
-  repo: https://helm.scw.cloud/
-  version: 0.4.1
-  valuesFile: values.yaml
+  - name: scaleway-certmanager-webhook
+    releaseName: cert-manager-scaleway
+    namespace: *namespace
+    repo: https://helm.scw.cloud/
+    version: 0.4.1
+    valuesFile: values.yaml

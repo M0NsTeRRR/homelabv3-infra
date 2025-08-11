@@ -1,8 +1,8 @@
 ---
 configuration:
   timeZone: Europe/Paris
-  startTime: "02:00" 
-  endTime: "08:00" 
+  startTime: "02:00"
+  endTime: "08:00"
   annotateNodes: true
 metrics:
   create: true

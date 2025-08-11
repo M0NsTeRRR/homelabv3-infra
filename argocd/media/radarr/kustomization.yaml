@@ -13,9 +13,9 @@ resources:
   - manifests/05_volsync.yaml
 
 helmCharts:
-- name: radarr
-  releaseName: radarr
-  namespace: *namespace
-  repo: oci://ghcr.io/m0nsterrr/helm-charts
-  version: 2.10.3
-  valuesFile: values.yaml
+  - name: radarr
+    releaseName: radarr
+    namespace: *namespace
+    repo: oci://ghcr.io/m0nsterrr/helm-charts
+    version: 2.10.3
+    valuesFile: values.yaml

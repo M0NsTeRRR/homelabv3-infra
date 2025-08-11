@@ -12,9 +12,9 @@ resources:
   - manifests/04_autoinstrumentation.yaml
 
 helmCharts:
-- name: opentelemetry-operator
-  releaseName: opentelemetry-operator
-  namespace: *namespace
-  repo: oci://ghcr.io/open-telemetry/opentelemetry-helm-charts
-  version: 0.92.3
-  valuesFile: values.yaml
+  - name: opentelemetry-operator
+    releaseName: opentelemetry-operator
+    namespace: *namespace
+    repo: oci://ghcr.io/open-telemetry/opentelemetry-helm-charts
+    version: 0.92.3
+    valuesFile: values.yaml

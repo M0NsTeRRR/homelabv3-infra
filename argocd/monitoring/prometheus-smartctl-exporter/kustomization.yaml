@@ -6,9 +6,9 @@ kind: Kustomization
 namespace: &namespace prometheus-smartctl-exporter
 
 helmCharts:
-- name: prometheus-smartctl-exporter
-  releaseName: prometheus-smartctl-exporter
-  namespace: *namespace
-  repo: oci://ghcr.io/prometheus-community/charts
-  version: 0.15.4
-  valuesFile: values.yaml
+  - name: prometheus-smartctl-exporter
+    releaseName: prometheus-smartctl-exporter
+    namespace: *namespace
+    repo: oci://ghcr.io/prometheus-community/charts
+    version: 0.15.4
+    valuesFile: values.yaml

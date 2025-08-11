@@ -6,9 +6,9 @@ kind: Kustomization
 namespace: &namespace cilium
 
 helmCharts:
-- name: cilium
-  releaseName: cilium
-  namespace: *namespace
-  repo: https://helm.cilium.io/
-  version: 1.17.6
-  valuesFile: values.yaml
+  - name: cilium
+    releaseName: cilium
+    namespace: *namespace
+    repo: https://helm.cilium.io/
+    version: 1.17.6
+    valuesFile: values.yaml

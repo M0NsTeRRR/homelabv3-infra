@@ -6,9 +6,9 @@ kind: Kustomization
 namespace: &namespace external-snapshotter
 
 helmCharts:
-- name: snapshot-controller
-  releaseName: external-snapshotter
-  namespace: *namespace
-  repo: https://piraeus.io/helm-charts/
-  includeCRDs: true
-  version: 4.1.0
+  - name: snapshot-controller
+    releaseName: external-snapshotter
+    namespace: *namespace
+    repo: https://piraeus.io/helm-charts/
+    includeCRDs: true
+    version: 4.1.0

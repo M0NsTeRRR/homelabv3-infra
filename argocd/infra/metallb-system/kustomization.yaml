@@ -10,9 +10,9 @@ resources:
   - manifests/02_ipaddresspool.yaml
 
 helmCharts:
-- name: metallb
-  releaseName: metallb
-  namespace: *namespace
-  repo: oci://quay.io/metallb/chart
-  version: 0.15.2
-  valuesFile: values.yaml
+  - name: metallb
+    releaseName: metallb
+    namespace: *namespace
+    repo: oci://quay.io/metallb/chart
+    version: 0.15.2
+    valuesFile: values.yaml

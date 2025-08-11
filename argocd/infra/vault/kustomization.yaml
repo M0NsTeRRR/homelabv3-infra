@@ -6,9 +6,9 @@ kind: Kustomization
 namespace: &namespace vault
 
 helmCharts:
-- name: vault
-  releaseName: vault
-  namespace: *namespace
-  repo: https://helm.releases.hashicorp.com
-  version: 0.30.1
-  valuesFile: values.yaml
+  - name: vault
+    releaseName: vault
+    namespace: *namespace
+    repo: https://helm.releases.hashicorp.com
+    version: 0.30.1
+    valuesFile: values.yaml

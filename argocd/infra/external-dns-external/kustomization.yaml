@@ -11,9 +11,9 @@ resources:
   - manifests/02_external_secret.yaml
 
 helmCharts:
-- name: external-dns
-  releaseName: external-dns-external
-  namespace: *namespace
-  repo: https://kubernetes-sigs.github.io/external-dns/
-  version: 1.18.0
-  valuesFile: values.yaml
+  - name: external-dns
+    releaseName: external-dns-external
+    namespace: *namespace
+    repo: https://kubernetes-sigs.github.io/external-dns/
+    version: 1.18.0
+    valuesFile: values.yaml

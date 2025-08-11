@@ -9,9 +9,9 @@ resources:
   - manifests/01_service_monitor.yaml
 
 helmCharts:
-- name: prometheus-blackbox-exporter
-  releaseName: prometheus-blackbox-exporter
-  namespace: *namespace
-  repo: oci://ghcr.io/prometheus-community/charts
-  version: 11.2.1
-  valuesFile: values.yaml
+  - name: prometheus-blackbox-exporter
+    releaseName: prometheus-blackbox-exporter
+    namespace: *namespace
+    repo: oci://ghcr.io/prometheus-community/charts
+    version: 11.2.1
+    valuesFile: values.yaml

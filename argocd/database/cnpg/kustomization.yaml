@@ -9,9 +9,9 @@ resources:
   - https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/main/docs/src/samples/monitoring/prometheusrule.yaml
 
 helmCharts:
-- name: cloudnative-pg
-  releaseName: cnpg
-  namespace: *namespace
-  repo: oci://ghcr.io/cloudnative-pg/charts
-  version: 0.25.0
-  valuesFile: values.yaml
+  - name: cloudnative-pg
+    releaseName: cnpg
+    namespace: *namespace
+    repo: oci://ghcr.io/cloudnative-pg/charts
+    version: 0.25.0
+    valuesFile: values.yaml

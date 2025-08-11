@@ -12,9 +12,9 @@ resources:
   - manifests/04_volsync.yaml
 
 helmCharts:
-- name: prowlarr
-  releaseName: prowlarr
-  namespace: *namespace
-  repo: oci://ghcr.io/m0nsterrr/helm-charts
-  version: 3.0.2
-  valuesFile: values.yaml
+  - name: prowlarr
+    releaseName: prowlarr
+    namespace: *namespace
+    repo: oci://ghcr.io/m0nsterrr/helm-charts
+    version: 3.0.2
+    valuesFile: values.yaml

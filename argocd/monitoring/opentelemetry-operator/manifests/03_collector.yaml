@@ -42,15 +42,15 @@ spec:
     receivers:
       filelog:
         exclude:
-        - /var/log/pods/opentelemetry-operator_collector-collector*_*/*/*.log
+          - /var/log/pods/opentelemetry-operator_collector-collector*_*/*/*.log
         include:
-        - /var/log/pods/*/*/*.log
+          - /var/log/pods/*/*/*.log
         include_file_name: false
         include_file_path: true
         operators:
-        - id: container-parser
-          max_log_size: 102400
-          type: container
+          - id: container-parser
+            max_log_size: 102400
+            type: container
         retry_on_failure:
           enabled: true
         start_at: end
@@ -64,10 +64,10 @@ spec:
               metrics_path: "/probe"
               params:
                 module: [http_2xx]
-                target: '`scheme`://`endpoint`:`port`'
+                target: "`scheme`://`endpoint`:`port`"
               collection_interval: 5s
             resource_attributes:
-              service.name: '`endpoint`'
+              service.name: "`endpoint`"
       otlp:
         protocols:
           grpc:
@@ -80,7 +80,7 @@ spec:
             - job_name: "otel-collector"
               scrape_interval: 5s
               static_configs:
-                - targets: [ '0.0.0.0:8888' ]
+                - targets: ["0.0.0.0:8888"]
         target_allocator:
           endpoint: http://collector-targetallocator
           interval: 30s

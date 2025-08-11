@@ -9,9 +9,9 @@ resources:
   - manifests/01_configmap.yaml
 
 helmCharts:
-- name: homepage
-  releaseName: homepage
-  namespace: *namespace
-  repo: oci://ghcr.io/m0nsterrr/helm-charts
-  version: 4.1.2
-  valuesFile: values.yaml
+  - name: homepage
+    releaseName: homepage
+    namespace: *namespace
+    repo: oci://ghcr.io/m0nsterrr/helm-charts
+    version: 4.1.2
+    valuesFile: values.yaml

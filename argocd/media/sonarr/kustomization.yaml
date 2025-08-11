@@ -13,9 +13,9 @@ resources:
   - manifests/05_volsync.yaml
 
 helmCharts:
-- name: sonarr
-  releaseName: sonarr
-  namespace: *namespace
-  repo: oci://ghcr.io/m0nsterrr/helm-charts
-  version: 2.0.5
-  valuesFile: values.yaml
+  - name: sonarr
+    releaseName: sonarr
+    namespace: *namespace
+    repo: oci://ghcr.io/m0nsterrr/helm-charts
+    version: 2.0.5
+    valuesFile: values.yaml

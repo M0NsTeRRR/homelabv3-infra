@@ -9,9 +9,9 @@ resources:
   - manifests/01_endpoints.yaml
 
 helmCharts:
-- name: kube-prometheus-stack
-  releaseName: kube-prometheus-stack
-  namespace: *namespace
-  repo: oci://ghcr.io/prometheus-community/charts
-  version: 76.1.0
-  valuesFile: values.yaml
+  - name: kube-prometheus-stack
+    releaseName: kube-prometheus-stack
+    namespace: *namespace
+    repo: oci://ghcr.io/prometheus-community/charts
+    version: 76.1.0
+    valuesFile: values.yaml

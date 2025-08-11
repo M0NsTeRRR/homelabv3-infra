@@ -133,7 +133,7 @@ serverTelemetry:
     enabled: true
     rules:
       - alert: VaultSealed
-        expr: 'vault_core_unsealed == 0'
+        expr: "vault_core_unsealed == 0"
         for: 0m
         labels:
           severity: critical
@@ -142,7 +142,7 @@ serverTelemetry:
           description: "Vault instance is sealed on {{ $labels.instance }}\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
       - alert: VaultTooManyPendingTokens
-        expr: 'avg(vault_token_create_count - vault_token_store_count) > 0'
+        expr: "avg(vault_token_create_count - vault_token_store_count) > 0"
         for: 5m
         labels:
           severity: warning
@@ -160,7 +160,7 @@ serverTelemetry:
           description: "Too many infinity tokens {{ $labels.instance }}: {{ $value | printf \"%.2f\"}}%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
 
       - alert: VaultClusterHealth
-        expr: 'sum(vault_core_active) / count(vault_core_active) <= 0.5'
+        expr: "sum(vault_core_active) / count(vault_core_active) <= 0.5"
         for: 0m
         labels:
           severity: critical

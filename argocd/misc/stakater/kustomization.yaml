@@ -6,9 +6,9 @@ kind: Kustomization
 namespace: &namespace stakater
 
 helmCharts:
-- name: reloader
-  releaseName: stakater
-  namespace: *namespace
-  repo: oci://ghcr.io/stakater/charts
-  version: 2.2.0
-  valuesFile: values.yaml
+  - name: reloader
+    releaseName: stakater
+    namespace: *namespace
+    repo: oci://ghcr.io/stakater/charts
+    version: 2.2.0
+    valuesFile: values.yaml

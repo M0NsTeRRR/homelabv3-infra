@@ -1,7 +1,7 @@
 ---
 manager:
   auto_arpa: true
-  include_meta: False
+  include_meta: false
   max_workers: 5
 
 processors:
@@ -13,7 +13,7 @@ providers:
     class: octodns.provider.yaml.YamlProvider
     directory: ./octodns/internal
     default_ttl: 3600
-    enforce_order: True
+    enforce_order: true
   powerdns:
     class: octodns_powerdns.PowerDnsProvider
     host: 192.168.10.21

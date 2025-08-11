@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 2
 requires-python = ">=3.12, <4.0.0"
 resolution-markers = [
     "sys_platform != 'win32'",
@@ -26,7 +26,7 @@ wheels = [
 
 [[package]]
 name = "ansible-core"
-version = "2.18.0"
+version = "2.19.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "cryptography", marker = "sys_platform != 'win32'" },
@@ -35,9 +35,9 @@ dependencies = [
     { name = "pyyaml", marker = "sys_platform != 'win32'" },
     { name = "resolvelib", marker = "sys_platform != 'win32'" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/fd/5e/0d5a28caca8fc598b199f3710fffc010a6094dfabcf38f7f3c0abb50451a/ansible_core-2.18.0.tar.gz", hash = "sha256:87fbebbfe8d961e9b153e84b4438ba3a327dbfdcd4ad05a6065d9ff5d9d02e7b", size = 3064903, upload-time = "2024-11-04T18:44:12.423Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/ce/72/5fbf0f4a4f14286e1a50f9ba8f86dad6177b569d3b86c1296c85616c2289/ansible_core-2.19.0.tar.gz", hash = "sha256:ca4730837fdd50c8f8ab2fa17c04c448d74c5a27f3d5be7e602d9e3feb9430bc", size = 3396541, upload-time = "2025-07-21T17:44:26.941Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/73/14/c70341980b7636dfdbc03b0762102d2a69739bc5d7687a0476739007aad4/ansible_core-2.18.0-py3-none-any.whl", hash = "sha256:d28818df3741d6cd744dab5e4ff9c658daa94ba71c8e15a12dbe9eeab30a658f", size = 2212552, upload-time = "2024-11-04T18:44:10.342Z" },
+    { url = "https://files.pythonhosted.org/packages/ac/d6/5b9a1650581d4adca5dda3fa4a50235aa9e6ab767530c5c5b0e94cf4f5c9/ansible_core-2.19.0-py3-none-any.whl", hash = "sha256:5914f1539f5da190bd9591112e20e339d699bda0c546992fc77c1e3ccc3928f2", size = 2398633, upload-time = "2025-07-21T17:44:25.122Z" },
 ]
 
 [[package]]
@@ -408,7 +408,7 @@ terraform = [
 
 [package.metadata]
 requires-dist = [
-    { name = "ansible-core", marker = "extra == 'ansible'", specifier = "~=2.18.0" },
+    { name = "ansible-core", marker = "extra == 'ansible'", specifier = "~=2.19.0" },
     { name = "ansible-lint", marker = "extra == 'ansible'", specifier = "~=25.7.0" },
     { name = "bcrypt", marker = "extra == 'ansible'", specifier = "~=4.0.1" },
     { name = "cryptography", marker = "extra == 'ansible'", specifier = "~=45.0.2" },

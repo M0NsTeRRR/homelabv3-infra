@@ -1,8 +1,8 @@
-'':
-#  - type: NS
-#    values:
-#      - 'ns0.dom.scw.cloud.'
-#      - 'ns1.dom.scw.cloud.'
+"":
+  #  - type: NS
+  #    values:
+  #      - 'ns0.dom.scw.cloud.'
+  #      - 'ns1.dom.scw.cloud.'
   - type: CAA
     values:
       - flags: 0

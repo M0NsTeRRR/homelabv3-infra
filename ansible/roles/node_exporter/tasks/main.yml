@@ -26,22 +26,22 @@
 - name: Check if node-exporter is already installed
   ansible.builtin.stat:
     path: /usr/local/bin/node_exporter
-  register: node_exporter
+  register: node_exporter_install
 
 - name: Detect machine architecture
   ansible.builtin.set_fact:
-    arch: "{% if ansible_architecture == 'aarch64' %}arm64{% else %}amd64{% endif %}"
-  when: not node_exporter.stat.exists or node_exporter_force_install
+    node_exporter_arch: "{% if ansible_architecture == 'aarch64' %}arm64{% else %}amd64{% endif %}"
+  when: not node_exporter_install.stat.exists or node_exporter_force_install
 
 - name: Download last version of node-exporter
   ansible.builtin.get_url:
-    url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.{{ ansible_system | lower }}-{{ arch }}.tar.gz"
+    url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.{{ ansible_system | lower }}-{{ node_exporter_arch }}.tar.gz"
     checksum: "sha256:https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/sha256sums.txt"
     dest: /tmp/node-exporter.tar.gz
     owner: node_exporter
     group: node_exporter
     mode: "0700"
-  when: not node_exporter.stat.exists or node_exporter_force_install
+  when: not node_exporter_install.stat.exists or node_exporter_force_install
 
 - name: Extract latest binary of node-exporter
   ansible.builtin.unarchive:
@@ -52,19 +52,19 @@
     mode: "0700"
     remote_src: true
     list_files: true
-  register: archive_contents
-  when: not node_exporter.stat.exists or node_exporter_force_install
+  register: node_exporter_archive_contents
+  when: not node_exporter_install.stat.exists or node_exporter_force_install
 
 - name: Copy node-exporter binary to /usr/local/bin
   ansible.builtin.copy:
-    src: "/opt/node_exporter/{{ archive_contents.files[0] }}node_exporter"
+    src: "/opt/node_exporter/{{ node_exporter_archive_contents.files[0] }}node_exporter"
     dest: /usr/local/bin/node_exporter
     owner: node_exporter
     group: node_exporter
     mode: "0700"
     remote_src: true
   notify: Restart node_exporter.service
-  when: not node_exporter.stat.exists or node_exporter_force_install
+  when: not node_exporter_install.stat.exists or node_exporter_force_install
 
 - name: Create systemd service file
   ansible.builtin.copy:

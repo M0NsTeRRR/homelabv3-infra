@@ -14,9 +14,9 @@ resources:
   - manifests/06_pvc_volsync.yaml
 
 helmCharts:
-- name: jellyseerr-chart
-  releaseName: jellyseerr
-  namespace: *namespace
-  repo: oci://ghcr.io/fallenbagel/jellyseerr
-  version: 2.6.1
-  valuesFile: values.yaml
+  - name: jellyseerr-chart
+    releaseName: jellyseerr
+    namespace: *namespace
+    repo: oci://ghcr.io/fallenbagel/jellyseerr
+    version: 2.6.1
+    valuesFile: values.yaml
