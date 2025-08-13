@@ -31,7 +31,7 @@
     proto: "{{ item.proto }}"
     to_ip: "{{ item.to_ip | default('any') }}"
     comment: "{{ item.comment }} (ansible_managed)"
-  with_items: "{{ default_rules + ufw_additional_rules }}"
+  with_items: "{{ default_rules + (ufw_additional_rules | default([])) }}"
   vars:
     default_rules:
       - { port: "22", proto: "tcp", direction: "in", comment: "SSH" }
