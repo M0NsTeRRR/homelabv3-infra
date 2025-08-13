@@ -1,4 +1,4 @@
-#jinja2: lstrip_blocks: "True"
+#jinja2:lstrip_blocks: True
 {% if item.https is defined %}
   {% with backends=item.https, https=true %}
     {% include "site_block.j2" %}

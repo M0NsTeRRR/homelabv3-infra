@@ -72,6 +72,17 @@
     - Daemon-reload
     - Restart dnsdist
 
+- name: Configure systemd-resolved
+  ansible.builtin.copy:
+    src: dnsdist.service
+    dest: /etc/systemd/system/dnsdist.service
+    owner: root
+    group: root
+    mode: "0640"
+  notify:
+    - Daemon-reload
+    - Restart dnsdist
+
 - name: Create dnsdist ssl configuration directory
   ansible.builtin.file:
     name: /etc/dnsdist/ssl
@@ -91,8 +102,8 @@
 
 - name: Configure dnsdist
   ansible.builtin.template:
-    src: dnsdist.conf.j2
-    dest: /etc/dnsdist/dnsdist.conf
+    src: dnsdist.yml.j2
+    dest: /etc/dnsdist/dnsdist.yml
     owner: _dnsdist
     group: _dnsdist
     mode: "0640"

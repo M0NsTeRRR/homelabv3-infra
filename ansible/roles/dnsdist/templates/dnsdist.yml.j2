@@ -1,0 +1,172 @@
+#jinja2:lstrip_blocks: True
+webserver:
+  listen_addresses:
+    - '127.0.0.1:8083'
+  api_key: {{ dnsdist_api_key }}
+
+acl:
+  - 0.0.0.0/0
+  - '::/0'
+
+binds:
+  # Do53
+  - listen_address: '0.0.0.0'
+    protocol: Do53
+  - listen_address: '::'
+    protocol: Do53
+
+  # DoH
+{% if dnsdist_doh_proxified %}
+  - listen_address: '127.0.0.1:8053'
+    protocol: DoH
+  - listen_address: '[::1]:8053'
+    protocol: DoH
+{% else %}
+  - listen_address: '0.0.0.0'
+    protocol: DoH
+    custom_response_headers:
+      - key: alt-svc
+        value: 'h3=":443"'
+    tls:
+      certificates:
+        - certificate: /etc/dnsdist/ssl/{{ dnsdist_cert_filename }}
+          key: /etc/dnsdist/ssl/{{ dnsdist_key_filename }}
+  - listen_address: '::'
+    protocol: DoH
+    custom_response_headers:
+      - key: alt-svc
+        value: 'h3=":443"'
+    tls:
+      certificates:
+        - certificate: /etc/dnsdist/ssl/{{ dnsdist_cert_filename }}
+          key: /etc/dnsdist/ssl/{{ dnsdist_key_filename }}
+  # DoH3
+  - listen_address: '0.0.0.0'
+    protocol: DoH3
+    tls:
+      certificates:
+        - certificate: /etc/dnsdist/ssl/{{ dnsdist_cert_filename }}
+          key: /etc/dnsdist/ssl/{{ dnsdist_key_filename }}
+  - listen_address: '::'
+    protocol: DoH3
+    tls:
+      certificates:
+        - certificate: /etc/dnsdist/ssl/{{ dnsdist_cert_filename }}
+          key: /etc/dnsdist/ssl/{{ dnsdist_key_filename }}
+{% endif %}
+
+  # DoT
+  - listen_address: '0.0.0.0'
+    protocol: DoT
+    tls:
+      certificates:
+        - certificate: /etc/dnsdist/ssl/{{ dnsdist_cert_filename }}
+          key: /etc/dnsdist/ssl/{{ dnsdist_key_filename }}
+  - listen_address: '::'
+    protocol: DoT
+    tls:
+      certificates:
+        - certificate: /etc/dnsdist/ssl/{{ dnsdist_cert_filename }}
+          key: /etc/dnsdist/ssl/{{ dnsdist_key_filename }}
+
+  # DoQ
+  - listen_address: '0.0.0.0'
+    protocol: DoQ
+    tls:
+      certificates:
+        - certificate: /etc/dnsdist/ssl/{{ dnsdist_cert_filename }}
+          key: /etc/dnsdist/ssl/{{ dnsdist_key_filename }}
+  - listen_address: '::'
+    protocol: DoQ
+    tls:
+      certificates:
+        - certificate: /etc/dnsdist/ssl/{{ dnsdist_cert_filename }}
+          key: /etc/dnsdist/ssl/{{ dnsdist_key_filename }}
+
+backends:
+  - address: 127.0.0.1:5300
+    protocol: Do53
+    pools:
+      - primary
+  - address: '[::1]:5300'
+    protocol: Do53
+    pools:
+      - primary
+  - address: 127.0.0.1:5301
+    protocol: Do53
+    use_proxy_protocol: true
+    pools:
+      - recursor
+  - address: '[::1]:5301'
+    protocol: Do53
+    use_proxy_protocol: true
+    pools:
+      - recursor
+
+# https://www.dnsdist.org/advanced/axfr.html
+{% if inventory_hostname == ansible_play_hosts_all[0] %}
+netmask_groups:
+  - name: trusted_slave
+    netmasks:
+{% for dnsdist_pdns_slave in ansible_play_hosts_all[1:] %}
+      - {{ hostvars[dnsdist_pdns_slave].ansible_default_ipv4.address | default(hostvars[dnsdist_pdns_slave].ansible_all_ipv4_addresses[0]) }}/32
+      - {{ hostvars[dnsdist_pdns_slave].ansible_default_ipv6.address | default(hostvars[dnsdist_pdns_slave].ansible_all_ipv6_addresses[0]) }}/128
+{% endfor %}
+{% endif %}
+query_rules:
+{% if inventory_hostname == ansible_play_hosts_all[0] %}
+  - name: Block SOA, AXFR and IXFR from IPs not in defined range
+    selector:
+      type: And
+      selectors:
+        - type: Or
+          selectors:
+            - type: QType
+              qtype: DNSQType.SOA
+            - type: QType
+              qtype: DNSQType.AXFR
+            - type: QType
+              qtype: DNSQType.IXFR
+        - type: Not
+          selector:
+            type: NetmaskGroup
+            netmask_group_name: trusted_slave
+    action:
+      type: RCode
+      rcode: '5'
+  - name: This rule will route SOA, AXFR and IXFR queries to a specific pool of servers
+    selector:
+      type: Or
+      selectors:
+        - type: QType
+          qtype: DNSQType.SOA
+        - type: QType
+          qtype: DNSQType.AXFR
+        - type: QType
+          qtype: DNSQType.IXFR
+    action:
+      type: Pool
+      pool_name: primary
+{% else %}
+  - name: This rule will disable the caching of responses for NOTIFY queries
+    selector:
+      type: Opcode
+      code: 4
+    action:
+      type: SetSkipCache
+  - name: Block Notify from IPs not in defined range
+    selector:
+      type: Or
+      selectors:
+        - type: Opcode
+          code: 4
+    action:
+      type: Pool
+      pool_name: primary
+{% endif %}
+  - name: Default route
+    selector:
+      type: All
+    action:
+      type: Pool
+      pool_name: recursor

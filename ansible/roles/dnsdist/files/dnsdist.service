@@ -1,0 +1,6 @@
+[Service]
+ExecStart=
+ExecStart=/usr/bin/dnsdist \
+  --supervised \
+  --disable-syslog \
+  -C /etc/dnsdist/dnsdist.yml
