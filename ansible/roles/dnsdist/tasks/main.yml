@@ -72,7 +72,7 @@
     - Daemon-reload
     - Restart dnsdist
 
-- name: Configure systemd-resolved
+- name: Configure dnsdist service
   ansible.builtin.copy:
     src: dnsdist.service
     dest: /etc/systemd/system/dnsdist.service
