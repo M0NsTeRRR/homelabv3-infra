@@ -15,6 +15,7 @@
     "github>M0NsTeRRR/homelabv3-infra//.github/renovate/cnpg.json5",
     "github>M0NsTeRRR/homelabv3-infra//.github/renovate/devContainers.json5",
     "github>M0NsTeRRR/homelabv3-infra//.github/renovate/grafanaDashboards.json5",
+    "github>M0NsTeRRR/homelabv3-infra//.github/renovate/groups.json5",
     "github>M0NsTeRRR/homelabv3-infra//.github/renovate/labels.json5",
     "github>M0NsTeRRR/homelabv3-infra//.github/renovate/packer.json5",
     "github>M0NsTeRRR/homelabv3-infra//.github/renovate/semanticCommits.json5",
