@@ -5,7 +5,7 @@ galaxy_info:
   description: Install and configure uptime_kuma
   company: Ludovic Ortega
   license: CeCILL
-  min_ansible_version: "2.18.8"
+  min_ansible_version: "2.19.0"
   platforms:
     - name: Ubuntu
       versions:
