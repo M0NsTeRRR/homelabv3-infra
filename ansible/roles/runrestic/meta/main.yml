@@ -5,7 +5,7 @@ galaxy_info:
   description: Install and configure runrestic
   company: Ludovic Ortega
   license: CeCILL
-  min_ansible_version: "2.18.7"
+  min_ansible_version: "2.18.8"
   platforms:
     - name: Ubuntu
       versions:
