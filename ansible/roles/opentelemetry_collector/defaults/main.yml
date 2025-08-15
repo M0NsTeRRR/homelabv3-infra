@@ -1,6 +1,6 @@
 ---
 # renovate: datasource=github-releases depName=open-telemetry/opentelemetry-collector-releases
-opentelemetry_collector_version: "v0.131.1"
+opentelemetry_collector_version: "v0.132.2"
 opentelemetry_collector_force_install: true
 opentelemetry_collector_local_path_ca_certificate: "ca.crt"
 opentelemetry_collector_cert_filename: "example.fr.crt"
