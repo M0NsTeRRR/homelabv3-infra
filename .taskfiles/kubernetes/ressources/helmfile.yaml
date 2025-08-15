@@ -128,7 +128,7 @@ releases:
   - name: trust-manager
     namespace: trust-manager
     chart: jetstack/trust-manager
-    version: v0.18.0
+    version: v0.19.0
     values: ["../../../argocd/infra/trust-manager/values.yaml"]
     needs: ["cert-manager/cert-manager"]
     hooks:
