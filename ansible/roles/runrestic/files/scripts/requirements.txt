@@ -1,2 +1,2 @@
 toml==0.10.2
-requests==2.32.4
+requests==2.32.5
