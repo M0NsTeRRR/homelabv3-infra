@@ -30,4 +30,4 @@ jobs:
         with:
           terragrunt-version: latest
       - name: Check Terragrunt fmt
-        run: terragrunt hclfmt --terragrunt-working-dir terraform --terragrunt-check
+        run: terragrunt hcl format --working-dir=terraform --check
