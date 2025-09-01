@@ -4,7 +4,7 @@
 	{% if inventory_hostname != ansible_play_hosts_all[0] %}"masters": ["{{ hostvars[ansible_play_hosts_all[0]].ansible_default_ipv4.address | default(hostvars[ansible_play_hosts_all[0]].ansible_all_ipv4_addresses[0]) }}", "{{ hostvars[ansible_play_hosts_all[0]].ansible_default_ipv6.address | default(hostvars[ansible_play_hosts_all[0]].ansible_all_ipv6_addresses[0]) }}"],{% endif %}
 	"dnssec": true,
 	"presigned": true,
-	"soa_edit_api" : "INCREASE",
+	"soa_edit_api" : "EPOCH",
 	"rrsets": [
 		{
 			"name": "{{ item }}.",
