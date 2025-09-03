@@ -127,10 +127,8 @@ query_rules:
               qtype: DNSQType.AXFR
             - type: QType
               qtype: DNSQType.IXFR
-        - type: Not
-          selector:
-            type: NetmaskGroup
-            netmask_group_name: trusted_slave
+        - type: NetmaskGroup
+          netmask_group_name: trusted_slave
     action:
       type: RCode
       rcode: '5'
