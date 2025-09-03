@@ -1,7 +1,7 @@
 ---
 # renovate: datasource=gitlab-tags depName=isc-projects/kea registryUrl=https://gitlab.isc.org
-kea_dhcp_repo_version: "Kea-2.5"
-kea_dhcp_repo_gpg_key: D4FEAEAEFBD81FB9
+kea_dhcp_repo_version: "Kea-2.6"
+kea_dhcp_repo_gpg_key: 63D408891D8B8D01
 # kea_dhcp_hooks_version:
 kea_dhcp_hooks_package_state: latest
 # kea_dhcp_v4_version:
@@ -25,7 +25,6 @@ kea_dhcp_ipv4_ntp_servers: []
 kea_dhcp_ipv6_ntp_servers: []
 kea_dhcp_ipv4_unifi_controller: ""
 kea_dhcp_ipv6_unifi_controller: ""
-
 # kea_dhcp_dns_domains:
 #   - example.com
 # kea_dhcp_ipv4_subnets:
