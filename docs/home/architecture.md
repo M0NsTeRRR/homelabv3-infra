@@ -2,7 +2,7 @@
 
 ### Networking
 
-I'm running my own AS for my IPv6 stack registered as [AS212510](https://as212510.net)  
+I'm running my own AS for my IPv6 stack registered as [AS212510](https://as212510.net)
 
 - [Openfactory](https://www.openfactory.net/) free BGP Tunnel, thanks to them :heart:
 - [iFog](https://bgptunnel.com/) free BGP Tunnel, thanks to them :heart:

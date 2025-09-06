@@ -53,6 +53,12 @@ sequenceDiagram
         ufw allow <PORT>/tcp comment "Packer"
         ```
 
+    === "Nixos"
+
+        ```sh
+        nixos-firewall-tool open tcp <PORT>
+        ```
+
 * Close port
 
     === "Iptables"
@@ -67,24 +73,10 @@ sequenceDiagram
         ufw delete allow <PORT>/tcp
         ```
 
-??? question "How to expose packer HTTP server from WSL ?"
-    `WINDOWS IP` represents the IP used to connect  
-    `WINDOWS PORT` represents the port used to connect  
-    `WSL_IP` represents the packer http server ip that will be accessible through `<WINDOWS IP>:<WINDOWS PORT>`  
-    `WSL PORT` represents the packer http server port that will be accessible through `<WINDOWS IP>:<WINDOWS PORT>`  
+    === "Nixos"
 
-    * To create a port forwarding rule open powershell prompt with admin right
-
-        ```powershell
-        New-NetFirewallRule -DisplayName 'Packer' -Direction Inbound -Protocol TCP -LocalPort <WINDOWS PORT> -Action Allow
-        netsh interface portproxy add v4tov4 listenaddress=<WINDOWS IP> connectaddress=<WSL_IP> listenport=<WINDOWS PORT> connectport=<WSL PORT>
-        ```
-
-    * To delete a port forwarding rule open powershell prompt with admin right
-
-        ```powershell
-        Remove-NetFirewallRule -DisplayName 'Packer'
-        netsh interface portproxy del v4tov4 listenaddress=<WINDOWS IP> listenport=<WINDOWS PORT>
+        ```sh
+        nixos-firewall-tool reset
         ```
 
 ## Usage
@@ -102,6 +94,7 @@ uv run task packer:init
 ```
 
 Generate ubuntu template
+
 ```sh
 uv run task packer:ubuntu
 ```

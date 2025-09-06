@@ -1,68 +1,71 @@
 // For format details, see https://aka.ms/devcontainer.json
 {
-	"name": "homelabv3",
-	"build": {
-		"context": "../",
-		"dockerfile": "Dockerfile"
-	},
-	"postCreateCommand": "./.devcontainer/postCreateCommand.sh",
-	// Features to add to the dev container. More info: https://containers.dev/features.
-	"features": {
-		"ghcr.io/va-h/devcontainers-features/uv:1": {},
-		"ghcr.io/audacioustux/devcontainers/taskfile:1": {},
-		"ghcr.io/devcontainers-extra/features/packer-asdf:2": {
-			// datasource=github-tags depName=hashicorp/packer
-			"version": "1.14.1"
-		},
-		"ghcr.io/devcontainers/features/terraform:1": {
-			// datasource=github-tags depName=hashicorp/terraform
-			"version": "1.13.0",
-			// datasource=github-tags depName=gruntwork-io/terragrunt
-			"terragrunt": "0.85.1"
-		},
-		"ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
-			"version": "latest"
-		},
-		"ghcr.io/rio/features/kustomize:1": {},
-		"ghcr.io/schlich/devcontainer-features/helmfile:1": {}
-	},
-	// Use 'forwardPorts' to make a list of ports inside the container available locally.
-	"forwardPorts": [
-		8888
-	],
-	// Configure tool-specific properties.
-	// "customizations": {},
-	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
-	// "remoteUser": "root",
-	"mounts": [
-		// mount kubeconfig files
-		"source=${localEnv:HOME}${localEnv:USERPROFILE}/.kube,target=/home/vscode/.kube,type=bind,consistency=cached",
-		"source=/tmp,target=/tmp,type=bind,consistency=cached"
-	],
-	"userEnvProbe": "loginInteractiveShell",
-	"customizations": {
-		"vscode": {
-			"extensions": [
-				"wholroyd.jinja",
-				"mrmlnc.vscode-json5",
-				"coolbear.systemd-unit-file",
-				"redhat.ansible",
-				"hashicorp.hcl",
-				"hashicorp.terraform",
-				"ms-kubernetes-tools.vscode-kubernetes-tools",
-				"DavidAnson.vscode-markdownlint",
-				"ms-python.python",
-				"medo64.render-crlf",
-				"redhat.vscode-yaml",
-				"github.vscode-github-actions",
-				"donjayamanne.githistory",
-				"eamodio.gitlens",
-				"task.vscode-task",
-				"EditorConfig.EditorConfig"
-			]
-		}
-	},
-	"containerEnv": {
-		"KUBECONFIG": "${localEnv:KUBECONFIG}"
-	}
+  "name": "homelabv3",
+  "build": {
+    "context": "../",
+    "dockerfile": "Dockerfile"
+  },
+  "postCreateCommand": "./.devcontainer/postCreateCommand.sh",
+  // Features to add to the dev container. More info: https://containers.dev/features.
+  "features": {
+    "ghcr.io/va-h/devcontainers-features/uv:1": {},
+    "ghcr.io/audacioustux/devcontainers/taskfile:1": {},
+    "ghcr.io/devcontainers-extra/features/packer-asdf:2": {
+      // datasource=github-tags depName=hashicorp/packer
+      "version": "1.14.1"
+    },
+    "ghcr.io/devcontainers/features/terraform:1": {
+      // datasource=github-tags depName=hashicorp/terraform
+      "version": "1.13.0",
+      // datasource=github-tags depName=gruntwork-io/terragrunt
+      "terragrunt": "0.85.1"
+    },
+    "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
+      "version": "latest"
+    },
+    "ghcr.io/rio/features/kustomize:1": {},
+    "ghcr.io/schlich/devcontainer-features/helmfile:1": {}
+  },
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  "forwardPorts": [
+    8888
+  ],
+  "runArgs": [
+    "-p=8888:8888"
+  ],
+  // Configure tool-specific properties.
+  // "customizations": {},
+  // Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+  // "remoteUser": "root",
+  "mounts": [
+    // mount kubeconfig files
+    "source=${localEnv:HOME}${localEnv:USERPROFILE}/.kube,target=/home/vscode/.kube,type=bind,consistency=cached",
+    "source=/tmp,target=/tmp,type=bind,consistency=cached"
+  ],
+  "userEnvProbe": "loginInteractiveShell",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "wholroyd.jinja",
+        "mrmlnc.vscode-json5",
+        "coolbear.systemd-unit-file",
+        "redhat.ansible",
+        "hashicorp.hcl",
+        "hashicorp.terraform",
+        "ms-kubernetes-tools.vscode-kubernetes-tools",
+        "DavidAnson.vscode-markdownlint",
+        "ms-python.python",
+        "medo64.render-crlf",
+        "redhat.vscode-yaml",
+        "github.vscode-github-actions",
+        "donjayamanne.githistory",
+        "eamodio.gitlens",
+        "task.vscode-task",
+        "EditorConfig.EditorConfig"
+      ]
+    }
+  },
+  "containerEnv": {
+    "KUBECONFIG": "${localEnv:KUBECONFIG}"
+  }
 }

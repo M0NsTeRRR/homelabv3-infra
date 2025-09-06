@@ -10,7 +10,7 @@ task --completion bash >> /home/vscode/.bashrc
 packer init packer/templates/ubuntu
 
 # setup ansible
-ansible-galaxy install -r ansible/requirements.yml
+uv run ansible-galaxy install -r ansible/requirements.yml
 
 # install helm plugins
 helm plugin install https://github.com/databus23/helm-diff

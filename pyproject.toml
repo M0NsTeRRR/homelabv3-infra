@@ -63,4 +63,3 @@ documentation = [
 
 [tool.uv]
 package = false
-environments = ["platform_system != 'Windows'"]
