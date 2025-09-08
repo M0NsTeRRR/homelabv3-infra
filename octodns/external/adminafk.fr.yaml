@@ -42,9 +42,6 @@ dkim03._domainkey.mail:
 dkim._domainkey.mail:
   - type: CNAME
     value: dkim._domainkey.alias.proton.me.
-helm-charts:
-  - type: CNAME
-    value: m0nsterrr.github.io.
 homelab:
   - type: CNAME
     value: m0nsterrr.github.io.
