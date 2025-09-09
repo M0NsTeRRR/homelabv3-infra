@@ -1211,31 +1211,15 @@
 <h3 id="execute">Execute<a class="headerlink" href="#execute" title="Permanent link">&para;</a></h3>
 <p>Configuration is stored in <code>ansible</code> folder.</p>
 <p>Fill <code>inventory.proxmox.yml</code> based on <code>inventory.proxmox.example</code>.
-Fill <code>ssl</code> folders with certificates.<br />
-Fill <code>.vault_password.txt</code> at root with ansible vault password used.<br />
+Fill <code>ssl</code> folders with certificates.
+Fill <code>.vault_password.txt</code> at root with ansible vault password used.
 Fill all <code>secrets.yml</code> based on <code>secrets.example</code> in each subdirectory of <code>groups_vars</code>.</p>
 <p><code>PLAYBOOK</code> represents the playbook file used to deploy</p>
-<div class="highlight"><pre><span></span><code><span class="nb">cd</span><span class="w"> </span>ansible
-ansible-playbook<span class="w"> </span>&lt;PLAYBOOK&gt;
+<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>task<span class="w"> </span>ansible:&lt;dns<span class="p">|</span>dhcp<span class="p">|</span>status&gt;
 </code></pre></div>
 <div class="admonition info">
 <p class="admonition-title">KUBECONFIG environment variable is hardcoded to <code>/home/vscode/.kube/homelab</code> in <code>.devcontainer/Dockerfile</code> and context is set to <code>default</code> in <code>.devcontainer/postCreateCommand.sh</code></p>
 </div>
-<details class="question">
-<summary>How to execute only a part of an ansible playbook ?</summary>
-<ul>
-<li>
-<p>Filter by hosts</p>
-<div class="highlight"><pre><span></span><code>-l<span class="w"> </span>SUBSET,<span class="w"> </span>--limit<span class="w"> </span>SUBSET<span class="w"> </span><span class="c1"># further limit selected hosts to an additional pattern</span>
-</code></pre></div>
-</li>
-<li>
-<p>Filter by tags</p>
-<div class="highlight"><pre><span></span><code>-t<span class="w"> </span>TAGS,<span class="w"> </span>--tags<span class="w"> </span>TAGS<span class="w"> </span><span class="c1"># only run plays and tasks tagged with these values. This argument may be specified multiple times.</span>
-</code></pre></div>
-</li>
-</ul>
-</details>
 
 
 

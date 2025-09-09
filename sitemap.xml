@@ -2,86 +2,86 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://homelab.adminafk.fr/</loc>
-         <lastmod>2025-09-06</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://homelab.adminafk.fr/getting-started/</loc>
-         <lastmod>2025-09-06</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://homelab.adminafk.fr/getting-started/installation/</loc>
-         <lastmod>2025-09-06</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://homelab.adminafk.fr/getting-started/upgrade/</loc>
-         <lastmod>2025-09-06</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://homelab.adminafk.fr/guide/</loc>
-         <lastmod>2025-09-06</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://homelab.adminafk.fr/guide/ansible/</loc>
-         <lastmod>2025-09-06</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://homelab.adminafk.fr/guide/argocd/</loc>
-         <lastmod>2025-09-06</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://homelab.adminafk.fr/guide/ci_cd/</loc>
-         <lastmod>2025-09-06</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://homelab.adminafk.fr/guide/dns_blocklist/</loc>
-         <lastmod>2025-09-06</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://homelab.adminafk.fr/guide/kubernetes/</loc>
-         <lastmod>2025-09-06</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://homelab.adminafk.fr/guide/octodns/</loc>
-         <lastmod>2025-09-06</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://homelab.adminafk.fr/guide/packer/</loc>
-         <lastmod>2025-09-06</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://homelab.adminafk.fr/guide/proxmox_acme/</loc>
-         <lastmod>2025-09-06</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://homelab.adminafk.fr/guide/proxmox_exporter/</loc>
-         <lastmod>2025-09-06</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://homelab.adminafk.fr/guide/renovatebot/</loc>
-         <lastmod>2025-09-06</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://homelab.adminafk.fr/guide/s3/</loc>
-         <lastmod>2025-09-06</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://homelab.adminafk.fr/guide/snmp_exporter/</loc>
-         <lastmod>2025-09-06</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://homelab.adminafk.fr/guide/terraform/</loc>
-         <lastmod>2025-09-06</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://homelab.adminafk.fr/guide/truenas/</loc>
-         <lastmod>2025-09-06</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://homelab.adminafk.fr/home/architecture/</loc>
-         <lastmod>2025-09-06</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
     <url>
          <loc>https://homelab.adminafk.fr/home/choices/</loc>
-         <lastmod>2025-09-06</lastmod>
+         <lastmod>2025-09-09</lastmod>
     </url>
 </urlset>
