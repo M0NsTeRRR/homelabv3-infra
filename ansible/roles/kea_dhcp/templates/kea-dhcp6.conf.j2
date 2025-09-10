@@ -1,4 +1,4 @@
-{    
+{
     "Dhcp6": {
         "hooks-libraries": [
             {
@@ -40,7 +40,7 @@
         },
         "control-socket": {
             "socket-type": "unix",
-            "socket-name": "/opt/kea/kea-dhcp6-ctrl.sock"
+            "socket-name": "/var/run/kea/kea-dhcp6-ctrl.sock"
         },
         "lease-database": {
             "type": "memfile",
@@ -91,10 +91,10 @@
                 "id": {{ subnet.id }},
                 "subnet": "{{ subnet.subnet }}",
                 "pools": [
-                    {% for pool in subnet.pools %}{ 
-                        "pool": "{{ pool.start }} - {{ pool.end }}" 
+                    {% for pool in subnet.pools %}{
+                        "pool": "{{ pool.start }} - {{ pool.end }}"
                     }{% if not loop.last %},{% endif %}
-                    {% endfor %} 
+                    {% endfor %}
                 ],
                 "reservations": [
                     {% for reservation in subnet.reservations %}{
