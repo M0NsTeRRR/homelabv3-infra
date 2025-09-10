@@ -174,7 +174,8 @@ vault_policies:
 public_vault_datas:
   - path: pki/config/ca
     data:
-      pem_bundle: "{{ lookup('ansible.builtin.file', ca_certificates_local_path_ca_certificate) }}\n{{ lookup('ansible.builtin.file', certs_dir_role_path ~ 'intermediate/vault/vault.crt') }}\n{{ lookup('ansible.builtin.file', certs_dir_role_path ~ 'intermediate/vault/vault.key') }}"
+      pem_bundle: "{{ lookup('ansible.builtin.file', ca_certificates_local_path_ca_certificate) }}\n{{ lookup('ansible.builtin.file', certs_dir_role_path ~ 'intermediate/vault/vault.crt')
+        }}\n{{ lookup('ansible.builtin.file', certs_dir_role_path ~ 'intermediate/vault/vault.key') }}"
   - path: pki/config/cluster
     data:
       path: https://vault.unicornafk.fr:8200/v1/pki

@@ -7,10 +7,10 @@
     proto: "{{ item.proto }}"
     comment: "{{ item.comment }} (ansible_managed)"
   with_items:
-    - {port: "53", proto: tcp, comment: "Dnsdist DNS"}
-    - {port: "53", proto: udp, comment: "Dnsdist DNS"}
-    - {port: "853", proto: tcp, comment: "Dnsdist DoT"}
-    - {port: "853", proto: udp, comment: "Dnsdist DoQ"}
+    - { port: "53", proto: tcp, comment: "Dnsdist DNS" }
+    - { port: "53", proto: udp, comment: "Dnsdist DNS" }
+    - { port: "853", proto: tcp, comment: "Dnsdist DoT" }
+    - { port: "853", proto: udp, comment: "Dnsdist DoQ" }
 
 - name: Add _dnsdist group
   ansible.builtin.group:

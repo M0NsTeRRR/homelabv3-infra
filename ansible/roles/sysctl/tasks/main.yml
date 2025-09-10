@@ -6,24 +6,24 @@
     state: present
     reload: true
   with_items:
-    - {name: 'dev.tty.ldisc_autoload', value: '0'}
-    - {name: 'fs.inotify.max_user_watches', value: '524288'}
-    - {name: 'fs.inotify.max_user_instances', value: '512'}
-    - {name: 'fs.protected_fifos', value: '2'}
-    - {name: 'kernel.core_uses_pid', value: '1'}
-    - {name: 'kernel.core_pattern', value: '|/bin/false'}
-    - {name: 'kernel.dmesg_restrict', value: '1'}
-    - {name: 'kernel.kptr_restrict', value: '2'}
-    - {name: 'kernel.unprivileged_bpf_disabled', value: '1'}
-    - {name: 'net.core.bpf_jit_harden', value: '2'}
-    - {name: 'net.ipv4.conf.all.log_martians', value: '1'}
-    - {name: 'net.ipv4.conf.all.accept_redirects', value: '0'}
-    - {name: 'net.ipv6.conf.all.accept_redirects', value: '0'}
-    - {name: 'net.ipv4.conf.all.send_redirects', value: '0'}
-    - {name: 'net.ipv4.conf.all.accept_source_route', value: '0'}
-    - {name: 'net.ipv6.conf.all.accept_source_route', value: '0'}
-    - {name: 'net.ipv4.conf.all.secure_redirects', value: '0'}
-    - {name: 'net.ipv4.conf.default.accept_source_route', value: '0'}
-    - {name: 'net.ipv4.conf.default.log_martians', value: '1'}
-    - {name: 'net.ipv4.icmp_echo_ignore_broadcasts', value: '1'}
-    - {name: 'net.ipv4.conf.all.rp_filter', value: '1'}
+    - { name: "dev.tty.ldisc_autoload", value: "0" }
+    - { name: "fs.inotify.max_user_watches", value: "524288" }
+    - { name: "fs.inotify.max_user_instances", value: "512" }
+    - { name: "fs.protected_fifos", value: "2" }
+    - { name: "kernel.core_uses_pid", value: "1" }
+    - { name: "kernel.core_pattern", value: "|/bin/false" }
+    - { name: "kernel.dmesg_restrict", value: "1" }
+    - { name: "kernel.kptr_restrict", value: "2" }
+    - { name: "kernel.unprivileged_bpf_disabled", value: "1" }
+    - { name: "net.core.bpf_jit_harden", value: "2" }
+    - { name: "net.ipv4.conf.all.log_martians", value: "1" }
+    - { name: "net.ipv4.conf.all.accept_redirects", value: "0" }
+    - { name: "net.ipv6.conf.all.accept_redirects", value: "0" }
+    - { name: "net.ipv4.conf.all.send_redirects", value: "0" }
+    - { name: "net.ipv4.conf.all.accept_source_route", value: "0" }
+    - { name: "net.ipv6.conf.all.accept_source_route", value: "0" }
+    - { name: "net.ipv4.conf.all.secure_redirects", value: "0" }
+    - { name: "net.ipv4.conf.default.accept_source_route", value: "0" }
+    - { name: "net.ipv4.conf.default.log_martians", value: "1" }
+    - { name: "net.ipv4.icmp_echo_ignore_broadcasts", value: "1" }
+    - { name: "net.ipv4.conf.all.rp_filter", value: "1" }

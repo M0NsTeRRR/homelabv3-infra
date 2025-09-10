@@ -23,8 +23,9 @@
     line: "{{ item.line }}"
     state: "present"
   with_items:
-    - {regexp: '^(# )?set superusers', line: 'set superusers="{{ grub_user }}"'}
-    - {regexp: '^(# )?password_pbkdf2', line: 'password_pbkdf2 {{ grub_user }} {{ grub_password_hashed.stdout_lines[2] | replace("PBKDF2 hash of your password is ", "") }} '}
+    - { regexp: "^(# )?set superusers", line: 'set superusers="{{ grub_user }}"' }
+    - regexp: "^(# )?password_pbkdf2"
+      line: 'password_pbkdf2 {{ grub_user }} {{ grub_password_hashed.stdout_lines[2] | replace("PBKDF2 hash of your password is ", "") }} '
   no_log: true
   notify: Update grub
 

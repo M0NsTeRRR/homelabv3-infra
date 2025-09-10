@@ -11,7 +11,7 @@
     state: directory
     owner: root
     group: root
-    mode: '0755'
+    mode: "0755"
 
 - name: Configure apt-daily service timer
   ansible.builtin.template:
@@ -19,7 +19,7 @@
     dest: /etc/systemd/system/apt-daily.timer.d/override.conf
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
   notify:
     - Daemon-reload
     - Restart apt-daily.timer
@@ -30,7 +30,7 @@
     state: directory
     owner: root
     group: root
-    mode: '0755'
+    mode: "0755"
 
 - name: Configure apt-daily-upgrade service timer
   ansible.builtin.template:
@@ -38,7 +38,7 @@
     dest: /etc/systemd/system/apt-daily-upgrade.timer.d/override.conf
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"
   notify:
     - Daemon-reload
     - Restart apt-daily-upgrade.timer
@@ -49,4 +49,4 @@
     dest: /etc/apt/apt.conf.d/50unattended-upgrades
     owner: root
     group: root
-    mode: '0644'
+    mode: "0644"

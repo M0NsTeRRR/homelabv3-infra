@@ -12,15 +12,15 @@
 - name: Restrict access to /etc/sudoers.d
   ansible.builtin.file:
     path: /etc/sudoers.d
-    mode: '0750'
+    mode: "0750"
 
 - name: "Allow passwordless sudo for group {{ user_passwordless_sudo_group }} "
   ansible.builtin.lineinfile:
     dest: /etc/sudoers
     state: present
-    regexp: '^%{{ user_passwordless_sudo_group }}'
-    line: '%{{ user_passwordless_sudo_group }} ALL=(ALL) NOPASSWD: ALL'
-    validate: 'visudo -cf %s'
+    regexp: "^%{{ user_passwordless_sudo_group }}"
+    line: "%{{ user_passwordless_sudo_group }} ALL=(ALL) NOPASSWD: ALL"
+    validate: "visudo -cf %s"
 
 - name: Add users
   ansible.builtin.user:
@@ -46,5 +46,5 @@
     line: "{{ item.line }}"
     state: "present"
   with_items:
-    - {regexp: '^(# )?session optional        pam_umask.so', line: 'session optional        pam_umask.so umask=027', file: "/etc/pam.d/common-session"}
-    - {regexp: '^(# )?UMASK', line: 'UMASK           027', file: "/etc/login.defs"}
+    - { regexp: "^(# )?session optional        pam_umask.so", line: "session optional        pam_umask.so umask=027", file: "/etc/pam.d/common-session" }
+    - { regexp: "^(# )?UMASK", line: "UMASK           027", file: "/etc/login.defs" }

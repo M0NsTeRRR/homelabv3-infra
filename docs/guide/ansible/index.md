@@ -29,28 +29,14 @@ Distributions :
 Configuration is stored in `ansible` folder.
 
 Fill `inventory.proxmox.yml` based on `inventory.proxmox.example`.
-Fill `ssl` folders with certificates.  
-Fill `.vault_password.txt` at root with ansible vault password used.  
+Fill `ssl` folders with certificates.
+Fill `.vault_password.txt` at root with ansible vault password used.
 Fill all `secrets.yml` based on `secrets.example` in each subdirectory of `groups_vars`.
 
 `PLAYBOOK` represents the playbook file used to deploy
 
 ```sh
-cd ansible
-ansible-playbook <PLAYBOOK>
+uv run task ansible:<dns|dhcp|status>
 ```
 
 !!! info "KUBECONFIG environment variable is hardcoded to `/home/vscode/.kube/homelab` in `.devcontainer/Dockerfile` and context is set to `default` in `.devcontainer/postCreateCommand.sh`"
-
-??? question "How to execute only a part of an ansible playbook ?"
-    * Filter by hosts
-
-        ```sh
-        -l SUBSET, --limit SUBSET # further limit selected hosts to an additional pattern
-        ```
-
-    * Filter by tags
-
-        ```sh
-        -t TAGS, --tags TAGS # only run plays and tasks tagged with these values. This argument may be specified multiple times.
-        ```

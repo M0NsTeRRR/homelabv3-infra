@@ -28,5 +28,5 @@
   ansible.builtin.copy:
     src: "{{ item }}"
     dest: "/etc/update-motd.d/{{ item | basename }}"
-    mode: '0755'
+    mode: "0755"
   with_fileglob: ./files/*

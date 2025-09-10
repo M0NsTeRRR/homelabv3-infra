@@ -29,7 +29,7 @@
     state: directory
     owner: vault-unseal
     group: vault-unseal
-    mode: '0700'
+    mode: "0700"
 
 - name: Check if vault-unseal is already installed
   ansible.builtin.stat:

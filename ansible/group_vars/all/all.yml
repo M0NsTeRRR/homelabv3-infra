@@ -1,9 +1,9 @@
 ---
 country: FR
 organization: unicornafk
-certs_dir: "../../../ssl/"
+certs_dir: "ssl/"
 root_dir_role_path: "{{ role_path }}/../../../"
-certs_dir_role_path: "{{ root_dir_role_path }}ssl/"
+certs_dir_role_path: "{{ root_dir_role_path }}{{ certs_dir }}"
 ca_certificates_local_path_ca_certificate: "{{ certs_dir_role_path }}unicornafk.crt"
 ca_certificates_certs_dir: "{{ certs_dir_role_path }}"
 

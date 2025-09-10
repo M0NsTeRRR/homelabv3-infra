@@ -32,8 +32,10 @@
 
 - name: "Download opentelemetry collector version {{ opentelemetry_collector_version }}"
   ansible.builtin.get_url:
-    url: "https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/{{ opentelemetry_collector_version }}/otelcol-contrib_{{ opentelemetry_collector_version[1:] }}_linux_{{ opentelemetry_collector_arch }}.deb"
-    checksum: sha256:https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/{{ opentelemetry_collector_version }}/opentelemetry-collector-releases_otelcol-contrib_checksums.txt
+    url: "https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/{{ opentelemetry_collector_version }}/otelcol-contrib_{{ opentelemetry_collector_version[1:]
+      }}_linux_{{ opentelemetry_collector_arch }}.deb"
+    checksum: sha256:https://github.com/open-telemetry/opentelemetry-collector-releases/releases/download/{{ opentelemetry_collector_version
+      }}/opentelemetry-collector-releases_otelcol-contrib_checksums.txt
     dest: /tmp/opentelemetry-collector.deb
     owner: root
     group: root

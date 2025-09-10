@@ -98,7 +98,7 @@
         name: "{{ certs_dir }}intermediate/{{ signing_certificate }}"
         owner: "{{ lookup('env', 'USER') }}"
         group: "{{ lookup('env', 'USER') }}"
-        mode: '0750'
+        mode: "0750"
 
     - name: Generate cert intermediate authority OpenSSL private key
       community.crypto.openssl_privatekey:
@@ -144,7 +144,7 @@
         name: "{{ certs_dir }}{{ signing_certificate }}/{{ common_name }}"
         owner: "{{ lookup('env', 'USER') }}"
         group: "{{ lookup('env', 'USER') }}"
-        mode: '0750'
+        mode: "0750"
 
     - name: Generate client OpenSSL private key
       community.crypto.openssl_privatekey:
@@ -185,7 +185,7 @@
         content: "{{ ''.join(fullchain_cert.complete_chain) }}"
         owner: "{{ lookup('env', 'USER') }}"
         group: "{{ lookup('env', 'USER') }}"
-        mode: '0644'
+        mode: "0644"
 
     - name: Generate PKCS#12 file
       community.crypto.openssl_pkcs12:

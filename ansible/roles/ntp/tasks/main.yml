@@ -1,5 +1,4 @@
 ---
-
 - name: Add ntp group
   ansible.builtin.group:
     name: ntp

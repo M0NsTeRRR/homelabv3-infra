@@ -35,7 +35,8 @@
 
 - name: Download last version of node-exporter
   ansible.builtin.get_url:
-    url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.{{ ansible_system | lower }}-{{ node_exporter_arch }}.tar.gz"
+    url: "https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.{{ ansible_system |
+      lower }}-{{ node_exporter_arch }}.tar.gz"
     checksum: "sha256:https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/sha256sums.txt"
     dest: /tmp/node-exporter.tar.gz
     owner: node_exporter

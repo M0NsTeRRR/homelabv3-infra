@@ -22,7 +22,8 @@
     country_name: "{{ item.country }}"
     organization_name: "{{ item.organization }}"
     common_name: "{{ item.common_name }}"
-    subject_alt_name: "DNS:{{ item.common_name }}{% if item.subject_alt_name is defined %}{% for alt in item.subject_alt_name %},{{ alt }}{% endfor %}{% endif %},IP:{{ ansible_default_ipv4.address }},IP:{{ ansible_default_ipv6.address }}"
+    subject_alt_name: "DNS:{{ item.common_name }}{% if item.subject_alt_name is defined %}{% for alt in item.subject_alt_name %},{{ alt }}{% endfor %}{% endif %},IP:{{
+      ansible_default_ipv4.address }},IP:{{ ansible_default_ipv6.address }}"
   delegate_to: localhost
   become: false
   when: >
