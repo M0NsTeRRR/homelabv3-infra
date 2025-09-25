@@ -15,5 +15,5 @@ helmCharts:
     releaseName: qbittorrent
     namespace: *namespace
     repo: oci://ghcr.io/m0nsterrr/helm-charts
-    version: 5.1.2
+    version: 5.1.3
     valuesFile: values.yaml
