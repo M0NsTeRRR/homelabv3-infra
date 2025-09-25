@@ -2,7 +2,7 @@
 # runrestic_version:
 runrestic_package_state: latest
 # renovate: datasource=github-releases depName=restic/restic
-runrestic_restic_version: v0.18.0
+runrestic_restic_version: v0.18.1
 runrestic_force_install: true
 runrestic_systemd_calendar: "*-*-* 0:00:00"
 runrestic_backup: []
