@@ -36,12 +36,15 @@ wheels = [
 
 [[package]]
 name = "ansible-lint"
-version = "25.8.1"
+version = "25.9.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "ansible-compat" },
     { name = "ansible-core" },
     { name = "black" },
+    { name = "cffi" },
+    { name = "cryptography" },
+    { name = "distro" },
     { name = "filelock" },
     { name = "importlib-metadata" },
     { name = "jsonschema" },
@@ -50,13 +53,14 @@ dependencies = [
     { name = "pyyaml" },
     { name = "referencing" },
     { name = "ruamel-yaml" },
+    { name = "ruamel-yaml-clib", marker = "python_full_version < '3.14'" },
     { name = "subprocess-tee" },
     { name = "wcmatch" },
     { name = "yamllint" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/99/cc/43d66a73bf34b5e93702c71f432aedaa45e2b32c8fcee825120af0171ae1/ansible_lint-25.8.1.tar.gz", hash = "sha256:04059e3cf5b644e796e21d445004621d1e2454e3aeb68d1eea0a49f650ef3219", size = 578090, upload-time = "2025-08-14T00:44:04.229Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/06/9e/8a86c0b05a05c3a2c8690eb5fcd4b3c248c821a45f595fa0e7565ac1e048/ansible_lint-25.9.0.tar.gz", hash = "sha256:b8fe138a1257c6e58a755febd726b3186820f6dcb23a5bb062538c939a7277bb", size = 699967, upload-time = "2025-09-16T10:38:40.971Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/32/29/02c9ba1258d97a0ceee47e89b852810d8c83c3294dd60f32cc0ad759fa08/ansible_lint-25.8.1-py3-none-any.whl", hash = "sha256:ce23c83212d21ccef9053fabeafbbe63488ab11f85e1ed2a94b2523f479d1372", size = 327282, upload-time = "2025-08-14T00:44:02.152Z" },
+    { url = "https://files.pythonhosted.org/packages/98/ca/9b6136060c7f45c6f7af0e8806ef29a90655edee584fd495bba457cb70ac/ansible_lint-25.9.0-py3-none-any.whl", hash = "sha256:2d5a8a2b01c46966591a17769a129142181515aac19c27742ecb8c94e84bf692", size = 322342, upload-time = "2025-09-16T10:38:39.049Z" },
 ]
 
 [[package]]
@@ -326,6 +330,15 @@ wheels = [
 ]
 
 [[package]]
+name = "distro"
+version = "1.9.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/fc/f8/98eea607f65de6527f8a2e8885fc8015d3e6f5775df186e443e0964a11c3/distro-1.9.0.tar.gz", hash = "sha256:2fa77c6fd8940f116ee1d6b94a2f90b13b5ea8d019b98bc8bafdcabcdd9bdbed", size = 60722, upload-time = "2023-12-24T09:54:32.31Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/12/b3/231ffd4ab1fc9d679809f356cebee130ac7daa00d6d6f3206dd4fd137e9e/distro-1.9.0-py3-none-any.whl", hash = "sha256:7bffd925d65168f85027d8da9af6bddab658135b840670a223589bc0c8ef02b2", size = 20277, upload-time = "2023-12-24T09:54:30.421Z" },
+]
+
+[[package]]
 name = "dnspython"
 version = "2.8.0"
 source = { registry = "https://pypi.org/simple" }
@@ -422,7 +435,7 @@ terraform = [
 [package.metadata]
 requires-dist = [
     { name = "ansible-core", marker = "extra == 'ansible'", specifier = "~=2.19.0" },
-    { name = "ansible-lint", marker = "extra == 'ansible'", specifier = "~=25.8.1" },
+    { name = "ansible-lint", marker = "extra == 'ansible'", specifier = "~=25.9.0" },
     { name = "bcrypt", marker = "extra == 'ansible'", specifier = "~=4.0.1" },
     { name = "cryptography", marker = "extra == 'ansible'", specifier = "~=45.0.2" },
     { name = "dnspython", marker = "extra == 'ansible'", specifier = "~=2.8.0" },
@@ -452,14 +465,14 @@ wheels = [
 
 [[package]]
 name = "importlib-metadata"
-version = "8.5.0"
+version = "8.7.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "zipp" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/cd/12/33e59336dca5be0c398a7482335911a33aa0e20776128f038019f1a95f1b/importlib_metadata-8.5.0.tar.gz", hash = "sha256:71522656f0abace1d072b9e5481a48f07c138e00f079c38c8f883823f9c26bd7", size = 55304, upload-time = "2024-09-11T14:56:08.937Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/76/66/650a33bd90f786193e4de4b3ad86ea60b53c89b669a5c7be931fac31cdb0/importlib_metadata-8.7.0.tar.gz", hash = "sha256:d13b81ad223b890aa16c5471f2ac3056cf76c5f10f82d6f9292f0b415f389000", size = 56641, upload-time = "2025-04-27T15:29:01.736Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/a0/d9/a1e041c5e7caa9a05c925f4bdbdfb7f006d1f74996af53467bc394c97be7/importlib_metadata-8.5.0-py3-none-any.whl", hash = "sha256:45e54197d28b7a7f1559e60b95e7c567032b602131fbd588f1497f47880aa68b", size = 26514, upload-time = "2024-09-11T14:56:07.019Z" },
+    { url = "https://files.pythonhosted.org/packages/20/b0/36bd937216ec521246249be3bf9855081de4c5e06a0c9b4219dbeda50373/importlib_metadata-8.7.0-py3-none-any.whl", hash = "sha256:e5dd1551894c77868a30651cef00984d50e1002d06942a7101d34870c5f02afd", size = 27656, upload-time = "2025-04-27T15:29:00.214Z" },
 ]
 
 [[package]]
