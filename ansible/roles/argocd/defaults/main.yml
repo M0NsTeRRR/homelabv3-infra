@@ -1,6 +1,6 @@
 ---
 # renovate: datasource=github-releases depName=argoproj/argo-cd
-argocd_version: "v3.1.0"
+argocd_version: "v3.1.7"
 # renovate: datasource=github-releases depName=argoproj/argo-helm
 argocd_chart_github_tag: "argo-cd-8.5.6"
 argocd_chart_version: "{{ argocd_chart_github_tag | replace('argo-cd-', '') }}"
