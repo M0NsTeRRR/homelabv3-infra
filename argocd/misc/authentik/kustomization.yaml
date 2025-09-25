@@ -17,5 +17,5 @@ helmCharts:
     releaseName: authentik
     namespace: *namespace
     repo: oci://ghcr.io/goauthentik/helm-charts
-    version: 2025.8.0
+    version: 2025.8.3
     valuesFile: values.yaml
