@@ -1,6 +1,6 @@
 variable "http_server_name" {
   type    = string
-  default = "192.168.30.21"
+  default = "192.168.50.214"
 }
 
 variable "http_port" {
@@ -41,7 +41,7 @@ variable "proxmox_password" {
 
 variable "proxmox_url" {
   type    = string
-  default = "https://server1.unicornafk.fr:8006/api2/json"
+  default = "https://192.168.40.11:8006/api2/json"
 }
 
 variable "proxmox_username" {
