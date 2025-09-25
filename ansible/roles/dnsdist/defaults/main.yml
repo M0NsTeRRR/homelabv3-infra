@@ -1,6 +1,6 @@
 ---
 # renovate: datasource=github-tags depName=PowerDNS/pdns
-dnsdist_repo_version: "dnsdist-2.0.0"
+dnsdist_repo_version: "dnsdist-2.0.1"
 # dnsdist_version:
 dnsdist_repository_key: FD380FBB
 dnsdist_package_state: latest
