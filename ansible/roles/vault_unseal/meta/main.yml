@@ -4,7 +4,7 @@ galaxy_info:
   author: Ludovic Ortega
   description: Install and configure vault_unseal
   license: CeCILL
-  min_ansible_version: "2.19.0"
+  min_ansible_version: "2.19.2"
   platforms:
     - name: Ubuntu
       versions:
