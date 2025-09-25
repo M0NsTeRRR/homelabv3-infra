@@ -169,7 +169,7 @@ releases:
   - name: external-dns-internal
     namespace: external-dns-internal
     chart: kubernetes-sigs/external-dns
-    version: 1.18.0
+    version: 1.19.0
     values: ["../../../argocd/infra/external-dns-internal/values.yaml"]
     needs: ["cert-manager-scaleway/cert-manager-scaleway"]
     hooks:
