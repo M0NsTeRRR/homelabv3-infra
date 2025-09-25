@@ -10,5 +10,5 @@ helmCharts:
     releaseName: cilium
     namespace: *namespace
     repo: https://helm.cilium.io/
-    version: 1.18.1
+    version: 1.18.2
     valuesFile: values.yaml
