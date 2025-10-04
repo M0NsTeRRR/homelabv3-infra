@@ -69,24 +69,9 @@ lego_certificates:
       - "{{ ansible_default_ipv4.address }}"
       - "{{ ansible_default_ipv6.address }}"
     destinations:
-      - {
-          path: /etc/caddy/ssl,
-          filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}",
-          owner: caddy,
-          group: caddy,
-        }
-      - {
-          path: /etc/dnsdist/ssl,
-          filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}",
-          owner: _dnsdist,
-          group: _dnsdist,
-        }
-      - {
-          path: /etc/otelcol-contrib/ssl,
-          filename: "{{ inventory_hostname }}",
-          owner: otelcol-contrib,
-          group: otelcol-contrib,
-        }
+      - { path: /etc/caddy/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: caddy, group: caddy }
+      - { path: /etc/dnsdist/ssl, filename: "{{ hostvars[inventory_hostname].hostname[:-1] }}", owner: _dnsdist, group: _dnsdist }
+      - { path: /etc/otelcol-contrib/ssl, filename: "{{ inventory_hostname }}", owner: otelcol-contrib, group: otelcol-contrib }
     systemd_services:
       - { name: caddy, state: restarted }
       - { name: dnsdist, state: restarted }
