@@ -18,7 +18,7 @@
       // datasource=github-tags depName=hashicorp/terraform
       "version": "1.13.3",
       // datasource=github-tags depName=gruntwork-io/terragrunt
-      "terragrunt": "0.87.7"
+      "terragrunt": "0.89.4"
     },
     "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
       "version": "latest"
