@@ -4,7 +4,7 @@ kind: Cluster
 metadata:
   name: radarr-cluster
 spec:
-  imageName: ghcr.io/cloudnative-pg/postgresql:17.6@sha256:da8ec98cc678a3cd449312e658dc0c6323a3ce09571b7a0f700abf1479023cb7
+  imageName: ghcr.io/cloudnative-pg/postgresql:17.6@sha256:8d39f0643fef1dacbbc50bf0b26a0b6e8f3bb354e8ac3bfaefb99e2f96027ad8
 
   primaryUpdateStrategy: unsupervised
   instances: 1
