@@ -10,5 +10,5 @@ helmCharts:
     releaseName: routinator
     namespace: *namespace
     repo: oci://ghcr.io/m0nsterrr/helm-charts
-    version: 2.1.0
+    version: 2.1.1
     valuesFile: values.yaml
