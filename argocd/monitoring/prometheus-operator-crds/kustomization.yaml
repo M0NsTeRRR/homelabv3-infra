@@ -10,4 +10,4 @@ helmCharts:
     releaseName: prometheus-operator-crds
     namespace: *namespace
     repo: oci://ghcr.io/prometheus-community/charts
-    version: 24.0.0
+    version: 24.0.1
