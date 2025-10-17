@@ -4,7 +4,7 @@ kind: Cluster
 metadata:
   name: authentik-cluster
 spec:
-  imageName: ghcr.io/cloudnative-pg/postgresql:17.6@sha256:b7f2855c5a419249e30d64616da38cbb7ed3397a21cb115a581a02da8cb21ee0
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.0@sha256:5f67a8c8ae429c8af5692024ad58408a3f70223bf5d1cb9f9dbc36dcead88919
 
   primaryUpdateStrategy: unsupervised
   instances: 1
