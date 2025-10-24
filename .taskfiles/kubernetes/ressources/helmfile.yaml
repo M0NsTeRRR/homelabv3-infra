@@ -96,14 +96,14 @@ releases:
   - name: rook-ceph
     namespace: rook-ceph
     chart: rook-ceph/rook-ceph
-    version: v1.18.4
+    version: v1.18.5
     values: ["../../../argocd/storage/rook-ceph/values.yaml"]
     needs: ["external-secrets/external-secrets"]
 
   - name: rook-ceph-cluster
     namespace: rook-ceph-cluster
     chart: rook-ceph/rook-ceph-cluster
-    version: v1.18.4
+    version: v1.18.5
     values: ["../../../argocd/storage/rook-ceph-cluster/values.yaml"]
     needs: ["rook-ceph/rook-ceph"]
 
