@@ -7,7 +7,7 @@ collections:
   - name: community.general
     version: "11.4.0"
   - name: community.crypto
-    version: "3.0.4"
+    version: "3.0.5"
   - name: community.postgresql
     version: "4.1.0"
   - name: community.proxmox
