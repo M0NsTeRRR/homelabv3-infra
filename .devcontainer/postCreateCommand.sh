@@ -3,8 +3,12 @@
 # install python packages
 uv sync --all-extras
 
+# install minijinja-cli
+cargo install minijinja-cli
+
 # Setup bash completion
 task --completion bash >> /home/vscode/.bashrc
+minijinja-cli --generate-completion bash >> /home/vscode/.bashrc
 
 # setup packer
 packer init packer/templates/ubuntu

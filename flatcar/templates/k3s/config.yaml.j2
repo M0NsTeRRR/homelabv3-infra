@@ -1,0 +1,36 @@
+{% autoescape false %}
+node-name: {{ k3s_node_name }}
+{%- if k3s_server_init %}
+cluster-init: true
+{%- else %}
+token-file: /etc/rancher/k3s/token
+server: {{ k3s_join_url }}
+{%- endif %}
+{%- if k3s_server %}
+tls-san: {{ k3s_ha_controlplane_ip | join(",") }}
+secrets-encryption: true
+node-taint: node-role.kubernetes.io/master=true:NoSchedule
+kube-controller-manager-arg:
+- "bind-address=0.0.0.0"
+- "node-cidr-mask-size-ipv6={{ (k3s_service_cidr_ipv6 | split('/'))[1] }}"
+kube-scheduler-arg:
+- "bind-address=0.0.0.0"
+{%- if k3s_issuer_url and k3s_issuer_url %}
+kube-apiserver-arg:
+- "oidc-issuer-url={{ k3s_issuer_url }}"
+- "oidc-client-id={{ k3s_client_id }}"
+- "oidc-username-claim=email"
+- "oidc-groups-claim=groups"
+{%- endif %}
+etcd-expose-metrics: true
+cluster-cidr: {{ k3s_cluster_cidr_ipv4 }},{{ k3s_cluster_cidr_ipv6 }}
+service-cidr: {{ k3s_service_cidr_ipv4 }},{{ k3s_service_cidr_ipv6 }}
+flannel-backend: none
+disable-network-policy: true
+disable-kube-proxy: true
+disable: traefik,servicelb,metrics-server
+write-kubeconfig-mode: 0640
+write-kubeconfig-group: wheel
+write-kubeconfig: /etc/rancher/k3s/kubeconfig
+{%- endif %}
+{% endautoescape %}

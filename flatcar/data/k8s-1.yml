@@ -1,0 +1,6 @@
+---
+network_node_ipv4: 192.168.10.81/24
+network_node_ipv6: 2a0c:b641:02c0:110::81/64
+
+k3s_node_name: k8s-1
+k3s_server_init: true

@@ -1,0 +1,28 @@
+# source : https://www.ssi.gouv.fr/uploads/2016/01/linux_configuration-fr-v1.2.pdf
+
+-D
+
+-b 320
+
+-f 1
+
+-w /sbin/insmod -p x
+-w /sbin/modprobe -p x
+-w /sbin/rmmod -p x
+
+-w /bin/kmod -p x
+
+-w /etc/ -p wa
+
+-a exit,always -F arch=b64 -S mount -S umount2
+
+-a exit,always -F arch=b64 -S ioperm -S modify_ldt
+
+-a exit,always -F arch=b64 -S get_kernel_syms -S ptrace
+-a exit,always -F arch=b64 -S prctl
+
+-a exit,always -F arch=b64 -S unlink -S rmdir -S rename
+-a exit,always -F arch=b64 -S creat -S open -S openat
+-a exit,always -F arch=b64 -S truncate -S ftruncate
+
+-e 2

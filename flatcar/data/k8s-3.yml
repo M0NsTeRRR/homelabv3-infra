@@ -1,0 +1,5 @@
+---
+network_node_ipv4: 192.168.10.83/24
+network_node_ipv6: 2a0c:b641:02c0:110::83/64
+
+k3s_node_name: k8s-3

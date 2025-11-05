@@ -1,0 +1,33 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+---
+version: "3"
+
+tasks:
+  generate-ignitions:
+    desc: Generate infra ignition
+    cmds:
+      - for:
+          - k8s-1
+          - k8s-2
+          - k8s-3
+        task: generate-ignition
+        vars:
+          NODE_NAME: "{{.ITEM}}"
+
+  generate-ignition:
+    desc: Generate ignition for one node
+    internal: true
+    dotenv:
+      - .env
+    vars:
+      FLATCAR_BASE_CMD: podman run --interactive -v .:/tmp -v ../ssh_pub_keys:/tmp/ssh_pub_keys -v ../ssl:/tmp/ssl -v ./files:/tmp/files -v ./generated/{{.NODE_NAME}}:/tmp/generated --rm quay.io/coreos/butane:release -d ./tmp --pretty --strict
+    cmds:
+      - mkdir -p generated/{{.NODE_NAME}}
+      - minijinja-cli templates/network.conf.j2 data/default.yml data/{{.NODE_NAME}}.yml -o generated/{{.NODE_NAME}}/network.conf
+      - minijinja-cli templates/resolved.conf.j2 data/default.yml data/{{.NODE_NAME}}.yml -o generated/{{.NODE_NAME}}/resolved.conf
+      - minijinja-cli templates/timesyncd.conf.j2 data/default.yml data/{{.NODE_NAME}}.yml -o generated/{{.NODE_NAME}}/timesyncd.conf
+      - minijinja-cli templates/k3s/config.yaml.j2 data/default.yml data/{{.NODE_NAME}}.yml -o generated/{{.NODE_NAME}}/k3s_config.yaml
+      - minijinja-cli -D k3s_token=$K3S_TOKEN templates/k3s/token.j2 data/default.yml data/{{.NODE_NAME}}.yml -o generated/{{.NODE_NAME}}/k3s_token
+      - "{{.FLATCAR_BASE_CMD}} /tmp/base.bu > base.ign"
+      - "{{.FLATCAR_BASE_CMD}} /tmp/base.k3s.bu > base.k3s.ign"
+      - "{{.FLATCAR_BASE_CMD}} /tmp/k3s-server.bu > output/{{.NODE_NAME}}.ign"

@@ -29,3 +29,8 @@ inventory.proxmox.yml
 .cache
 # argocd
 argocd/**/charts/
+# flatcar
+flatcar/.env
+flatcar/*.ign
+flatcar/generated/*
+flatcar/output/*

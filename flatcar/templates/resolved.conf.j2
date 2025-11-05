@@ -1,0 +1,14 @@
+[Resolve]
+DNS={{ systemd_resolved_dns|join(' ') }}
+FallbackDNS={{ systemd_resolved_fallback_dns|join(' ') }}
+Domains={{ systemd_resolved_domains|join(' ') }}
+DNSSEC={{ systemd_resolved_dnssec }}
+DNSOverTLS={{ systemd_resolved_dot }}
+#MulticastDNS=no
+#LLMNR=no
+#Cache=no-negative
+#CacheFromLocalhost=no
+#DNSStubListener=yes
+#DNSStubListenerExtra=
+#ReadEtcHosts=yes
+#ResolveUnicastSingleLabel=no

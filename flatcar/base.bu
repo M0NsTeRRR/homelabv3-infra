@@ -1,0 +1,83 @@
+variant: flatcar
+version: 1.1.0
+storage:
+  files:
+    # auditd
+    - path: /etc/audit/rules.d/audit.rules
+      mode: 0644
+      contents:
+        local: files/audit.rules
+    # ca-certificates
+    - path: /etc/ssl/certs/unicornafk.pem
+      mode: 0644
+      contents:
+        local: ssl/unicornafk.crt
+    # modprobe
+    - path: /etc/modprobe.d/blacklist.conf
+      mode: 0644
+      contents:
+        local: files/modprobe_blacklist.conf
+    # nftables
+    - path: /var/lib/nftables/rules-save
+      mode: 0644
+      contents:
+        local: files/nftables.conf
+    # sshd
+    - path: /etc/ssh/sshd_config
+      overwrite: true
+      mode: 0600
+      contents:
+        local: files/sshd.conf
+    # sysctl
+    - path: /etc/sysctl.d/custom.conf
+      mode: 0644
+      contents:
+        local: files/sysctl.conf
+    # systemd-network
+    - path: /etc/systemd/network/10-custom.network
+      mode: 0640
+      user:
+        name: systemd-network
+      group:
+        name: systemd-network
+      contents:
+        local: generated/network.conf
+    # systemd-resolved
+    - path: /etc/systemd/resolved.conf.d/10-custom.conf
+      mode: 0640
+      user:
+        name: systemd-resolve
+      group:
+        name: systemd-resolve
+      contents:
+        local: generated/resolved.conf
+    # systemd-timesyncd
+    - path: /etc/systemd/timesyncd.conf.d/10-custom.conf
+      mode: 0640
+      user:
+        name: systemd-timesync
+      group:
+        name: systemd-timesync
+      contents:
+        local: generated/timesyncd.conf
+  links:
+    - path: /etc/resolv.conf
+      overwrite: true
+      target: /run/systemd/resolve/stub-resolv.conf
+passwd:
+  users:
+    - name: core
+      ssh_authorized_keys_local:
+        - ssh_pub_keys/lortega.pub
+systemd:
+  units:
+    - name: auditd.service
+      enabled: true
+    - name: nftables-load.service
+      enabled: true
+    - name: ca-certificates.service
+      enabled: true
+      contents_local: files/ca-certificates.service
+kernel_arguments:
+  should_exist:
+    - ip=192.168.10.60::192.168.10.1:255.255.255.0:::none:9.9.9.9:149.112.112.112

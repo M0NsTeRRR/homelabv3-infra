@@ -32,11 +32,26 @@ hs110-rack1:
 hs110-rack2:
   - type: A
     value: "192.168.50.102"
-kubernetes:
+k8s:
   - type: A
     value: "192.168.10.80"
   - type: AAAA
     value: "2a0c:b641:02c0:110::80"
+k8s-1:
+  - type: A
+    value: "192.168.10.81"
+  - type: AAAA
+    value: "2a0c:b641:02c0:110::81"
+k8s-2:
+  - type: A
+    value: "192.168.10.82"
+  - type: AAAA
+    value: "2a0c:b641:02c0:110::82"
+k8s-3:
+  - type: A
+    value: "192.168.10.83"
+  - type: AAAA
+    value: "2a0c:b641:02c0:110::83"
 kvm1:
   - type: A
     value: "192.168.30.51"

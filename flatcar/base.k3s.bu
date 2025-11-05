@@ -1,0 +1,49 @@
+variant: flatcar
+version: 1.1.0
+storage:
+  files:
+    - path: /opt/extensions/k3s/k3s-v1.34.1+k3s1-x86-64.raw
+      mode: 0644
+      contents:
+        source: https://extensions.flatcar.org/extensions/k3s-v1.34.1+k3s1-x86-64.raw
+    - path: /etc/sysupdate.k3s-v1.34.d/k3s-v1.34.conf
+      contents:
+        source: https://extensions.flatcar.org/extensions/k3s/k3s-v1.34.conf
+    - path: /etc/sysupdate.d/noop.conf
+      contents:
+        source: https://extensions.flatcar.org/extensions/noop.conf
+    - path: /etc/rancher/k3s/token
+      mode: 0400
+      contents:
+        local: generated/k3s_token
+    - path: /etc/rancher/k3s/config.yaml
+      mode: 0644
+      contents:
+        local: generated/k3s_config.yaml
+  links:
+    - target: /opt/extensions/k3s/k3s-v1.34.1+k3s1-x86-64.raw
+      path: /etc/extensions/k3s.raw
+      hard: false
+    - path: /etc/extensions/docker-flatcar.raw
+      target: /dev/null
+      overwrite: true
+    - path: /etc/extensions/containerd-flatcar.raw
+      target: /dev/null
+      overwrite: true
+systemd:
+  units:
+    - name: systemd-sysupdate.timer
+      enabled: true
+    - name: systemd-sysupdate.service
+      dropins:
+        - name: k3s.conf
+          contents: |
+            [Service]
+            ExecStartPre=/usr/bin/sh -c "readlink --canonicalize /etc/extensions/k3s.raw > /tmp/k3s"
+            ExecStartPre=/usr/lib/systemd/systemd-sysupdate -C k3s-v1.34 update
+            ExecStartPost=/usr/bin/sh -c "readlink --canonicalize /etc/extensions/k3s.raw > /tmp/k3s-new"
+            ExecStartPost=/usr/bin/sh -c "if ! cmp --silent /tmp/k3s /tmp/k3s-new; then touch /run/reboot-required; fi"
+    - name: locksmithd.service
+      # NOTE: To coordinate the node reboot in this context, we recommend to use Kured.
+      # kured is a kubernetes service, configured outside this butane/ignition
+      mask: true
