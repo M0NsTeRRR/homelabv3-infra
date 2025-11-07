@@ -7,15 +7,6 @@
     - lego
     - opentelemetry_collector
 
-- name: Configure status infra
-  hosts: status
-  become: true
-  roles:
-    - nodejs
-    - uptime_kuma
-    - caddy
-    - runrestic
-
 - name: Configure DNS servers
   hosts: dns
   become: true
@@ -32,32 +23,6 @@
   roles:
     - kea_dhcp
     - ntp
-
-- name: Configure kubernetes
-  hosts: kubernetes
-  become: true
-  roles:
-    - swap
-    - role: apt
-      vars:
-        apt_unattended_automatic_reboot: false
-    - kubectl
-    - k3s
-
-- name: Configure kube-vip
-  hosts: kubernetes_master
-  become: true
-  roles:
-    - kube_vip
-
-- name: Deploy kubernetes services
-  hosts: kubernetes_master[0]
-  become: true
-  roles:
-    - role: vault
-      tags: vault
-    - role: argocd
-      tags: argocd
 
 - name: Configure Vault unseal
   hosts: dns

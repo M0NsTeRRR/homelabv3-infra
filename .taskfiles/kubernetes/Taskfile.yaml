@@ -3,11 +3,6 @@
 version: "3"
 
 tasks:
-  setup-kubernetes:
-    desc: Setup kubernetes
-    internal: true
-    dir: "{{.ansible_dir}}"
-    cmd: ansible-playbook deploy_infra.yml --limit kubernetes --skip-tags vault --skip-tags argocd
   bootstrap:
     desc: Bootstrap kubernetes cluster
     cmds:

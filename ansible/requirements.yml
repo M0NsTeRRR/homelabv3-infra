@@ -12,5 +12,3 @@ collections:
     version: "4.1.0"
   - name: community.proxmox
     version: "1.3.0"
-  - name: kubernetes.core
-    version: "6.2.0"
