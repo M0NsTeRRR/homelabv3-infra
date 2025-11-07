@@ -13,5 +13,5 @@ helmCharts:
     releaseName: prometheus-blackbox-exporter
     namespace: *namespace
     repo: oci://ghcr.io/prometheus-community/charts
-    version: 11.4.1
+    version: 11.4.2
     valuesFile: values.yaml
