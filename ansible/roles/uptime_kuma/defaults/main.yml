@@ -1,4 +1,4 @@
 ---
 # renovate: datasource=github-releases depName=louislam/uptime-kuma
-uptime_kuma_version: "1.23.17"
+uptime_kuma_version: "2.0.2"
 uptime_kuma_force_install: false
