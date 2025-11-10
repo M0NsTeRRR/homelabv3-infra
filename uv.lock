@@ -488,7 +488,7 @@ requires-dist = [
     { name = "kubernetes", marker = "extra == 'ansible'", specifier = "~=34.1.0" },
     { name = "mkdocs-material", extras = ["imaging"], marker = "extra == 'documentation'", specifier = "~=9.6.1" },
     { name = "netaddr", marker = "extra == 'ansible'", specifier = "~=1.3.0" },
-    { name = "octodns", marker = "extra == 'octodns'", specifier = "~=1.13.0" },
+    { name = "octodns", marker = "extra == 'octodns'", specifier = "~=1.14.0" },
     { name = "octodns-powerdns", marker = "extra == 'octodns'", specifier = "~=1.0.0" },
     { name = "octodns-scaleway", marker = "extra == 'octodns'", specifier = "~=0.0.4" },
     { name = "paramiko", marker = "extra == 'terraform'", specifier = "~=4.0.0" },
@@ -779,7 +779,7 @@ wheels = [
 
 [[package]]
 name = "octodns"
-version = "1.13.0"
+version = "1.14.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "dnspython" },
@@ -789,9 +789,9 @@ dependencies = [
     { name = "python-dateutil" },
     { name = "pyyaml" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/2d/63/45938396707ee62ef76a1dca2a4477b03b097014fed163786412b02b4961/octodns-1.13.0.tar.gz", hash = "sha256:b3223b18d094c2e5d57ce1b09d0cf5b6d0b818efa1ef508d69fb6bce8b6f4f3e", size = 597061, upload-time = "2025-08-06T23:34:45.464Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/2f/14/db80316ae3fdc49cc7d51f6c338c4d93493dc6c6e733a18c59103ff89e73/octodns-1.14.0.tar.gz", hash = "sha256:1be83b74d76fb48a7f94c570c39ba2ce058c1a1dcc8eab07f5b57e029253bc41", size = 568988, upload-time = "2025-10-24T17:25:25.634Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/63/f0/80966789e8ea85e017961514e343f47a2e5456c4bdaefdbcffccfd31666a/octodns-1.13.0-py3-none-any.whl", hash = "sha256:26b2987910ea6d2e548f90771ba9874c5606053ddb02cd15e2b9cea15b50bf7f", size = 107715, upload-time = "2025-08-06T23:34:43.475Z" },
+    { url = "https://files.pythonhosted.org/packages/97/47/5bc8a304769686f9dc5fbdf2486b68f059cd40da75aa741d655928541726/octodns-1.14.0-py3-none-any.whl", hash = "sha256:1b8024ef89efb3a8bc780ef1ae2697a3294b2da570c2e2a82ab700be3d1df949", size = 108392, upload-time = "2025-10-24T17:25:23.657Z" },
 ]
 
 [[package]]
