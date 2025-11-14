@@ -1,6 +1,6 @@
 ---
 # renovate: datasource=github-tags depName=kubernetes/kubectl
-kubectl_github_tag: "kubernetes-1.34.1"
+kubectl_github_tag: "kubernetes-1.34.2"
 kubectl_repo_version: "v{{ (kubectl_github_tag | replace('kubernetes-', '') | split('.'))[:-1] | join('.') }}"
 # kubectl_version:
 kubectl_package_state: latest
