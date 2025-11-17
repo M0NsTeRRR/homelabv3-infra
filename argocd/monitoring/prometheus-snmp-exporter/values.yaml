@@ -6,8 +6,8 @@ podAnnotations:
 extraArgs:
   - "--config.file=/run/secrets/snmp-exporter/snmp.yaml"
 extraSecretMounts:
-  - name: prometheus-snmp-exporter-vault
+  - name: prometheus-snmp-exporter-openbao
     mountPath: /run/secrets/snmp-exporter/snmp.yaml
     subPath: snmp.yaml
-    secretName: prometheus-snmp-exporter-vault
+    secretName: prometheus-snmp-exporter-openbao
     readOnly: true

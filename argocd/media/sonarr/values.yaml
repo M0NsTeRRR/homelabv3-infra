@@ -13,7 +13,7 @@ extraEnvFrom:
   - configMapRef:
       name: sonarr
   - secretRef:
-      name: sonarr-vault
+      name: sonarr-openbao
 volumes:
   - name: &volume-data data
     persistentVolumeClaim:

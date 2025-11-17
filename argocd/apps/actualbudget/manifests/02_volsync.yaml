@@ -10,7 +10,7 @@ spec:
     schedule: "0 */6 * * *"
   restic:
     pruneIntervalDays: 14
-    repository: pvc-backup-vault
+    repository: pvc-backup-openbao
     retain:
       hourly: 1
       daily: 4
@@ -37,7 +37,7 @@ spec:
   trigger:
     manual: restore-once
   restic:
-    repository: pvc-backup-vault
+    repository: pvc-backup-openbao
     destinationPVC: actualbudget-chart-data
     copyMethod: Direct
     accessModes: ["ReadWriteOnce"]

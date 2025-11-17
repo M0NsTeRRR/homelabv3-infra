@@ -10,7 +10,7 @@ spec:
     schedule: "0 */6 * * *"
   restic:
     pruneIntervalDays: 14
-    repository: db-backup-vault
+    repository: db-backup-openbao
     retain:
       hourly: 1
       daily: 4
@@ -37,7 +37,7 @@ spec:
   trigger:
     manual: restore-once
   restic:
-    repository: db-backup-vault
+    repository: db-backup-openbao
     destinationPVC: authentik-cluster-1
     copyMethod: Direct
     accessModes: ["ReadWriteOnce"]

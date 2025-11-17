@@ -6,7 +6,7 @@ global:
     - configMapRef:
         name: authentik
     - secretRef:
-        name: authentik-vault
+        name: authentik-openbao
   volumes:
     - name: &volume-ca ca-certs
       configMap:

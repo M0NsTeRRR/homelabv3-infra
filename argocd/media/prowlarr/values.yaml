@@ -13,4 +13,4 @@ extraEnvFrom:
   - configMapRef:
       name: prowlarr
   - secretRef:
-      name: prowlarr-vault
+      name: prowlarr-openbao

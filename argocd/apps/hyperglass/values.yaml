@@ -6,7 +6,7 @@ extraEnvFrom:
   - configMapRef:
       name: hyperglass
   - secretRef:
-      name: &secret-ref hyperglass-vault
+      name: &secret-ref hyperglass-openbao
 
 volumes:
   - name: &volume-config hyperglass-files
@@ -14,7 +14,7 @@ volumes:
       name: hyperglass-files
   - name: &volume-devices hyperglass-devices
     secret:
-      secretName: hyperglass-devices-vault
+      secretName: hyperglass-devices-openbao
 volumeMounts:
   - name: *volume-config
     mountPath: /etc/hyperglass/config.yaml

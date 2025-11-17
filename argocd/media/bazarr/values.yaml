@@ -13,7 +13,7 @@ extraEnvFrom:
   - configMapRef:
       name: bazarr
   - secretRef:
-      name: bazarr-vault
+      name: bazarr-openbao
 volumes:
   - name: data
     persistentVolumeClaim:

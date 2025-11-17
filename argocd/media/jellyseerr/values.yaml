@@ -6,7 +6,7 @@ extraEnvFrom:
   - configMapRef:
       name: jellyseerr
   - secretRef:
-      name: jellyseerr-vault
+      name: jellyseerr-openbao
 
 config:
   persistence:

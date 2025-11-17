@@ -25,7 +25,7 @@ spec:
       database: radarr
       owner: radarr
       secret:
-        name: postgres-vault
+        name: postgres-openbao
       dataChecksums: true
       encoding: UTF8
 

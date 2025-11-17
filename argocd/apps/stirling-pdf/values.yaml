@@ -6,7 +6,7 @@ envsFrom:
   - configMapRef:
       name: stirling-pdf
   - secretRef:
-      name: stirling-pdf-vault
+      name: stirling-pdf-openbao
 
 service:
   ipFamilyPolicy: "PreferDualStack"

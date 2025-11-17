@@ -9,12 +9,6 @@ repositories:
   - name: cilium
     url: https://helm.cilium.io
 
-  - name: jetstack
-    url: https://charts.jetstack.io
-
-  - name: hashicorp
-    url: https://helm.releases.hashicorp.com
-
 releases:
   - name: prometheus-operator-crds
     namespace: prometheus-operator-crds
@@ -30,7 +24,7 @@ releases:
 
   - name: cert-manager
     namespace: cert-manager
-    chart: jetstack/cert-manager
+    chart: oci://quay.io/jetstack/charts/cert-manager
     version: v1.19.1
     values: ["./values.yaml.gotmpl"]
     needs: ["rook-ceph/rook-ceph"]

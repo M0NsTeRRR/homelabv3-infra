@@ -207,140 +207,140 @@ public_vault_datas:
       kubernetes_host: "https://10.43.0.1:443"
   - path: auth/kubernetes/role/cert-manager
     data:
-      bound_service_account_names: cert-manager-vault
+      bound_service_account_names: cert-manager-openbao
       bound_service_account_namespaces: cert-manager
       audience: "vault://vault"
       policies: pki
       ttl: 1m
   - path: auth/kubernetes/role/cert-manager-scaleway
     data:
-      bound_service_account_names: cert-manager-scaleway-vault
+      bound_service_account_names: cert-manager-scaleway-openbao
       bound_service_account_namespaces: cert-manager-scaleway
       policies: cert-manager-scaleway
       ttl: 1h
   - path: auth/kubernetes/role/external-dns-internal
     data:
-      bound_service_account_names: external-dns-vault
+      bound_service_account_names: external-dns-openbao
       bound_service_account_namespaces: external-dns-internal
       policies: external-dns-internal
       ttl: 1h
   - path: auth/kubernetes/role/external-dns-external
     data:
-      bound_service_account_names: external-dns-vault
+      bound_service_account_names: external-dns-openbao
       bound_service_account_namespaces: external-dns-external
       policies: external-dns-external
       ttl: 1h
   - path: auth/kubernetes/role/argocd
     data:
-      bound_service_account_names: argocd-vault
+      bound_service_account_names: argocd-openbao
       bound_service_account_namespaces: argocd
       policies: argocd
       ttl: 1h
   - path: auth/kubernetes/role/csi-driver-smb
     data:
-      bound_service_account_names: csi-driver-smb-vault
+      bound_service_account_names: csi-driver-smb-openbao
       bound_service_account_namespaces: csi-driver-smb
       policies: csi-driver-smb
       ttl: 1m
   - path: auth/kubernetes/role/authentik
     data:
-      bound_service_account_names: authentik-vault
+      bound_service_account_names: authentik-openbao
       bound_service_account_namespaces: authentik
       policies: authentik
       ttl: 1h
   - path: auth/kubernetes/role/rook-ceph-cluster
     data:
-      bound_service_account_names: rook-ceph-cluster-vault
+      bound_service_account_names: rook-ceph-cluster-openbao
       bound_service_account_namespaces: rook-ceph-cluster
       policies: rook-ceph-cluster
       ttl: 1h
   - path: auth/kubernetes/role/grafana
     data:
-      bound_service_account_names: grafana-vault
+      bound_service_account_names: grafana-openbao
       bound_service_account_namespaces: grafana
       policies: grafana
       ttl: 1h
   - path: auth/kubernetes/role/prometheus-snmp-exporter
     data:
-      bound_service_account_names: prometheus-snmp-exporter-vault
+      bound_service_account_names: prometheus-snmp-exporter-openbao
       bound_service_account_namespaces: prometheus-snmp-exporter
       policies: prometheus-snmp-exporter
       ttl: 1h
   - path: auth/kubernetes/role/prometheus-pve-exporter
     data:
-      bound_service_account_names: prometheus-pve-exporter-vault
+      bound_service_account_names: prometheus-pve-exporter-openbao
       bound_service_account_namespaces: prometheus-pve-exporter
       policies: prometheus-pve-exporter
       ttl: 1h
   - path: auth/kubernetes/role/as212510-net
     data:
-      bound_service_account_names: as212510-net-vault
+      bound_service_account_names: as212510-net-openbao
       bound_service_account_namespaces: as212510-net
       policies: as212510-net
       ttl: 1h
   - path: auth/kubernetes/role/hyperglass
     data:
-      bound_service_account_names: hyperglass-vault
+      bound_service_account_names: hyperglass-openbao
       bound_service_account_namespaces: hyperglass
       policies: hyperglass
       ttl: 1h
   - path: auth/kubernetes/role/qbittorrent
     data:
-      bound_service_account_names: qbittorrent-vault
+      bound_service_account_names: qbittorrent-openbao
       bound_service_account_namespaces: qbittorrent
       policies: qbittorrent
       ttl: 1h
   - path: auth/kubernetes/role/bazarr
     data:
-      bound_service_account_names: bazarr-vault
+      bound_service_account_names: bazarr-openbao
       bound_service_account_namespaces: bazarr
       policies: bazarr
       ttl: 1h
   - path: auth/kubernetes/role/jellyfin
     data:
-      bound_service_account_names: jellyfin-vault
+      bound_service_account_names: jellyfin-openbao
       bound_service_account_namespaces: jellyfin
       policies: jellyfin
       ttl: 1h
   - path: auth/kubernetes/role/jellyseerr
     data:
-      bound_service_account_names: jellyseerr-vault
+      bound_service_account_names: jellyseerr-openbao
       bound_service_account_namespaces: jellyseerr
       policies: jellyseerr
       ttl: 1h
   - path: auth/kubernetes/role/prowlarr
     data:
-      bound_service_account_names: prowlarr-vault
+      bound_service_account_names: prowlarr-openbao
       bound_service_account_namespaces: prowlarr
       policies: prowlarr
       ttl: 1h
   - path: auth/kubernetes/role/radarr
     data:
-      bound_service_account_names: radarr-vault
+      bound_service_account_names: radarr-openbao
       bound_service_account_namespaces: radarr
       policies: radarr
       ttl: 1h
   - path: auth/kubernetes/role/sonarr
     data:
-      bound_service_account_names: sonarr-vault
+      bound_service_account_names: sonarr-openbao
       bound_service_account_namespaces: sonarr
       policies: sonarr
       ttl: 1h
   - path: auth/kubernetes/role/recyclarr
     data:
-      bound_service_account_names: recyclarr-vault
+      bound_service_account_names: recyclarr-openbao
       bound_service_account_namespaces: recyclarr
       policies: recyclarr
       ttl: 1h
   - path: auth/kubernetes/role/stirling-pdf
     data:
-      bound_service_account_names: stirling-pdf-vault
+      bound_service_account_names: stirling-pdf-openbao
       bound_service_account_namespaces: stirling-pdf
       policies: stirling-pdf
       ttl: 1h
   - path: auth/kubernetes/role/actualbudget
     data:
-      bound_service_account_names: actualbudget-vault
+      bound_service_account_names: actualbudget-openbao
       bound_service_account_namespaces: actualbudget
       policies: actualbudget
       ttl: 1h

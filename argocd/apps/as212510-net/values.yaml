@@ -5,7 +5,7 @@ extraEnvFrom:
   - configMapRef:
       name: as212510-net
   - secretRef:
-      name: as212510-net-vault
+      name: as212510-net-openbao
 ingress:
   enabled: true
   annotations:

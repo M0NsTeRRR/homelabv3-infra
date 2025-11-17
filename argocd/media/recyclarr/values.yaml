@@ -6,7 +6,7 @@ extraEnvFrom:
   - configMapRef:
       name: recyclarr
   - secretRef:
-      name: recyclarr-vault
+      name: recyclarr-openbao
 volumes:
   - name: &volume-config recyclarr-files
     configMap:

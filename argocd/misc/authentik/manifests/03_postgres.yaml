@@ -29,7 +29,7 @@ spec:
       database: authentik
       owner: authentik
       secret:
-        name: postgres-vault
+        name: postgres-openbao
       dataChecksums: true
       encoding: UTF8
 

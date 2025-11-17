@@ -13,7 +13,7 @@ extraEnvFrom:
   - configMapRef:
       name: radarr
   - secretRef:
-      name: radarr-vault
+      name: radarr-openbao
 volumes:
   - name: &volume-data data
     persistentVolumeClaim:

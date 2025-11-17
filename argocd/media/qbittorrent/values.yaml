@@ -9,7 +9,7 @@ qbittorrent:
 
   extraEnvFrom:
     - secretRef:
-        name: qbittorrent-vault
+        name: qbittorrent-openbao
   volumes:
     - name: &volume-data data
       persistentVolumeClaim:
@@ -24,7 +24,7 @@ qbittorrent:
       - configMapRef:
           name: gluetun
       - secretRef:
-          name: gluetun-vault
+          name: gluetun-openbao
 
   prometheusQbittorrentExporter:
     enabled: true

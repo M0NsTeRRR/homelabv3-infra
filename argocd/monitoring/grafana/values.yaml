@@ -1,4 +1,4 @@
-envFromSecret: "grafana-vault"
+envFromSecret: "grafana-openbao"
 
 annotations:
   reloader.stakater.com/auto: "true"
@@ -20,7 +20,7 @@ service:
   ipFamilyPolicy: PreferDualStack
 
 admin:
-  existingSecret: grafana-vault
+  existingSecret: grafana-openbao
   userKey: ADMIN_USER
   passwordKey: ADMIN_PASSWORD
 
@@ -136,7 +136,7 @@ dashboards:
       gnetId: 5342
       revision: 9
       datasource: *datasource
-    Ceph-Vault:
+    Ceph-openbao:
       gnetId: 12904
       revision: 2
       datasource: *datasource

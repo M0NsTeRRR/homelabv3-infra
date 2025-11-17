@@ -13,6 +13,6 @@ helmCharts:
   - name: trust-manager
     releaseName: trust-manager
     namespace: *namespace
-    repo: https://charts.jetstack.io
+    repo: oci://quay.io/jetstack/charts/trust-manager
     version: v0.20.2
     valuesFile: values.yaml

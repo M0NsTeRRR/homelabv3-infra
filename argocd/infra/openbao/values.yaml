@@ -1,36 +1,29 @@
 global:
-  enabled: true
   tlsDisable: false
 
 injector:
   enabled: false
 
 server:
-  image:
-    tag: "1.18.5"
-
-  networkPolicy:
-    enabled: false
-
   statefulSet:
     annotations:
       reloader.stakater.com/auto: "true"
 
   extraEnvironmentVars:
-    VAULT_CACERT: /vault/userconfig/vault-server-tls/ca.crt
+    VAULT_CACERT: /openbao/userconfig/openbao-server-tls/ca.crt
 
   volumes:
-    - name: userconfig-vault-server-tls
+    - name: userconfig-openbao-server-tls
       secret:
         defaultMode: 420
-        secretName: vault-server-tls
+        secretName: openbao-server-tls
     - name: ca-certs
       configMap:
         name: homelab-ca
 
   volumeMounts:
-    - mountPath: /vault/userconfig/vault-server-tls
-      name: userconfig-vault-server-tls
+    - mountPath: /openbao/userconfig/openbao-server-tls
+      name: userconfig-openbao-server-tls
       readOnly: true
     - name: ca-certs
       mountPath: /etc/ssl/certs/homelab.crt
@@ -40,19 +33,13 @@ server:
   dataStorage:
     enabled: true
     size: 20Gi
-    mountPath: "/vault/data"
+    mountPath: "/openbao/data"
     storageClass: null
     accessMode: ReadWriteOnce
     annotations: {}
 
   service:
     ipFamilyPolicy: "PreferDualStack"
-
-  readinessProbe:
-    path: "/v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204"
-  livenessProbe:
-    path: "/v1/sys/health?standbyok=true"
-    initialDelaySeconds: 60
 
   auditStorage:
     enabled: true
@@ -72,8 +59,8 @@ server:
         listener "tcp" {
           address = "[::]:8200"
           cluster_address = "[::]:8201"
-          tls_cert_file = "/vault/userconfig/vault-server-tls/vault.crt"
-          tls_key_file  = "/vault/userconfig/vault-server-tls/vault.key"
+          tls_cert_file = "/openbao/userconfig/openbao-server-tls/openbao.crt"
+          tls_key_file  = "/openbao/userconfig/openbao-server-tls/openbao.key"
 
           telemetry {
             unauthenticated_metrics_access = true
@@ -81,27 +68,27 @@ server:
         }
 
         storage "raft" {
-          path = "/vault/data"
+          path = "/openbao/data"
 
           retry_join {
-            leader_api_addr = "https://vault-0.vault-internal:8200"
-            leader_ca_cert_file = "/vault/userconfig/vault-server-tls/ca.crt"
-            leader_client_cert_file = "/vault/userconfig/vault-server-tls/vault.crt"
-            leader_client_key_file  = "/vault/userconfig/vault-server-tls/vault.key"
+            leader_api_addr = "https://openbao-0.openbao-internal:8200"
+            leader_ca_cert_file = "/openbao/userconfig/openbao-server-tls/ca.crt"
+            leader_client_cert_file = "/openbao/userconfig/openbao-server-tls/openbao.crt"
+            leader_client_key_file  = "/openbao/userconfig/openbao-server-tls/openbao.key"
           }
 
           retry_join {
-            leader_api_addr = "https://vault-1.vault-internal:8200"
-            leader_ca_cert_file = "/vault/userconfig/vault-server-tls/ca.crt"
-            leader_client_cert_file = "/vault/userconfig/vault-server-tls/vault.crt"
-            leader_client_key_file  = "/vault/userconfig/vault-server-tls/vault.key"
+            leader_api_addr = "https://openbao-1.openbao-internal:8200"
+            leader_ca_cert_file = "/openbao/userconfig/openbao-server-tls/ca.crt"
+            leader_client_cert_file = "/openbao/userconfig/openbao-server-tls/openbao.crt"
+            leader_client_key_file  = "/openbao/userconfig/openbao-server-tls/openbao.key"
           }
 
           retry_join {
-            leader_api_addr = "https://vault-2.vault-internal:8200"
-            leader_ca_cert_file = "/vault/userconfig/vault-server-tls/ca.crt"
-            leader_client_cert_file = "/vault/userconfig/vault-server-tls/vault.crt"
-            leader_client_key_file  = "/vault/userconfig/vault-server-tls/vault.key"
+            leader_api_addr = "https://openbao-2.openbao-internal:8200"
+            leader_ca_cert_file = "/openbao/userconfig/openbao-server-tls/ca.crt"
+            leader_client_cert_file = "/openbao/userconfig/openbao-server-tls/openbao.crt"
+            leader_client_key_file  = "/openbao/userconfig/openbao-server-tls/openbao.key"
           }
         }
 
@@ -122,7 +109,7 @@ ui:
     metallb.universe.tf/loadBalancerIPs: 192.168.10.102,2a0c:b641:2c0:110::102
     gethomepage.dev/enabled: "true"
     gethomepage.dev/group: Infrastructure
-    gethomepage.dev/name: Vault
+    gethomepage.dev/name: OpenBao
     gethomepage.dev/description: Identity-based secrets management
     gethomepage.dev/icon: vault.png
 

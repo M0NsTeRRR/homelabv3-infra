@@ -14,7 +14,7 @@ extraEnvFrom:
   - configMapRef:
       name: prometheus-pve-exporter
   - secretRef:
-      name: prometheus-pve-exporter-vault
+      name: prometheus-pve-exporter-openbao
 serviceMonitor:
   enabled: true
 prometheusRule:
