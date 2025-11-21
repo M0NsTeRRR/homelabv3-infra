@@ -13,5 +13,5 @@ helmCharts:
     releaseName: grafana
     namespace: *namespace
     repo: oci://ghcr.io/grafana/helm-charts
-    version: 10.0.0
+    version: 10.2.0
     valuesFile: values.yaml
