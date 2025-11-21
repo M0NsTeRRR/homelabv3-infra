@@ -12,7 +12,7 @@
     "ghcr.io/audacioustux/devcontainers/taskfile:1": {},
     "ghcr.io/devcontainers-extra/features/packer-asdf:2": {
       // datasource=github-tags depName=hashicorp/packer
-      "version": "1.14.2"
+      "version": "1.14.3"
     },
     "ghcr.io/devcontainers/features/terraform:1": {
       // datasource=github-tags depName=hashicorp/terraform
