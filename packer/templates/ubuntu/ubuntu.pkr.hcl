@@ -1,5 +1,5 @@
 packer {
-  required_version = "v1.14.2"
+  required_version = "v1.14.3"
   required_plugins {
     proxmox = {
       source  = "github.com/hashicorp/proxmox"
