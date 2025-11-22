@@ -116,7 +116,7 @@ dashboards:
           value: *datasource
     Argocd-notifications:
       gnetId: 19975
-      revision: 4
+      revision: 7
       datasource:
         - name: DS_PROMETHEUS
           value: *datasource
