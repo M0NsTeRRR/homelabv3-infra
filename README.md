@@ -4,7 +4,7 @@
 
 ### Homelab infrastructure v3
 
-_... managed with Ansible, Terraform, Packer, Argocd, Renovate, and GitHub Actions_ 🤖
+_... managed with Ansible, Terraform, Packer, Flatcar, Flux, Renovate, and GitHub Actions_ 🤖
 
 </div>
 
@@ -22,14 +22,13 @@ _... managed with Ansible, Terraform, Packer, Argocd, Renovate, and GitHub Actio
 
 <div align="center">
 
-
 [![Status-Page](https://img.shields.io/uptimerobot/status/m793418416-67fe8e5a8853df15d81a1f29?color=brightgreeen&label=Status%20Page&style=for-the-badge&logo=uptimekuma&logoColor=white)](https://status.adminafk.fr/status/homelab)
 
 </div>
 
 # Documentation
 
-https://homelab.adminafk.fr
+<https://homelab.adminafk.fr>
 
 # Contributing
 
@@ -43,7 +42,7 @@ See [SECURITY.md](SECURITY.md) file for details.
 
 The code is under CeCILL license.
 
-You can find all details here: https://cecill.info/licences/Licence_CeCILL_V2.1-en.html
+You can find all details here: <https://cecill.info/licences/Licence_CeCILL_V2.1-en.html>
 
 # Credits
 
@@ -51,4 +50,4 @@ Copyright © Ludovic Ortega, 2023
 
 Contributor(s):
 
--Ortega Ludovic - ludovic.ortega@adminafk.fr
+-Ortega Ludovic - <ludovic.ortega@adminafk.fr>

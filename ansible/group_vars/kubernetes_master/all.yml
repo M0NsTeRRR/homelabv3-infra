@@ -126,9 +126,9 @@ vault_policies:
       - path: secret/data/homelab/prod/jellyfin
         capabilities:
           - read
-  - name: jellyseerr
+  - name: seerr
     rules:
-      - path: secret/data/homelab/prod/jellyseerr
+      - path: secret/data/homelab/prod/seerr
         capabilities:
           - read
   - name: prowlarr
@@ -293,43 +293,43 @@ public_vault_datas:
   - path: auth/kubernetes/role/bazarr
     data:
       bound_service_account_names: bazarr-openbao
-      bound_service_account_namespaces: bazarr
+      bound_service_account_namespaces: media
       policies: bazarr
       ttl: 1h
   - path: auth/kubernetes/role/jellyfin
     data:
       bound_service_account_names: jellyfin-openbao
-      bound_service_account_namespaces: jellyfin
+      bound_service_account_namespaces: media
       policies: jellyfin
       ttl: 1h
-  - path: auth/kubernetes/role/jellyseerr
+  - path: auth/kubernetes/role/seerr
     data:
-      bound_service_account_names: jellyseerr-openbao
-      bound_service_account_namespaces: jellyseerr
-      policies: jellyseerr
+      bound_service_account_names: seerr-openbao
+      bound_service_account_namespaces: media
+      policies: seerr
       ttl: 1h
   - path: auth/kubernetes/role/prowlarr
     data:
       bound_service_account_names: prowlarr-openbao
-      bound_service_account_namespaces: prowlarr
+      bound_service_account_namespaces: media
       policies: prowlarr
       ttl: 1h
   - path: auth/kubernetes/role/radarr
     data:
       bound_service_account_names: radarr-openbao
-      bound_service_account_namespaces: radarr
+      bound_service_account_namespaces: media
       policies: radarr
       ttl: 1h
   - path: auth/kubernetes/role/sonarr
     data:
       bound_service_account_names: sonarr-openbao
-      bound_service_account_namespaces: sonarr
+      bound_service_account_namespaces: media
       policies: sonarr
       ttl: 1h
   - path: auth/kubernetes/role/recyclarr
     data:
       bound_service_account_names: recyclarr-openbao
-      bound_service_account_namespaces: recyclarr
+      bound_service_account_namespaces: media
       policies: recyclarr
       ttl: 1h
   - path: auth/kubernetes/role/stirling-pdf

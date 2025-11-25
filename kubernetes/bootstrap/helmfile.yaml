@@ -29,13 +29,6 @@ releases:
     values: ["./values.yaml.gotmpl"]
     needs: ["rook-ceph/rook-ceph"]
 
-  - name: external-secrets
-    namespace: external-secrets
-    chart: oci://ghcr.io/external-secrets/charts/external-secrets
-    version: 0.20.4
-    values: ["./values.yaml.gotmpl"]
-    needs: ["ingress-internal/ingress-internal"]
-
   - name: flux-operator
     namespace: flux-system
     chart: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator

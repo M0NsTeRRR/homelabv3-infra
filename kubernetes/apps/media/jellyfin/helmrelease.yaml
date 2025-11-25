@@ -1,0 +1,54 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: jellyfin
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: jellyfin
+  interval: 1h
+  values:
+    volumes:
+      - name: &volume-ca ca-certs
+        configMap:
+          name: homelab-ca
+      - name: &volume-data data
+        persistentVolumeClaim:
+          claimName: media-storage
+    volumeMounts:
+      - name: *volume-ca
+        mountPath: /etc/ssl/certs/homelab.crt
+        subPath: ca.crt
+        readOnly: true
+      - name: *volume-data
+        mountPath: /movies
+        subPath: movies
+        readOnly: true
+      - name: *volume-data
+        mountPath: /tv
+        subPath: tv
+        readOnly: true
+
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: "vault"
+        cert-manager.io/private-key-algorithm: "RSA"
+        cert-manager.io/private-key-size: "4096"
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/group: Media
+        gethomepage.dev/name: Jellyfin
+        gethomepage.dev/description: Media System
+        gethomepage.dev/icon: jellyfin.png
+      hosts:
+        - host: &host jellyfin.unicornafk.fr
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
+      tls:
+        - hosts:
+            - *host
+          secretName: jellyfin.unicornafk.fr-tls
+      ingressClassName: ingress-internal

@@ -1,0 +1,29 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: recyclarr
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: recyclarr
+  interval: 1h
+  values:
+    jobAnnotations:
+      reloader.stakater.com/auto: "true"
+
+    extraEnvFrom:
+      - configMapRef:
+          name: recyclarr
+      - secretRef:
+          name: recyclarr-openbao
+    volumes:
+      - name: &volume-config recyclarr-files
+        configMap:
+          name: recyclarr-files
+    volumeMounts:
+      - name: *volume-config
+        mountPath: /config/recyclarr.yml
+        subPath: recyclarr.yml
+        readOnly: true

@@ -1,0 +1,38 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: sonarr
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: sonarr
+  interval: 1h
+  values:
+    podAnnotations:
+      reloader.stakater.com/auto: "true"
+
+    strategy:
+      type: RollingUpdate
+
+    config:
+      persistence:
+        enabled: false
+
+    extraEnvFrom:
+      - configMapRef:
+          name: sonarr
+      - secretRef:
+          name: sonarr-openbao
+    volumes:
+      - name: &volume-data data
+        persistentVolumeClaim:
+          claimName: media-storage
+    volumeMounts:
+      - name: *volume-data
+        mountPath: /tv
+        subPath: tv
+      - name: *volume-data
+        mountPath: /downloads
+        subPath: downloads

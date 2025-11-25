@@ -1,0 +1,56 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: seerr
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: seerr
+  interval: 1h
+  values:
+    podAnnotations:
+      reloader.stakater.com/auto: "true"
+
+    extraEnvFrom:
+      - configMapRef:
+          name: seerr
+      - secretRef:
+          name: seerr-openbao
+
+    config:
+      persistence:
+        volumeName: seerr-chart-config
+
+    volumes:
+      - name: &volume-ca ca-certs
+        configMap:
+          name: homelab-ca
+    volumeMounts:
+      - name: *volume-ca
+        mountPath: /etc/ssl/certs/homelab.crt
+        subPath: ca.crt
+        readOnly: true
+
+    ingress:
+      enabled: true
+      annotations:
+        cert-manager.io/cluster-issuer: "vault"
+        cert-manager.io/private-key-algorithm: "RSA"
+        cert-manager.io/private-key-size: "4096"
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/group: Media
+        gethomepage.dev/name: seerr
+        gethomepage.dev/description: Media System
+        gethomepage.dev/icon: seerr.png
+      hosts:
+        - host: &host seerr.unicornafk.fr
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
+      tls:
+        - hosts:
+            - *host
+          secretName: seerr.unicornafk.fr-tls
+      ingressClassName: ingress-internal

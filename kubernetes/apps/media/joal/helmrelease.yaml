@@ -1,0 +1,29 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: joal
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: joal
+  interval: 1h
+  values:
+    podAnnotations:
+      reloader.stakater.com/auto: "true"
+
+    volumes:
+      - name: &volume-config joal-files
+        configMap:
+          name: joal-files
+
+    volumeMounts:
+      - name: *volume-config
+        mountPath: /data/config.json
+        subPath: config.json
+        readOnly: true
+      - name: *volume-config
+        mountPath: /data/clients/qbittorrent-4.6.5.client
+        subPath: torrent.client
+        readOnly: true

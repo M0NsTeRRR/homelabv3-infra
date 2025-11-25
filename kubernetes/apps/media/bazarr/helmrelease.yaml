@@ -1,0 +1,41 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: bazarr
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: bazarr
+  interval: 1h
+  values:
+    podAnnotations:
+      reloader.stakater.com/auto: "true"
+
+    strategy:
+      type: RollingUpdate
+
+    config:
+      persistence:
+        enabled: false
+
+    extraEnvFrom:
+      - configMapRef:
+          name: bazarr
+      - secretRef:
+          name: bazarr-openbao
+    volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: media-storage
+    volumeMounts:
+      - name: data
+        mountPath: /movies
+        subPath: movies
+      - name: data
+        mountPath: /tv
+        subPath: tv
+      - name: data
+        mountPath: /downloads
+        subPath: downloads

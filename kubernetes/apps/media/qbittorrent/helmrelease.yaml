@@ -1,0 +1,47 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: qbittorrent
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: qbittorrent
+  interval: 1h
+  values:
+    qbittorrent:
+      podAnnotations:
+        reloader.stakater.com/auto: "true"
+
+      config:
+        persistence:
+          enabled: false
+
+      extraEnvFrom:
+        - secretRef:
+            name: qbittorrent-openbao
+      volumes:
+        - name: &volume-data data
+          persistentVolumeClaim:
+            claimName: media-storage
+      volumeMounts:
+        - name: *volume-data
+          mountPath: /downloads
+          subPath: downloads
+      gluetun:
+        enabled: true
+        extraEnvFrom:
+          - configMapRef:
+              name: gluetun
+          - secretRef:
+              name: gluetun-openbao
+
+      prometheusQbittorrentExporter:
+        enabled: true
+        serviceMonitor:
+          enabled: true
+
+    genericDevicePlugin:
+      serviceMonitor:
+        enabled: true

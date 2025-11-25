@@ -1,0 +1,27 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: prowlarr
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: prowlarr
+  interval: 1h
+  values:
+    podAnnotations:
+      reloader.stakater.com/auto: "true"
+
+    strategy:
+      type: RollingUpdate
+
+    config:
+      persistence:
+        enabled: false
+
+    extraEnvFrom:
+      - configMapRef:
+          name: prowlarr
+      - secretRef:
+          name: prowlarr-openbao
