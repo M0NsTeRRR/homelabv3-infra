@@ -57,7 +57,7 @@ octodns = [
     "octodns-powerdns~=1.0.0"
 ]
 documentation = [
-    "mkdocs-material[imaging]~=9.6.1",
+    "mkdocs-material[imaging]~=9.7.0",
     "pytz~=2025.1"
 ]
 
