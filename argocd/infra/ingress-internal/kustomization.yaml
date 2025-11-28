@@ -14,5 +14,5 @@ helmCharts:
     releaseName: ingress-internal
     namespace: *namespace
     repo: oci://ghcr.io/traefik/helm
-    version: 37.1.2
+    version: 37.4.0
     valuesFile: values.yaml
