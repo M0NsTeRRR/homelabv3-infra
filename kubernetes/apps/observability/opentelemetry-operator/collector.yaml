@@ -1,0 +1,156 @@
+---
+apiVersion: opentelemetry.io/v1beta1
+kind: OpenTelemetryCollector
+metadata:
+  name: collector
+spec:
+  mode: daemonset
+  targetAllocator:
+    allocationStrategy: "per-node"
+    enabled: true
+    prometheusCR:
+      enabled: true
+      serviceMonitorSelector: {}
+      podMonitorSelector: {}
+    serviceAccount: targetallocator
+  serviceAccount: collector
+  env:
+    - name: K8S_POD_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.podIP
+    - name: K8S_NODE_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: spec.nodeName
+  volumeMounts:
+    - name: varlogpods
+      mountPath: /var/log/pods
+      readOnly: true
+  volumes:
+    - name: varlogpods
+      hostPath:
+        path: /var/log/pods
+  tolerations:
+    - key: node-role.kubernetes.io/master
+      operator: Exists
+      effect: NoSchedule
+    - key: node-role.kubernetes.io/control-plane
+      operator: Exists
+      effect: NoSchedule
+  config:
+    receivers:
+      filelog:
+        exclude:
+          - /var/log/pods/opentelemetry-operator_collector-collector*_*/*/*.log
+        include:
+          - /var/log/pods/*/*/*.log
+        include_file_name: false
+        include_file_path: true
+        operators:
+          - id: container-parser
+            max_log_size: 102400
+            type: container
+        retry_on_failure:
+          enabled: true
+        start_at: end
+      receiver_creator/k8s_ingress:
+        watch_observers: [k8s_observer]
+        receivers:
+          prometheus_simple:
+            rule: type == "k8s.ingress"
+            config:
+              endpoint: "http://blackbox-exporter-prometheus-blackbox-exporter.observability.svc:9115"
+              metrics_path: "/probe"
+              params:
+                module: [http_2xx]
+                target: "`scheme`://`endpoint`:`port`"
+              collection_interval: 5s
+            resource_attributes:
+              service.name: "`endpoint`"
+      otlp:
+        protocols:
+          grpc:
+            endpoint: ${env:K8S_POD_IP}:4317
+          http:
+            endpoint: ${env:K8S_POD_IP}:4318
+      prometheus:
+        config:
+          scrape_configs:
+            - job_name: "otel-collector"
+              scrape_interval: 5s
+              static_configs:
+                - targets: ["0.0.0.0:8888"]
+        target_allocator:
+          endpoint: http://collector-targetallocator
+          interval: 30s
+          collector_id: "${env:POD_NAME}"
+    exporters:
+      debug:
+        verbosity: normal
+      prometheusremotewrite/victoriametrics:
+        endpoint: http://victoria-metrics-victoria-metrics-single-server.observability.svc.cluster.local:8428/api/v1/push
+        tls:
+          insecure: true
+      otlp/quickwit:
+        endpoint: http://quickwit-indexer.observability.svc.cluster.local:7281
+        tls:
+          insecure: true
+    extensions:
+      health_check:
+        endpoint: ${env:K8S_POD_IP}:13133
+      k8s_observer:
+        auth_type: serviceAccount
+        node: ${env:K8S_NODE_NAME}
+        observe_ingresses: true
+    processors:
+      batch:
+        send_batch_max_size: 10000
+        timeout: 200ms
+      memory_limiter:
+        check_interval: 1s
+        limit_mib: 4000
+        spike_limit_mib: 800
+      k8sattributes/default:
+    service:
+      telemetry:
+        metrics:
+          level: normal
+          address: 0.0.0.0:8888
+      extensions:
+        - health_check
+        - k8s_observer
+      pipelines:
+        logs:
+          exporters:
+            - otlp/quickwit
+            - debug
+          processors:
+            - k8sattributes/default
+            - memory_limiter
+            - batch
+          receivers:
+            - filelog
+            - otlp
+        metrics:
+          exporters:
+            - prometheusremotewrite/victoriametrics
+            - debug
+          processors:
+            - k8sattributes/default
+            - memory_limiter
+            - batch
+          receivers:
+            - receiver_creator/k8s_ingress
+            - prometheus
+            - otlp
+        traces:
+          exporters:
+            - otlp/quickwit
+            - debug
+          processors:
+            - k8sattributes/default
+            - memory_limiter
+            - batch
+          receivers:
+            - otlp

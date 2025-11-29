@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: prometheus-smartctl-exporter
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: prometheus-smartctl-exporter
+  interval: 1h
+  values:
+    service:
+      ipDualStack:
+        enabled: true
+    serviceMonitor:
+      enabled: true
+    prometheusRules:
+      enabled: true

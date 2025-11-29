@@ -1,0 +1,25 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: prometheus-snmp-exporter
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: prometheus-snmp-exporter
+  interval: 1h
+  values:
+    service:
+      ipDualStack:
+        enabled: true
+    podAnnotations:
+      reloader.stakater.com/auto: "true"
+    extraArgs:
+      - "--config.file=/run/secrets/snmp-exporter/snmp.yaml"
+    extraSecretMounts:
+      - name: prometheus-snmp-exporter-openbao
+        mountPath: /run/secrets/snmp-exporter/snmp.yaml
+        subPath: snmp.yaml
+        secretName: prometheus-snmp-exporter-openbao
+        readOnly: true

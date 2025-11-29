@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: victoria-metrics-datasource
+  labels:
+    grafana_datasource: "1"
+data:
+  victoria-metrics-datasource.yaml: |-
+    apiVersion: 1
+    datasources:
+    - name: prometheus
+      type: prometheus
+      url: http://victoria-metrics-victoria-metrics-single-server.observability.svc.cluster.local:8428
+      access: proxy

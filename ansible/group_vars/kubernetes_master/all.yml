@@ -257,7 +257,7 @@ public_vault_datas:
   - path: auth/kubernetes/role/grafana
     data:
       bound_service_account_names: grafana-openbao
-      bound_service_account_namespaces: grafana
+      bound_service_account_namespaces: observability
       policies: grafana
       ttl: 1h
   - path: auth/kubernetes/role/prometheus-snmp-exporter
@@ -269,7 +269,7 @@ public_vault_datas:
   - path: auth/kubernetes/role/prometheus-pve-exporter
     data:
       bound_service_account_names: prometheus-pve-exporter-openbao
-      bound_service_account_namespaces: prometheus-pve-exporter
+      bound_service_account_namespaces: observability
       policies: prometheus-pve-exporter
       ttl: 1h
   - path: auth/kubernetes/role/as212510-net

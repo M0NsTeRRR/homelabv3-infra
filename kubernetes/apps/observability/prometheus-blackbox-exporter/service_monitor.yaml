@@ -1,0 +1,41 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: blackbox-exporter-icmp
+spec:
+  prober:
+    url: prometheus-blackbox-exporter.observability.svc.cluster.local:9115
+  targets:
+    staticConfig:
+      static:
+        - 1.1.1.1
+        - 2606:4700:4700::1111
+        - 8.8.8.8
+        - 2001:4860:4860::8888
+        - 141.145.215.178
+        - 2603:c027:c000:c200::10
+  interval: 5s
+  module: icmp
+---
+apiVersion: monitoring.coreos.com/v1
+kind: Probe
+metadata:
+  name: blackbox-exporter-http
+spec:
+  prober:
+    url: prometheus-blackbox-exporter.observability.svc.cluster.local:9115
+  targets:
+    staticConfig:
+      static:
+        - https://server1.unicornafk.fr:8006
+        - https://server2.unicornafk.fr:8006
+        - https://server3.unicornafk.fr:8006
+        - https://dns1.unicornafk.fr
+        - https://dns2.unicornafk.fr
+        - https://home-assistant.unicornafk.fr
+        - https://nas.unicornafk.fr
+        - https://nas.unicornafk.fr:9002
+        - https://vault.unicornafk.fr
+  interval: 5s
+  module: http_2xx

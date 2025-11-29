@@ -1,0 +1,19 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: flux-system
+
+resources:
+  - ./namespace.yaml
+  - ./grafana/kustomization.yaml
+  - ./kea-exporter/kustomization.yaml
+  - ./kube-prometheus-stack/kustomization.yaml
+  - ./opentelemetry-operator/kustomization.yaml
+  - ./prometheus-blackbox-exporter/kustomization.yaml
+  - ./prometheus-operator-crds/kustomization.yaml
+  - ./prometheus-pve-exporter/kustomization.yaml
+  - ./prometheus-smartctl-exporter/kustomization.yaml
+  - ./prometheus-snmp-exporter/kustomization.yaml
+  - ./quickwit/kustomization.yaml
+  - ./victoria-metrics-single/kustomization.yaml
