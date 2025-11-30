@@ -1,0 +1,15 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: cert-manager-scaleway
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/cert-manager-scaleway/cert-manage-scaleway/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: cert-manager-scaleway
+    namespace: cert-manager-scaleway
+  targetNamespace: cert-manager-scaleway

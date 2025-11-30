@@ -6,13 +6,13 @@ namespace: media
 
 resources:
   - ./namespace.yaml
-  - ./bazarr/kustomization.yaml
-  - ./flaresolverr/kustomization.yaml
-  - ./jellyfin/kustomization.yaml
-  - ./joal/kustomization.yaml
-  - ./prowlarr/kustomization.yaml
-  - ./qbittorrent/kustomization.yaml
-  - ./radarr/kustomization.yaml
-  - ./recyclarr/kustomization.yaml
-  - ./seerr/kustomization.yaml
-  - ./sonarr/kustomization.yaml
+  - ./bazarr/ks.yaml
+  - ./flaresolverr/ks.yaml
+  - ./jellyfin/ks.yaml
+  - ./joal/ks.yaml
+  - ./prowlarr/ks.yaml
+  - ./qbittorrent/ks.yaml
+  - ./radarr/ks.yaml
+  - ./recyclarr/ks.yaml
+  - ./seerr/ks.yaml
+  - ./sonarr/ks.yaml

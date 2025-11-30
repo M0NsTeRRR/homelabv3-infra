@@ -2,9 +2,8 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: external-dns-external
+
 resources:
-  - ./helmrelease.yaml
-  - ./ocirepository.yaml
-  # Already deployed with external-dns-internal
-  # - ./prometheusrule.yaml
-  - ./externalsecret.yaml
+  - ./namespace.yaml
+  - ./external-dns-external/ks.yaml

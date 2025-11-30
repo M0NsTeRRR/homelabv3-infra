@@ -6,5 +6,5 @@ namespace: flux-system
 
 resources:
   - ./namespace.yaml
-  - ./flux-instance/kustomization.yaml
-  - ./flux-operator/kustomization.yaml
+  - ./flux-instance/ks.yaml
+  - ./flux-operator/ks.yaml

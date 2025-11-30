@@ -1,0 +1,15 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: external-dns-internal
+spec:
+  interval: 1h
+  path: ./kubernetes/apps/external-dns-internal/external-dns-internal/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: external-dns-internal
+    namespace: external-dns-internal
+  targetNamespace: external-dns-internal

@@ -2,8 +2,8 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: metallb-system
+
 resources:
-  - ./helmrelease.yaml
-  - ./ocirepository.yaml
-  - ./l2advertisement.yaml
-  - ./ipaddresspool.yaml
+  - ./namespace.yaml
+  - ./metallb-system/ks.yaml
