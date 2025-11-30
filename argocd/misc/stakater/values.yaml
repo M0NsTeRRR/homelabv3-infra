@@ -1,4 +1,0 @@
-isArgoRollouts: true
-reloader:
-  serviceMonitor:
-    enabled: true

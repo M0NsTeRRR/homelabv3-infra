@@ -1,7 +1,0 @@
-prometheus:
-  serviceAccount: "prometheus"
-  namespace: "metallb-system"
-  serviceMonitor:
-    enabled: true
-  prometheusRule:
-    enabled: true

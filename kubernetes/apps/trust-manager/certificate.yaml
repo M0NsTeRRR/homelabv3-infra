@@ -1,0 +1,43 @@
+apiVersion: trust.cert-manager.io/v1alpha1
+kind: Bundle
+metadata:
+  name: homelab-ca
+spec:
+  sources:
+    - inLine: |
+        -----BEGIN CERTIFICATE-----
+        MIIFXDCCA0SgAwIBAgIUBRsjODe/e27sErU24Uub8IZR1bkwDQYJKoZIhvcNAQEL
+        BQAwNzELMAkGA1UEBhMCRlIxEzARBgNVBAoMCnVuaWNvcm5hZmsxEzARBgNVBAMM
+        CnVuaWNvcm5hZmswHhcNMjUwOTEwMTk0NzMwWhcNMzUwOTA4MTk0NzMwWjA3MQsw
+        CQYDVQQGEwJGUjETMBEGA1UECgwKdW5pY29ybmFmazETMBEGA1UEAwwKdW5pY29y
+        bmFmazCCAiIwDQYJKoZIhvcNAQEBBQADggIPADCCAgoCggIBAKS7EoJoQeG/81uo
+        qFlWE3ERe2Vr3q7kZwjoXRB+pFGmDWnUUE/qEMRuL3FqF3pFHvbtr7yXSKAFFX40
+        gwXmAmHdAAAXcuLDMmBAElG92lQaWBAvZKeatZjZSGsgB7nigRupWDxNMQBuI3Vb
+        5HHTzSE0HxF0CC8E2P6WzillmOHYSqwBOfboM3d34rPSWrFz1QhNkJ7PVMEZ+Ve+
+        BZWKkoDdtQA+xTFsD9zA2peTG9PXhwtradfrnJkQZolCVyywaBPTRhZNIQbol1bz
+        35IlJuvSomae4fHaTEYK2OpsI/euRkUaIjnvCCEbD02UQsE5XYclXih8la93dhQP
+        kOCLgekBhsgBitLsuLObwzQKj/g8Lkg5mNWwDiasmA+zzNEPZTo4DLN/qExF1RkA
+        7K3PeMZQBqiqd3VKZeIdF3NSAlUn3scvzC5I5hZu3Q62n4+c1Oo52RZiFrSFmGTI
+        Z34xYh4TYM2vQM7CObPe7Fc/xv9nPR/RKtNdNgeBtYYtr95C/NlgKoLeDm64eE7Y
+        OFEYiZKsJkT+T2IH88HCEuBqK2YbXpKHLSfRx8Nl0GrjsxvmSEwkvve1HG8uqRiG
+        ZMQVkYDl16koBmHviu6FB/Gyih450MDZV3zQCbHbfJcbC+4nT3geHa9D7pQI5og4
+        KfhHffhhFWsB9qZEDLos1A6CGtlFAgMBAAGjYDBeMBwGA1UdEQQVMBOBEWFkbWlu
+        QGFkbWluYWZrLmZyMA4GA1UdDwEB/wQEAwICBDAPBgNVHRMBAf8EBTADAQH/MB0G
+        A1UdDgQWBBRgTJm35idZAKdpUIbUnYqEdeafrDANBgkqhkiG9w0BAQsFAAOCAgEA
+        b/iuNArmRkqJUEcJui9f0BqkOUPFgNWef/SLbhicREdFCnJOdg/0vE/6BjBTfuhM
+        JlBNv1cJOMho9PSv38H5RLlOHVyW5RjCbORnZtujKMRBmsuDWuYQmSOS0emFDX+0
+        cg9j9tRpVhbayEoq05kdiC09c2pNhVX+FGCCXnWppLirNHdhkvFXG4cW16X3dQW2
+        xd18H5i/KNf/v1/Rj8wOhFnDKyVdHz1QaSusFjn5wsDTymCT+DApOP6d7UT5yfKu
+        GwdtY+o8K1XX87fNoL9LviQiypr5HdXCXxZ22MJYRCHr2D5ZXvOryGWX0zs3d7yb
+        bwz1oQgOSe7VBGWXAtQiLkMH4Ud445iYXngO6jZJaVwvjphDzyZTgUpDsc8ugx0n
+        UtV/rRczY/b68r0+xyObY7SyYmvGqrZ0nANyq8e01PAgwfg2gHuEEOnUrVbZFfyF
+        K3k3XfUJMw58HCUIK4bNGiQxFgS8td8G5IlTMtfhEz39hVt9NNfARQ/hSMYWUC5r
+        t2/ateaL6B5GM9sHMD3at7G+NPIPE28XNUPxz8QZT4SKMFFBFiehv26iGWdITu96
+        z91tJp36sAokuAtKRPMR5vg4Zp1CLKj/rNQnNz3i6EOahxxjm0/BjmKXlgnV0K0Q
+        558hUJc/HSEWCSvHpbrvCAn4cygf6n3SvdO4nnVXOis=
+        -----END CERTIFICATE-----
+  target:
+    configMap:
+      key: ca.crt
+    secret:
+      key: ca.crt

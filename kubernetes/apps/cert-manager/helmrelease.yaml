@@ -1,0 +1,27 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: cert-manager
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: cert-manager
+  interval: 1h
+  values:
+    crds:
+      enabled: true
+    extraArgs:
+      - enable-gateway-api
+    serviceIPFamilyPolicy: "PreferDualStack"
+    webhook:
+      networkPolicy:
+        enabled: false
+      serviceIPFamilyPolicy: "PreferDualStack"
+    deploymentAnnotations:
+      reloader.stakater.com/auto: "true"
+    prometheus:
+      enabled: true
+      servicemonitor:
+        enabled: true

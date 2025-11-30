@@ -1,0 +1,26 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kured
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: kured
+  interval: 1h
+  values:
+    configuration:
+      timeZone: Europe/Paris
+      startTime: "02:00"
+      endTime: "08:00"
+      annotateNodes: true
+    metrics:
+      create: true
+    tolerations:
+      - key: node-role.kubernetes.io/master
+        operator: Exists
+        effect: NoSchedule
+      - key: node-role.kubernetes.io/control-plane
+        operator: Exists
+        effect: NoSchedule
