@@ -23,6 +23,14 @@ spec:
         path: kubernetes/flux/cluster
       kustomize:
         patches:
+          - # Git commit verification https://fluxcd.io/flux/components/source/gitrepositories/#verification
+            patch: |-
+              - op: add
+                path: /spec/verify
+                value:
+                  mode: HEAD
+                  secretRef:
+                    name: pgp-public-keys
           - # Increase the number of workers https://fluxcd.io/flux/installation/configuration/vertical-scaling/#increase-the-number-of-workers-and-limits
             patch: |
               - op: add

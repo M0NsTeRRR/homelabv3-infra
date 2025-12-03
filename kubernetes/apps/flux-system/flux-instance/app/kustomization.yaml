@@ -5,3 +5,10 @@ kind: Kustomization
 resources:
   - ./helmrelease.yaml
   - ./ocirepository.yaml
+secretGenerator:
+  - name: pgp-public-keys
+    files:
+      - ../files/M0NsTeRRR.asc
+      - ../files/renovate.asc
+generatorOptions:
+  disableNameSuffixHash: true
