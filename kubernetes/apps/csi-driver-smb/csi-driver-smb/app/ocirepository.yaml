@@ -12,3 +12,8 @@ spec:
   ref:
     tag: 1.19.1
   url: oci://ghcr.io/home-operations/charts-mirror/csi-driver-smb
+  verify:
+    provider: cosign
+    matchOIDCIdentity:
+      - issuer: "^https://token.actions.githubusercontent.com$"
+        subject: "^https://github.com/home-operations/charts-mirror.*$"

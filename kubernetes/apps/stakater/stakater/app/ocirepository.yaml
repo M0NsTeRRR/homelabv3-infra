@@ -11,4 +11,9 @@ spec:
     operation: copy
   ref:
     tag: 2.2.3
-  url: oci://ghcr.io/stakater/charts/stakater
+  url: oci://ghcr.io/stakater/charts/reloader
+  verify:
+    provider: cosign
+    matchOIDCIdentity:
+      - issuer: "^https://token.actions.githubusercontent.com$"
+        subject: "^https://github.com/stakater/Reloader.*$"

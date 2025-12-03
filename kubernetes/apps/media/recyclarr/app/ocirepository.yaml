@@ -12,3 +12,8 @@ spec:
   ref:
     tag: 1.0.3
   url: oci://ghcr.io/m0nsterrr/helm-charts/recyclarr
+  verify:
+    provider: cosign
+    matchOIDCIdentity:
+      - issuer: "^https://token.actions.githubusercontent.com$"
+        subject: "^https://github.com/M0NsTeRRR/helm-charts.*$"

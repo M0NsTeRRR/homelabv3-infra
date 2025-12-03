@@ -12,3 +12,8 @@ spec:
   ref:
     tag: 2.0.1
   url: oci://ghcr.io/m0nsterrr/helm-charts/kea-exporter
+  verify:
+    provider: cosign
+    matchOIDCIdentity:
+      - issuer: "^https://token.actions.githubusercontent.com$"
+        subject: "^https://github.com/M0NsTeRRR/helm-charts.*$"
