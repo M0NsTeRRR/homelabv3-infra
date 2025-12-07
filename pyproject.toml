@@ -1,19 +1,9 @@
 [project]
 name = "homelabv3_infra"
 version = "0.0.0"
-description = "Homelab management infrastructure (Packer / Terraform / Ansible / Octodns / Argocd) "
+description = "Homelab management infrastructure"
 readme = "README.md"
 authors = [{ name = "Ludovic Ortega", email = "ludovic.ortega@adminafk.fr" }]
-keywords = [
-  "kubernetes",
-  "ansible",
-  "packer",
-  "terraform",
-  "selfhosted",
-  "homelab",
-  "terragrunt",
-  "argocd",
-]
 classifiers = [
   "Programming Language :: Python",
   "Programming Language :: Python :: 3.12",
@@ -47,7 +37,6 @@ ansible = [
   "PyYAML~=6.0.2",
   "jsonpatch~=1.33",
 ]
-terraform = ["paramiko~=4.0.0"]
 octodns = [
   "octodns~=1.13.0",
   "octodns_scaleway~=0.0.4",

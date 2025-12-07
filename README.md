@@ -4,7 +4,7 @@
 
 ### Homelab infrastructure v3
 
-_... managed with Ansible, Terraform, Packer, Flatcar, Flux, Renovate, and GitHub Actions_ 🤖
+_... managed with Ansible, Packer, Flatcar, Flux, Renovate, and GitHub Actions_ 🤖
 
 </div>
 
@@ -12,7 +12,6 @@ _... managed with Ansible, Terraform, Packer, Flatcar, Flux, Renovate, and GitHu
 
 [![Ansible](https://img.shields.io/github/actions/workflow/status/M0NsTeRRR/homelabv3-infra/ansible-lint.yml?branch=main&label=&logo=ansible&style=for-the-badge&color=black)](https://github.com/M0NsTeRRR/homelabv3-infra/tree/main/.github/workflows/ansible-lint.yml)&nbsp;&nbsp;
 [![Packer](https://img.shields.io/github/actions/workflow/status/M0NsTeRRR/homelabv3-infra/packer-lint.yml?branch=main&label=&logo=packer&style=for-the-badge&logoColor=white&color=blue)](https://github.com/M0NsTeRRR/homelabv3-infra/tree/main/.github/workflows/packer-lint.yml)&nbsp;&nbsp;
-[![Terraform](https://img.shields.io/github/actions/workflow/status/M0NsTeRRR/homelabv3-infra/terraform-lint.yml?branch=main&label=&logo=terraform&style=for-the-badge&logoColor=white&color=purple)](https://github.com/M0NsTeRRR/homelabv3-infra/tree/main/.github/workflows/terraform-lint.yml)&nbsp;&nbsp;
 [![Kubernetes](https://img.shields.io/github/actions/workflow/status/M0NsTeRRR/homelabv3-infra/kubernetes-lint.yml?branch=main&label=&logo=kubernetes&style=for-the-badge&logoColor=white&color=blue)](https://github.com/M0NsTeRRR/homelabv3-infra/tree/main/.github/workflows/kubernetes-lint.yml)&nbsp;&nbsp;
 [![Octodns](https://img.shields.io/github/actions/workflow/status/M0NsTeRRR/homelabv3-infra/octodns.yml?branch=main&label=&logo=octopusdeploy&style=for-the-badge&logoColor=white&color=purple)](https://github.com/M0NsTeRRR/homelabv3-infra/tree/main/.github/workflows/octodns.yml)&nbsp;&nbsp;
 [![Renovate](https://img.shields.io/github/actions/workflow/status/M0NsTeRRR/homelabv3-infra/renovate-lint.yml?branch=main&label=&logo=renovatebot&style=for-the-badge&logoColor=white&color=blue)](https://github.com/M0NsTeRRR/homelabv3-infra/tree/main/.github/workflows/renovate-lint.yml)&nbsp;&nbsp;

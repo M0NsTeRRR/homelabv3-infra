@@ -6,14 +6,6 @@ venv
 # packer
 packer_cache/
 downloaded_iso_path/
-# terraform
-.terraform*
-.terragrunt-cache
-terragrunt-debug*
-terraform/build
-terraform/account.hcl
-*.tfstate
-*.tfstate.backup
 # ansible
 .vault_password.txt
 vault.json.secrets

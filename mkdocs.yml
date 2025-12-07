@@ -106,7 +106,6 @@ nav:
   - Guide:
       - Introduction: guide/index.md
       - Packer: guide/packer/index.md
-      - Terraform: guide/terraform/index.md
       - Ansible: guide/ansible/index.md
       - Kubernetes: guide/kubernetes/index.md
       - Argocd: guide/argocd/index.md

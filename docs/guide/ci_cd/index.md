@@ -14,7 +14,6 @@
 | `octodns.yml`           | Lint Octodns and deploy Octodns configuration   |
 | `packer-lint.yml`       | Lint Packer configuration                       |
 | `renovatebot-check.yml` | Lint Renovatebot configuration                  |
-| `terraform-lint.yml`    | Lint Terraform and Terragrunt configuration     |
 
 ## Usage
 
