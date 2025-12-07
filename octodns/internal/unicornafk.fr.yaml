@@ -3,6 +3,16 @@ ap1:
     value: "192.168.20.51"
   - type: AAAA
     value: "2a0c:b641:02c0:120::51"
+dhcp1:
+  - type: A
+    value: "192.168.10.23"
+  - type: AAAA
+    value: "2a0c:b641:02c0:110::23"
+dhcp2:
+  - type: A
+    value: "192.168.10.24"
+  - type: AAAA
+    value: "2a0c:b641:02c0:110::24"
 dns1:
   - type: A
     value: "192.168.10.21"
