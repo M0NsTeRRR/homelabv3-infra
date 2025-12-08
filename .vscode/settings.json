@@ -12,5 +12,6 @@
   ],
   "files.associations": {
     "*.bu": "yaml"
-  }
+  },
+  "ansible.python.interpreterPath": "/workspaces/homelabv3-infra/.venv/bin/python"
 }

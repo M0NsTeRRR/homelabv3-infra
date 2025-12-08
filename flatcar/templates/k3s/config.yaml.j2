@@ -3,13 +3,13 @@ node-name: {{ k3s_node_name }}
 {%- if k3s_server_init %}
 cluster-init: true
 {%- else %}
-token-file: /etc/rancher/k3s/token
 server: {{ k3s_join_url }}
 {%- endif %}
+token-file: /etc/rancher/k3s/token
 {%- if k3s_server %}
 tls-san: {{ k3s_ha_controlplane_ip | join(",") }}
 secrets-encryption: true
-node-taint: node-role.kubernetes.io/master=true:NoSchedule
+# node-taint: node-role.kubernetes.io/master=true:NoSchedule
 kube-controller-manager-arg:
 - "bind-address=0.0.0.0"
 - "node-cidr-mask-size-ipv6={{ (k3s_service_cidr_ipv6 | split('/'))[1] }}"

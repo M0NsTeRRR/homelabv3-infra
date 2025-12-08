@@ -4,7 +4,30 @@
 
 [Proxmox Virtual Environment](https://proxmox.com) is a complete open-source platform for enterprise virtualization. With the built-in web interface you can easily manage VMs and containers, software-defined storage and networking, high-availability clustering, and multiple out-of-the-box tools using a single solution.
 
+## Deploy a VM on Proxmox
+
+```bash
+export VM_ID=XX
+export VM_NAME=XX
+export VM_STORAGE=XX
+curl -LO https://stable.release.flatcar-linux.net/amd64-usr/current/flatcar_production_proxmoxve_image.img
+vi /var/lib/vz/snippets/vm-$VM_ID-user-data
+qm create $VM_ID --name $VM_NAME --cores 12 --memory 51200 --net0 "virtio,bridge=vmbr0,firewall=1,tag=10" --ipconfig0 "ip=dhcp"
+qm disk import $VM_ID flatcar_production_proxmoxve_image.img $VM_STORAGE
+qm set $VM_ID --scsi0 $VM_STORAGE:vm-$VM_ID-disk-0
+qm set $VM_ID --boot order=scsi0
+qm set $VM_ID --bios ovmf
+qm set $VM_ID --efidisk0 "file=$VM_STORAGE:1,efitype=4m,size=4M"
+qm set $VM_ID --machine q35
+qm set $VM_ID --scsihw virtio-scsi-single
+qm set $VM_ID --onboot 1
+qm set $VM_ID --agent "enabled=1"
+qm set $VM_ID --ide2 local-lvm:cloudinit
+qm set $VM_ID --cicustom "user=local:snippets/vm-$VM_ID-user-data"
+```
+
 ## How to enable Proxmox ACME ?
+
 In this guide we will see how to enable proxmox ACME with vault.
 This guide assume vault PKI is already setup using the ansible role from this repository.
 This guide also assume that your proxmox server trust the vault PKI.

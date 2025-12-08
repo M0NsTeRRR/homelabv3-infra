@@ -113,7 +113,7 @@ nav:
       - Renovatebot: guide/renovatebot/index.md
       - DNS Blocklist: guide/dns_blocklist/index.md
       - CI/CD: guide/ci_cd/index.md
-      - Proxmox ACME: guide/proxmox_acme/index.md
+      - Proxmox: guide/proxmox/index.md
       - Proxmox-exporter: guide/proxmox_exporter/index.md
       - Snmp-exporter: guide/snmp_exporter/index.md
       - Truenas: guide/truenas/index.md

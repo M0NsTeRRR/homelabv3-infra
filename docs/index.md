@@ -2,8 +2,8 @@
 
 This is the third version of my homelab :rocket:
 
-~~v1 : [Personnal-docker-config](https://github.com/M0NsTeRRR/Personnal-docker-config)~~  
-~~v2 : [Homelab-infra](https://github.com/M0NsTeRRR/Homelab-infra)~~  
+~~v1 : [Personnal-docker-config](https://github.com/M0NsTeRRR/Personnal-docker-config)~~
+~~v2 : [Homelab-infra](https://github.com/M0NsTeRRR/Homelab-infra)~~
 v3 : [homelabv3-infra](https://github.com/M0NsTeRRR/homelabv3-infra)
 
 To start, I would like to thank all maintainers and contributors to open source projects that make my lab possible !
@@ -18,17 +18,17 @@ To start, I would like to thank all maintainers and contributors to open source 
 - [x] Monitoring, logging and alerting
 - [x] Offsite encrypted backup to S3 multi A-Z
 - [x] Manage everything except :
-    * [ ] Emails
+  - [ ] Emails
 - [x] Eveything is automated with scripts, IaC, etc except :
-    * [ ] Hypervisor installation but can be done with [netboot.xyz](https://netboot.xyz/)
-    * [ ] Networking hardware device configuration (routers, switchs)
+  - [ ] Hypervisor installation but can be done with [netboot.xyz](https://netboot.xyz/)
+  - [ ] Networking hardware device configuration (routers, switchs)
 
 ## Roadmap
 
 - Kubernetes :
-    * [ ] Kubernetes node firewalling
-    * [ ] Kubernetes policies rules
+  - [ ] Kubernetes node firewalling
+  - [ ] Kubernetes policies rules
 - Monitoring/Logging/Alerting :
-    * [ ] Alerting system
+  - [ ] Alerting system
 - Security :
-    * [ ] Implement systemd-resolved dnssec validation (DS record not supported by my current registrar)
+  - [ ] Implement systemd-resolved dnssec validation (DS record not supported by my current registrar)
