@@ -28,7 +28,7 @@ spec:
           - ingress-external-security@kubernetescrd
     service:
       annotations:
-        metallb.universe.tf/loadBalancerIPs: 192.168.10.100,2a0c:b641:2c0:110::100
+        lbipam.cilium.io/ips: 192.168.10.100,2a0c:b641:2c0:110::100
       ipFamilyPolicy: PreferDualStack
     providers:
       kubernetesCRD:
