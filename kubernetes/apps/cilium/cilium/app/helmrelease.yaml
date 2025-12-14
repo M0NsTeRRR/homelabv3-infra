@@ -20,8 +20,8 @@ spec:
     loadBalancer:
       mode: dsr
       acceleration: native
-    k8sServiceHost: "192.168.10.80"
-    k8sServicePort: 6443
+    k8sServiceHost: 127.0.0.1
+    k8sServicePort: 6444
     policyEnforcementMode: default
     policyAuditMode: false
     rollOutCiliumPods: true
