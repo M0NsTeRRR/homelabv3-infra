@@ -31,6 +31,8 @@ spec:
                   mode: HEAD
                   secretRef:
                     name: pgp-public-keys
+                target:
+                  kind: GitRepository
           - # Increase the number of workers https://fluxcd.io/flux/installation/configuration/vertical-scaling/#increase-the-number-of-workers-and-limits
             patch: |
               - op: add
