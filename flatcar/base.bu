@@ -17,11 +17,6 @@ storage:
       mode: 0644
       contents:
         local: files/modprobe_blacklist.conf
-    # nftables
-    - path: /var/lib/nftables/rules-save
-      mode: 0644
-      contents:
-        local: files/nftables.conf
     # sshd
     - path: /etc/ssh/sshd_config
       overwrite: true
@@ -72,8 +67,6 @@ passwd:
 systemd:
   units:
     - name: auditd.service
-      enabled: true
-    - name: nftables-load.service
       enabled: true
     - name: ca-certificates.service
       enabled: true

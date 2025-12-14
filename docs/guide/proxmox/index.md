@@ -16,12 +16,13 @@ qm create $VM_ID --name $VM_NAME --cores 12 --memory 51200 --net0 "virtio,bridge
 qm disk import $VM_ID flatcar_production_proxmoxve_image.img $VM_STORAGE
 qm set $VM_ID --scsi0 $VM_STORAGE:vm-$VM_ID-disk-0
 qm set $VM_ID --boot order=scsi0
-qm set $VM_ID --bios ovmf
 qm set $VM_ID --efidisk0 "file=$VM_STORAGE:1,efitype=4m,size=4M"
+qm set $VM_ID --bios ovmf
 qm set $VM_ID --machine q35
 qm set $VM_ID --scsihw virtio-scsi-single
 qm set $VM_ID --onboot 1
 qm set $VM_ID --agent "enabled=1"
+qm set $VM_ID --scsi1 "file=$VM_STORAGE:1000,iothread=1,discard=ignore,format=raw"
 qm set $VM_ID --ide2 local-lvm:cloudinit
 qm set $VM_ID --cicustom "user=local:snippets/vm-$VM_ID-user-data"
 ```
