@@ -5,8 +5,9 @@ version: "3"
 vars:
   packer_dir: "{{.TASKDIR}}/packer"
   ansible_dir: "{{.TASKDIR}}/ansible"
-  argocd_dir: "{{.TASKDIR}}/argocd"
   flatcar_dir: "{{.TASKDIR}}/flatcar"
+  octodns_dir: "{{.TASKDIR}}/octodns"
+  kubernetes_dir: "{{.TASKDIR}}/kubernetes"
 
 includes:
   packer:
@@ -20,8 +21,10 @@ includes:
     dir: "{{.flatcar_dir}}"
   octodns:
     taskfile: .taskfiles/octodns
+    dir: "{{.octodns_dir}}"
   kubernetes:
     taskfile: .taskfiles/kubernetes
+    dir: "{{.kubernetes_dir}}"
 
 tasks:
   default: task -l

@@ -10,3 +10,4 @@ RUN sudo update-ca-certificates
 # Set REQUESTS_CA_BUNDLE for python script
 RUN echo 'export REQUESTS_CA_BUNDLE="/etc/ssl/certs/ca-certificates.crt"' >> /etc/bash.bashrc
 RUN echo 'alias k=kubectl' >> /etc/bash.bashrc
+RUN echo 'export KUBECONFIG="/home/vscode/.kube/static-kubeconfigs/homelab"' >> /etc/bash.bashrc
