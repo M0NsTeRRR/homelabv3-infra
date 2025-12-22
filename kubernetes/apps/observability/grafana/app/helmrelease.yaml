@@ -156,12 +156,6 @@ spec:
           url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
         Cert-manager:
           url: https://gitlab.com/uneeq-oss/cert-manager-mixin/-/raw/master/dashboards/cert-manager.json
-        Metallb:
-          gnetId: 20162
-          revision: 6
-          datasource:
-            - name: DS_PROMETHEUS
-              value: *datasource
         Volsync:
           gnetId: 21356
           revision: 3
