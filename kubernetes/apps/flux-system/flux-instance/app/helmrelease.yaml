@@ -19,7 +19,8 @@ spec:
       sync:
         kind: GitRepository
         url: https://github.com/m0nsterrr/homelabv3-infra.git
-        ref: refs/heads/main
+        # TODO
+        ref: refs/heads/feat/flatcar
         path: kubernetes/flux/cluster
       kustomize:
         patches:
