@@ -5,6 +5,9 @@ kind: Kustomization
 metadata:
   name: seerr
 spec:
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   interval: 1h
   path: ./kubernetes/apps/media/seerr/app
   prune: true

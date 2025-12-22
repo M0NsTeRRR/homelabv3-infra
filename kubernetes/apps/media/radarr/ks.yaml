@@ -5,6 +5,9 @@ kind: Kustomization
 metadata:
   name: radarr
 spec:
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
   interval: 1h
   path: ./kubernetes/apps/media/radarr/app
   prune: true

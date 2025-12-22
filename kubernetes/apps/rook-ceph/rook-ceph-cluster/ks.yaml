@@ -5,6 +5,10 @@ kind: Kustomization
 metadata:
   name: rook-ceph-cluster
 spec:
+  dependsOn:
+    - name: rook-ceph
+    - name: volsync
+      namespace: volsync
   interval: 1h
   path: ./kubernetes/apps/rook-ceph/rook-ceph-cluster/app
   prune: true

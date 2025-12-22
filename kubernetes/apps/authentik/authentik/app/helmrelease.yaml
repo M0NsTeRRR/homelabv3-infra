@@ -13,7 +13,6 @@ spec:
     global:
       podAnnotations:
         reloader.stakater.com/auto: "true"
-
       envFrom:
         - configMapRef:
             name: authentik
