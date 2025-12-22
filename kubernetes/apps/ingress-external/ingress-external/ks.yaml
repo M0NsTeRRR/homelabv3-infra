@@ -10,6 +10,6 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: ingress-external
-    namespace: ingress-external
+    name: flux-system
+    namespace: flux-system
   targetNamespace: ingress-external

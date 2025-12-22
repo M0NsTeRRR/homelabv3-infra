@@ -10,6 +10,6 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: external-dns-internal
-    namespace: external-dns-internal
+    name: flux-system
+    namespace: flux-system
   targetNamespace: external-dns-internal

@@ -10,6 +10,6 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: as212510-net
-    namespace: as212510-net
+    name: flux-system
+    namespace: flux-system
   targetNamespace: as212510-net

@@ -10,6 +10,6 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: openbao
-    namespace: openbao
+    name: flux-system
+    namespace: flux-system
   targetNamespace: openbao

@@ -10,6 +10,6 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: observability
-    namespace: observability
+    name: flux-system
+    namespace: flux-system
   targetNamespace: observability

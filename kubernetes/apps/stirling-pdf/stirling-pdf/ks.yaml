@@ -10,6 +10,6 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: stirling-pdf
-    namespace: stirling-pdf
+    name: flux-system
+    namespace: flux-system
   targetNamespace: stirling-pdf

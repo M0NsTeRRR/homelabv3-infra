@@ -10,6 +10,6 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: csi-driver-smb
-    namespace: csi-driver-smb
+    name: flux-system
+    namespace: flux-system
   targetNamespace: csi-driver-smb

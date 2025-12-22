@@ -10,6 +10,6 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: gateway-api-crds
-    namespace: gateway-api-crds
+    name: flux-system
+    namespace: flux-system
   targetNamespace: gateway-api-crds

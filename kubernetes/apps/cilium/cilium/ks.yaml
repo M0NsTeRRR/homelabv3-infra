@@ -10,6 +10,6 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: cilium
-    namespace: cilium
+    name: flux-system
+    namespace: flux-system
   targetNamespace: cilium

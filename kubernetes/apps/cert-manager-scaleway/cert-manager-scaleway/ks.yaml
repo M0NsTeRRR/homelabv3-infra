@@ -10,6 +10,6 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: cert-manager-scaleway
-    namespace: cert-manager-scaleway
+    name: flux-system
+    namespace: flux-system
   targetNamespace: cert-manager-scaleway

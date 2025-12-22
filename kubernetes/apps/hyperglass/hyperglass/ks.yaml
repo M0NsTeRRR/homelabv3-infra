@@ -10,6 +10,6 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: hyperglass
-    namespace: hyperglass
+    name: flux-system
+    namespace: flux-system
   targetNamespace: hyperglass
