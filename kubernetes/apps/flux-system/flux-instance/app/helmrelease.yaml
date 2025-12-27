@@ -34,6 +34,9 @@ spec:
                     name: pgp-public-keys
                 target:
                   kind: GitRepository
+            target:
+              kind: GitRepository
+              name: flux-system
           - # Increase the number of workers https://fluxcd.io/flux/installation/configuration/vertical-scaling/#increase-the-number-of-workers-and-limits
             patch: |
               - op: add
