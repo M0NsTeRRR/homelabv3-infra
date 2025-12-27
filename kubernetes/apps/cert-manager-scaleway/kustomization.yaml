@@ -6,4 +6,4 @@ namespace: cert-manage-scaleway
 
 resources:
   - ./namespace.yaml
-  - ./cert-manage-scaleway/ks.yaml
+  - ./cert-manager-scaleway/ks.yaml

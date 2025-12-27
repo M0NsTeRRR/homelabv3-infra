@@ -9,7 +9,7 @@ spec:
     - name: cert-manager
       namespace: cert-manager
   interval: 1h
-  path: ./kubernetes/apps/cert-manager-scaleway/cert-manage-scaleway/app
+  path: ./kubernetes/apps/cert-manager-scaleway/cert-manager-scaleway/app
   prune: true
   sourceRef:
     kind: GitRepository
