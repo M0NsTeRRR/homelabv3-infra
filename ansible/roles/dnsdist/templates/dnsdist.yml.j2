@@ -149,7 +149,7 @@ query_rules:
   - name: This rule will disable the caching of responses for NOTIFY queries
     selector:
       type: Opcode
-      code: 4
+      code: '4'
     action:
       type: SetSkipCache
   - name: Block Notify from IPs not in defined range
@@ -157,7 +157,7 @@ query_rules:
       type: Or
       selectors:
         - type: Opcode
-          code: 4
+          code: '4'
     action:
       type: Pool
       pool_name: primary
