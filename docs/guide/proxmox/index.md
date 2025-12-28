@@ -12,7 +12,7 @@ export VM_NAME=XX
 export VM_STORAGE=XX
 curl -LO https://stable.release.flatcar-linux.net/amd64-usr/current/flatcar_production_proxmoxve_image.img
 vi /var/lib/vz/snippets/vm-$VM_ID-user-data
-qm create $VM_ID --name $VM_NAME --cores 12 --memory 51200 --net0 "virtio,bridge=vmbr0,firewall=1,tag=10" --ipconfig0 "ip=dhcp"
+qm create $VM_ID --name $VM_NAME --cores 12 --cpu host --memory 51200 --net0 "virtio,bridge=vmbr0,firewall=0,tag=10" --ipconfig0 "ip=dhcp"
 qm disk import $VM_ID flatcar_production_proxmoxve_image.img $VM_STORAGE
 qm set $VM_ID --scsi0 $VM_STORAGE:vm-$VM_ID-disk-0
 qm set $VM_ID --boot order=scsi0
