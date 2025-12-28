@@ -12,6 +12,10 @@ storage:
       mode: 0644
       contents:
         local: ssl/unicornafk.crt
+    - path: /etc/hostname
+      mode: 0644
+      contents:
+        local: generated/hostname
     # modprobe
     - path: /etc/modprobe.d/blacklist.conf
       mode: 0644

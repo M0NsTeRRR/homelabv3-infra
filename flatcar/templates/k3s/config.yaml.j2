@@ -1,5 +1,5 @@
 {% autoescape false %}
-node-name: {{ k3s_node_name }}
+node-name: {{ hostname }}
 {%- if k3s_server_init %}
 cluster-init: true
 {%- else %}
