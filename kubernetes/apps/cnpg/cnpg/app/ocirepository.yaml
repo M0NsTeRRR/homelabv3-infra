@@ -11,9 +11,4 @@ spec:
     operation: copy
   ref:
     tag: 0.26.1
-  url: oci://ghcr.io/cloudnative-pg/charts/cnpg
-  verify:
-    provider: cosign
-    matchOIDCIdentity:
-      - issuer: "^https://token.actions.githubusercontent.com$"
-        subject: "^https://github.com/cloudnative-pg/charts.*$"
+  url: oci://ghcr.io/cloudnative-pg/charts/cloudnative-pg
