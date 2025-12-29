@@ -22,7 +22,7 @@ spec:
           reloader.stakater.com/auto: "true"
 
       extraEnvironmentVars:
-        VAULT_CACERT: /openbao/userconfig/openbao-server-tls/ca.crt
+        VAULT_CACERT: /etc/ssl/certs/homelab.crt
 
       volumes:
         - name: userconfig-openbao-server-tls
@@ -84,27 +84,25 @@ spec:
 
               retry_join {
                 leader_api_addr = "https://openbao-0.openbao-internal:8200"
-                leader_ca_cert_file = "/openbao/userconfig/openbao-server-tls/ca.crt"
+                leader_ca_cert_file = "/etc/ssl/certs/homelab.crt"
                 leader_client_cert_file = "/openbao/userconfig/openbao-server-tls/openbao.crt"
                 leader_client_key_file  = "/openbao/userconfig/openbao-server-tls/openbao.key"
               }
 
               retry_join {
                 leader_api_addr = "https://openbao-1.openbao-internal:8200"
-                leader_ca_cert_file = "/openbao/userconfig/openbao-server-tls/ca.crt"
+                leader_ca_cert_file = "/etc/ssl/certs/homelab.crt"
                 leader_client_cert_file = "/openbao/userconfig/openbao-server-tls/openbao.crt"
                 leader_client_key_file  = "/openbao/userconfig/openbao-server-tls/openbao.key"
               }
 
               retry_join {
                 leader_api_addr = "https://openbao-2.openbao-internal:8200"
-                leader_ca_cert_file = "/openbao/userconfig/openbao-server-tls/ca.crt"
+                leader_ca_cert_file = "/etc/ssl/certs/homelab.crt"
                 leader_client_cert_file = "/openbao/userconfig/openbao-server-tls/openbao.crt"
                 leader_client_key_file  = "/openbao/userconfig/openbao-server-tls/openbao.key"
               }
             }
-
-            disable_mlock = true
 
             service_registration "kubernetes" {}
 
