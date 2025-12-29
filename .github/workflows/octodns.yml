@@ -29,6 +29,7 @@ jobs:
         run: uv sync --extra octodns
       - name: Validate octodns config
         run: |
+          cd octodns
           uv run octodns-validate --config-file=./octodns/internal/config.yaml --all
           uv run octodns-validate --config-file=./octodns/external/config.yaml --all
         env:
@@ -57,6 +58,7 @@ jobs:
         run: uv sync --extra octodns
       - name: Apply octodns config
         run: |
+          cd octodns
           uv run octodns-sync --config-file=./octodns/external/config.yaml --doit --force
         env:
           SCALEWAY_SECRET_KEY: ${{ secrets.SCALEWAY_SECRET_KEY }}

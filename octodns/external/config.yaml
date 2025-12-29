@@ -10,7 +10,7 @@ processors:
 providers:
   config:
     class: octodns.provider.yaml.YamlProvider
-    directory: ./octodns/external
+    directory: ./external
     default_ttl: 3600
     enforce_order: true
   scaleway:
