@@ -99,6 +99,11 @@ nvidia-shield:
     value: "192.168.50.92"
   - type: AAAA
     value: "2a0c:b641:02c0:150::92"
+openbao:
+  - type: A
+    value: "192.168.10.102"
+  - type: AAAA
+    value: "2a0c:b641:02c0:110::102"
 r1:
   - type: A
     value: "192.168.6.1"
@@ -160,11 +165,6 @@ sw2:
     value: "192.168.40.2"
   - type: AAAA
     value: "2a0c:b641:02c0:140::2"
-vault:
-  - type: A
-    value: "192.168.10.102"
-  - type: AAAA
-    value: "2a0c:b641:02c0:110::102"
 xiaomi-bulb-chambre1:
   - type: A
     value: "192.168.50.111"

@@ -36,6 +36,6 @@ spec:
         - https://home-assistant.unicornafk.fr
         - https://nas.unicornafk.fr
         - https://nas.unicornafk.fr:9002
-        - https://vault.unicornafk.fr
+        - https://openbao.unicornafk.fr
   interval: 5s
   module: http_2xx

@@ -25,7 +25,7 @@ ufw_additional_rules:
       comment: "Vault HTTPS ACME",
     }
 
-vault_url: "https://vault.unicornafk.fr:8200"
+vault_url: "https://openbao.unicornafk.fr:8200"
 
 vault_unseal_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 vault_unseal_k8s_api_server: "https://{{ kubernetes_vip_url }}:6443"
