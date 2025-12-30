@@ -14,6 +14,7 @@
 1. Install (versions are pinned in configuration files)
 
     * [Uv](https://docs.astral.sh/uv/getting-started/installation/)
+    * [Jq](https://jqlang.org/download/)
     * [Task](https://taskfile.dev/installation/)
     * [Packer](https://developer.hashicorp.com/packer/install)
     * [Kubectl](https://kubernetes.io/docs/tasks/tools/)

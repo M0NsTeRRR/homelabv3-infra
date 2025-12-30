@@ -1,0 +1,14 @@
+---
+- name: Set openbao secret engine
+  ansible.builtin.include_tasks: secret_engine.yml
+
+- name: Set openbao auth method
+  ansible.builtin.include_tasks: auth_method.yml
+
+- name: Set openbao policy
+  ansible.builtin.include_tasks: policy.yml
+  with_items: "{{ openbao_policies }}"
+
+- name: Set openbao datas
+  ansible.builtin.include_tasks: data.yml
+  with_items: "{{ openbao_datas }}"

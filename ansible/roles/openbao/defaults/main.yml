@@ -1,0 +1,49 @@
+---
+openbao_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
+openbao_url: "https://openbao.example.fr:8200"
+openbao_root_token: "token"
+openbao_unseal_keys: []
+openbao_ca_path: /etc/ssl/certs/test.pem
+openbao_init_output_file_path: "/tmp/openbao_init.json"
+openbao_replicas: 3
+openbao_ca_filename: "/tmp/ca.crt"
+openbao_cert_filename: "/tmp/client.crt"
+openbao_key_filename: "/tmp/client.key"
+openbao_auth_methods: []
+openbao_secrets_engine: []
+openbao_policies: []
+openbao_datas: []
+
+# openbao server certificate subject alt name
+# DNS.1 = <domain that match openbao_loadbalancer_ip>
+# DNS.2 = *.openbao-internal
+# DNS.3 = *.openbao.svc
+# DNS.4 = *.openbao.svc.cluster.local
+# IP.1 = 127.0.0.1
+# IP.2 = ::1
+
+# openbao injector certificate subject alt name
+# DNS.1 = openbao-agent-injector-svc
+# DNS.2 = openbao-agent-injector-svc.openbao
+# DNS.3 = openbao-agent-injector-svc.openbao.svc
+# DNS.4 = openbao-agent-injector-svc.openbao.svc.cluster.local
+
+# openbao_secrets_engine:
+#   - name: pki
+#     path: pki
+#     tunes:
+#       max-lease-ttl: 8760h
+# openbao_auth_methods:
+#   - name: kubernetes
+#     path: kubernetes
+# openbao_policies:
+#   - path: "pki*"
+#     capabilities:
+#       - read
+#       - list
+# openbao_datas:
+#   - path: test/mysecret
+#     data:
+#       key1: val1
+#     args:
+#       key1: val1

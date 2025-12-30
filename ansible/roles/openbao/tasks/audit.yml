@@ -1,7 +1,7 @@
 ---
-- name: Enable vault audit log on stdout
+- name: Enable openbao audit log on stdout
   ansible.builtin.uri:
-    url: "{{ vault_url }}/v1/sys/audit/stdout"
+    url: "{{ openbao_url }}/v1/sys/audit/stdout"
     method: POST
     return_content: true
     body_format: json
@@ -11,6 +11,6 @@
       - 204
     headers:
       Content-Type: application/json
-      X-Vault-Token: "{{ vault_root_token }}"
-    ca_path: "{{ vault_ca_path }}"
+      X-Vault-Token: "{{ openbao_root_token }}"
+    ca_path: "{{ openbao_ca_path }}"
   delegate_to: localhost

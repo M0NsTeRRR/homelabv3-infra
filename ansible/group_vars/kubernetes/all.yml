@@ -4,13 +4,13 @@ kube_vip_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 kube_vip_master_group: kubernetes_master
 kube_vip_address: "192.168.10.80,2a0c:b641:2c0:110::80"
 kube_vip_interface: enp6s18
-vault_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
-vault_init_output_file_path: "{{ root_dir_role_path }}/vault.json.secrets"
-vault_ca_filename: "{{ ca_certificates_local_path_ca_certificate }}"
-vault_cert_filename: "{{ certs_dir_role_path }}homelab/openbao.unicornafk.fr/openbao.unicornafk.fr-fullchain.crt"
-vault_key_filename: "{{ certs_dir_role_path }}homelab/openbao.unicornafk.fr/openbao.unicornafk.fr.key"
-vault_ca_path: "{{ ca_certificates_local_path_ca_certificate }}"
-vault_secrets_engine:
+openbao_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
+openbao_init_output_file_path: "{{ root_dir_role_path }}/openbao.json.secrets"
+openbao_ca_filename: "{{ ca_certificates_local_path_ca_certificate }}"
+openbao_cert_filename: "{{ certs_dir_role_path }}homelab/openbao.unicornafk.fr/openbao.unicornafk.fr-fullchain.crt"
+openbao_key_filename: "{{ certs_dir_role_path }}homelab/openbao.unicornafk.fr/openbao.unicornafk.fr.key"
+openbao_ca_path: "{{ ca_certificates_local_path_ca_certificate }}"
+openbao_secrets_engine:
   - name: kv-v2
     path: secret
   - name: pki
@@ -27,12 +27,12 @@ vault_secrets_engine:
         - Location
         - Link
         - Replay-Nonce
-vault_auth_methods:
+openbao_auth_methods:
   - name: oidc
     path: oidc
   - name: kubernetes
     path: kubernetes
-vault_policies:
+openbao_policies:
   - name: viewer
     rules:
       - path: /secret/*
@@ -172,12 +172,13 @@ vault_policies:
       - path: secret/data/homelab/prod/actualbudget
         capabilities:
           - read
-public_vault_datas:
+public_openbao_datas:
   - path: pki/config/ca
     data:
-      pem_bundle:
-        "{{ lookup('ansible.builtin.file', ca_certificates_local_path_ca_certificate) }}\n{{ lookup('ansible.builtin.file', certs_dir_role_path ~ 'intermediate/vault/vault.crt')
-        }}\n{{ lookup('ansible.builtin.file', certs_dir_role_path ~ 'intermediate/vault/vault.key') }}"
+      pem_bundle: |
+        {{ lookup('ansible.builtin.file', ca_certificates_local_path_ca_certificate) }}
+        {{ lookup('ansible.builtin.file', certs_dir_role_path ~ 'intermediate/openbao/openbao.crt') }}
+        {{ lookup('pipe', 'openssl rsa -in ' ~ certs_dir_role_path ~ 'intermediate/openbao/openbao.key -passin pass:"' ~ ca_private_passphrase ~ '"') }}
   - path: pki/config/cluster
     data:
       path: https://openbao.unicornafk.fr:8200/v1/pki
@@ -209,7 +210,7 @@ public_vault_datas:
     data:
       bound_service_account_names: cert-manager-openbao
       bound_service_account_namespaces: cert-manager
-      audience: "vault://vault"
+      audience: "vault://openbao"
       policies: pki
       ttl: 1m
   - path: auth/kubernetes/role/cert-manager-scaleway
@@ -344,4 +345,4 @@ public_vault_datas:
       bound_service_account_namespaces: actualbudget
       policies: actualbudget
       ttl: 1h
-vault_datas: "{{ public_vault_datas + secret_vault_datas }}"
+openbao_datas: "{{ public_openbao_datas + secret_openbao_datas }}"

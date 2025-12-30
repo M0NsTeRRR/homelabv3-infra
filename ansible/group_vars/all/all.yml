@@ -15,27 +15,27 @@ ufw_additional_rules:
       proto: "tcp",
       direction: "out",
       to_ip: "192.18.10.102",
-      comment: "Vault HTTPS ACME",
+      comment: "openbao HTTPS ACME",
     }
   - {
       port: "8200",
       proto: "tcp",
       direction: "out",
       to_ip: "2a0c:b641:2c0:110::102",
-      comment: "Vault HTTPS ACME",
+      comment: "openbao HTTPS ACME",
     }
 
-vault_url: "https://openbao.unicornafk.fr:8200"
+openbao_url: "https://openbao.unicornafk.fr:8200"
 
-vault_unseal_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
-vault_unseal_k8s_api_server: "https://{{ kubernetes_vip_url }}:6443"
-vault_unseal_k8s_api_ips:
+openbao_unseal_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
+openbao_unseal_k8s_api_server: "https://{{ kubernetes_vip_url }}:6443"
+openbao_unseal_k8s_api_ips:
   - "{{ lookup('community.general.dig', kubernetes_vip_url) }}"
   - "{{ lookup('community.general.dig', kubernetes_vip_url, 'qtype=AAAA') }}"
-vault_unseal_nodes:
-  - https:vault-0:8200
-  - https:vault-1:8200
-  - https:vault-2:8200
+openbao_unseal_nodes:
+  - https:openbao-0:8200
+  - https:openbao-1:8200
+  - https:openbao-2:8200
 
 opentelemetry_collector_local_path_ca_certificate: "{{ ca_certificates_local_path_ca_certificate }}"
 opentelemetry_collector_cert_filename: "{{ inventory_hostname }}-fullchain.crt"
@@ -44,7 +44,7 @@ opentelemetry_collector_metrics_prometheus_url: "https://victoria-metrics.unicor
 opentelemetry_collector_logs_otlp_url: "https://quickwit.unicornafk.fr:443"
 
 lego_account_email: "{{ monitoring_email }}"
-lego_acme_url: "{{ vault_url }}/v1/pki/acme/directory"
+lego_acme_url: "{{ openbao_url }}/v1/pki/acme/directory"
 
 systemd_timesyncd_ntp:
   - ntp1.unicornafk.fr

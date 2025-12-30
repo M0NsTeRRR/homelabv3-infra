@@ -18,3 +18,9 @@ tasks:
           --from-file=openbao.crt=../ssl/homelab/openbao.unicornafk.fr/openbao.unicornafk.fr-fullchain.crt \
           --from-file=openbao.key=../ssl/homelab/openbao.unicornafk.fr/openbao.unicornafk.fr.key \
           --dry-run=client -o yaml | kubectl apply -f -
+
+  configure-openbao:
+    desc: Init openbao
+    cmd: |
+      cd ../ansible
+      ansible-playbook deploy_infra.yml --limit kubernetes
