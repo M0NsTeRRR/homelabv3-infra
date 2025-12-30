@@ -252,7 +252,7 @@ public_openbao_datas:
   - path: auth/kubernetes/role/rook-ceph-cluster
     data:
       bound_service_account_names: rook-ceph-cluster-openbao
-      bound_service_account_namespaces: rook-ceph-cluster
+      bound_service_account_namespaces: rook-ceph
       policies: rook-ceph-cluster
       ttl: 1h
   - path: auth/kubernetes/role/grafana
@@ -288,7 +288,7 @@ public_openbao_datas:
   - path: auth/kubernetes/role/qbittorrent
     data:
       bound_service_account_names: qbittorrent-openbao
-      bound_service_account_namespaces: qbittorrent
+      bound_service_account_namespaces: media
       policies: qbittorrent
       ttl: 1h
   - path: auth/kubernetes/role/bazarr

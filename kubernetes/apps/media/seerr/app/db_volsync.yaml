@@ -2,15 +2,15 @@
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
-  name: jellyseerr-db-backup
+  name: seerr-db-backup
 spec:
-  sourcePVC: jellyseerr-cluster-1
+  sourcePVC: seerr-cluster-1
   trigger:
     # At 0 minutes past the hour, every 6 hours
     schedule: "0 */6 * * *"
   restic:
     pruneIntervalDays: 14
-    repository: jellyseerr-db-backup-openbao
+    repository: seerr-db-backup-openbao
     retain:
       hourly: 1
       daily: 4
@@ -32,13 +32,13 @@ spec:
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
 metadata:
-  name: jellyseerr-db-restore
+  name: seerr-db-restore
 spec:
   trigger:
     manual: restore-once
   restic:
-    repository: jellyseerr-db-backup-openbao
-    destinationPVC: jellyseerr-cluster-1
+    repository: seerr-db-backup-openbao
+    destinationPVC: seerr-cluster-1
     copyMethod: Direct
     accessModes: ["ReadWriteOnce"]
     cleanupCachePVC: true

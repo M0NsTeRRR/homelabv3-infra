@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: jellyseerr
+  name: seerr
 data:
   TZ: "Europe/Paris"
   DB_TYPE: postgres
-  DB_HOST: "jellyseerr-cluster-rw"
+  DB_HOST: "seerr-cluster-rw"
   DB_PORT: "5432"
   DB_SSL_CA: "/etc/ssl/certs/homelab.crt"
-  DB_NAME: jellyseerr
+  DB_NAME: seerr
   DB_LOG_QUERIES: "false"
