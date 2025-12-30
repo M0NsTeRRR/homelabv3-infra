@@ -29,17 +29,13 @@ spec:
       - name: SCW_ACCESS_KEY
         valueFrom:
           secretKeyRef:
-            name: openbao
+            name: external-dns-openbao
             key: SCW_ACCESS_KEY
       - name: SCW_SECRET_KEY
         valueFrom:
           secretKeyRef:
-            name: openbao
+            name: external-dns-openbao
             key: SCW_SECRET_KEY
-    extraVolumes:
-      - name: openbao
-        secret:
-          secretName: external-dns-openbao
     service:
       ipFamilyPolicy: "PreferDualStack"
     serviceMonitor:
