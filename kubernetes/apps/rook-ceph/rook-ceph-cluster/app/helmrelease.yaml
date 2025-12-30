@@ -100,7 +100,7 @@ spec:
         ingress:
           enabled: true
           annotations:
-            cert-manager.io/cluster-issuer: "vault"
+            cert-manager.io/cluster-issuer: "openbao"
             cert-manager.io/private-key-algorithm: "RSA"
             cert-manager.io/private-key-size: "4096"
           host:
@@ -233,7 +233,7 @@ spec:
     ingress:
       dashboard:
         annotations:
-          cert-manager.io/cluster-issuer: "vault"
+          cert-manager.io/cluster-issuer: "openbao"
           cert-manager.io/private-key-algorithm: "RSA"
           cert-manager.io/private-key-size: "4096"
         host:

@@ -2,7 +2,7 @@
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
-  name: db-backup
+  name: radarr-db-backup
 spec:
   sourcePVC: radarr-cluster-1
   trigger:
@@ -10,7 +10,7 @@ spec:
     schedule: "0 */6 * * *"
   restic:
     pruneIntervalDays: 14
-    repository: db-backup-openbao
+    repository: radarr-db-backup-openbao
     retain:
       hourly: 1
       daily: 4
@@ -32,12 +32,12 @@ spec:
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
 metadata:
-  name: db-restore
+  name: radarr-db-restore
 spec:
   trigger:
     manual: restore-once
   restic:
-    repository: db-backup-openbao
+    repository: radarr-db-backup-openbao
     destinationPVC: radarr-cluster-1
     copyMethod: Direct
     accessModes: ["ReadWriteOnce"]

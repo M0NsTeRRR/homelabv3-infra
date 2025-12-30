@@ -32,17 +32,17 @@ spec:
       - name: EXTERNAL_DNS_PDNS_SERVER
         valueFrom:
           secretKeyRef:
-            name: vault
+            name: openbao
             key: EXTERNAL_DNS_PDNS_SERVER
       - name: EXTERNAL_DNS_PDNS_API_KEY
         valueFrom:
           secretKeyRef:
-            name: vault
+            name: openbao
             key: EXTERNAL_DNS_PDNS_API_KEY
     extraVolumes:
-      - name: vault
+      - name: openbao
         secret:
-          secretName: vault
+          secretName: external-dns-openbao
       - name: "homelab-ca"
         configMap:
           name: "homelab-ca"

@@ -2,7 +2,7 @@
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
-  name: db-backup
+  name: prowlarr-db-backup
 spec:
   sourcePVC: prowlarr-cluster-1
   trigger:
@@ -10,7 +10,7 @@ spec:
     schedule: "0 */6 * * *"
   restic:
     pruneIntervalDays: 14
-    repository: db-backup-openbao
+    repository: prowlarr-db-backup-openbao
     retain:
       hourly: 1
       daily: 4
@@ -32,12 +32,12 @@ spec:
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
 metadata:
-  name: db-restore
+  name: prowlarr-db-restore
 spec:
   trigger:
     manual: restore-once
   restic:
-    repository: db-backup-openbao
+    repository: prowlarr-db-backup-openbao
     destinationPVC: prowlarr-cluster-1
     copyMethod: Direct
     accessModes: ["ReadWriteOnce"]

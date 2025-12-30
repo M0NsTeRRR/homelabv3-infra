@@ -20,7 +20,7 @@ metadata:
   name: cert-manager-openbao
 subjects:
   - kind: ServiceAccount
-    name: cert-manager
+    name: cert-manager-openbao
     namespace: cert-manager
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -30,17 +30,17 @@ roleRef:
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: vault
+  name: openbao
 spec:
   vault:
     path: pki/sign/cert-manager
-    server: https://vault-active.vault.svc:8200
+    server: https://openbao-active.openbao.svc:8200
     caBundleSecretRef:
       name: "homelab-ca"
       key: "ca.crt"
     auth:
       kubernetes:
-        role: cert-manager
+        role: cert-manager-openbao
         mountPath: /v1/auth/kubernetes
         serviceAccountRef:
           name: cert-manager-openbao

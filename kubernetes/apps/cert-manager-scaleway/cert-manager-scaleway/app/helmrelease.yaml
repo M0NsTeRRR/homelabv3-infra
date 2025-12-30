@@ -16,6 +16,6 @@ spec:
   interval: 1h
   values:
     secret:
-      externalSecretName: "cert-manager-scaleway-secret"
+      externalSecretName: cert-manager-scaleway-secret-openbao
     service:
       ipFamilyPolicy: "PreferDualStack"

@@ -61,7 +61,7 @@ spec:
       database: jellyseerr
       owner: jellyseerr
       secret:
-        name: postgres-openbao
+        name: jellyseerr-postgres-openbao
       dataChecksums: true
       encoding: UTF8
 

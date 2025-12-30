@@ -2,7 +2,7 @@
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationSource
 metadata:
-  name: pv-backup
+  name: jellyfin-pv-backup
 spec:
   sourcePVC: jellyfin-config
   trigger:
@@ -10,7 +10,7 @@ spec:
     schedule: "0 */6 * * *"
   restic:
     pruneIntervalDays: 14
-    repository: db-backup-openbao
+    repository: jellyfin-db-backup-openbao
     retain:
       hourly: 1
       daily: 4
@@ -32,12 +32,12 @@ spec:
 apiVersion: volsync.backube/v1alpha1
 kind: ReplicationDestination
 metadata:
-  name: pv-restore
+  name: jellyfin-pv-restore
 spec:
   trigger:
     manual: restore-once
   restic:
-    repository: db-backup-openbao
+    repository: jellyfin-db-backup-openbao
     destinationPVC: bazarr-cluster-1
     copyMethod: Direct
     accessModes: ["ReadWriteOnce"]

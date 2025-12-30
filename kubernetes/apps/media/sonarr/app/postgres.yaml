@@ -25,7 +25,7 @@ spec:
       database: sonarr
       owner: sonarr
       secret:
-        name: postgres-openbao
+        name: sonarr-postgres-openbao
       dataChecksums: true
       encoding: UTF8
 
