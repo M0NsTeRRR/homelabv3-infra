@@ -13,8 +13,7 @@ spec:
   selector:
     matchLabels: *common-labels
   endpoints:
-    - &default-endpoint
-      honorLabels: true
+    - honorLabels: true
       path: /snmp
       port: http
       scrapeTimeout: 10s
@@ -23,10 +22,6 @@ spec:
           sourceLabels:
             - instance
           targetLabel: instance
-
-    - <<: *default-endpoint
-      metricRelabelings:
-        - <<: *default-endpoint
           replacement: r1.unicornafk.fr
       params:
         module:
@@ -36,9 +31,15 @@ spec:
         auth:
           - homelab_aes
 
-    - <<: *default-endpoint
+    - honorLabels: true
+      path: /snmp
+      port: http
+      scrapeTimeout: 10s
       metricRelabelings:
-        - <<: *default-endpoint
+        - action: replace
+          sourceLabels:
+            - instance
+          targetLabel: instance
           replacement: sw1.unicornafk.fr
       params:
         module:
@@ -48,9 +49,15 @@ spec:
         auth:
           - homelab_aes
 
-    - <<: *default-endpoint
+    - honorLabels: true
+      path: /snmp
+      port: http
+      scrapeTimeout: 10s
       metricRelabelings:
-        - <<: *default-endpoint
+        - action: replace
+          sourceLabels:
+            - instance
+          targetLabel: instance
           replacement: sw2.unicornafk.fr
       params:
         module:
