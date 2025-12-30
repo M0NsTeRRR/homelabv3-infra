@@ -28,5 +28,5 @@ spec:
     - authentik-cluster-ro.default
     - authentik-cluster-ro.default.svc
   issuerRef:
-    name: vault
+    name: openbao
     kind: ClusterIssuer

@@ -28,7 +28,7 @@ spec:
     - seerr-cluster-ro.default
     - seerr-cluster-ro.default.svc
   issuerRef:
-    name: vault
+    name: openbao
     kind: ClusterIssuer
 ---
 apiVersion: postgresql.cnpg.io/v1

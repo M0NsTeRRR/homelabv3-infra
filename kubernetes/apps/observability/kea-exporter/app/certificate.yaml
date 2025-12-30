@@ -12,5 +12,5 @@ spec:
   usages:
     - client auth
   issuerRef:
-    name: vault
+    name: openbao
     kind: ClusterIssuer
