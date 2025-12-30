@@ -33,9 +33,9 @@ spec:
         enabled: true
         extraEnvFrom:
           - configMapRef:
-              name: gluetun
+              name: qbittorrent-gluetun
           - secretRef:
-              name: gluetun-openbao
+              name: qbittorrent-gluetun-openbao
 
       prometheusQbittorrentExporter:
         enabled: true
