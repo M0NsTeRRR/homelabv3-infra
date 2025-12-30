@@ -1,8 +1,8 @@
 ---
 galaxy_info:
-  role_name: vault
+  role_name: openbao
   author: Ludovic Ortega
-  description: Install and configure vault
+  description: Install and configure openbao
   license: CeCILL
   min_ansible_version: "2.19.3"
   platforms:

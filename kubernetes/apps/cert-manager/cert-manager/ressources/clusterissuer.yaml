@@ -20,7 +20,7 @@ metadata:
   name: cert-manager-openbao
 subjects:
   - kind: ServiceAccount
-    name: cert-manager-openbao
+    name: cert-manager
     namespace: cert-manager
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -33,7 +33,7 @@ metadata:
   name: openbao
 spec:
   vault:
-    path: pki/sign/cert-manager
+    path: pki/sign/cert-manager-openbao
     server: https://openbao-active.openbao.svc:8200
     caBundleSecretRef:
       name: "homelab-ca"

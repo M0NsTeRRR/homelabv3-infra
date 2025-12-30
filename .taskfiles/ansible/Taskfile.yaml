@@ -9,6 +9,3 @@ tasks:
   dns:
     desc: Setup DNS servers
     cmd: ansible-playbook deploy_infra.yml --limit dns
-  vault:
-    desc: Setup vault
-    cmd: ansible-playbook deploy_infra.yml --limit vault
