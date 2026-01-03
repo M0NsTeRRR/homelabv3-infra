@@ -11,5 +11,5 @@ spec:
     - client auth
   commonName: ${APP}
   issuerRef:
-    name: postgres-client-ca
+    name: openbao
     kind: ClusterIssuer

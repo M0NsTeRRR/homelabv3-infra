@@ -25,4 +25,3 @@ spec:
       enabled: true
       authorizedSecrets:
         - homelab-ca
-        - postgres-client-ca

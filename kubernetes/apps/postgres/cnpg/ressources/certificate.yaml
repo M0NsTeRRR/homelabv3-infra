@@ -41,5 +41,5 @@ spec:
     - client auth
   commonName: streaming_replica
   issuerRef:
-    name: postgres-client-ca
+    name: openbao
     kind: ClusterIssuer

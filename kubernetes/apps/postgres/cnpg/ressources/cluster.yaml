@@ -9,7 +9,7 @@ spec:
   certificates:
     serverCASecret: postgres-server-cert
     serverTLSSecret: postgres-server-cert
-    clientCASecret: postgres-client-ca
+    clientCASecret: homelab-ca
     replicationTLSSecret: postgres-replication-cert
 
   storage:

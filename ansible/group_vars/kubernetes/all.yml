@@ -203,18 +203,6 @@ public_openbao_datas:
       organization: "{{ organization }}"
       country: "{{ country }}"
       require_cn: false # must be disabled for cert-manager
-  - path: pki/roles/cert-manager-postgres-client-ca
-    data:
-      allow_localhost: false
-      allow_wildcard_certificates: false
-      allowed_domains:
-        ["*.postgres.svc", "*.postgres.svc.cluster.local", "streaming_replica"]
-      ttl: 30d
-      max_ttl: 30d
-      key_type: ed25519
-      organization: "{{ organization }}"
-      country: "{{ country }}"
-      require_cn: false # must be disabled for cert-manager
   - path: auth/kubernetes/config
     data:
       kubernetes_host: "https://10.43.0.1:443"
@@ -223,13 +211,6 @@ public_openbao_datas:
       bound_service_account_names: cert-manager-openbao
       bound_service_account_namespaces: cert-manager
       audience: "vault://openbao"
-      policies: pki
-      ttl: 1m
-  - path: auth/kubernetes/role/cert-manager-postgres-client-ca
-    data:
-      bound_service_account_names: cert-manager-openbao
-      bound_service_account_namespaces: cert-manager
-      audience: "vault://postgres-client-ca"
       policies: pki
       ttl: 1m
   - path: auth/kubernetes/role/cert-manager-scaleway
