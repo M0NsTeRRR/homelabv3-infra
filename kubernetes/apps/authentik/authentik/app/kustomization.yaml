@@ -6,7 +6,4 @@ resources:
   - ./helmrelease.yaml
   - ./ocirepository.yaml
   - ./externalsecret.yaml
-  - ./certificate.yaml
-  - ./postgres.yaml
   - ./configmap.yaml
-  - ./volsync.yaml

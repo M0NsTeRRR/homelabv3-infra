@@ -24,7 +24,7 @@ spec:
       - configMapRef:
           name: radarr
       - secretRef:
-          name: radarr-openbao
+          name: radarr-postgres-openbao
     volumes:
       - name: &volume-data data
         persistentVolumeClaim:

@@ -1,0 +1,23 @@
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: rustfs-store
+spec:
+  configuration:
+    destinationPath: s3://postgres/
+    endpointURL: https://nas.unicornafk.fr:30292
+    endpointCA:
+      name: homelab-ca
+      key: ca.crt
+    s3Credentials:
+      accessKeyId:
+        name: cnpg-backup-openbao
+        key: BACKUP_S3_ACCESS_KEY
+      secretAccessKey:
+        name: cnpg-backup-openbao
+        key: BACKUP_S3_SECRET_KEY
+    wal:
+      compression: zstd
+    data:
+      compression: gzip
+  retentionPolicy: "30d"

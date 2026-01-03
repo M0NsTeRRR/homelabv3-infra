@@ -4,7 +4,7 @@
     {
       "customType": "regex",
       "description": ["Process any imageName keys in YAML files (cloudnative-pg)"],
-      "fileMatch": ["(^|/)argocd/.+\\.ya?ml$"],
+      "fileMatch": ["(^|/)flux/.+\\.ya?ml$"],
       "matchStrings": ["imageName: (?<depName>[^\\s:]+):(?<currentValue>\\S+)(@(?<currentDigest>sha256:\\S+)?)"],
       "datasourceTemplate": "docker"
     }

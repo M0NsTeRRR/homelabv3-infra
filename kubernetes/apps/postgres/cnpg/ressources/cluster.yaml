@@ -1,0 +1,75 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres
+spec:
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.1-system-trixie@sha256:cc0468df48ff63a2d007818eabd1decaa68e31300b505879afe03cf6c5c5ff88
+
+  certificates:
+    serverCASecret: postgres-server-cert
+    serverTLSSecret: postgres-server-cert
+    clientCASecret: postgres-client-ca
+    replicationTLSSecret: postgres-replication-cert
+
+  storage:
+    size: 20Gi
+
+  bootstrap:
+    recovery:
+      source: &source source
+
+  plugins:
+    - name: &plugin barman-cloud.cloudnative-pg.io
+      isWALArchiver: true
+      parameters:
+        barmanObjectName: &store rustfs-store
+
+  externalClusters:
+    - name: *source
+      plugin:
+        name: *plugin
+        parameters:
+          barmanObjectName: *store
+          serverName: postgres
+
+  monitoring:
+    enablePodMonitor: true
+
+  managed:
+    roles:
+      - name: authentik
+        ensure: present
+        login: true
+        superuser: false
+        disablePassword: true
+      - name: bazarr
+        ensure: present
+        login: true
+        superuser: false
+        passwordSecret:
+          name: bazarr-postgres-openbao
+      - name: prowlarr
+        ensure: present
+        login: true
+        superuser: false
+        passwordSecret:
+          name: prowlarr-postgres-openbao
+      - name: radarr
+        ensure: present
+        login: true
+        superuser: false
+        passwordSecret:
+          name: radarr-postgres-openbao
+      - name: seerr
+        ensure: present
+        login: true
+        superuser: false
+        passwordSecret:
+          name: seerr-postgres-openbao
+      - name: sonarr
+        ensure: present
+        login: true
+        superuser: false
+        passwordSecret:
+          name: sonarr-postgres-openbao

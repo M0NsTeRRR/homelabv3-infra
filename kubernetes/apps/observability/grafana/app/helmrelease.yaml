@@ -110,9 +110,9 @@ spec:
           gnetId: 17347
           revision: 9
           datasource: *datasource
-        Argocd-operational:
-          gnetId: 19993
-          revision: 4
+        Flux2:
+          gnetId: 16714
+          revision: 1
           datasource:
             - name: DS_PROMETHEUS
               value: *datasource
@@ -120,18 +120,6 @@ spec:
           gnetId: 14837
           revision: 2
           datasource: *datasource
-        Argocd-application:
-          gnetId: 19974
-          revision: 4
-          datasource:
-            - name: DS_PROMETHEUS
-              value: *datasource
-        Argocd-notifications:
-          gnetId: 19975
-          revision: 4
-          datasource:
-            - name: DS_PROMETHEUS
-              value: *datasource
         External-dns:
           gnetId: 15038
           revision: 3

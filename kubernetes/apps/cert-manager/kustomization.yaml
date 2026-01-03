@@ -7,3 +7,4 @@ namespace: cert-manager
 resources:
   - ./namespace.yaml
   - ./cert-manager/ks.yaml
+  - ./trust-manager/ks.yaml

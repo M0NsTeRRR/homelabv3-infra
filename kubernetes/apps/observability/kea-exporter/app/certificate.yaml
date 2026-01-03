@@ -6,8 +6,7 @@ metadata:
 spec:
   secretName: client-mtls
   privateKey:
-    algorithm: RSA
-    size: 4096
+    algorithm: Ed25519
   commonName: monitoring.unicornafk.fr
   usages:
     - client auth

@@ -7,5 +7,3 @@ resources:
   - ./ocirepository.yaml
   - ./externalsecret.yaml
   - ./configmap.yaml
-  - ./postgres.yaml
-  - ./volsync.yaml

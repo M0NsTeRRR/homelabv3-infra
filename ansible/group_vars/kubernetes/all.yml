@@ -71,9 +71,9 @@ openbao_policies:
       - path: secret/data/homelab/prod/external_dns/external
         capabilities:
           - read
-  - name: argocd
+  - name: cnpg-backup
     rules:
-      - path: secret/data/homelab/prod/argocd
+      - path: secret/data/homelab/prod/cnpg
         capabilities:
           - read
   - name: csi-driver-smb
@@ -203,14 +203,33 @@ public_openbao_datas:
       organization: "{{ organization }}"
       country: "{{ country }}"
       require_cn: false # must be disabled for cert-manager
+  - path: pki/roles/cert-manager-postgres-client-ca
+    data:
+      allow_localhost: false
+      allow_wildcard_certificates: false
+      allowed_domains:
+        ["*.postgres.svc", "*.postgres.svc.cluster.local", "streaming_replica"]
+      ttl: 30d
+      max_ttl: 30d
+      key_type: ed25519
+      organization: "{{ organization }}"
+      country: "{{ country }}"
+      require_cn: false # must be disabled for cert-manager
   - path: auth/kubernetes/config
     data:
       kubernetes_host: "https://10.43.0.1:443"
-  - path: auth/kubernetes/role/cert-manager-openbao
+  - path: auth/kubernetes/role/cert-manager
     data:
       bound_service_account_names: cert-manager-openbao
       bound_service_account_namespaces: cert-manager
       audience: "vault://openbao"
+      policies: pki
+      ttl: 1m
+  - path: auth/kubernetes/role/cert-manager-postgres-client-ca
+    data:
+      bound_service_account_names: cert-manager-openbao
+      bound_service_account_namespaces: cert-manager
+      audience: "vault://postgres-client-ca"
       policies: pki
       ttl: 1m
   - path: auth/kubernetes/role/cert-manager-scaleway
@@ -231,11 +250,11 @@ public_openbao_datas:
       bound_service_account_namespaces: external-dns-external
       policies: external-dns-external
       ttl: 1h
-  - path: auth/kubernetes/role/argocd
+  - path: auth/kubernetes/role/cnpg-backup
     data:
-      bound_service_account_names: argocd-openbao
-      bound_service_account_namespaces: argocd
-      policies: argocd
+      bound_service_account_names: cnpg-backup-openbao
+      bound_service_account_namespaces: postgres
+      policies: cnpg-backup
       ttl: 1h
   - path: auth/kubernetes/role/csi-driver-smb
     data:

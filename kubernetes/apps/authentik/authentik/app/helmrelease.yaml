@@ -18,6 +18,22 @@ spec:
             name: authentik
         - secretRef:
             name: authentik-openbao
+      env:
+        - name: AUTHENTIK_POSTGRESQL__SSLROOTCERT
+          valueFrom:
+            secretKeyRef:
+              name: postgres-cert-${APP}
+              key: ca.crt
+        - name: AUTHENTIK_POSTGRESQL__SSLCERT
+          valueFrom:
+            secretKeyRef:
+              name: postgres-cert-${APP}
+              key: tls.crt
+        - name: AUTHENTIK_POSTGRESQL__SSLKEY
+          valueFrom:
+            secretKeyRef:
+              name: postgres-cert-${APP}
+              key: tls.key
       volumes:
         - name: &volume-ca ca-certs
           configMap:

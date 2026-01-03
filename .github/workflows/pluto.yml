@@ -20,4 +20,4 @@ jobs:
       - name: Download Pluto
         uses: FairwindsOps/pluto/github-action@ccf65a5fea4291b5443047d67b8614fce58d16c5 # v5.22.5
       - name: Pluto detect-files
-        run: pluto detect-files -d argocd/
+        run: pluto detect-files -d kubernetes/

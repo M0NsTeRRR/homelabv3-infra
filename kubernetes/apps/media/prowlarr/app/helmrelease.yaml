@@ -24,4 +24,4 @@ spec:
       - configMapRef:
           name: prowlarr
       - secretRef:
-          name: prowlarr-openbao
+          name: prowlarr-postgres-openbao

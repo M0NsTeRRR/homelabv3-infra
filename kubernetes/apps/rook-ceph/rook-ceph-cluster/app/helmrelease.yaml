@@ -233,7 +233,7 @@ spec:
     ingress:
       dashboard:
         annotations:
-          cert-manager.io/cluster-issuer: "openbao"
+          cert-manager.io/cluster-issuer: "default"
           cert-manager.io/private-key-algorithm: "RSA"
           cert-manager.io/private-key-size: "4096"
         host:

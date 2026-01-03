@@ -5,6 +5,6 @@ metadata:
 data:
   TZ: "Europe/Paris"
   POSTGRES_ENABLED: "True"
-  POSTGRES_HOST: "bazarr-cluster-rw"
+  POSTGRES_HOST: "pooler-rw.postgres.svc"
   POSTGRES_PORT: "5432"
   POSTGRES_DATABASE: "bazarr"

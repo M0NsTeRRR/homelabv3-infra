@@ -1,0 +1,45 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: postgres-server-cert
+spec:
+  secretName: postgres-server-cert
+  privateKey:
+    algorithm: RSA
+    size: 4096
+  secretTemplate:
+    labels:
+      cnpg.io/reload: ""
+  usages:
+    - server auth
+  dnsNames:
+    - postgres-rw.postgres.svc
+    - postgres-ro.postgres.svc
+    - postgres-r.postgres.svc
+    - pooler-rw.postgres.svc
+    - postgres-rw.postgres.svc.cluster.local
+    - postgres-ro.postgres.svc.cluster.local
+    - postgres-r.postgres.svc.cluster.local
+    - pooler-rw.postgres.svc.cluster.local
+  issuerRef:
+    name: openbao
+    kind: ClusterIssuer
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: postgres-replication-cert
+spec:
+  secretName: postgres-replication-cert
+  privateKey:
+    algorithm: Ed25519
+  secretTemplate:
+    labels:
+      cnpg.io/reload: ""
+  usages:
+    - client auth
+  commonName: streaming_replica
+  issuerRef:
+    name: postgres-client-ca
+    kind: ClusterIssuer

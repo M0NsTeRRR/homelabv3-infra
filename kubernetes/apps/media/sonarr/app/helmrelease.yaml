@@ -24,7 +24,7 @@ spec:
       - configMapRef:
           name: sonarr
       - secretRef:
-          name: sonarr-openbao
+          name: sonarr-postgres-openbao
     volumes:
       - name: &volume-data data
         persistentVolumeClaim:

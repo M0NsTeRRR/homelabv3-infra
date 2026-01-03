@@ -8,5 +8,3 @@ resources:
   - ./externalsecret.yaml
   - ./configmap.yaml
   - ./pvc.yaml
-  - ./postgres.yaml
-  - ./volsync.yaml
