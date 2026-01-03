@@ -33,9 +33,6 @@ spec:
           barmanObjectName: *store
           serverName: postgres
 
-  monitoring:
-    enablePodMonitor: true
-
   managed:
     roles:
       - name: authentik
