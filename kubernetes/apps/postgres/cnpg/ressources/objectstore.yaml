@@ -11,10 +11,10 @@ spec:
       key: ca.crt
     s3Credentials:
       accessKeyId:
-        name: cnpg-backup-openbao
+        name: cnpg-openbao
         key: BACKUP_S3_ACCESS_KEY
       secretAccessKey:
-        name: cnpg-backup-openbao
+        name: cnpg-openbao
         key: BACKUP_S3_SECRET_KEY
     wal:
       compression: zstd

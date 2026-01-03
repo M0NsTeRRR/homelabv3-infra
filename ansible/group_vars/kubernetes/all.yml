@@ -71,7 +71,7 @@ openbao_policies:
       - path: secret/data/homelab/prod/external_dns/external
         capabilities:
           - read
-  - name: cnpg-backup
+  - name: cnpg
     rules:
       - path: secret/data/homelab/prod/cnpg
         capabilities:
@@ -231,11 +231,11 @@ public_openbao_datas:
       bound_service_account_namespaces: external-dns-external
       policies: external-dns-external
       ttl: 1h
-  - path: auth/kubernetes/role/cnpg-backup
+  - path: auth/kubernetes/role/cnpg
     data:
-      bound_service_account_names: cnpg-backup-openbao
+      bound_service_account_names: cnpg-openbao
       bound_service_account_namespaces: postgres
-      policies: cnpg-backup
+      policies: cnpg
       ttl: 1h
   - path: auth/kubernetes/role/csi-driver-smb
     data:
