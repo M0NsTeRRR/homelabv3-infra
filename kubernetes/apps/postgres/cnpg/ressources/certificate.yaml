@@ -43,3 +43,21 @@ spec:
   issuerRef:
     name: openbao
     kind: ClusterIssuer
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: pooler-rw
+spec:
+  secretName: pooler-rw-cert
+  privateKey:
+    algorithm: Ed25519
+  secretTemplate:
+    labels:
+      cnpg.io/reload: ""
+  usages:
+    - client auth
+  commonName: pooler-rw
+  issuerRef:
+    name: openbao
+    kind: ClusterIssuer

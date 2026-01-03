@@ -6,10 +6,16 @@ metadata:
 spec:
   cluster:
     name: postgres
-
   type: rw
   pgbouncer:
-    poolMode: session
+    serverCASecret:
+      name: postgres-server-cert
+    serverTLSSecret:
+      name: postgres-server-cert
+    clientCASecret:
+      name: homelab-ca
+    clientTLSSecret:
+      name: pooler-rw-cert
     parameters:
       max_client_conn: "1000"
       default_pool_size: "10"
