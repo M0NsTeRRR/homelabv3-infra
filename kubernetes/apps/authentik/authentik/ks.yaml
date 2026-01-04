@@ -6,6 +6,7 @@ metadata:
   name: &app authentik
 spec:
   components:
+    - ../../../../components/database/base
     - ../../../../components/database/certificate
   dependsOn:
     - name: rook-ceph-cluster

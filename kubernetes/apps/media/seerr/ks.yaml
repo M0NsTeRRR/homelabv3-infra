@@ -6,7 +6,8 @@ metadata:
   name: &app seerr
 spec:
   components:
-    - ../../../../components/database/certificate
+    - ../../../../components/database/base
+    - ../../../../components/database/password
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
