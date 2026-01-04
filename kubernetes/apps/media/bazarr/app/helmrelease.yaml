@@ -24,7 +24,7 @@ spec:
       - configMapRef:
           name: bazarr
       - secretRef:
-          name: bazarr-postgres-openbao
+          name: bazarr-openbao
     volumes:
       - name: data
         persistentVolumeClaim:

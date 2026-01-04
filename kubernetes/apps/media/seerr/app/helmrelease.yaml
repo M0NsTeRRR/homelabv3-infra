@@ -17,7 +17,7 @@ spec:
       - configMapRef:
           name: seerr
       - secretRef:
-          name: seerr-postgres-openbao
+          name: seerr-openbao
 
     config:
       persistence:
