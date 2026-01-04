@@ -18,31 +18,20 @@ spec:
             name: authentik
         - secretRef:
             name: authentik-openbao
-      env:
-        - name: AUTHENTIK_POSTGRESQL__SSLROOTCERT
-          valueFrom:
-            secretKeyRef:
-              name: postgres-cert-${APP}
-              key: ca.crt
-        - name: AUTHENTIK_POSTGRESQL__SSLCERT
-          valueFrom:
-            secretKeyRef:
-              name: postgres-cert-${APP}
-              key: tls.crt
-        - name: AUTHENTIK_POSTGRESQL__SSLKEY
-          valueFrom:
-            secretKeyRef:
-              name: postgres-cert-${APP}
-              key: tls.key
       volumes:
-        - name: &volume-ca ca-certs
-          configMap:
-            name: homelab-ca
+        - name: &volume-postgres postgres-certs
+          secret:
+            secretName: postgres-cert-${APP}
+            defaultMode: 0400
       volumeMounts:
-        - name: *volume-ca
-          mountPath: /etc/ssl/certs/homelab.crt
-          subPath: ca.crt
+        - name: *volume-postgres
+          mountPath: /run/credentials/authentik/postgres
+          defaultMode: 0400
           readOnly: true
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
     redis:
       enabled: true
     server:
