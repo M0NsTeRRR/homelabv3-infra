@@ -3,7 +3,7 @@ apiVersion: postgresql.cnpg.io/v1
 kind: Database
 metadata:
   name: postgres-${APP}
-  namespace: cnpg
+  namespace: postgres
 spec:
   name: ${APP}
   owner: ${OWNER}
