@@ -9,9 +9,8 @@ spec:
   certificates:
     serverCASecret: postgres-server-cert
     serverTLSSecret: postgres-server-cert
-    clientCASecret: homelab-ca
-    clientTLSSecret: postgres-server-cert
-    replicationTLSSecret: postgres-replication-cert
+    clientCASecret: postgres-client-cert
+    replicationTLSSecret: postgres-client-cert
 
   storage:
     size: 20Gi
