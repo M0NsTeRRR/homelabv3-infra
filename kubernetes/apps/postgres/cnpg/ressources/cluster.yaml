@@ -15,9 +15,9 @@ spec:
   storage:
     size: 20Gi
 
-  bootstrap:
-    recovery:
-      source: &source source
+  # bootstrap:
+  #   recovery:
+  #     source: &source source
 
   plugins:
     - name: &plugin barman-cloud.cloudnative-pg.io
@@ -25,13 +25,13 @@ spec:
       parameters:
         barmanObjectName: &store rustfs-store
 
-  externalClusters:
-    - name: *source
-      plugin:
-        name: *plugin
-        parameters:
-          barmanObjectName: *store
-          serverName: postgres
+  # externalClusters:
+  #   - name: *source
+  #     plugin:
+  #       name: *plugin
+  #       parameters:
+  #         barmanObjectName: *store
+  #         serverName: postgres
 
   managed:
     roles:

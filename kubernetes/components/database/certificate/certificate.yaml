@@ -6,7 +6,8 @@ metadata:
 spec:
   secretName: postgres-cert-${APP}
   privateKey:
-    algorithm: Ed25519
+    algorithm: RSA
+    size: 4096
   usages:
     - client auth
   commonName: ${APP}

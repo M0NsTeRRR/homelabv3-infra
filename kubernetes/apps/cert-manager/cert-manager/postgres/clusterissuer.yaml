@@ -15,7 +15,8 @@ spec:
   commonName: cert-manager-postgres-ca
   secretName: cert-manager-postgres-ca
   privateKey:
-    algorithm: Ed25519
+    algorithm: RSA
+    size: 4096
   issuerRef:
     name: selfsigned-issuer
     kind: Issuer

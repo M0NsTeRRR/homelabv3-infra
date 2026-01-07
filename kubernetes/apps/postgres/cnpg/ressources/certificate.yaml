@@ -33,7 +33,8 @@ metadata:
 spec:
   secretName: postgres-client-cert
   privateKey:
-    algorithm: Ed25519
+    algorithm: RSA
+    size: 4096
   secretTemplate:
     labels:
       cnpg.io/reload: ""
@@ -51,7 +52,8 @@ metadata:
 spec:
   secretName: pooler-rw-cert
   privateKey:
-    algorithm: Ed25519
+    algorithm: RSA
+    size: 4096
   secretTemplate:
     labels:
       cnpg.io/reload: ""
