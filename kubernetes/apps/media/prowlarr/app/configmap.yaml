@@ -11,6 +11,6 @@ data:
   PROWLARR__LOG__DBENABLED: "False"
   PROWLARR__LOG__LEVEL: info
   PROWLARR__LOG__ANALYTICSENABLED: "False"
-  PROWLARR__POSTGRES__HOST: "pooler-rw.postgres.svc"
+  PROWLARR__POSTGRES__HOST: "pooler-pw-rw.postgres.svc"
   PROWLARR__POSTGRES__PORT: "5432"
   PROWLARR__POSTGRES__MAINDB: "prowlarr"

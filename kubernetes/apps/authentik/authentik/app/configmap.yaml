@@ -7,7 +7,7 @@ data:
   AUTHENTIK_DISABLE_STARTUP_ANALYTICS: "true"
   AUTHENTIK_DISABLE_UPDATE_CHECK: "true"
   AUTHENTIK_ERROR_REPORTING__ENABLED: "false"
-  AUTHENTIK_POSTGRESQL__HOST: "pooler-rw.postgres.svc"
+  AUTHENTIK_POSTGRESQL__HOST: "pooler-cert-rw.postgres.svc"
   AUTHENTIK_POSTGRESQL__SSLMODE: verify-full
   AUTHENTIK_POSTGRESQL__SSLROOTCERT: /run/credentials/authentik/postgres/ca.crt
   AUTHENTIK_POSTGRESQL__SSLCERT: /run/credentials/authentik/postgres/tls.crt

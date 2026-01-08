@@ -17,11 +17,9 @@ spec:
     - postgres-rw.postgres.svc
     - postgres-ro.postgres.svc
     - postgres-r.postgres.svc
-    - pooler-rw.postgres.svc
     - postgres-rw.postgres.svc.cluster.local
     - postgres-ro.postgres.svc.cluster.local
     - postgres-r.postgres.svc.cluster.local
-    - pooler-rw.postgres.svc.cluster.local
   issuerRef:
     name: openbao
     kind: ClusterIssuer
@@ -48,9 +46,9 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: pooler-rw
+  name: pooler-cert-rw
 spec:
-  secretName: pooler-rw-cert
+  secretName: pooler-cert-rw
   privateKey:
     algorithm: RSA
     size: 4096
@@ -59,7 +57,26 @@ spec:
       cnpg.io/reload: ""
   usages:
     - client auth
-  commonName: pooler-rw
+  commonName: pooler-cert-rw
+  issuerRef:
+    name: cert-manager-postgres
+    kind: ClusterIssuer
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: pooler-pw-rw
+spec:
+  secretName: pooler-pw-rw
+  privateKey:
+    algorithm: RSA
+    size: 4096
+  secretTemplate:
+    labels:
+      cnpg.io/reload: ""
+  usages:
+    - client auth
+  commonName: pooler-pw-rw
   issuerRef:
     name: cert-manager-postgres
     kind: ClusterIssuer

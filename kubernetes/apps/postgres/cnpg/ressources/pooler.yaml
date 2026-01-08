@@ -2,7 +2,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Pooler
 metadata:
-  name: pooler-rw
+  name: pooler-cert-rw
 spec:
   cluster:
     name: postgres
@@ -14,9 +14,29 @@ spec:
     serverTLSSecret:
       name: postgres-server-cert
     clientCASecret:
-      name: pooler-rw-cert
+      name: pooler-cert-rw
     clientTLSSecret:
-      name: pooler-rw-cert
+      name: pooler-cert-rw
+    parameters:
+      max_client_conn: "1000"
+      default_pool_size: "10"
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Pooler
+metadata:
+  name: pooler-pw-rw
+spec:
+  cluster:
+    name: postgres
+  type: rw
+  pgbouncer:
+    authQuery: "SELECT usename, passwd FROM public.user_search($1)"
+    serverCASecret:
+      name: postgres-server-cert
+    serverTLSSecret:
+      name: postgres-server-cert
+    clientTLSSecret:
+      name: pooler-pw-rw
     parameters:
       max_client_conn: "1000"
       default_pool_size: "10"
