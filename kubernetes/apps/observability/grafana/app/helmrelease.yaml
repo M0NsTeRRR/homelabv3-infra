@@ -85,7 +85,6 @@ spec:
 
     plugins:
       - grafana-piechart-panel
-      - victoriametrics-metrics-datasource
       - victoriametrics-logs-datasource
 
     dashboardProviders:
