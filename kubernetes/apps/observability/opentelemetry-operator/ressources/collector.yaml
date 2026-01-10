@@ -111,7 +111,7 @@ spec:
         check_interval: 1s
         limit_mib: 4000
         spike_limit_mib: 800
-      k8sattributes/default:
+      k8sattributes/default: {}
     service:
       telemetry:
         metrics:
