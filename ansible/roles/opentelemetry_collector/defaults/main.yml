@@ -6,7 +6,7 @@ opentelemetry_collector_local_path_ca_certificate: "ca.crt"
 opentelemetry_collector_cert_filename: "example.fr.crt"
 opentelemetry_collector_key_filename: "example.fr.key"
 opentelemetry_collector_metrics_prometheus_url: "https://prometheus/api/v1/push"
-opentelemetry_collector_logs_otlp_url: "http://quickwit:7281"
+opentelemetry_collector_logs_otlp_url: "http://victoria-traces:7281"
 opentelemetry_collector_extra_scrape: []
 
 # opentelemetry_collector_extra_scrape:

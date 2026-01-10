@@ -15,5 +15,6 @@ resources:
   - ./prometheus-pve-exporter/ks.yaml
   - ./prometheus-smartctl-exporter/ks.yaml
   - ./prometheus-snmp-exporter/ks.yaml
-  - ./quickwit/ks.yaml
+  - ./victoria-logs-single/ks.yaml
   - ./victoria-metrics-single/ks.yaml
+  - ./victoria-traces-single/ks.yaml

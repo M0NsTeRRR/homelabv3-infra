@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: victoria-traces-datasource
+  labels:
+    grafana_datasource: "1"
+data:
+  victoria-traces-datasource.yaml: |-
+    apiVersion: 1
+    datasources:
+    - name: VictoriaTraces
+      type: jaeger
+      url: http://victoria-traces-victoria-traces-single-server.observability.svc.cluster.local:10428/select/jaeger
+      access: proxy

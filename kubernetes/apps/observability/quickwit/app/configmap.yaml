@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: quickwit-env
-data:
-  QW_DISABLE_TELEMETRY: "1"

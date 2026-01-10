@@ -1,0 +1,34 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: victoria-traces-single
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: victoria-traces-single
+  interval: 1h
+  values:
+    server:
+      persistentVolume:
+        size: 100Gi
+      service:
+        ipFamilyPolicy: "PreferDualStack"
+      ingress:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: "openbao"
+          cert-manager.io/private-key-algorithm: "RSA"
+          cert-manager.io/private-key-size: "4096"
+        hosts:
+          - name: victoria-traces.unicornafk.fr
+            path: /
+        pathType: ImplementationSpecific
+        ingressClassName: "ingress-internal"
+        tls:
+          - secretName: victoria-traces.unicornafk.fr
+            hosts:
+              - victoria-traces.unicornafk.fr
+      serviceMonitor:
+        enabled: true

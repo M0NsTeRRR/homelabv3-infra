@@ -54,7 +54,7 @@ exporters:
       cert_file: /etc/otelcol-contrib/ssl/{{ opentelemetry_collector_cert_filename }}
       key_file: /etc/otelcol-contrib/ssl/{{ opentelemetry_collector_key_filename }}
       ca_file: /etc/otelcol-contrib/ssl/ca.crt
-  otlp/quickwit:
+  otlp/victoriatraces:
     endpoint: {{ opentelemetry_collector_logs_otlp_url }}
     tls:
       insecure: true
@@ -99,7 +99,7 @@ service:
   pipelines:
     logs:
       exporters:
-        - otlp/quickwit
+        - otlp/victoriatraces
         - logging
       processors:
         - resourcedetection/system
@@ -123,7 +123,7 @@ service:
         - otlp
     traces:
       exporters:
-        - otlp/quickwit
+        - otlp/victoriatraces
         - logging
       processors:
         - resourcedetection/system

@@ -9,7 +9,8 @@ data:
   victoria-metrics-datasource.yaml: |-
     apiVersion: 1
     datasources:
-    - name: prometheus
-      type: prometheus
+    - name: VictoriaMetrics
+      type: victoriametrics-metrics-datasource
       url: http://victoria-metrics-victoria-metrics-single-server.observability.svc.cluster.local:8428
       access: proxy
+      isDefault: true

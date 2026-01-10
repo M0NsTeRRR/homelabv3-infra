@@ -85,7 +85,8 @@ spec:
 
     plugins:
       - grafana-piechart-panel
-      - quickwit-quickwit-datasource
+      - victoriametrics-metrics-datasource
+      - victoriametrics-logs-datasource
 
     dashboardProviders:
       dashboardproviders.yaml:
@@ -102,28 +103,20 @@ spec:
 
     dashboards:
       default:
-        Go-runtime:
-          gnetId: 13240
-          revision: 2
-          datasource: &datasource prometheus
-        Traefik:
-          gnetId: 17347
-          revision: 9
-          datasource: *datasource
-        Flux2:
-          gnetId: 16714
-          revision: 1
-          datasource:
-            - name: DS_PROMETHEUS
-              value: *datasource
         Authentik:
           gnetId: 14837
           revision: 2
+          datasource: &datasource VictoriaMetrics
+        Blackbox-exporter-http:
+          gnetId: 14928
+          revision: 6
           datasource: *datasource
-        External-dns:
-          gnetId: 15038
+        Blackbox-exporter-icmp:
+          gnetId: 20338
           revision: 3
-          datasource: *datasource
+          datasource:
+            - name: DS_PROMETHEUS
+              value: *datasource
         Ceph-cluster:
           gnetId: 2842
           revision: 18
@@ -140,40 +133,38 @@ spec:
           gnetId: 12904
           revision: 2
           datasource: *datasource
-        External-secrets:
-          url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
         Cert-manager:
           url: https://gitlab.com/uneeq-oss/cert-manager-mixin/-/raw/master/dashboards/cert-manager.json
-        Volsync:
-          gnetId: 21356
-          revision: 3
-          datasource:
-            - name: DS_PROMETHEUS
-              value: *datasource
-        Blackbox-exporter-http:
-          gnetId: 14928
-          revision: 6
-          datasource: *datasource
-        Blackbox-exporter-icmp:
-          gnetId: 20338
-          revision: 3
-          datasource:
-            - name: DS_PROMETHEUS
-              value: *datasource
-        Snmp-device:
-          gnetId: 20347
-          revision: 2
-          datasource:
-            - name: DS_PROMETHEUS
-              value: *datasource
-        Proxmox-exporter:
-          gnetId: 10347
-          revision: 5
-          datasource:
-            - name: DS_PROMETHEUS
-              value: *datasource
         Dnsdist:
           gnetId: 20422
+          revision: 4
+          datasource:
+            - name: DS_PROMETHEUS
+              value: *datasource
+        External-dns:
+          gnetId: 15038
+          revision: 3
+          datasource: *datasource
+        External-secrets:
+          url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
+        Go-runtime:
+          gnetId: 13240
+          revision: 2
+          datasource: *datasource
+        FlareSolverr:
+          gnetId: 19363
+          revision: 1
+          datasource:
+            - name: DS_PROMETHEUS
+              value: *datasource
+        Flux2:
+          gnetId: 16714
+          revision: 1
+          datasource:
+            - name: DS_PROMETHEUS
+              value: *datasource
+        Kea-exporter:
+          gnetId: 12688
           revision: 4
           datasource:
             - name: DS_PROMETHEUS
@@ -190,15 +181,9 @@ spec:
           datasource:
             - name: DS_PROMETHEUS
               value: *datasource
-        Kea-exporter:
-          gnetId: 12688
-          revision: 4
-          datasource:
-            - name: DS_PROMETHEUS
-              value: *datasource
-        FlareSolverr:
-          gnetId: 19363
-          revision: 1
+        Proxmox-exporter:
+          gnetId: 10347
+          revision: 5
           datasource:
             - name: DS_PROMETHEUS
               value: *datasource
@@ -211,6 +196,40 @@ spec:
         Smartctl-exporter:
           gnetId: 20204
           revision: 1
+          datasource:
+            - name: DS_PROMETHEUS
+              value: *datasource
+        Snmp-device:
+          gnetId: 20347
+          revision: 2
+          datasource:
+            - name: DS_PROMETHEUS
+              value: *datasource
+        Traefik:
+          gnetId: 17347
+          revision: 9
+          datasource: *datasource
+        Volsync:
+          gnetId: 21356
+          revision: 3
+          datasource:
+            - name: DS_PROMETHEUS
+              value: *datasource
+        VictoriaLogs:
+          gnetId: 22084
+          revision: 9
+          datasource:
+            - name: DS_PROMETHEUS
+              value: *datasource
+        VictoriaMetrics:
+          gnetId: 10229
+          revision: 48
+          datasource:
+            - name: DS_PROMETHEUS
+              value: *datasource
+        VictoriaTraces:
+          gnetId: 24136
+          revision: 2
           datasource:
             - name: DS_PROMETHEUS
               value: *datasource

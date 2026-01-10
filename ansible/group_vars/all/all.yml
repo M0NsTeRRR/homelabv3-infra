@@ -41,7 +41,7 @@ opentelemetry_collector_local_path_ca_certificate: "{{ ca_certificates_local_pat
 opentelemetry_collector_cert_filename: "{{ inventory_hostname }}-fullchain.crt"
 opentelemetry_collector_key_filename: "{{ inventory_hostname }}.key"
 opentelemetry_collector_metrics_prometheus_url: "https://victoria-metrics.unicornafk.fr/api/v1/push"
-opentelemetry_collector_logs_otlp_url: "https://quickwit.unicornafk.fr:443"
+opentelemetry_collector_logs_otlp_url: "https://victoria-traces.unicornafk.fr:443"
 
 lego_account_email: "{{ monitoring_email }}"
 lego_acme_url: "{{ openbao_url }}/v1/pki/acme/directory"
