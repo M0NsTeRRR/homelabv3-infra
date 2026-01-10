@@ -10,7 +10,7 @@ spec:
   pgbouncer:
     authQuery: "SELECT usename, passwd FROM public.user_search($1)"
     serverCASecret:
-      name: postgres-server-cert
+      name: homelab-ca
     serverTLSSecret:
       name: postgres-server-cert
     clientCASecret:
@@ -32,7 +32,7 @@ spec:
   pgbouncer:
     authQuery: "SELECT usename, passwd FROM public.user_search($1)"
     serverCASecret:
-      name: postgres-server-cert
+      name: homelab-ca
     serverTLSSecret:
       name: postgres-server-cert
     clientTLSSecret:
