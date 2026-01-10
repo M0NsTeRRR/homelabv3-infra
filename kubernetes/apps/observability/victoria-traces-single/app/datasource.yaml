@@ -11,5 +11,5 @@ data:
     datasources:
     - name: VictoriaTraces
       type: jaeger
-      url: http://victoria-traces-victoria-traces-single-server.observability.svc.cluster.local:10428/select/jaeger
+      url: http://victoria-traces-single-vt-single-server.observability.svc.cluster.local:10428/select/jaeger
       access: proxy

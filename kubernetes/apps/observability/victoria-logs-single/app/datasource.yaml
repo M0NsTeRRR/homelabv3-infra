@@ -11,5 +11,5 @@ data:
     datasources:
     - name: VictoriaLogs
       type: victoriametrics-logs-datasource
-      url: http://victoria-logs-victoria-logs-single-server.observability.svc.cluster.local:9428
+      url: http://victoria-logs-single-server.observability.svc.cluster.local:9428
       access: proxy

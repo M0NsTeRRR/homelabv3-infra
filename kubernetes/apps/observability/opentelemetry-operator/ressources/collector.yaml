@@ -88,12 +88,12 @@ spec:
     exporters:
       debug:
         verbosity: normal
-      prometheusremotewrite/victoriametrics:
-        endpoint: http://victoria-metrics-victoria-metrics-single-server.observability.svc.cluster.local:8428/api/v1/push
-        tls:
-          insecure: true
-      otlp/victoriatraces:
-        endpoint: http://victoria-traces-victoria-traces-single-server.observability.svc.cluster.local:10428
+      otlphttp/victoriametrics:
+        compression: gzip
+        encoding: proto
+        metrics_endpoint: http://victoria-metrics-single-server.observability.svc.cluster.local:8428/opentelemetry/v1/metrics
+        logs_endpoint: http://victoria-logs-single-server.observability.svc.cluster.local:9428/insert/opentelemetry/v1/logs
+        traces_endpoint: http://victoria-traces-single-vt-single-server.observability.svc.cluster.local:10428/insert/opentelemetry/v1/traces
         tls:
           insecure: true
     extensions:
@@ -122,7 +122,7 @@ spec:
       pipelines:
         logs:
           exporters:
-            - otlp/victoriatraces
+            - otlphttp/victoriametrics
             - debug
           processors:
             - k8sattributes/default
@@ -133,7 +133,7 @@ spec:
             - otlp
         metrics:
           exporters:
-            - prometheusremotewrite/victoriametrics
+            - otlphttp/victoriametrics
             - debug
           processors:
             - k8sattributes/default
@@ -145,7 +145,7 @@ spec:
             - otlp
         traces:
           exporters:
-            - otlp/victoriatraces
+            - otlphttp/victoriametrics
             - debug
           processors:
             - k8sattributes/default
