@@ -38,6 +38,7 @@ rules:
   - apiGroups:
       - monitoring.coreos.com
     resources:
+      - scrapeconfigs
       - servicemonitors
       - podmonitors
       - probes
