@@ -28,9 +28,8 @@ kind: Kustomization
 metadata:
   name: authentik-database
 spec:
-  components:
-    - ../../../../components/database/base
   interval: 1h
+  path: ./kubernetes/components/database/base
   postBuild:
     substitute:
       APP: authentik
