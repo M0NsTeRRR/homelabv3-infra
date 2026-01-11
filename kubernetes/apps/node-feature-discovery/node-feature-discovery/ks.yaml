@@ -5,9 +5,6 @@ kind: Kustomization
 metadata:
   name: node-feature-discovery
 spec:
-  dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
   interval: 1h
   path: ./kubernetes/apps/node-feature-discovery/node-feature-discovery/app
   prune: true
@@ -24,8 +21,7 @@ metadata:
   name: node-feature-discovery-ressources
 spec:
   dependsOn:
-    - name: rook-ceph-cluster
-      namespace: rook-ceph
+    - name: node-feature-discovery
   interval: 1h
   path: ./kubernetes/apps/node-feature-discovery/node-feature-discovery/ressources
   prune: true

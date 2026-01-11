@@ -20,6 +20,8 @@ kind: Kustomization
 metadata:
   name: cert-manager-openbao
 spec:
+  dependsOn:
+    - name: cert-manager
   interval: 1h
   path: ./kubernetes/apps/cert-manager/cert-manager/openbao
   prune: true
@@ -35,6 +37,8 @@ kind: Kustomization
 metadata:
   name: cert-manager-postgres
 spec:
+  dependsOn:
+    - name: cert-manager
   interval: 1h
   path: ./kubernetes/apps/cert-manager/cert-manager/postgres
   prune: true

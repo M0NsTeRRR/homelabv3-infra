@@ -35,6 +35,8 @@ kind: Kustomization
 metadata:
   name: cnpg-ressources
 spec:
+  dependsOn:
+    - name: cnpg
   interval: 1h
   path: ./kubernetes/apps/postgres/cnpg/ressources
   prune: true

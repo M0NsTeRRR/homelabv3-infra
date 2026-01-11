@@ -20,6 +20,8 @@ kind: Kustomization
 metadata:
   name: ingress-external-ressources
 spec:
+  dependsOn:
+    - name: ingress-external
   interval: 1h
   path: ./kubernetes/apps/ingress-external/ingress-external/ressources
   prune: true

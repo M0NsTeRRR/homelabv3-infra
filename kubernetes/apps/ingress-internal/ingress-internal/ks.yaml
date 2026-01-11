@@ -20,6 +20,8 @@ kind: Kustomization
 metadata:
   name: ingress-internal-ressources
 spec:
+  dependsOn:
+    - name: ingress-internal
   interval: 1h
   path: ./kubernetes/apps/ingress-internal/ingress-internal/ressources
   prune: true

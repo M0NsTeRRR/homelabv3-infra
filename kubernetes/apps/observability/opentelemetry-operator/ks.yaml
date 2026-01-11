@@ -20,6 +20,8 @@ kind: Kustomization
 metadata:
   name: opentelemetry-operator-ressources
 spec:
+  dependsOn:
+    - name: opentelemetry-operator
   interval: 1h
   path: ./kubernetes/apps/observability/opentelemetry-operator/ressources
   prune: true
