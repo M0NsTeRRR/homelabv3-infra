@@ -26,10 +26,25 @@ spec:
       - secretRef:
           name: bazarr-openbao
     volumes:
+      - name: &volume-ca ca-certs
+        configMap:
+          name: homelab-ca
+      - name: &volume-postgres postgres-certs
+        secret:
+          secretName: postgres-cert-${APP}
+          defaultMode: 0400
       - name: data
         persistentVolumeClaim:
           claimName: media-storage
     volumeMounts:
+      - name: *volume-ca
+        mountPath: /var/run/secrets/root-ca/ca.crt
+        subPath: ca.crt
+        readOnly: true
+      - name: *volume-postgres
+        mountPath: /var/run/secrets/postgresql
+        defaultMode: 0400
+        readOnly: true
       - name: data
         mountPath: /movies
         subPath: movies

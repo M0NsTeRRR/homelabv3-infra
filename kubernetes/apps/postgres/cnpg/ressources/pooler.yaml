@@ -2,41 +2,27 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Pooler
 metadata:
-  name: pooler-cert-rw
+  name: pooler-rw
 spec:
   cluster:
     name: postgres
   type: rw
   pgbouncer:
-    authQuery: "SELECT usename, passwd FROM public.user_search($1)"
+    authQuery: "SELECT $1, NULL"
+
     serverCASecret:
       name: homelab-ca
     serverTLSSecret:
-      name: postgres-server-cert
+      name: pooler-client-cert
     clientCASecret:
-      name: pooler-cert-rw
+      name: pooler-client-cert
     clientTLSSecret:
-      name: pooler-cert-rw
+      name: pooler-server-cert
+
     parameters:
-      max_client_conn: "1000"
-      default_pool_size: "10"
----
-apiVersion: postgresql.cnpg.io/v1
-kind: Pooler
-metadata:
-  name: pooler-pw-rw
-spec:
-  cluster:
-    name: postgres
-  type: rw
-  pgbouncer:
-    authQuery: "SELECT usename, passwd FROM public.user_search($1)"
-    serverCASecret:
-      name: homelab-ca
-    serverTLSSecret:
-      name: postgres-server-cert
-    clientTLSSecret:
-      name: pooler-pw-rw
-    parameters:
+      server_tls_protocols: tlsv1.3
+      auth_type: cert
+      server_tls_sslmode: verify-full
+      client_tls_sslmode: verify-full
       max_client_conn: "1000"
       default_pool_size: "10"

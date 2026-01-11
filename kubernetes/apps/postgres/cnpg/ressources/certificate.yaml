@@ -14,6 +14,9 @@ spec:
   usages:
     - server auth
   dnsNames:
+    - postgres-rw
+    - postgres-ro
+    - postgres-r
     - postgres-rw.postgres.svc
     - postgres-ro.postgres.svc
     - postgres-r.postgres.svc
@@ -46,9 +49,9 @@ spec:
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: pooler-cert-rw
+  name: pooler-server-cert
 spec:
-  secretName: pooler-cert-rw
+  secretName: pooler-server-cert
   privateKey:
     algorithm: RSA
     size: 4096
@@ -56,18 +59,20 @@ spec:
     labels:
       cnpg.io/reload: ""
   usages:
-    - client auth
-  commonName: pooler-cert-rw
+    - server auth
+  dnsNames:
+    - pooler-rw.postgres.svc
+    - pooler-rw.svc.cluster.local
   issuerRef:
-    name: cert-manager-postgres
+    name: openbao
     kind: ClusterIssuer
 ---
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: pooler-pw-rw
+  name: pooler-client-cert
 spec:
-  secretName: pooler-pw-rw
+  secretName: pooler-client-cert
   privateKey:
     algorithm: RSA
     size: 4096
@@ -76,7 +81,7 @@ spec:
       cnpg.io/reload: ""
   usages:
     - client auth
-  commonName: pooler-pw-rw
+  commonName: pooler-rw
   issuerRef:
     name: cert-manager-postgres
     kind: ClusterIssuer

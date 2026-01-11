@@ -5,8 +5,11 @@ metadata:
 data:
   TZ: "Europe/Paris"
   DB_TYPE: postgres
-  DB_HOST: "pooler-pw-rw.postgres.svc"
+  DB_HOST: "pooler-rw.postgres.svc"
   DB_PORT: "5432"
-  DB_SSL_CA: "/etc/ssl/certs/homelab.crt"
   DB_NAME: seerr
   DB_LOG_QUERIES: "false"
+  DB_SSL_CA_FILE: /var/run/secrets/root-ca/ca.crt
+  DB_SSL_CERT_FILE: /var/run/secrets/postgresql/tls.crt
+  DB_SSL_KEY_FILE: /var/run/secrets/postgresql/tls.key
+  DB_USE_SSL: "true"

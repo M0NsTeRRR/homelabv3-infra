@@ -5,6 +5,10 @@ metadata:
 data:
   TZ: "Europe/Paris"
   POSTGRES_ENABLED: "True"
-  POSTGRES_HOST: "pooler-pw-rw.postgres.svc"
+  POSTGRES_HOST: "pooler-rw.postgres.svc"
   POSTGRES_PORT: "5432"
   POSTGRES_DATABASE: "bazarr"
+  PGSSLROOTCERT: /var/run/secrets/root-ca/ca.crt
+  PGSSLCERT: /var/run/secrets/postgresql/tls.crt
+  PGSSLKEY: /var/run/secrets/postgresql/tls.key
+  PGSSLMODE: verify-full
