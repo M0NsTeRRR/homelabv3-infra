@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: "${APP}-pvc-restore"
+  name: "${APP}"
 spec:
   accessModes:
     - ${VOLSYNC_ACCESSMODES:=ReadWriteOnce}

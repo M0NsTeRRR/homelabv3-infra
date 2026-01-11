@@ -1,0 +1,30 @@
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationSource
+metadata:
+  name: "${APP}"
+spec:
+  sourcePVC: ${APP}
+  trigger:
+    # At 0 minutes past the hour, every 6 hours
+    schedule: "0 */6 * * *"
+  restic:
+    pruneIntervalDays: 14
+    repository: ${APP}-volsync-openbao
+    retain:
+      hourly: 1
+      daily: 4
+      weekly: 2
+      monthly: 4
+      yearly: 1
+    copyMethod: Snapshot
+    cacheCapacity: 5Gi
+    volumeSnapshotClassName: csi-ceph-blockpool
+    storageClassName: ceph-block
+    moverSecurityContext:
+      runAsUser: ${VOLSYNC_PUID:=1000}
+      runAsGroup: ${VOLSYNC_PGID:=1000}
+      fsGroup: ${VOLSYNC_PGID:=1000}
+    customCA:
+      key: ca.crt
+      secretName: homelab-ca

@@ -3,13 +3,21 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: actualbudget
+  name: &app actualbudget
 spec:
+  components:
+    - ../../../../components/volsync
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
   interval: 1h
   path: ./kubernetes/apps/actualbudget/actualbudget/app
+  postBuild:
+    substitute:
+      APP: *app
+      VOLSYNC_CAPACITY: 1Gi
+      VOLSYNC_PUID: "65534"
+      VOLSYNC_PGID: "65534"
   prune: true
   sourceRef:
     kind: GitRepository

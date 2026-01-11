@@ -10,6 +10,9 @@ spec:
     name: jellyfin
   interval: 1h
   values:
+    config:
+      persistence:
+        volumeName: ${APP}
     volumes:
       - name: &volume-ca ca-certs
         configMap:

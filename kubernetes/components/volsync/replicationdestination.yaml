@@ -1,0 +1,23 @@
+---
+apiVersion: volsync.backube/v1alpha1
+kind: ReplicationDestination
+metadata:
+  name: "${APP}-dst"
+spec:
+  trigger:
+    manual: restore-once
+  restic:
+    repository: ${APP}-volsync-openbao
+    enableFileDeletion: true
+    copyMethod: Snapshot
+    accessModes: ["ReadWriteOnce"]
+    cleanupCachePVC: true
+    cleanupTempPVC: true
+    storageClassName: ceph-block
+    moverSecurityContext:
+      runAsUser: ${VOLSYNC_PUID:=1000}
+      runAsGroup: ${VOLSYNC_PGID:=1000}
+      fsGroup: ${VOLSYNC_PGID:=1000}
+    customCA:
+      key: ca.crt
+      secretName: homelab-ca

@@ -6,6 +6,7 @@ metadata:
   name: &app seerr
 spec:
   components:
+    - ../../../../components/volsync
     - ../../../../components/database/certificate
   dependsOn:
     - name: rook-ceph-cluster
@@ -15,6 +16,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      VOLSYNC_CAPACITY: 1Gi
   prune: true
   sourceRef:
     kind: GitRepository

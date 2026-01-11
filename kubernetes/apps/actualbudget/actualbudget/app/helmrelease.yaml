@@ -15,7 +15,7 @@ spec:
 
     data:
       persistence:
-        volumeName: actualbudget-chart-data
+        volumeName: ${APP}
 
     ingress:
       enabled: true
