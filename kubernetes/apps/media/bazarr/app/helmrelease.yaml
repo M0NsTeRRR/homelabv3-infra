@@ -23,8 +23,6 @@ spec:
     extraEnvFrom:
       - configMapRef:
           name: bazarr
-      - secretRef:
-          name: bazarr-openbao
     volumes:
       - name: &volume-ca ca-certs
         configMap:

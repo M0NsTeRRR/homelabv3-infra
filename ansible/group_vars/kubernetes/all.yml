@@ -116,11 +116,6 @@ openbao_policies:
       - path: secret/data/homelab/prod/hyperglass
         capabilities:
           - read
-  - name: bazarr
-    rules:
-      - path: secret/data/homelab/prod/bazarr
-        capabilities:
-          - read
   - name: jellyfin
     rules:
       - path: secret/data/homelab/prod/jellyfin
