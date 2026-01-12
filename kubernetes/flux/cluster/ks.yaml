@@ -9,12 +9,6 @@ spec:
   deletionPolicy: WaitForTermination
   interval: 1h
   path: ./kubernetes/apps
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-    namespace: flux-system
-  wait: false
   patches:
     - # Add Kustomization defaults for all child Kustomizations
       patch: |-
@@ -52,3 +46,9 @@ spec:
       target:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  wait: false
