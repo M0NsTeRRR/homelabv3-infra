@@ -26,3 +26,6 @@ spec:
       client_tls_sslmode: verify-full
       max_client_conn: "1000"
       default_pool_size: "10"
+
+  monitoring:
+    enablePodMonitor: true
