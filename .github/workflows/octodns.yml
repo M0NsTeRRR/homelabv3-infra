@@ -30,8 +30,8 @@ jobs:
       - name: Validate octodns config
         run: |
           cd octodns
-          uv run octodns-validate --config-file=./octodns/internal/config.yaml --all
-          uv run octodns-validate --config-file=./octodns/external/config.yaml --all
+          uv run octodns-validate --config-file=./internal/config.yaml --all
+          uv run octodns-validate --config-file=./external/config.yaml --all
         env:
           SCALEWAY_SECRET_KEY: fake_token
           POWERDNS_API_KEY: fake_token
@@ -59,7 +59,7 @@ jobs:
       - name: Apply octodns config
         run: |
           cd octodns
-          uv run octodns-sync --config-file=./octodns/external/config.yaml --doit --force
+          uv run octodns-sync --config-file=./external/config.yaml --doit --force
         env:
           SCALEWAY_SECRET_KEY: ${{ secrets.SCALEWAY_SECRET_KEY }}
           POWERDNS_API_KEY: ${{ secrets.POWERDNS_API_KEY }}
