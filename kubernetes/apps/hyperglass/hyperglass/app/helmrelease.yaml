@@ -51,8 +51,10 @@ spec:
     valkey:
       auth:
         enabled: true
-        existingSecret: *secret-ref
-        existingSecretPasswordKey: "HYPERGLASS_REDIS_PASSWORD"
+        usersExistingSecret: *secret-ref
+        aclUsers:
+          default:
+            passwordKey: "HYPERGLASS_REDIS_PASSWORD"
       metrics:
         enabled: true
         serviceMonitor:
