@@ -15,9 +15,10 @@ I'm running my own AS for my IPv6 stack registered as [AS212510](https://as21251
 
 ### Cloud providers
 
-- [Scaleway](https://www.scaleway.com/en/) for domains
+- [Scaleway](https://www.scaleway.com/en/) for registrar and primary DNS
+- [Hurricane Electric](https://www.he.net/) for secondary DNS
 - [Infomaniak](https://www.infomaniak.com/en) for S3
-- [Proton](https://proton.me/en) for emails, VPN
+- [Proton](https://proton.me/en) for emails and VPN
 - [Oracle](https://www.oracle.com/) for VPS
 
 ![Homelab diagram](../assets/architecture_light.png#only-light){ loading=lazy }
