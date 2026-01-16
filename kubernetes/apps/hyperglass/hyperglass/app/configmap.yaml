@@ -4,7 +4,7 @@ kind: ConfigMap
 metadata:
   name: hyperglass
 data:
-  HYPERGLASS_REDIS_HOST: "hyperglass-valkey-primary"
+  HYPERGLASS_REDIS_HOST: "hyperglass-valkey"
 ---
 apiVersion: v1
 kind: ConfigMap
