@@ -12,7 +12,8 @@ metadata:
   name: cert-manager-postgres-ca
 spec:
   isCA: true
-  commonName: cert-manager-postgres-ca
+  dnsNames:
+    - cert-manager-postgres-ca
   secretName: cert-manager-postgres-ca
   privateKey:
     algorithm: RSA

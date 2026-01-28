@@ -8,7 +8,8 @@ spec:
   privateKey:
     algorithm: RSA
     size: 4096
-  commonName: monitoring.unicornafk.fr
+  dnsNames:
+    - monitoring.unicornafk.fr
   usages:
     - client auth
   issuerRef:

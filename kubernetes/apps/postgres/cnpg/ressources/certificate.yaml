@@ -41,7 +41,8 @@ spec:
       cnpg.io/reload: ""
   usages:
     - client auth
-  commonName: streaming_replica
+  dnsNames:
+    - streaming_replica
   issuerRef:
     name: cert-manager-postgres
     kind: ClusterIssuer
@@ -81,7 +82,8 @@ spec:
       cnpg.io/reload: ""
   usages:
     - client auth
-  commonName: pooler-rw
+  dnsNames:
+    - pooler-rw
   issuerRef:
     name: cert-manager-postgres
     kind: ClusterIssuer

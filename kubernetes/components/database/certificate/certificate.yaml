@@ -10,7 +10,8 @@ spec:
     size: 4096
   usages:
     - client auth
-  commonName: ${APP}
+  dnsNames:
+    - ${APP}
   issuerRef:
     name: cert-manager-postgres
     kind: ClusterIssuer
