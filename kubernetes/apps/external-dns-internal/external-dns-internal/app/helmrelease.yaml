@@ -14,7 +14,9 @@ spec:
     deploymentAnnotations:
       reloader.stakater.com/auto: "true"
     registry: txt
-    txtOwnerId: "homelab.kubernetes"
+    txtOwnerId: "homelab.k8s"
+    triggerLoopOnEvent: true
+    policy: sync
     provider: "pdns"
     domainFilters:
       - unicornafk.fr
