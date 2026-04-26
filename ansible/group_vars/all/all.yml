@@ -47,8 +47,7 @@ lego_account_email: "{{ monitoring_email }}"
 lego_acme_url: "{{ openbao_url }}/v1/pki/acme/directory"
 
 systemd_timesyncd_ntp:
-  - ntp1.unicornafk.fr
-  - ntp2.unicornafk.fr
+  - ntp.unicornafk.fr
 
 systemd_resolved_dnssec: false
 systemd_resolved_dns:

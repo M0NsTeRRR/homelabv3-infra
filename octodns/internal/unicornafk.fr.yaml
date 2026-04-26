@@ -88,12 +88,9 @@ nas:
     value: "192.168.50.41"
   - type: AAAA
     value: "2a0c:b641:02c0:150::41"
-ntp1:
+ntp:
   - type: CNAME
-    value: dhcp1.unicornafk.fr.
-ntp2:
-  - type: CNAME
-    value: dhcp2.unicornafk.fr.
+    value: r1.unicornafk.fr.
 nvidia-shield:
   - type: A
     value: "192.168.50.92"

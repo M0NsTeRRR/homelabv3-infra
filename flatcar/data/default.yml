@@ -3,8 +3,7 @@ network_gateway_ipv4: 192.168.10.1
 network_gateway_ipv6: 2a0c:b641:2c0:110::1
 
 systemd_timesyncd_ntp:
-  - ntp1.unicornafk.fr
-  - ntp2.unicornafk.fr
+  - ntp.unicornafk.fr
 
 systemd_resolved_dnssec: false
 systemd_resolved_dns:

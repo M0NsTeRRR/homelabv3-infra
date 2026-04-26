@@ -17,13 +17,6 @@
     - powerdns_recursor
     - powerdns_authoritative
 
-- name: Configure DHCP servers
-  hosts: dhcp
-  become: true
-  roles:
-    - kea_dhcp
-    - ntp
-
 - name: Configure Vault unseal
   hosts: dns
   become: true
