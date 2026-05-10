@@ -5,22 +5,22 @@ description = "Homelab management infrastructure"
 readme = "README.md"
 authors = [{ name = "Ludovic Ortega", email = "ludovic.ortega@adminafk.fr" }]
 classifiers = [
+  "License :: OSI Approved :: CEA CNRS Inria Logiciel Libre License, version 2.1 (CeCILL-2.1)",
+  "Operating System :: OS Independent",
   "Programming Language :: Python",
   "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
-  "Operating System :: OS Independent",
-  "License :: OSI Approved :: CEA CNRS Inria Logiciel Libre License, version 2.1 (CeCILL-2.1)",
   "Topic :: Utilities",
 ]
 
 requires-python = ">=3.12,<4.0.0"
 
 [project.urls]
-Homepage = "https://github.com/M0NsTeRRR/homelabv3-infra"
-Repository = "https://github.com/M0NsTeRRR/homelabv3-infra"
-Issues = "https://github.com/M0NsTeRRR/homelabv3-infra/issues"
 Funding = "https://ko-fi.com/ludovicortega"
+Homepage = "https://github.com/M0NsTeRRR/homelabv3-infra"
+Issues = "https://github.com/M0NsTeRRR/homelabv3-infra/issues"
+Repository = "https://github.com/M0NsTeRRR/homelabv3-infra"
 
 [project.optional-dependencies]
 ansible = [
@@ -37,12 +37,12 @@ ansible = [
   "PyYAML~=6.0.3",
   "jsonpatch~=1.33",
 ]
+documentation = ["mkdocs-material[imaging]~=9.7.1", "pytz~=2025.2"]
 octodns = [
   "octodns~=1.15.0",
   "octodns_scaleway~=0.0.4",
-  "octodns-powerdns~=1.0.0",
+  "octodns-mikrotik~=0.1.1",
 ]
-documentation = ["mkdocs-material[imaging]~=9.7.1", "pytz~=2025.2"]
 
 [tool.uv]
 package = false

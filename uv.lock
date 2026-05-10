@@ -487,7 +487,7 @@ documentation = [
 ]
 octodns = [
     { name = "octodns" },
-    { name = "octodns-powerdns" },
+    { name = "octodns-mikrotik" },
     { name = "octodns-scaleway" },
 ]
 
@@ -503,14 +503,14 @@ requires-dist = [
     { name = "mkdocs-material", extras = ["imaging"], marker = "extra == 'documentation'", specifier = "~=9.7.1" },
     { name = "netaddr", marker = "extra == 'ansible'", specifier = "~=1.3.0" },
     { name = "octodns", marker = "extra == 'octodns'", specifier = "~=1.15.0" },
-    { name = "octodns-powerdns", marker = "extra == 'octodns'", specifier = "~=1.0.0" },
+    { name = "octodns-mikrotik", marker = "extra == 'octodns'", specifier = "~=0.1.1" },
     { name = "octodns-scaleway", marker = "extra == 'octodns'", specifier = "~=0.0.4" },
     { name = "passlib", marker = "extra == 'ansible'", specifier = "~=1.7.4" },
     { name = "pytz", marker = "extra == 'documentation'", specifier = "~=2025.2" },
     { name = "pyyaml", marker = "extra == 'ansible'", specifier = "~=6.0.3" },
     { name = "requests", marker = "extra == 'ansible'", specifier = "~=2.32.5" },
 ]
-provides-extras = ["ansible", "octodns", "documentation"]
+provides-extras = ["ansible", "documentation", "octodns"]
 
 [[package]]
 name = "idna"
@@ -787,16 +787,16 @@ wheels = [
 ]
 
 [[package]]
-name = "octodns-powerdns"
-version = "1.0.0"
+name = "octodns-mikrotik"
+version = "0.1.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "octodns" },
     { name = "requests" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/4b/85/b0197ec3b027523395b6a4a2610e221789e71a030e169a69392fedbe1883/octodns_powerdns-1.0.0.tar.gz", hash = "sha256:096625dcd2778cf26f4a1f8616fc28cb2a85cf503c2d78fe6c8438d3eef89462", size = 15637, upload-time = "2025-05-04T20:45:38.889Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/2d/45/7d578a5bb363166594071771da21d61cf0c2f4c8dc020827f41fa92e4acc/octodns_mikrotik-0.1.1.tar.gz", hash = "sha256:eded68a8ce24e28b625fd3640c4aac281386f2105609ecddd305bc57971276d6", size = 21557, upload-time = "2026-05-10T23:08:30.297Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/47/21/c325f18bf88e44b9d0c00b4c4e08ad121e214860aff538c3fd90a5fe7d17/octodns_powerdns-1.0.0-py3-none-any.whl", hash = "sha256:f13c2bb82e419a405e21514f62595de3fef604f01d4a5b01002b5a94e7c000f7", size = 10086, upload-time = "2025-05-04T20:45:37.568Z" },
+    { url = "https://files.pythonhosted.org/packages/2a/72/e8d1951cae3983878527fd9ba39dbc4b6d6b4be45ce8b7532f7f772c6ca2/octodns_mikrotik-0.1.1-py3-none-any.whl", hash = "sha256:a95ecf0b0ad4d473cd590c4ffd9baa3f82239cdc1d241939465efe57c85d180a", size = 21854, upload-time = "2026-05-10T23:08:28.84Z" },
 ]
 
 [[package]]

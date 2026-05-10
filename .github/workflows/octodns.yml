@@ -34,7 +34,8 @@ jobs:
           uv run octodns-validate --config-file=./external/config.yaml --all
         env:
           SCALEWAY_SECRET_KEY: fake_token
-          POWERDNS_API_KEY: fake_token
+          MIKROTIK_USER: fake_user
+          MIKROTIK_PASSWORD: fake_password
   octodns-deploy:
     name: Deploy
     if: github.ref == 'refs/heads/main'
@@ -62,4 +63,3 @@ jobs:
           uv run octodns-sync --config-file=./external/config.yaml --doit --force
         env:
           SCALEWAY_SECRET_KEY: ${{ secrets.SCALEWAY_SECRET_KEY }}
-          POWERDNS_API_KEY: ${{ secrets.POWERDNS_API_KEY }}

@@ -14,10 +14,11 @@
 
 Configuration is stored in `octodns/internal` folder.
 
-`POWERDNS_API_KEY` represents the API token to manage your DNS zone
+`MIKROTIK_USER` and `MIKROTIK_PASSWORD` represent the username and password used to connect to your MikroTik router to manage your DNS zone.
 
 ```sh
-export POWERDNS_API_KEY=<POWERDNS_API_KEY>
+export MIKROTIK_USER=<MIKROTIK_USER>
+export MIKROTIK_PASSWORD=<MIKROTIK_PASSWORD>
 uv run task octodns:sync-internal
 ```
 
