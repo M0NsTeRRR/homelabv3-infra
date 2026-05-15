@@ -1,7 +1,0 @@
----
-modprobe_module_blacklist:
-  - usb-storage
-  - dccp
-  - sctp
-  - rds
-  - tipc

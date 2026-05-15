@@ -29,12 +29,12 @@ qm set $VM_ID --cicustom "user=local:snippets/vm-$VM_ID-user-data"
 
 ## How to enable Proxmox ACME ?
 
-In this guide we will see how to enable proxmox ACME with vault.
-This guide assume vault PKI is already setup using the ansible role from this repository.
-This guide also assume that your proxmox server trust the vault PKI.
+In this guide we will see how to enable proxmox ACME with openbao.
+This guide assume openbao PKI is already setup using the ansible role from this repository.
+This guide also assume that your proxmox server trust the openbao PKI.
 
 - `email_account` with your email account (not used)
-- `vault_acme_url` like `https://openbao.unicornafk.fr:8200/v1/pki/acme/directory`
+- `openbao_acme_url` like `https://openbao.unicornafk.fr:8200/v1/pki/acme/directory`
 - `proxmox_domains` it's a list of domains separated by `;` like `server.unicornafk.fr;server1.unicornafk.fr`. As we are using DNS round robin (recommended way to get cluster metrics) on proxmox exporter we must have an entry matching that record `server.unicornafk.fr`
 
 Execute the following steps :
@@ -42,7 +42,7 @@ Execute the following steps :
 1. SSH to a proxmox node
 2. Run `pvenode acme account register default <email_acount>`
 3. Choose option 2 as we are using a custom endpoint
-4. Type your `<vault_acme_url>` and don't use external account binding.
+4. Type your `<openbao_acme_url>` and don't use external account binding.
 5. Configure ACME hostname `pvenode config set --acme domains="<proxmox_domains>"`
 6. Order a certificate `pvenode acme cert order`
 

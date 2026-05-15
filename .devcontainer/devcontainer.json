@@ -11,10 +11,6 @@
     "ghcr.io/va-h/devcontainers-features/uv:1": {},
     "ghcr.io/devcontainers/features/rust:1": {},
     "ghcr.io/audacioustux/devcontainers/taskfile:1": {},
-    "ghcr.io/devcontainers-extra/features/packer-asdf:2": {
-      // datasource=github-tags depName=hashicorp/packer
-      "version": "1.14.2"
-    },
     "ghcr.io/devcontainers/features/kubectl-helm-minikube:1": {
       "version": "latest"
     },
@@ -45,11 +41,9 @@
         "mrmlnc.vscode-json5",
         "coolbear.systemd-unit-file",
         "redhat.ansible",
-        "hashicorp.hcl",
         "ms-kubernetes-tools.vscode-kubernetes-tools",
         "DavidAnson.vscode-markdownlint",
         "ms-python.python",
-        "medo64.render-crlf",
         "redhat.vscode-yaml",
         "github.vscode-github-actions",
         "donjayamanne.githistory",

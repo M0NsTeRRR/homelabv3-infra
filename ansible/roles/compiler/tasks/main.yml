@@ -1,7 +1,0 @@
----
-- name: "Remove read/execution for others on some binaries"
-  ansible.builtin.file:
-    name: "{{ item }}"
-    mode: o-rx
-    state: file
-  with_items: "{{ compiler_binary_path }}"

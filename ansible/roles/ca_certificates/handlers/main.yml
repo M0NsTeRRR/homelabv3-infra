@@ -1,8 +1,0 @@
----
-- name: Update ca-certificates
-  ansible.builtin.command: /usr/sbin/update-ca-certificates
-  retries: 3
-  delay: 3
-  register: result
-  until: result.rc == 0
-  changed_when: true

@@ -9,14 +9,5 @@ Just rebuild the container
 2. Update python packages
 
     ```sh
-    source venv/bin/activate
-    python3 -m pip install --upgrade pip
-    pip install --upgrade '.[ansible,octodns,documentation]'
-    ```
-
-3. Update packer plugins
-
-    ```sh
-    cd packer
-    packer init --upgrade templates/ubuntu
+    uv --sync-extras
     ```

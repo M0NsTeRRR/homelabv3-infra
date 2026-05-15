@@ -105,8 +105,6 @@ nav:
       - Upgrade: getting-started/upgrade.md
   - Guide:
       - Introduction: guide/index.md
-      - Packer: guide/packer/index.md
-      - Ansible: guide/ansible/index.md
       - Kubernetes: guide/kubernetes/index.md
       - Flux: guide/flux/index.md
       - Octodns: guide/octodns/index.md

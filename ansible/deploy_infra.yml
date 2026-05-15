@@ -1,22 +1,4 @@
 ---
-- name: Configure base infra
-  hosts: all,!cloud,!kubernetes
-  become: true
-  roles:
-    - self_signed_cert
-    - lego
-    - opentelemetry_collector
-
-- name: Configure DNS servers
-  hosts: dns
-  become: true
-  roles:
-    - postgresql
-    - caddy
-    - dnsdist
-    - powerdns_recursor
-    - powerdns_authoritative
-
 - name: Configure Vault unseal
   hosts: dns
   become: true

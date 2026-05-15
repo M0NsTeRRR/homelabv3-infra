@@ -7,10 +7,8 @@ systemd_timesyncd_ntp:
 
 systemd_resolved_dnssec: false
 systemd_resolved_dns:
-  - 192.168.10.21#dns1.unicornafk.fr
-  - 192.168.10.22#dns2.unicornafk.fr
-  - 2a0c:b641:2c0:110::21#dns1.unicornafk.fr
-  - 2a0c:b641:2c0:110::22#dns2.unicornafk.fr
+  - 192.168.6.1
+  - 2a0c:b641:2c0:106::1
 systemd_resolved_fallback_dns:
   - 9.9.9.9#dns.quad9.net
   - 149.112.112.112#dns.quad9.net

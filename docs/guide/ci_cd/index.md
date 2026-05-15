@@ -8,11 +8,9 @@
 
 | Workflow                | Description                                     |
 | ----------------------- | ----------------------------------------------- |
-| `ansible-lint.yml`      | Lint Ansible configuration                      |
 | `doc.yml`               | Deploy generic configuration used by every VM   |
 | `kubernetes-lint.yml`   | Lint Kubernetes configuration                   |
 | `octodns.yml`           | Lint Octodns and deploy Octodns configuration   |
-| `packer-lint.yml`       | Lint Packer configuration                       |
 | `renovatebot-check.yml` | Lint Renovatebot configuration                  |
 
 ## Usage

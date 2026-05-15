@@ -1,6 +1,0 @@
----
-# grub_pexpect_version:
-grub_pexpect_package_state: latest
-grub_venv: "/tmp/venv_grub"
-grub_user: admin
-grub_password: password

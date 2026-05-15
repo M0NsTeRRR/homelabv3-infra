@@ -13,10 +13,9 @@
 
 1. Install (versions are pinned in configuration files)
 
-    * [Uv](https://docs.astral.sh/uv/getting-started/installation/)
-    * [Jq](https://jqlang.org/download/)
+    * [uv](https://docs.astral.sh/uv/getting-started/installation/)
+    * [yq](https://mikefarah.gitbook.io/yq#install)
     * [Task](https://taskfile.dev/installation/)
-    * [Packer](https://developer.hashicorp.com/packer/install)
     * [Kubectl](https://kubernetes.io/docs/tasks/tools/)
     * [Kustomize](https://kubectl.docs.kubernetes.io/installation/kustomize/)
     * [Helm](https://helm.sh/docs/intro/install/)
@@ -37,17 +36,4 @@
     ```sh
     sudo cp ssl/*.crt /usr/local/share/ca-certificates
     sudo update-ca-certificates
-    ```
-
-4. Init packer plugins
-
-    ```sh
-    cd packer
-    packer init templates/ubuntu
-    ```
-
-5. Install helm plugins
-
-    ```sh
-    helm plugin install https://github.com/databus23/helm-diff
     ```

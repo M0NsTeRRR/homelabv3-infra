@@ -3,26 +3,9 @@ ap1:
     value: "192.168.20.51"
   - type: AAAA
     value: "2a0c:b641:02c0:120::51"
-dhcp1:
-  - type: A
-    value: "192.168.10.23"
-  - type: AAAA
-    value: "2a0c:b641:02c0:110::23"
-dhcp2:
-  - type: A
-    value: "192.168.10.24"
-  - type: AAAA
-    value: "2a0c:b641:02c0:110::24"
-dns1:
-  - type: A
-    value: "192.168.10.21"
-  - type: AAAA
-    value: "2a0c:b641:02c0:110::21"
-dns2:
-  - type: A
-    value: "192.168.10.22"
-  - type: AAAA
-    value: "2a0c:b641:02c0:110::22"
+dns:
+  - type: CNAME
+    value: r1.unicornafk.fr.
 grandstream:
   - type: A
     value: "192.168.50.81"
@@ -111,16 +94,6 @@ r2:
     value: "192.168.6.3"
   - type: AAAA
     value: "2a0c:b641:02c0:106::3"
-rr1:
-  - type: A
-    value: "192.168.5.13"
-  - type: AAAA
-    value: "2a0c:b641:02c0:105::d"
-rr2:
-  - type: A
-    value: "192.168.5.17"
-  - type: AAAA
-    value: "2a0c:b641:02c0:105::11"
 samsung-tv:
   - type: A
     value: "192.168.50.91"
