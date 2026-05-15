@@ -24,24 +24,24 @@ Repository = "https://github.com/M0NsTeRRR/homelabv3-infra"
 
 [project.optional-dependencies]
 ansible = [
-  "ansible-core~=2.19.0",
-  "ansible-lint~=25.12.2",
+  "ansible-core~=2.20.5",
+  "ansible-lint~=26.4.0",
   "dnspython~=2.8.0",
   "netaddr~=1.3.0",
-  "cryptography~=46.0.3",
+  "cryptography~=48.0.0",
   "passlib~=1.7.4",
   # https://foss.heptapod.net/python-libs/passlib/-/issues/190
   "bcrypt~=4.0.1",
-  "requests~=2.32.5",
-  "kubernetes~=34.1.0",
+  "requests~=2.34.2",
+  "kubernetes~=35.0.0",
   "PyYAML~=6.0.3",
   "jsonpatch~=1.33",
 ]
-documentation = ["mkdocs-material[imaging]~=9.7.1", "pytz~=2025.2"]
+documentation = ["mkdocs-material[imaging]~=9.7.6", "pytz~=2026.2"]
 octodns = [
   "octodns~=1.15.0",
   "octodns_scaleway~=0.0.4",
-  "octodns-mikrotik~=0.1.1",
+  "octodns-mikrotik~=0.1.2",
 ]
 
 [tool.uv]
