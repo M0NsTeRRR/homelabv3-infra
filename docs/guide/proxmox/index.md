@@ -6,15 +6,19 @@
 
 ## Deploy a VM on Proxmox
 
+1. Generate flatcar ignitions file `task flatcar:generate-ignitions`
+
+2. Log in to Proxmox via SSH and create the VMs
 ```bash
 export VM_ID=XX
 export VM_NAME=XX
 export VM_STORAGE=XX
 curl -LO https://stable.release.flatcar-linux.net/amd64-usr/current/flatcar_production_proxmoxve_image.img
+# Write the corresponding Ignition file from ./flatcar/output to the file below
 vi /var/lib/vz/snippets/vm-$VM_ID-user-data
 qm create $VM_ID --name $VM_NAME --cores 12 --cpu host --memory 51200 --net0 "virtio,bridge=vmbr0,firewall=0,tag=10,queues=12" --ipconfig0 "ip=dhcp"
 qm disk import $VM_ID flatcar_production_proxmoxve_image.img $VM_STORAGE
-qm set $VM_ID --scsi0 $VM_STORAGE:100,iothread=1,ssd=1,discard=on
+qm set $VM_ID --scsi0 $VM_STORAGE:vm-$VM_ID-disk-0,iothread=1,ssd=1,discard=on
 qm set $VM_ID --boot order=scsi0
 qm set $VM_ID --efidisk0 $VM_STORAGE:1,efitype=4m,size=4M
 qm set $VM_ID --bios ovmf
