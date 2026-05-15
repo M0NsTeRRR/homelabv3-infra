@@ -3,16 +3,12 @@
 version: "3"
 
 vars:
-  packer_dir: "{{.TASKDIR}}/packer"
   ansible_dir: "{{.TASKDIR}}/ansible"
   flatcar_dir: "{{.TASKDIR}}/flatcar"
   octodns_dir: "{{.TASKDIR}}/octodns"
   kubernetes_dir: "{{.TASKDIR}}/kubernetes"
 
 includes:
-  packer:
-    taskfile: .taskfiles/packer
-    dir: "{{.packer_dir}}"
   ansible:
     taskfile: .taskfiles/ansible
     dir: "{{.ansible_dir}}"

@@ -1,0 +1,11 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+---
+version: "3"
+
+tasks:
+  openbao:
+    desc: Setup openbao
+    cmd: ansible-playbook deploy_infra.yml --limit openbao
+  generate_certs:
+    desc: Setup generate_certs
+    cmd: ansible-playbook playbooks/generate_certs.yml
