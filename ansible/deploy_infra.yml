@@ -1,10 +1,4 @@
 ---
-- name: Configure Vault unseal
-  hosts: dns
-  become: true
-  roles:
-    - vault_unseal
-
 - name: Configure kubernetes
   hosts: kubernetes[0]
   become: true

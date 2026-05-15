@@ -1,9 +1,4 @@
 ---
-kubernetes_vip_url: "kubernetes.unicornafk.fr"
-kube_vip_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
-kube_vip_master_group: kubernetes_master
-kube_vip_address: "192.168.10.80,2a0c:b641:2c0:110::80"
-kube_vip_interface: enp6s18
 openbao_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
 openbao_init_output_file_path: "{{ root_dir_role_path }}/openbao.json.secrets"
 openbao_ca_filename: "{{ ca_certificates_local_path_ca_certificate }}"
