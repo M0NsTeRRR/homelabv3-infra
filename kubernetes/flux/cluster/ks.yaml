@@ -8,7 +8,6 @@ metadata:
 spec:
   deletionPolicy: WaitForTermination
   interval: 1h
-  path: ./kubernetes/apps
   patches:
     - # Add Kustomization defaults for all child Kustomizations
       patch: |-
@@ -46,6 +45,7 @@ spec:
       target:
         group: kustomize.toolkit.fluxcd.io
         kind: Kustomization
+  path: ./kubernetes/apps
   prune: true
   sourceRef:
     kind: GitRepository
