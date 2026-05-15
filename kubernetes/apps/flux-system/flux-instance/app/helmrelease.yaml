@@ -10,10 +10,9 @@ spec:
     name: flux-instance
   interval: 1h
   values:
+    commonAnnotations:
+      fluxcd.controlplane.io/reconcileArtifactEvery: 1h
     instance:
-      distribution:
-        artifact: oci://ghcr.io/controlplaneio-fluxcd/flux-operator-manifests:v0.38.1
-        version: 2.x
       cluster:
         networkPolicy: false
       sync:
@@ -61,7 +60,7 @@ spec:
                       - name: manager
                         resources:
                           limits:
-                            memory: 1Gi
+                            memory: 2Gi
             target:
               kind: Deployment
               name: (kustomize-controller|helm-controller|source-controller)
@@ -107,11 +106,11 @@ spec:
             target:
               kind: Deployment
               name: helm-controller
-          - # Disable chart digest tracking https://github.com/fluxcd/helm-controller/pull/1212
+          - # Default to retry on failure and disable chart digest tracking https://github.com/fluxcd/helm-controller/pull/1212
             patch: |
               - op: add
                 path: /spec/template/spec/containers/0/args/-
-                value: --feature-gates=DisableChartDigestTracking=true
+                value: --feature-gates=DefaultToRetryOnFailure=true,DisableChartDigestTracking=true
             target:
               kind: Deployment
               name: helm-controller

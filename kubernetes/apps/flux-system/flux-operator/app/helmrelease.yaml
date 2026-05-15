@@ -12,3 +12,33 @@ spec:
   values:
     serviceMonitor:
       create: true
+    web:
+      config:
+        authentication:
+          type: Anonymous
+          anonymous:
+            username: flux
+            groups:
+              - flux-admin
+      ingress:
+        enabled: true
+        annotations:
+          cert-manager.io/cluster-issuer: "openbao"
+          cert-manager.io/private-key-algorithm: "RSA"
+          cert-manager.io/private-key-size: "4096"
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Other
+          gethomepage.dev/name: Flux
+          gethomepage.dev/description: Open and extensible continuous delivery solution for Kubernetes. Powered by GitOps Toolkit.
+        hosts:
+          - host: &host flux.unicornafk.fr
+            paths:
+              - path: /
+                pathType: ImplementationSpecific
+        tls:
+          - hosts:
+              - *host
+            secretName: flux.unicornafk.fr-tls
+        ingressClassName: ingress-internal
+      networkPolicy:
+        create: false
