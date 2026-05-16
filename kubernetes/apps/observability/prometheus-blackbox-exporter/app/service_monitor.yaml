@@ -31,11 +31,9 @@ spec:
         - https://server1.unicornafk.fr:8006
         - https://server2.unicornafk.fr:8006
         - https://server3.unicornafk.fr:8006
-        - https://dns1.unicornafk.fr
-        - https://dns2.unicornafk.fr
         - https://home-assistant.unicornafk.fr
         - https://nas.unicornafk.fr
-        - https://nas.unicornafk.fr:9002
+        - https://nas.unicornafk.fr:30293
         - https://openbao.unicornafk.fr
   interval: 5s
   module: http_2xx

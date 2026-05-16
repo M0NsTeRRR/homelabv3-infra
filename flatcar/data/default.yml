@@ -10,13 +10,13 @@ systemd_resolved_dns:
   - 192.168.6.1
   - 2a0c:b641:2c0:106::1
 systemd_resolved_fallback_dns:
-  - 9.9.9.9#dns.quad9.net
-  - 149.112.112.112#dns.quad9.net
-  - 2620:fe::fe#dns.quad9.net
-  - 2620:fe::9#dns.quad9.net
+  - 9.9.9.9
+  - 149.112.112.112
+  - 2620:fe::fe
+  - 2620:fe::9
 systemd_resolved_domains:
   - unicornafk.fr
-systemd_resolved_dot: true
+systemd_resolved_dot: false
 
 k3s_server: true
 k3s_join_url: https://192.168.10.81:6443
