@@ -19,6 +19,7 @@ vi /var/lib/vz/snippets/vm-$VM_ID-user-data
 qm create $VM_ID --name $VM_NAME --cores 12 --cpu host --memory 51200 --net0 "virtio,bridge=vmbr0,firewall=0,tag=10,queues=12" --ipconfig0 "ip=dhcp"
 qm disk import $VM_ID flatcar_production_proxmoxve_image.img $VM_STORAGE
 qm set $VM_ID --scsi0 $VM_STORAGE:vm-$VM_ID-disk-0,iothread=1,ssd=1,discard=on
+qm resize $VM_ID scsi0 100G
 qm set $VM_ID --boot order=scsi0
 qm set $VM_ID --efidisk0 $VM_STORAGE:1,efitype=4m,size=4M
 qm set $VM_ID --bios ovmf

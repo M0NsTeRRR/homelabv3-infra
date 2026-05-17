@@ -75,3 +75,6 @@ systemd:
     - name: ca-certificates.service
       enabled: true
       contents_local: files/ca-certificates.service
+kernel_arguments:
+  should_exist:
+    - fips=1
