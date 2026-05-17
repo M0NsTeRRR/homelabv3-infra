@@ -196,7 +196,7 @@ public_openbao_datas:
   - path: auth/kubernetes/config
     data:
       kubernetes_host: "https://10.43.0.1:443"
-  - path: auth/kubernetes/role/cert-manager
+  - path: auth/kubernetes/role/cert-manager-openbao
     data:
       bound_service_account_names: cert-manager-openbao
       bound_service_account_namespaces: cert-manager
