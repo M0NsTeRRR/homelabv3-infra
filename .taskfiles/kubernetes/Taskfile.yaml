@@ -34,4 +34,4 @@ tasks:
     desc: Init openbao
     cmd: |
       cd ../ansible
-      ansible-playbook deploy_infra.yml --limit kubernetes
+      uv run ansible-playbook deploy_infra.yml --limit kubernetes

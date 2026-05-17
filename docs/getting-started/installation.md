@@ -13,6 +13,7 @@
 
 1. Install (versions are pinned in configuration files)
 
+    * openssl
     * [uv](https://docs.astral.sh/uv/getting-started/installation/)
     * [yq](https://mikefarah.gitbook.io/yq#install)
     * [Task](https://taskfile.dev/installation/)
