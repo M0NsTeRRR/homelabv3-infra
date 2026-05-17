@@ -25,42 +25,42 @@ spec:
         image:
           repository: ghcr.io/mirceanton/external-dns-provider-mikrotik
           tag: v1.6.0
-      env:
-        - name: LOG_FORMAT
-          value: json
-        - name: EXTERNAL_DNS_INGRESS_CLASS
-          value: ingress-internal
-        - name: EXTERNAL_DNS_DEFAULT_TARGETS
-          value: |-
-            192.168.10.101
-            2a0c:b641:2c0:110::101
-        - name: EXTERNAL_DNS_TLS_CA
-          value: /etc/external-dns/ssl/ca.crt
-        - name: MIKROTIK_BASEURL
-          valueFrom:
-            secretKeyRef:
-              name: external-dns-openbao
-              key: MIKROTIK_BASEURL
-        - name: MIKROTIK_CA_CERT
-          value: /etc/external-dns/ssl/ca.crt
-        - name: MIKROTIK_USERNAME
-          valueFrom:
-            secretKeyRef:
-              name: external-dns-openbao
-              key: MIKROTIK_USERNAME
-        - name: MIKROTIK_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              name: external-dns-openbao
-              key: MIKROTIK_PASSWORD
-      extraVolumes:
-        - name: "homelab-ca"
-          configMap:
-            name: "homelab-ca"
-      extraVolumeMounts:
-        - name: "homelab-ca"
-          mountPath: /etc/external-dns/ssl
-          readOnly: true
+        env:
+          - name: LOG_FORMAT
+            value: json
+          - name: EXTERNAL_DNS_INGRESS_CLASS
+            value: ingress-internal
+          - name: EXTERNAL_DNS_DEFAULT_TARGETS
+            value: |-
+              192.168.10.101
+              2a0c:b641:2c0:110::101
+          - name: EXTERNAL_DNS_TLS_CA
+            value: /etc/external-dns/ssl/ca.crt
+          - name: MIKROTIK_BASEURL
+            valueFrom:
+              secretKeyRef:
+                name: external-dns-openbao
+                key: MIKROTIK_BASEURL
+          - name: MIKROTIK_CA_CERT
+            value: /etc/external-dns/ssl/ca.crt
+          - name: MIKROTIK_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: external-dns-openbao
+                key: MIKROTIK_USERNAME
+          - name: MIKROTIK_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: external-dns-openbao
+                key: MIKROTIK_PASSWORD
+        extraVolumeMounts:
+          - name: "homelab-ca"
+            mountPath: /etc/external-dns/ssl
+            readOnly: true
+    extraVolumes:
+      - name: "homelab-ca"
+        configMap:
+          name: "homelab-ca"
     service:
       ipFamilyPolicy: "PreferDualStack"
     serviceMonitor:
