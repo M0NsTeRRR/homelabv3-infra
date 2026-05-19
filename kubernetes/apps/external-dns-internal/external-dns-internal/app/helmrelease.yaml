@@ -30,6 +30,8 @@ spec:
             value: json
           - name: EXTERNAL_DNS_INGRESS_CLASS
             value: ingress-internal
+          - name: EXTERNAL_DNS_FORCE_DEFAULT_TARGETS
+            value: true
           - name: EXTERNAL_DNS_DEFAULT_TARGETS
             value: |-
               192.168.10.101
