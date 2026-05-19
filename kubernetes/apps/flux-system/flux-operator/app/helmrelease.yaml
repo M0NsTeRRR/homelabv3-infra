@@ -39,6 +39,6 @@ spec:
           - hosts:
               - *host
             secretName: flux.unicornafk.fr-tls
-        ingressClassName: ingress-internal
+        className: ingress-internal
       networkPolicy:
         create: false
