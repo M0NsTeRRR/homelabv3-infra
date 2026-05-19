@@ -11,3 +11,7 @@
       - flags: 0
         tag: issue
         value: letsencrypt.org
+  - type: MX
+    values:
+      - exchange: .
+        preference: 0

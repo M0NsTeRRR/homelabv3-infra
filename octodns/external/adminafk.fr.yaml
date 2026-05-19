@@ -33,6 +33,12 @@ _dmarc.mail:
 _github-pages-challenge-M0NsTeRRR:
   - type: TXT
     value: 3d8e8d04a6f41d4c7308cb45b236e9
+_smtp._tls:
+  - type: TXT
+    value: v=TLSRPTv1\; rua=mailto:security@adminafk.fr\;"
+_smtp._tls.mail:
+  - type: TXT
+    value: v=TLSRPTv1\; rua=mailto:security@adminafk.fr\;"
 dkim02._domainkey.mail:
   - type: CNAME
     value: dkim02._domainkey.alias.proton.me.

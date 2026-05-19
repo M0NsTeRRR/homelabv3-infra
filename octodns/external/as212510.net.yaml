@@ -27,6 +27,9 @@
 _dmarc:
   - type: TXT
     value: v=DMARC1\; p=reject\; aspf=s\; adkim=s\; rua=mailto:noc@as21250.net\; ruf=mailto:noc@as21250.net\;
+_smtp._tls:
+  - type: TXT
+    value: v=TLSRPTv1\; rua=mailto:noc@adminafk.fr\;"
 protonmail2._domainkey:
   - type: CNAME
     value: protonmail2.domainkey.dgnik3qjnqlslo3wp5cn3stwn3stngzrfru5a6iriojittyaqllcq.domains.proton.ch.
