@@ -25,7 +25,7 @@ spec:
       - name: EXTERNAL_DNS_INGRESS_CLASS
         value: ingress-external
       - name: EXTERNAL_DNS_FORCE_DEFAULT_TARGETS
-        value: true
+        value: "true"
       - name: EXTERNAL_DNS_DEFAULT_TARGETS
         value: |-
           82.65.135.80
