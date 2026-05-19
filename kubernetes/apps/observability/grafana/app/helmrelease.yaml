@@ -134,12 +134,6 @@ spec:
           datasource: *datasource
         Cert-manager:
           url: https://gitlab.com/uneeq-oss/cert-manager-mixin/-/raw/master/dashboards/cert-manager.json
-        Dnsdist:
-          gnetId: 20422
-          revision: 4
-          datasource:
-            - name: DS_PROMETHEUS
-              value: *datasource
         External-dns:
           gnetId: 15038
           revision: 3
@@ -159,24 +153,6 @@ spec:
         Flux2:
           gnetId: 16714
           revision: 1
-          datasource:
-            - name: DS_PROMETHEUS
-              value: *datasource
-        Kea-exporter:
-          gnetId: 12688
-          revision: 4
-          datasource:
-            - name: DS_PROMETHEUS
-              value: *datasource
-        Powerdns-authoritative:
-          gnetId: 20445
-          revision: 3
-          datasource:
-            - name: DS_PROMETHEUS
-              value: *datasource
-        Powerdns-recursor:
-          gnetId: 20448
-          revision: 3
           datasource:
             - name: DS_PROMETHEUS
               value: *datasource

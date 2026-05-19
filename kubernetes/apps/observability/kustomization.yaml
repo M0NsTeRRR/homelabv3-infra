@@ -7,7 +7,6 @@ namespace: observability
 resources:
   - ./namespace.yaml
   - ./grafana/ks.yaml
-  - ./kea-exporter/ks.yaml
   - ./kube-prometheus-stack/ks.yaml
   - ./opentelemetry-operator/ks.yaml
   - ./prometheus-blackbox-exporter/ks.yaml
