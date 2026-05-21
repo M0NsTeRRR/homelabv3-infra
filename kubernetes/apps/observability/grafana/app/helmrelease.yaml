@@ -134,6 +134,26 @@ spec:
           datasource: *datasource
         Cert-manager:
           url: https://gitlab.com/uneeq-oss/cert-manager-mixin/-/raw/master/dashboards/cert-manager.json
+        Envoy-downstream:
+          gnetId: 24458
+          revision: 3
+          datasource: *datasource
+        Envoy-gateway:
+          gnetId: 24460
+          revision: 1
+          datasource: *datasource
+        Envoy-overview:
+          gnetId: 24459
+          revision: 3
+          datasource: *datasource
+        Envoy-proxy:
+          gnetId: 23239
+          revision: 1
+          datasource: *datasource
+        Envoy-upstream:
+          gnetId: 24457
+          revision: 4
+          datasource: *datasource
         External-dns:
           gnetId: 15038
           revision: 3
