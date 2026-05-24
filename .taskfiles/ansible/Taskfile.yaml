@@ -8,4 +8,4 @@ tasks:
     cmd: ansible-playbook deploy_infra.yml --limit openbao
   generate_certs:
     desc: Setup generate_certs
-    cmd: ansible-playbook playbooks/generate_certs.yml
+    cmd: uv run ansible-playbook playbooks/generate-certs.yml

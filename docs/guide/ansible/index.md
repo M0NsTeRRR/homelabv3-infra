@@ -17,4 +17,3 @@ Fill `.vault_password.txt` at root with ansible vault password used.
 uv run task ansible:<openbao|generate_certs>
 ```
 
-!!! info "KUBECONFIG environment variable is hardcoded to `/home/vscode/.kube/homelab` in `.devcontainer/Dockerfile` and context is set to `default` in `.devcontainer/postCreateCommand.sh`"

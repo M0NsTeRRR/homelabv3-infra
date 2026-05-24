@@ -43,7 +43,7 @@ You can find all details here: <https://cecill.info/licences/Licence_CeCILL_V2.1
 
 # Credits
 
-Copyright © Ludovic Ortega, 2023
+Copyright © Ludovic Ortega, 2026
 
 Contributor(s):
 

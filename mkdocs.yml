@@ -4,7 +4,7 @@ site_author: Ludovic Ortega
 site_description: >-
   Homelab documentation
 repo_url: https://github.com/M0NsTeRRR/homelabv3-infra
-copyright: Copyright © Ludovic Ortega, 2023
+copyright: Copyright © Ludovic Ortega, 2026
 edit_uri: edit/main/docs/
 extra:
   social:
@@ -99,20 +99,18 @@ nav:
       - index.md
       - Architecture: home/architecture.md
       - Choices: home/choices.md
-  - Getting started:
-      - Introduction: getting-started/index.md
-      - Installation: getting-started/installation.md
-      - Upgrade: getting-started/upgrade.md
+  - Getting started: getting-started/index.md
   - Guide:
       - Introduction: guide/index.md
-      - Kubernetes: guide/kubernetes/index.md
+      - Ansible: guide/ansible/index.md
+      - CI/CD: guide/ci_cd/index.md
+      - DNS Blocklist: guide/dns_blocklist/index.md
       - Flux: guide/flux/index.md
+      - Kubernetes: guide/kubernetes/index.md
       - Octodns: guide/octodns/index.md
       - Renovatebot: guide/renovatebot/index.md
-      - DNS Blocklist: guide/dns_blocklist/index.md
-      - CI/CD: guide/ci_cd/index.md
       - Proxmox: guide/proxmox/index.md
       - Proxmox-exporter: guide/proxmox_exporter/index.md
+      - S3: guide/s3/index.md
       - Snmp-exporter: guide/snmp_exporter/index.md
       - Truenas: guide/truenas/index.md
-      - S3: guide/s3/index.md

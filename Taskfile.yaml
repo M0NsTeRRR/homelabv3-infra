@@ -5,22 +5,24 @@ version: "3"
 vars:
   ansible_dir: "{{.TASKDIR}}/ansible"
   flatcar_dir: "{{.TASKDIR}}/flatcar"
-  octodns_dir: "{{.TASKDIR}}/octodns"
   kubernetes_dir: "{{.TASKDIR}}/kubernetes"
+  octodns_dir: "{{.TASKDIR}}/octodns"
 
 includes:
   ansible:
     taskfile: .taskfiles/ansible
     dir: "{{.ansible_dir}}"
+  docs:
+    taskfile: .taskfiles/docs
   flatcar:
     taskfile: .taskfiles/flatcar
     dir: "{{.flatcar_dir}}"
-  octodns:
-    taskfile: .taskfiles/octodns
-    dir: "{{.octodns_dir}}"
   kubernetes:
     taskfile: .taskfiles/kubernetes
     dir: "{{.kubernetes_dir}}"
+  octodns:
+    taskfile: .taskfiles/octodns
+    dir: "{{.octodns_dir}}"
 
 tasks:
   default: task -l
