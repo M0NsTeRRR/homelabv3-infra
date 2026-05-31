@@ -39,8 +39,10 @@ spec:
         runAsUser: 1000
         runAsGroup: 1000
         fsGroup: 1000
+
     redis:
       enabled: true
+
     server:
       metrics:
         enabled: true
@@ -55,27 +57,24 @@ spec:
           mountPath: /media/public/unicornafk.svg
           subPath: unicornafk.svg
           readOnly: true
-      ingress:
-        enabled: true
-        annotations:
-          cert-manager.io/cluster-issuer: "openbao"
-          cert-manager.io/private-key-algorithm: "RSA"
-          cert-manager.io/private-key-size: "4096"
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/group: Infrastructure
-          gethomepage.dev/name: Authentik
-          gethomepage.dev/description: Identity Provider
-          gethomepage.dev/icon: authentik.png
-        hosts:
-          - &host sso.unicornafk.fr
-        paths:
-          - /
-        pathType: ImplementationSpecific
-        tls:
-          - hosts:
-              - *host
-            secretName: sso.unicornafk.fr-tls
-        ingressClassName: ingress-internal
+
+      route:
+        main:
+          enabled: true
+          kind: HTTPRoute
+          apiVersion: gateway.networking.k8s.io/v1
+          annotations:
+            gethomepage.dev/enabled: "true"
+            gethomepage.dev/group: Infrastructure
+            gethomepage.dev/name: Authentik
+            gethomepage.dev/description: Identity Provider
+            gethomepage.dev/icon: authentik.png
+          parentRefs:
+            - name: internal
+              namespace: gateway
+          hostnames:
+            - sso.unicornafk.fr
+
     prometheus:
       rules:
         enabled: true

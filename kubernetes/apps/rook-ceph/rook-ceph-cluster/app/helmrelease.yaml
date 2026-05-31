@@ -97,20 +97,15 @@ spec:
           parameters:
             # note: objectStoreNamespace and objectStoreName are configured by the chart
             region: eu-west-1
-        ingress:
+        route:
           enabled: true
-          annotations:
-            cert-manager.io/cluster-issuer: "openbao"
-            cert-manager.io/private-key-algorithm: "RSA"
-            cert-manager.io/private-key-size: "4096"
           host:
             name: s3.unicornafk.fr
             path: /
-          tls:
-            - secretName: s3.unicornafk.fr
-              hosts:
-                - s3.unicornafk.fr
-          ingressClassName: ingress-internal
+            pathType: PathPrefix
+          parentRefs:
+            - name: internal
+              namespace: gateway
     cephBlockPools:
       - name: ceph-blockpool
         # see https://github.com/rook/rook/blob/master/Documentation/CRDs/Block-Storage/ceph-block-pool-crd.md#spec for available configuration
@@ -244,6 +239,14 @@ spec:
             hosts:
               - ceph.unicornafk.fr
         ingressClassName: ingress-internal
+      route:
+        host:
+          name: ceph.unicornafk.fr
+          path: /
+          pathType: PathPrefix
+        parentRefs:
+          - name: internal
+            namespace: gateway
     monitoring:
       enabled: true
       createPrometheusRules: true

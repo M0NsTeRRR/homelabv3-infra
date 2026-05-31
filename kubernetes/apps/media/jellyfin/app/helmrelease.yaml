@@ -13,6 +13,7 @@ spec:
     config:
       persistence:
         volumeName: ${APP}
+
     volumes:
       - name: &volume-ca ca-certs
         configMap:
@@ -20,6 +21,7 @@ spec:
       - name: &volume-data data
         persistentVolumeClaim:
           claimName: media-storage
+
     volumeMounts:
       - name: *volume-ca
         mountPath: /etc/ssl/certs/homelab.crt
@@ -34,24 +36,19 @@ spec:
         subPath: tv
         readOnly: true
 
-    ingress:
-      enabled: true
-      annotations:
-        cert-manager.io/cluster-issuer: "openbao"
-        cert-manager.io/private-key-algorithm: "RSA"
-        cert-manager.io/private-key-size: "4096"
-        gethomepage.dev/enabled: "true"
-        gethomepage.dev/group: Media
-        gethomepage.dev/name: Jellyfin
-        gethomepage.dev/description: Media System
-        gethomepage.dev/icon: jellyfin.png
-      hosts:
-        - host: &host jellyfin.unicornafk.fr
-          paths:
-            - path: /
-              pathType: ImplementationSpecific
-      tls:
-        - hosts:
-            - *host
-          secretName: jellyfin.unicornafk.fr-tls
-      ingressClassName: ingress-internal
+    route:
+      main:
+        enabled: true
+        kind: HTTPRoute
+        apiVersion: gateway.networking.k8s.io/v1
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Media
+          gethomepage.dev/name: Jellyfin
+          gethomepage.dev/description: Media System
+          gethomepage.dev/icon: jellyfin.png
+        parentRefs:
+          - name: internal
+            namespace: gateway
+        hostnames:
+          - jellyfin.unicornafk.fr

@@ -1,0 +1,44 @@
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyProxy
+metadata:
+  name: internal
+spec:
+  ipFamily: "DualStack"
+  logging:
+    level:
+      default: info
+  provider:
+    type: Kubernetes
+    kubernetes:
+      envoyDeployment:
+        replicas: 3
+        container:
+          imageRepository: mirror.gcr.io/envoyproxy/envoy
+  telemetry:
+    metrics:
+      prometheus:
+        compression:
+          type: Zstd
+---
+apiVersion: gateway.envoyproxy.io/v1alpha1
+kind: EnvoyProxy
+metadata:
+  name: external
+spec:
+  ipFamily: "DualStack"
+  logging:
+    level:
+      default: info
+  provider:
+    type: Kubernetes
+    kubernetes:
+      envoyDeployment:
+        replicas: 3
+        container:
+          imageRepository: mirror.gcr.io/envoyproxy/envoy
+  telemetry:
+    metrics:
+      prometheus:
+        compression:
+          type: Zstd

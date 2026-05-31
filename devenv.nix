@@ -6,7 +6,7 @@
 }:
 {
   packages = [
-    pkgs.cairo
+    pkgs.cairo # documentation
     pkgs.go-task
     pkgs.butane
     pkgs.minijinja

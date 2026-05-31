@@ -26,6 +26,7 @@ spec:
       - name: &volume-devices hyperglass-devices
         secret:
           secretName: hyperglass-devices-openbao
+
     volumeMounts:
       - name: *volume-config
         mountPath: /etc/hyperglass/config.yaml
@@ -47,6 +48,22 @@ spec:
         mountPath: /etc/hyperglass/unicornafk.svg
         subPath: unicornafk.svg
         readOnly: true
+
+    route:
+      main:
+        enabled: true
+        kind: HTTPRoute
+        apiVersion: gateway.networking.k8s.io/v1
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: ASN
+          gethomepage.dev/name: Hyperglass
+          gethomepage.dev/description: Looking glass
+        parentRefs:
+          - name: external
+            namespace: gateway
+        hostnames:
+          - lg.as212510.net
 
     valkey:
       auth:
@@ -94,22 +111,3 @@ spec:
               for: 1s
               labels:
                 severity: error
-
-    ingress:
-      enabled: true
-      annotations:
-        cert-manager.io/cluster-issuer: letsencrypt
-        gethomepage.dev/enabled: "true"
-        gethomepage.dev/group: ASN
-        gethomepage.dev/name: Hyperglass
-        gethomepage.dev/description: Looking glass
-      hosts:
-        - host: &host lg.as212510.net
-          paths:
-            - path: /
-              pathType: ImplementationSpecific
-      tls:
-        - hosts:
-            - *host
-          secretName: lg.as212510.net-tls
-      ingressClassName: ingress-external

@@ -10,8 +10,6 @@ spec:
     name: routinator
   interval: 1h
   values:
-    podAnnotations:
-      reloader.stakater.com/auto: "true"
     rtrService:
       annotations:
         lbipam.cilium.io/ips: 192.168.10.103,2a0c:b641:2c0:110::103

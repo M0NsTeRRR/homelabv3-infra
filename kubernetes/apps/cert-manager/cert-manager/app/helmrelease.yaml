@@ -10,17 +10,18 @@ spec:
     name: cert-manager
   interval: 1h
   values:
+    config:
+      enableGatewayAPI: true
+      enableGatewayAPIListenerSet: true
+      featureGates:
+        ListenerSets: true
     crds:
       enabled: true
-    extraArgs:
-      - enable-gateway-api
-    serviceIPFamilyPolicy: "PreferDualStack"
     webhook:
       networkPolicy:
         enabled: false
       serviceIPFamilyPolicy: "PreferDualStack"
-    deploymentAnnotations:
-      reloader.stakater.com/auto: "true"
+    serviceIPFamilyPolicy: "PreferDualStack"
     prometheus:
       enabled: true
       servicemonitor:

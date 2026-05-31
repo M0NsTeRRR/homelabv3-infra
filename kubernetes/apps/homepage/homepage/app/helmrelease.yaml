@@ -66,19 +66,13 @@ spec:
         subPath: background.svg
         readOnly: true
 
-    ingress:
-      enabled: true
-      annotations:
-        cert-manager.io/cluster-issuer: "openbao"
-        cert-manager.io/private-key-algorithm: "RSA"
-        cert-manager.io/private-key-size: "4096"
-      hosts:
-        - host: &host homepage.unicornafk.fr
-          paths:
-            - path: /
-              pathType: ImplementationSpecific
-      tls:
-        - hosts:
-            - *host
-          secretName: homepage.unicornafk.fr-tls
-      ingressClassName: ingress-internal
+    route:
+      main:
+        enabled: true
+        kind: HTTPRoute
+        apiVersion: gateway.networking.k8s.io/v1
+        parentRefs:
+          - name: internal
+            namespace: gateway
+        hostnames:
+          - homepage.unicornafk.fr

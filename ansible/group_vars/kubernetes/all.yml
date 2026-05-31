@@ -185,10 +185,10 @@ public_openbao_datas:
   - path: pki/roles/cert-manager-openbao
     data:
       allow_any_name: true
-      ttl: 90d
-      max_ttl: 365d
-      key_type: rsa
-      key_bits: 4096
+      ttl: 7d
+      max_ttl: 14d
+      key_type: ec
+      key_bits: 521
       signature_bits: 512
       organization: "{{ organization }}"
       country: "{{ country }}"

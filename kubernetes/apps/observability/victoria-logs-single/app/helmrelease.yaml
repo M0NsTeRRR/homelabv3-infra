@@ -15,20 +15,12 @@ spec:
         size: 100Gi
       service:
         ipFamilyPolicy: "PreferDualStack"
-      ingress:
+      route:
         enabled: true
-        annotations:
-          cert-manager.io/cluster-issuer: "openbao"
-          cert-manager.io/private-key-algorithm: "RSA"
-          cert-manager.io/private-key-size: "4096"
-        hosts:
-          - name: victoria-logs.unicornafk.fr
-            path: /
-        pathType: ImplementationSpecific
-        ingressClassName: "ingress-internal"
-        tls:
-          - secretName: victoria-logs.unicornafk.fr
-            hosts:
-              - victoria-logs.unicornafk.fr
+        parentRefs:
+          - name: internal
+            namespace: gateway
+        hostnames:
+          - victoria-logs.unicornafk.fr
       serviceMonitor:
         enabled: true

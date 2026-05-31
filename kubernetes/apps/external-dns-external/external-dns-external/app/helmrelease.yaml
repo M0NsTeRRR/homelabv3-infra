@@ -11,25 +11,27 @@ spec:
   interval: 1h
   values:
     nameOverride: "external-dns-external"
-    deploymentAnnotations:
+    logFormat: json
+    podAnnotations:
       reloader.stakater.com/auto: "true"
     registry: txt
     txtOwnerId: "homelab.k8s"
     triggerLoopOnEvent: true
     policy: sync
+    sources:
+      - crd
+      - gateway-httproute
+      - gateway-tlsroute
+      - service
     provider: "scaleway"
     domainFilters:
       - adminafk.fr
       - as212510.net
+    extraArgs:
+      - --gateway-name=external
+      - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
+      - --crd-source-kind=DNSEndpoint
     env:
-      - name: EXTERNAL_DNS_INGRESS_CLASS
-        value: ingress-external
-      - name: EXTERNAL_DNS_FORCE_DEFAULT_TARGETS
-        value: "true"
-      - name: EXTERNAL_DNS_DEFAULT_TARGETS
-        value: |-
-          82.65.135.80
-          2a0c:b641:2c0:110::100
       - name: SCW_ACCESS_KEY
         valueFrom:
           secretKeyRef:

@@ -1,0 +1,57 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: as212510-net-tls
+spec:
+  secretName: as212510-net-tls
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  privateKey:
+    algorithm: ECDSA
+    size: 521
+    rotationPolicy: Always
+  duration: 168h
+  usages: ["digital signature"]
+  dnsNames:
+    - "as212510.net"
+    - "*.as212510.net"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: adminafk-fr-tls
+spec:
+  secretName: adminafk-fr-tls
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+  privateKey:
+    algorithm: ECDSA
+    size: 521
+    rotationPolicy: Always
+  duration: 168h
+  usages: ["digital signature"]
+  dnsNames:
+    - "adminafk.fr"
+    - "*.adminafk.fr"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: unicornafk-fr-tls
+spec:
+  secretName: unicornafk-fr-tls
+  issuerRef:
+    name: openbao
+    kind: ClusterIssuer
+  privateKey:
+    algorithm: ECDSA
+    size: 521
+    rotationPolicy: Always
+  duration: 168h
+  usages: ["digital signature"]
+  dnsNames:
+    - "unicornafk.fr"
+    - "*.unicornafk.fr"
