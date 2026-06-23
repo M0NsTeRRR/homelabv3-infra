@@ -12,21 +12,20 @@ tasks:
           - k8s-3
         task: generate-ignition
         vars:
-          NODE_NAME: "{{.ITEM}}"
+          FLATCAR_NODE_NAME: "{{.ITEM}}"
 
   generate-ignition:
     desc: Generate ignition for one node
-    internal: true
     dotenv:
       - .env
     cmds:
-      - mkdir -p generated/{{.NODE_NAME}}
-      - minijinja-cli templates/hostname.j2 data/default.yml data/hosts/{{.NODE_NAME}}.yml -o generated/hostname
-      - minijinja-cli templates/network.conf.j2 data/default.yml data/hosts/{{.NODE_NAME}}.yml -o generated/network.conf
-      - minijinja-cli templates/resolved.conf.j2 data/default.yml data/hosts/{{.NODE_NAME}}.yml -o generated/resolved.conf
-      - minijinja-cli templates/timesyncd.conf.j2 data/default.yml data/hosts/{{.NODE_NAME}}.yml -o generated/timesyncd.conf
-      - minijinja-cli templates/k3s/config.yaml.j2 data/default.yml data/hosts/{{.NODE_NAME}}.yml -o generated/k3s_config.yaml
-      - minijinja-cli -D k3s_token=$K3S_TOKEN templates/k3s/token.j2 data/default.yml data/hosts/{{.NODE_NAME}}.yml -o generated/k3s_token
-      - butane -d . --pretty --strict base.bu > generated/{{.NODE_NAME}}/base.ign
-      - butane -d . --pretty --strict base.k3s.bu > generated/{{.NODE_NAME}}/base.k3s.ign
-      - butane -d . --pretty --strict k3s-server.bu > output/{{.NODE_NAME}}.ign
+      - mkdir -p generated/{{.FLATCAR_NODE_NAME}}
+      - minijinja-cli templates/hostname.j2 data/default.yml data/hosts/{{.FLATCAR_NODE_NAME}}.yml -o generated/hostname
+      - minijinja-cli templates/network.conf.j2 data/default.yml data/hosts/{{.FLATCAR_NODE_NAME}}.yml -o generated/network.conf
+      - minijinja-cli templates/resolved.conf.j2 data/default.yml data/hosts/{{.FLATCAR_NODE_NAME}}.yml -o generated/resolved.conf
+      - minijinja-cli templates/timesyncd.conf.j2 data/default.yml data/hosts/{{.FLATCAR_NODE_NAME}}.yml -o generated/timesyncd.conf
+      - minijinja-cli templates/k3s/config.yaml.j2 data/default.yml data/hosts/{{.FLATCAR_NODE_NAME}}.yml -o generated/k3s_config.yaml
+      - minijinja-cli -D k3s_token=$K3S_TOKEN templates/k3s/token.j2 data/default.yml data/hosts/{{.FLATCAR_NODE_NAME}}.yml -o generated/k3s_token
+      - butane -d . --pretty --strict base.bu > generated/{{.FLATCAR_NODE_NAME}}/base.ign
+      - butane -d . --pretty --strict base.k3s.bu > generated/{{.FLATCAR_NODE_NAME}}/base.k3s.ign
+      - butane -d . --pretty --strict k3s-server.bu > output/{{.FLATCAR_NODE_NAME}}.ign

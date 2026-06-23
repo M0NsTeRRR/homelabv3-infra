@@ -8,6 +8,8 @@
   packages = [
     pkgs.cairo # documentation
     pkgs.go-task
+    pkgs.incus
+    pkgs.openssl
     pkgs.butane
     pkgs.minijinja
     pkgs.kubectl

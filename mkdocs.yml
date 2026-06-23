@@ -106,11 +106,10 @@ nav:
       - CI/CD: guide/ci_cd/index.md
       - DNS Blocklist: guide/dns_blocklist/index.md
       - Flux: guide/flux/index.md
+      - IncusOS: guide/incusos/index.md
       - Kubernetes: guide/kubernetes/index.md
       - Octodns: guide/octodns/index.md
       - Renovatebot: guide/renovatebot/index.md
-      - Proxmox: guide/proxmox/index.md
-      - Proxmox-exporter: guide/proxmox_exporter/index.md
       - S3: guide/s3/index.md
       - Snmp-exporter: guide/snmp_exporter/index.md
       - Truenas: guide/truenas/index.md

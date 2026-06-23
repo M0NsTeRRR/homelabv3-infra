@@ -176,12 +176,6 @@ spec:
           datasource:
             - name: DS_PROMETHEUS
               value: *datasource
-        Proxmox-exporter:
-          gnetId: 10347
-          revision: 5
-          datasource:
-            - name: DS_PROMETHEUS
-              value: *datasource
         Routinator:
           gnetId: 11922
           revision: 7

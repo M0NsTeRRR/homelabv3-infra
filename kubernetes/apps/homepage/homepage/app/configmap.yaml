@@ -46,18 +46,6 @@ data:
   services.yaml: |-
     ---
     - Infrastructure:
-      - Server1:
-          href: https://server1.unicornafk.fr:8006
-          icon: proxmox.png
-          description: Proxmox
-      - Server2:
-          href: https://server2.unicornafk.fr:8006
-          icon: proxmox.png
-          description: Proxmox
-      - Server3:
-          href: https://server3.unicornafk.fr:8006
-          icon: proxmox.png
-          description: Proxmox
       - NAS:
           href: https://nas.unicornafk.fr
           icon: truenas.png
