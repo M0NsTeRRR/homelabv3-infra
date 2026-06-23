@@ -33,7 +33,7 @@ jobs:
           uv run octodns-validate --config-file=./internal/config.yaml --all
           uv run octodns-validate --config-file=./external/config.yaml --all
         env:
-          SCALEWAY_SECRET_KEY: fake_token
+          INFOMANIAK_TOKEN: fake_token
           MIKROTIK_USER: fake_user
           MIKROTIK_PASSWORD: fake_password
   octodns-deploy:
@@ -62,4 +62,4 @@ jobs:
           cd octodns
           uv run octodns-sync --config-file=./external/config.yaml --doit --force
         env:
-          SCALEWAY_SECRET_KEY: ${{ secrets.SCALEWAY_SECRET_KEY }}
+          INFOMANIAK_TOKEN: ${{ secrets.INFOMANIAK_TOKEN }}

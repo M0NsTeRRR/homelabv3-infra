@@ -20,7 +20,7 @@ Workflows are stored in `.github/workflows` folder.
 
 Configure the following repository secrets in `Actions secrets and variables` :
 
-* `SCALEWAY_SECRET_KEY`
+* `INFOMANIAK_TOKEN`
 
 ### Kube-lint
 

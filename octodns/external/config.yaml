@@ -13,30 +13,29 @@ providers:
     directory: ./external
     default_ttl: 3600
     enforce_order: true
-  scaleway:
-    class: octodns_scaleway.ScalewayProvider
-    token: env/SCALEWAY_SECRET_KEY
-    create_zone: false
+  infomaniak:
+    class: octodns_infomaniak.InfomaniakProvider
+    token: env/INFOMANIAK_TOKEN
 
 zones:
   as212510.net.:
     sources:
       - config
     targets:
-      - scaleway
+      - infomaniak
     processors:
       - ownership
   adminafk.fr.:
     sources:
       - config
     targets:
-      - scaleway
+      - infomaniak
     processors:
       - ownership
   unicornafk.fr.:
     sources:
       - config
     targets:
-      - scaleway
+      - infomaniak
     processors:
       - ownership

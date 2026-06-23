@@ -51,9 +51,9 @@ openbao_policies:
       - path: pki/issue/*
         capabilities:
           - create
-  - name: cert-manager-scaleway
+  - name: cert-manager-webhook-infomaniak
     rules:
-      - path: secret/data/homelab/prod/cert_manager_scaleway
+      - path: secret/data/homelab/prod/cert_manager_webhook_infomaniak
         capabilities:
           - read
   - name: external-dns-internal
@@ -203,11 +203,11 @@ public_openbao_datas:
       audience: "vault://openbao"
       policies: pki
       ttl: 1m
-  - path: auth/kubernetes/role/cert-manager-scaleway
+  - path: auth/kubernetes/role/cert-manager-webhook-infomaniak
     data:
-      bound_service_account_names: cert-manager-scaleway-openbao
-      bound_service_account_namespaces: cert-manager-scaleway
-      policies: cert-manager-scaleway
+      bound_service_account_names: cert-manager-webhook-infomaniak-openbao
+      bound_service_account_namespaces: cert-manager-webhook-infomaniak
+      policies: cert-manager-webhook-infomaniak
       ttl: 1h
   - path: auth/kubernetes/role/external-dns-internal
     data:

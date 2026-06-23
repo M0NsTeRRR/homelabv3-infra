@@ -4,9 +4,6 @@
 
 [Octodns](https://github.com/octodns/octodns) gives the ability to manage DNS agnostically across multiple providers.
 
-## List of supported providers
-
-* [Scaleway](https://www.scaleway.com/en/)
 
 ## Usage
 
@@ -28,9 +25,9 @@ You should not normally use it by hand it's running in a Github action.
 
 Configuration is stored in `octodns/external` folder.
 
-`SCALEWAY_SECRET_KEY` represents the API token to manage your DNS zone
+`INFOMANIAK_TOKEN` represents the API token to manage your DNS zone
 
 ```sh
-export SCALEWAY_SECRET_KEY=<SCALEWAY_SECRET_KEY>
+export INFOMANIAK_TOKEN=<INFOMANIAK_TOKEN>
 uv run task octodns:sync-external
 ```

@@ -12,5 +12,7 @@ spec:
     solvers:
       - dns01:
           webhook:
-            groupName: acme.scaleway.com
-            solverName: scaleway
+            groupName: acme.infomaniak.com
+            solverName: infomaniak
+            config:
+              secretRef: cert-manager-webhook-infomaniak-secret-openbao

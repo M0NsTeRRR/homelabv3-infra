@@ -23,7 +23,7 @@ spec:
       - gateway-httproute
       - gateway-tlsroute
       - service
-    provider: "scaleway"
+    provider: "infomaniak"
     domainFilters:
       - adminafk.fr
       - as212510.net

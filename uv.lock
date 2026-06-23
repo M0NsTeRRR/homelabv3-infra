@@ -461,8 +461,8 @@ documentation = [
 ]
 octodns = [
     { name = "octodns" },
+    { name = "octodns-infomaniak" },
     { name = "octodns-mikrotik" },
-    { name = "octodns-scaleway" },
 ]
 
 [package.metadata]
@@ -477,8 +477,8 @@ requires-dist = [
     { name = "mkdocs-material", extras = ["imaging"], marker = "extra == 'documentation'", specifier = "~=9.7.6" },
     { name = "netaddr", marker = "extra == 'ansible'", specifier = "~=1.3.0" },
     { name = "octodns", marker = "extra == 'octodns'", specifier = "~=1.15.0" },
+    { name = "octodns-infomaniak", marker = "extra == 'octodns'", specifier = "~=0.1.6" },
     { name = "octodns-mikrotik", marker = "extra == 'octodns'", specifier = "~=0.1.2" },
-    { name = "octodns-scaleway", marker = "extra == 'octodns'", specifier = "~=0.0.4" },
     { name = "passlib", marker = "extra == 'ansible'", specifier = "~=1.7.4" },
     { name = "pytz", marker = "extra == 'documentation'", specifier = "~=2026.2" },
     { name = "pyyaml", marker = "extra == 'ansible'", specifier = "~=6.0.3" },
@@ -760,6 +760,19 @@ wheels = [
 ]
 
 [[package]]
+name = "octodns-infomaniak"
+version = "0.1.6"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "octodns" },
+    { name = "requests" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/40/ca/a048e7bbd5052da1df755833d4109cdedae372ac7e23e6beaa2ae6897575/octodns_infomaniak-0.1.6.tar.gz", hash = "sha256:83ec235235466bc00cfd2ae63d864607b687ff26bdb6c385a080d4ec28f6ab8f", size = 20250, upload-time = "2025-05-12T20:46:26.168Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/8d/53/3dc1c3455bada6b891f8624e84f904361d4d5cb3874a1818334109f4b5d4/octodns_infomaniak-0.1.6-py3-none-any.whl", hash = "sha256:f95ca99629fa6848f3be7d088ba0484508fe757af91f1e5d371b86215ee8a092", size = 21545, upload-time = "2025-05-12T20:46:24.003Z" },
+]
+
+[[package]]
 name = "octodns-mikrotik"
 version = "0.1.2"
 source = { registry = "https://pypi.org/simple" }
@@ -770,19 +783,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/28/1a/d7f3dd54a96ae517d3793d2c24850df0e573f71686b8b1739f86a68a1b48/octodns_mikrotik-0.1.2.tar.gz", hash = "sha256:525358f554953f410c9f173bf3935b8c81e25a2df579b956b95e69d2c47b8f51", size = 21560, upload-time = "2026-05-15T16:27:19.083Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/ec/05/2bee82a86e3c2153ab424e8a8f2d7c611d5d1006c2a697088550cacb79f8/octodns_mikrotik-0.1.2-py3-none-any.whl", hash = "sha256:257931995f6e2be64eeae670b86c6b82480404fa564efd23cda9f6d6851259bc", size = 21861, upload-time = "2026-05-15T16:27:17.936Z" },
-]
-
-[[package]]
-name = "octodns-scaleway"
-version = "0.0.4"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "octodns" },
-    { name = "requests" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/04/3b/bcb0dab989673e3119f6d44381af1369786fa0ab06f1b0d3c93f724a300b/octodns-scaleway-0.0.4.tar.gz", hash = "sha256:7c7f71b8282e5433e9b4f1c8c43502045af54a46d35f74a7f64376dbccfa560f", size = 8909, upload-time = "2024-01-08T15:08:43.222Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/53/84/c1a36802c5316a8f40331a045dd9f1ff947b021b248743c0f529cac628ed/octodns_scaleway-0.0.4-py3-none-any.whl", hash = "sha256:9eb73325245e00ea4d52a1a55b040e91c350945ef7de07d8297bad3539254de1", size = 7587, upload-time = "2024-01-08T15:08:41.544Z" },
 ]
 
 [[package]]
