@@ -1,5 +1,5 @@
 interfaces:
-  - name: lan
+  - name: enp3s0
     hwaddr: "1c:83:41:40:6b:73"
     lldp: true
     addresses:

@@ -7,14 +7,16 @@
 ## Install IncusOS
 
 1. Go to the [IncusOS image downloader](https://incusos-customizer.linuxcontainers.org/ui/).
-2. In application configuration `Apply default configuration` must be checked **only** for server1.
+2. In installation target `Wipe the target drive` must be checked.
 3. In target drive identifier, put `wwn`
-4. In the advanced settings, paste the network configuration from `incusos/serverX/network.yaml` (where `X` represents the server number).
-5. Download the ISO.
-6. [Configure the BIOS](https://linuxcontainers.org/incus-os/docs/main/getting-started/installation/physical/).
-7. Boot from the ISO.
-8. Install and reboot
-9. [Connect to IncusOS](https://linuxcontainers.org/incus-os/docs/main/getting-started/access/#connecting-to-incusos)
+4. In application configuration `Apply default configuration` must be checked **only** for server1.
+5. In TLS client certificate copy the output of `incus remote get-client-certificate`
+6. In the advanced settings, paste the network configuration from `incusos/serverX/network.yaml` (where `X` represents the server number).
+7. Download the ISO.
+8. [Configure the BIOS](https://linuxcontainers.org/incus-os/docs/main/getting-started/installation/physical/).
+9. Boot from the ISO.
+10. Install and reboot
+11. [Connect to IncusOS](https://linuxcontainers.org/incus-os/docs/main/getting-started/access/#connecting-to-incusos)
 
 ## Post install setup
 
@@ -22,10 +24,6 @@ Create Volumes
 ```fish
 # Volumes
 incus storage volume create local flatcar
-
-# VM Volumes
-incus admin os system storage create-volume -d '{"pool":"data","name":"vm-volume","use":"incus"}'
-incus storage create vm-storage zfs source=data/vm-volume
 ```
 
 Create Networks
@@ -33,12 +31,6 @@ Create Networks
 incus network create prod parent=enp3s0 vlan=10 --type=physical
 incus network create lab parent=enp3s0 vlan=20 --type=physical
 ```
-
-## Deploy a VM
-
-1. Generate flatcar ignitions file `task flatcar:generate-ignitions`
-
-2. Log in to the server via Sfish and create the VMs
 
 ## Add custom CA certs
 
@@ -140,6 +132,12 @@ devices:
     size: 16GiB
 name: flatcar
 used_by:" | incus profile create flatcar
+```
+
+### Deploy flatcar VM
+
+```fish
+task flatcar:deploy
 ```
 
 ### List hardware ressources
