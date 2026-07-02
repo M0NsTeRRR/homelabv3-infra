@@ -3,8 +3,8 @@ version: 1.1.0
 ignition:
   config:
     merge:
-      - local: base.ign
-      - local: base.k3s.ign
+      - local: generated/base.ign
+      - local: generated/base.k3s.ign
 storage:
   links:
     - path: /etc/systemd/system/multi-user.target.wants/k3s-agent.service

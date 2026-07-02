@@ -5,7 +5,12 @@
   ...
 }:
 {
+  env = {
+    K3S_TOKEN = config.secretspec.secrets.K3S_TOKEN or "";
+  };
+
   packages = [
+    pkgs.secretspec
     pkgs.cairo # documentation
     pkgs.go-task
     pkgs.incus

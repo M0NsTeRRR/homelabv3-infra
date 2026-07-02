@@ -11,3 +11,8 @@ inputs:
     inputs:
       nixpkgs:
         follows: nixpkgs
+
+secretspec:
+  enable: true
+  provider: keyring
+  profile: default

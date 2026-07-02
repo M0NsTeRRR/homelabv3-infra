@@ -20,11 +20,10 @@
 
 Create Volumes
 ```fish
-# EFI volumes
-incus storage volume create local efi
+# Volumes
+incus storage volume create local flatcar
 
 # VM Volumes
-incus admin os system storage edit # paste the storage configuration from `incusos/serverX/storage.yaml` (where `X` represents the server number).
 incus admin os system storage create-volume -d '{"pool":"data","name":"vm-volume","use":"incus"}'
 incus storage create vm-storage zfs source=data/vm-volume
 ```
@@ -60,22 +59,15 @@ In settings page configure the following :
 
 1. Export the env file
 ```fish
-set -gx OVMF_DIR "/opt/incus/share/qemu"
 set -gx CHANNEL "stable"
 set -gx VERSION "4593.2.3" # https://www.flatcar.org/releases/
 set -gx IMAGE_BASENAME "flatcar_production_qemu_uefi_secure"
 # Server1
 set -gx SERVER_NAME "server1"
-set -gx FLATCAR_NODE_NAME "$FLATCAR_NODE_NAME"
-set -gx DISK_ID "nvme-Lexar_SSD_NQ790_2TB_NHM259R004004P220B"
 # Server2
 set -gx SERVER_NAME "server2"
-set -gx FLATCAR_NODE_NAME "k8s-2"
-set -gx DISK_ID "nvme-Lexar_SSD_NQ790_2TB_NHM259R006082P220B"
 # Server3
 set -gx SERVER_NAME "server3"
-set -gx FLATCAR_NODE_NAME "k8s-3"
-set -gx DISK_ID "nvme-Lexar_SSD_NQ790_2TB_NHM259R004004P220B"
 ```
 
 2. Download the image  and associated files
@@ -112,8 +104,8 @@ tar -cvzf metadata.tar.gz metadata.yaml
 6. Import the metadata, the image and the efi code and vars
 ```fish
 incus image import metadata.tar.gz "$IMAGE_BASENAME.img" --alias "flatcar/$VERSION"
-incus storage volume file push $IMAGE_BASENAME"_efi_code.fd" $SERVER_NAME":local" "efi/"$IMAGE_BASENAME"_efi_code.fd"
-incus storage volume file push $IMAGE_BASENAME"_efi_vars.fd" $SERVER_NAME":local" "efi/"$IMAGE_BASENAME"_efi_vars.fd"
+incus storage volume file push $IMAGE_BASENAME"_efi_code.fd" $SERVER_NAME":local" "flatcar/"$IMAGE_BASENAME"_efi_code.fd"
+incus storage volume file push $IMAGE_BASENAME"_efi_vars.fd" $SERVER_NAME":local" "flatcar/"$IMAGE_BASENAME"_efi_vars.fd"
 ```
 
 7. Create the flatcar profile
@@ -124,11 +116,11 @@ config:
   limits.memory: 50GiB
   boot.autostart: true
   raw.apparmor: |-
-    /var/lib/incus/storage-pools/local/custom/default_efi/"$IMAGE_BASENAME"_efi_code.fd rk,
-    /var/lib/incus/storage-pools/local/custom/default_efi/"$IMAGE_BASENAME"_efi_vars.fd rwk,
+    /var/lib/incus/storage-pools/local/custom/default_flatcar/"$IMAGE_BASENAME"_efi_code.fd rk,
+    /var/lib/incus/storage-pools/local/custom/default_flatcar/"$IMAGE_BASENAME"_efi_vars.fd rwk,
   raw.qemu: |-
-    -drive if=pflash,format=raw,file=/var/lib/incus/storage-pools/local/custom/default_efi/"$IMAGE_BASENAME"_efi_code.fd,readonly=on
-    -drive if=pflash,format=raw,file=/var/lib/incus/storage-pools/local/custom/default_efi/"$IMAGE_BASENAME"_efi_vars.fd
+    -drive if=pflash,format=raw,file=/var/lib/incus/storage-pools/local/custom/default_flatcar/"$IMAGE_BASENAME"_efi_code.fd,readonly=on
+    -drive if=pflash,format=raw,file=/var/lib/incus/storage-pools/local/custom/default_flatcar/"$IMAGE_BASENAME"_efi_vars.fd
   raw.qemu.conf: |-
     [drive][0]
     [drive][1]
@@ -139,7 +131,7 @@ devices:
   efi:
     type: disk
     pool: local
-    source: efi
+    source: flatcar
     path: /mnt/efi
   root:
     path: /
@@ -148,28 +140,6 @@ devices:
     size: 16GiB
 name: flatcar
 used_by:" | incus profile create flatcar
-```
-
-### Create a flatcar VM from the profile
-
-```fish
-incus init flatcar/$VERSION $FLATCAR_NODE_NAME --vm --profile flatcar
-
-set current_qemu (incus config get --expanded $FLATCAR_NODE_NAME raw.qemu)
-incus config set $FLATCAR_NODE_NAME raw.qemu="$current_qemu
--fw_cfg name=opt/com.coreos/config,file=/var/lib/incus/devices/$FLATCAR_NODE_NAME/ignition.json"
-
-set current_apparmor (incus config get --expanded $FLATCAR_NODE_NAME raw.apparmor)
-incus config set $FLATCAR_NODE_NAME raw.apparmor="$current_apparmor
-/dev/disk/by-id/$DISK_ID rwk,"
-
-incus config device add $FLATCAR_NODE_NAME data disk source=/dev/disk/by-id/$DISK_ID
-
-task flatcar:generate-ignition
-
-incus file push ./flatcar/output/ignition.json $FLATCAR_NODE_NAME/var/lib/incus/devices/$FLATCAR_NODE_NAME/ignition.json
-
-incus start $FLATCAR_NODE_NAME
 ```
 
 ### List hardware ressources

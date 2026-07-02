@@ -2,23 +2,53 @@
 ---
 version: "3"
 
+vars:
+  FLATCAR_VERSION: "4593.2.3"
+
 tasks:
-  generate-ignitions:
-    desc: Generate infra ignition
+  deploy:
+    desc: Deploy a Flatcar node (generate ignition + start VM)
     cmds:
       - for:
-          - k8s-1
-          - k8s-2
-          - k8s-3
-        task: generate-ignition
+          - "k8s-1,server1,nvme-Lexar_SSD_NQ790_2TB_NHM259R004004P220B"
+          - "k8s-2,server2,nvme-Lexar_SSD_NQ790_2TB_NHM259R006082P220B"
+          - "k8s-3,server3,x"
+        task: deploy-node
         vars:
-          FLATCAR_NODE_NAME: "{{.ITEM}}"
+          FLATCAR_NODE_NAME: '{{splitList "," .ITEM | first}}'
+          SERVER_NAME: '{{index (splitList "," .ITEM) 1}}'
+          DISK_ID: '{{splitList "," .ITEM | last}}'
+
+  deploy-node:
+    desc: Deploy a single Flatcar node
+    cmds:
+      # 1. Générer l'ignition pour le nœud
+      - task: generate-ignition
+        vars:
+          FLATCAR_NODE_NAME: "{{.FLATCAR_NODE_NAME}}"
+      # create VM
+      - incus init flatcar/{{.FLATCAR_VERSION}} {{.SERVER_NAME}}:{{.FLATCAR_NODE_NAME}} --vm --profile flatcar
+      # configure qemu
+      - incus config set {{.SERVER_NAME}}:{{.FLATCAR_NODE_NAME}} raw.qemu="{{.CURRENT_QEMU}} -fw_cfg name=opt/org.flatcar-linux/config,file=/var/lib/incus/storage-pools/local/custom/default_flatcar/{{.FLATCAR_NODE_NAME}}/ignition.json"
+      # configure apparmor
+      - incus config set {{.SERVER_NAME}}:{{.FLATCAR_NODE_NAME}} raw.apparmor="{{.CURRENT_APPARMOR}} /dev/disk/by-id/{{.DISK_ID}} rwk, /var/lib/incus/storage-pools/local/custom/default_flatcar/{{.FLATCAR_NODE_NAME}}/ignition.json rk,"
+      # configure disk
+      - incus config device add {{.SERVER_NAME}}:{{.FLATCAR_NODE_NAME}} data disk source=/dev/disk/by-id/{{.DISK_ID}}
+      # push ignition file
+      - incus storage volume file create -t directory {{.SERVER_NAME}}:local flatcar/k8s-1
+      - incus storage volume file push ./output/{{.FLATCAR_NODE_NAME}}.ign {{.SERVER_NAME}}:local flatcar/{{.FLATCAR_NODE_NAME}}/ignition.json
+      # start vm
+      - incus start {{.SERVER_NAME}}:{{.FLATCAR_NODE_NAME}}
+    vars:
+      CURRENT_QEMU:
+        sh: incus profile get flatcar raw.qemu
+      CURRENT_APPARMOR:
+        sh: incus profile get flatcar raw.apparmor
 
   generate-ignition:
     desc: Generate ignition for one node
-    dotenv:
-      - .env
     cmds:
+      # generate template
       - mkdir -p generated/{{.FLATCAR_NODE_NAME}}
       - minijinja-cli templates/hostname.j2 data/default.yml data/hosts/{{.FLATCAR_NODE_NAME}}.yml -o generated/hostname
       - minijinja-cli templates/network.conf.j2 data/default.yml data/hosts/{{.FLATCAR_NODE_NAME}}.yml -o generated/network.conf
@@ -26,6 +56,7 @@ tasks:
       - minijinja-cli templates/timesyncd.conf.j2 data/default.yml data/hosts/{{.FLATCAR_NODE_NAME}}.yml -o generated/timesyncd.conf
       - minijinja-cli templates/k3s/config.yaml.j2 data/default.yml data/hosts/{{.FLATCAR_NODE_NAME}}.yml -o generated/k3s_config.yaml
       - minijinja-cli -D k3s_token=$K3S_TOKEN templates/k3s/token.j2 data/default.yml data/hosts/{{.FLATCAR_NODE_NAME}}.yml -o generated/k3s_token
-      - butane -d . --pretty --strict base.bu > generated/{{.FLATCAR_NODE_NAME}}/base.ign
-      - butane -d . --pretty --strict base.k3s.bu > generated/{{.FLATCAR_NODE_NAME}}/base.k3s.ign
+      # generate ignition
+      - butane -d . --pretty --strict base.bu > generated/base.ign
+      - butane -d . --pretty --strict base.k3s.bu > generated/base.k3s.ign
       - butane -d . --pretty --strict k3s-server.bu > output/{{.FLATCAR_NODE_NAME}}.ign
