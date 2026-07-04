@@ -4,7 +4,7 @@
 
 ### Homelab infrastructure v3
 
-_... managed with Flatcar, Flux, Renovate, and GitHub Actions_ 🤖
+_... managed with Incusos, Flatcar, Flux, Renovate and GitHub Actions_ 🤖
 
 </div>
 
