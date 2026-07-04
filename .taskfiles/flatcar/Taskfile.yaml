@@ -114,7 +114,7 @@ tasks:
         architecture: x86_64
         creation_date: {{.CURRENT_DATE}}
         properties:
-          description: {{.FLATCAR_IMAGE_BASENAME}}
+          description: Flatcar {{.FLATCAR_VERSION}}
           os: Flatcar
           release: {{.FLATCAR_VERSION}}" > tmp/metadata.yaml
       - tar -cvzf tmp/metadata.tar.gz tmp/metadata.yaml

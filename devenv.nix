@@ -21,6 +21,7 @@
     pkgs.minijinja
     pkgs.kubectl
     pkgs.kubernetes-helm
+    pkgs.helmfile
     pkgs.fluxcd
   ];
 
