@@ -3,16 +3,18 @@
 version: "3"
 
 vars:
-  FLATCAR_VERSION: "4593.2.3"
+  FLATCAR_VERSION: "4593.2.3" # https://www.flatcar.org/releases/
+  FLATCAR_CHANNEL: "stable"
+  FLATCAR_IMAGE_BASENAME: "flatcar_production_qemu_uefi_secure"
 
 tasks:
   deploy:
-    desc: Deploy a Flatcar node (generate ignition + start VM)
+    desc: Deploy all Flatcar node
     cmds:
       - for:
           - "k8s-1,server1,nvme-Lexar_SSD_NQ790_2TB_NHM259R004004P220B"
           - "k8s-2,server2,nvme-Lexar_SSD_NQ790_2TB_NHM259R006082P220B"
-          - "k8s-3,server3,x"
+          - "k8s-3,server3,nvme-Lexar_SSD_NQ790_2TB_NHM259R002638P220B"
         task: deploy-node
         vars:
           FLATCAR_NODE_NAME: '{{splitList "," .ITEM | first}}'
@@ -35,7 +37,7 @@ tasks:
       # configure disk
       - incus config device add {{.SERVER_NAME}}:{{.FLATCAR_NODE_NAME}} data disk source=/dev/disk/by-id/{{.DISK_ID}}
       # push ignition file
-      - incus storage volume file create -t directory {{.SERVER_NAME}}:local flatcar/k8s-1
+      - incus storage volume file create -t directory {{.SERVER_NAME}}:local flatcar/{{.FLATCAR_NODE_NAME}}
       - incus storage volume file push ./output/{{.FLATCAR_NODE_NAME}}.ign {{.SERVER_NAME}}:local flatcar/{{.FLATCAR_NODE_NAME}}/ignition.json
       # start vm
       - incus start {{.SERVER_NAME}}:{{.FLATCAR_NODE_NAME}}
@@ -46,7 +48,8 @@ tasks:
         sh: incus profile get flatcar raw.apparmor
 
   generate-ignition:
-    desc: Generate ignition for one node
+    desc: Generate ignition for a single Flatcar node
+    internal: true
     cmds:
       # generate template
       - mkdir -p generated/{{.FLATCAR_NODE_NAME}}
@@ -60,3 +63,107 @@ tasks:
       - butane -d . --pretty --strict base.bu > generated/base.ign
       - butane -d . --pretty --strict base.k3s.bu > generated/base.k3s.ign
       - butane -d . --pretty --strict k3s-server.bu > output/{{.FLATCAR_NODE_NAME}}.ign
+
+  add-image:
+    desc: Deploy Flatcar image to incusos
+    cmds:
+      - task: download-artifacts
+        vars:
+          FLATCAR_NODE_NAME: "{{.FLATCAR_NODE_NAME}}"
+
+      - for:
+          - server1
+          - server2
+          - server3
+        task: import-artifacts
+        vars:
+          SERVER_NAME: "{{.ITEM}}"
+          FLATCAR_NODE_NAME: "{{.FLATCAR_NODE_NAME}}"
+
+  add-profile:
+    desc: Deploy Flatcar profile to incusos
+    cmds:
+      - for:
+          - server1
+          - server2
+          - server3
+        task: import-profile
+        vars:
+          SERVER_NAME: "{{.ITEM}}"
+
+  download-artifacts:
+    desc: Download and prepare artifacts for incusos
+    internal: true
+    cmds:
+      # Download the image and associated files
+      - mkdir -p tmp/
+      - curl -Lo tmp/flatcar.asc https://www.flatcar.org/security/image-signing-key/Flatcar_Image_Signing_Key.asc
+      - curl -Lo tmp/{{.FLATCAR_IMAGE_BASENAME}}.img https://{{.FLATCAR_CHANNEL}}.release.flatcar-linux.net/amd64-usr/{{.FLATCAR_VERSION}}/{{.FLATCAR_IMAGE_BASENAME}}_image.img
+      - curl -Lo tmp/{{.FLATCAR_IMAGE_BASENAME}}.img.sig https://{{.FLATCAR_CHANNEL}}.release.flatcar-linux.net/amd64-usr/{{.FLATCAR_VERSION}}/{{.FLATCAR_IMAGE_BASENAME}}_image.img.sig
+      - curl -Lo tmp/{{.FLATCAR_IMAGE_BASENAME}}_efi_code.qcow2 https://{{.FLATCAR_CHANNEL}}.release.flatcar-linux.net/amd64-usr/{{.FLATCAR_VERSION}}/{{.FLATCAR_IMAGE_BASENAME}}_efi_code.qcow2
+      - curl -Lo tmp/{{.FLATCAR_IMAGE_BASENAME}}_efi_vars.qcow2 https://{{.FLATCAR_CHANNEL}}.release.flatcar-linux.net/amd64-usr/{{.FLATCAR_VERSION}}/{{.FLATCAR_IMAGE_BASENAME}}_efi_vars.qcow2
+      # Verify image signature
+      - gpg --import --keyid-format LONG tmp/flatcar.asc
+      - gpg tmp/{{.FLATCAR_IMAGE_BASENAME}}.img.sig
+      # Convert efi code and vars from qcow2 to raw
+      - qemu-img convert -f qcow2 -O raw tmp/{{.FLATCAR_IMAGE_BASENAME}}_efi_code.qcow2 tmp/{{.FLATCAR_IMAGE_BASENAME}}_efi_code.fd
+      - qemu-img convert -f qcow2 -O raw tmp/{{.FLATCAR_IMAGE_BASENAME}}_efi_vars.qcow2 tmp/{{.FLATCAR_IMAGE_BASENAME}}_efi_vars.fd
+      # Create the [metadata file](https://linuxcontainers.org/incus/docs/main/reference/image_format/#metadata)
+      - |
+        echo "---
+        architecture: x86_64
+        creation_date: {{.CURRENT_DATE}}
+        properties:
+          description: {{.FLATCAR_IMAGE_BASENAME}}
+          os: Flatcar
+          release: {{.FLATCAR_VERSION}}" > tmp/metadata.yaml
+      - tar -cvzf tmp/metadata.tar.gz tmp/metadata.yaml
+    vars:
+      CURRENT_DATE:
+        sh: date +%s
+
+  import-artifacts:
+    desc: Import Flatcar artifacts into incusos
+    internal: true
+    cmds:
+      # Import the metadata, the image and the efi code and vars
+      - incus image import tmp/metadata.tar.gz tmp/{{.FLATCAR_IMAGE_BASENAME}}.img "{{.SERVER_NAME}}:" --alias flatcar/{{.FLATCAR_VERSION}}
+      - incus storage volume file push tmp/{{.FLATCAR_IMAGE_BASENAME}}_efi_code.fd {{.SERVER_NAME}}:local flatcar/{{.FLATCAR_NODE_NAME}}/{{.FLATCAR_IMAGE_BASENAME}}_efi_code.fd
+      - incus storage volume file push tmp/{{.FLATCAR_IMAGE_BASENAME}}_efi_vars.fd {{.SERVER_NAME}}:local flatcar/{{.FLATCAR_NODE_NAME}}/{{.FLATCAR_IMAGE_BASENAME}}_efi_vars.fd
+
+  import-profile:
+    desc: Import Flatcar profile into incusos
+    internal: true
+    cmds:
+      - incus remote switch {{.SERVER_NAME}}
+      - |
+        echo "---
+        config:
+          limits.cpu: 12
+          limits.memory: 50GiB
+          boot.autostart: true
+          raw.apparmor: |-
+            /var/lib/incus/storage-pools/local/custom/default_flatcar/{{.FLATCAR_IMAGE_BASENAME}}_efi_code.fd rk,
+            /var/lib/incus/storage-pools/local/custom/default_flatcar/{{.FLATCAR_IMAGE_BASENAME}}_efi_vars.fd rwk,
+          raw.qemu: |-
+            -drive if=pflash,format=raw,file=/var/lib/incus/storage-pools/local/custom/default_flatcar/{{.FLATCAR_IMAGE_BASENAME}}_efi_code.fd,readonly=on
+            -drive if=pflash,format=raw,file=/var/lib/incus/storage-pools/local/custom/default_flatcar/{{.FLATCAR_IMAGE_BASENAME}}_efi_vars.fd
+          raw.qemu.conf: |-
+            [drive][0]
+            [drive][1]
+        devices:
+          eth0:
+            network: prod
+            type: nic
+          efi:
+            type: disk
+            pool: local
+            source: flatcar
+            path: /mnt/efi
+          root:
+            path: /
+            pool: local
+            type: disk
+            size: 16GiB
+        name: flatcar
+        used_by:" | incus profile create flatcar

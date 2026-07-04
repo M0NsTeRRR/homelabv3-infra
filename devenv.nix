@@ -14,6 +14,8 @@
     pkgs.cairo # documentation
     pkgs.go-task
     pkgs.incus
+    pkgs.gnupg
+    pkgs.gnutar
     pkgs.openssl
     pkgs.butane
     pkgs.minijinja

@@ -20,6 +20,7 @@ flatcar/.env
 flatcar/*.ign
 flatcar/generated/*
 flatcar/output/*
+flatcar/tmp/*
 
 # Devenv
 .devenv*
