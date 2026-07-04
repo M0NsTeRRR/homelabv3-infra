@@ -1,0 +1,48 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/helmfile
+helmDefaults:
+  cleanupOnFail: true
+  forceConflicts: true
+  serverSide: true
+  wait: true
+  waitForJobs: true
+
+bases:
+  - default.yaml
+
+defaultInherit: default
+
+releases:
+  - name: cilium
+    namespace: cilium
+    hooks:
+      - # Wait for CRDs to be available
+        command: kubectl
+        args:
+          - wait
+          - --for=create
+          - crd/ciliuml2announcementpolicies.cilium.io
+          - crd/ciliumloadbalancerippools.cilium.io
+          - --timeout=2m
+        events:
+          - postsync
+        showlogs: true
+      - # Apply Resources
+        command: kubectl
+        args:
+          - apply
+          - --namespace={{ .Release.Namespace }}
+          - --server-side
+          - --force-conflicts
+          - --filename=../../kubernetes/apps/{{ .Release.Namespace }}/{{ .Release.Name }}/app/loadbalancer.yaml
+        events:
+          - postsync
+        showlogs: true
+
+  - name: flux-operator
+    namespace: flux-system
+    needs: ["cilium/cilium"]
+
+  - name: flux-instance
+    namespace: flux-system
+    needs: ["flux-system/flux-operator"]

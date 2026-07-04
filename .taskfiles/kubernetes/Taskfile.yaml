@@ -8,7 +8,8 @@ tasks:
     cmds:
       - task: update-openbao-certs
       - task: init-flux-pgp-keys
-      - helmfile apply -f bootstrap/helmfile.yaml --skip-diff-on-install --suppress-diff
+      - helmfile template -f bootstrap/crds.yaml -q | yq ea -r -e 'select(.kind == "CustomResourceDefinition")' | kubectl apply --server-side --force-conflicts -f -
+      - helmfile sync -f bootstrap/apps.yaml --hide-notes
 
   update-openbao-certs:
     desc: Update openbao certificates
