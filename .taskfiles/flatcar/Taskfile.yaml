@@ -164,6 +164,6 @@ tasks:
             path: /
             pool: local
             type: disk
-            size: 16GiB
+            size: 100GiB
         name: flatcar
         used_by:" | incus profile create flatcar

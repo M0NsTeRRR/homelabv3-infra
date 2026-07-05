@@ -46,7 +46,7 @@ spec:
         enabled: true
         size: 20Gi
         mountPath: "/openbao/data"
-        storageClass: null
+        storageClass: local-path
         accessMode: ReadWriteOnce
         annotations: {}
 
@@ -55,6 +55,7 @@ spec:
 
       auditStorage:
         enabled: true
+        storageClass: local-path
 
       standalone:
         enabled: false

@@ -36,3 +36,12 @@ tasks:
     cmd: |
       cd ../ansible
       uv run ansible-playbook deploy_infra.yml --limit kubernetes
+
+  prune-pods:
+    desc: Prune pods in Failed, Pending, or Succeeded state
+    cmds:
+      - for:
+          - Failed
+          - Pending
+          - Succeeded
+        cmd: kubectl delete pods -A --field-selector status.phase="{{.ITEM}}" --ignore-not-found=true
