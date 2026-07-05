@@ -7,5 +7,5 @@ metadata:
 spec:
   chartRef:
     kind: OCIRepository
-    name: as212510-net
+    name: cert-manager-webhook-infomaniak
   interval: 1h
