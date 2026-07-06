@@ -38,6 +38,14 @@ https://linuxcontainers.org/incus-os/docs/main/reference/system/security/#config
 
 ## Configure ACME
 
+In `OS` > `System` > `Security` add custom CA cert.
+```
+custom_ca_certs:
+  - |
+    -----BEGIN CERTIFICATE-----
+    xxxxxxx
+```
+
 In settings page configure the following :
 
 `acme.agree_tos`: `true`
