@@ -6,7 +6,10 @@
 }:
 {
   env = {
+    INFOMANIAK_TOKEN = config.secretspec.secrets.INFOMANIAK_TOKEN or "";
     K3S_TOKEN = config.secretspec.secrets.K3S_TOKEN or "";
+    MIKROTIK_USER = config.secretspec.secrets.MIKROTIK_USER or "";
+    MIKROTIK_PASSWORD = config.secretspec.secrets.MIKROTIK_PASSWORD or "";
   };
 
   packages = [

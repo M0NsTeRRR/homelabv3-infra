@@ -13,12 +13,14 @@ openbao_auth_methods: []
 openbao_secrets_engine: []
 openbao_policies: []
 openbao_datas: []
-
 # openbao server certificate subject alt name
 # DNS.1 = <domain that match openbao_loadbalancer_ip>
-# DNS.2 = *.openbao-internal
-# DNS.3 = *.openbao.svc
-# DNS.4 = *.openbao.svc.cluster.local
+# DNS.2 = <domain that match openbao_node_1>
+# DNS.3 = <domain that match openbao_node_2>
+# DNS.4 = <domain that match openbao_node_3>
+# DNS.5 = *.openbao-internal
+# DNS.6 = *.openbao.svc
+# DNS.7 = *.openbao.svc.cluster.local
 # IP.1 = 127.0.0.1
 # IP.2 = ::1
 

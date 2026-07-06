@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: openbao-ui-nodeport
+  namespace: openbao
+spec:
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: openbao
+    app.kubernetes.io/instance: openbao
+    component: server
+  ports:
+    - name: https
+      port: 8200
+      targetPort: 8200
+      nodePort: 30000
+      protocol: TCP

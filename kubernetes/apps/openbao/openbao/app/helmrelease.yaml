@@ -114,6 +114,7 @@ spec:
 
     ui:
       enabled: true
+      activeOpenbaoPodOnly: true
       serviceType: "LoadBalancer"
       serviceIPFamilyPolicy: "PreferDualStack"
       annotations:

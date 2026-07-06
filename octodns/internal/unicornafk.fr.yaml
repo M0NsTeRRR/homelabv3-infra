@@ -84,6 +84,15 @@ openbao:
     value: "192.168.10.102"
   - type: AAAA
     value: "2a0c:b641:02c0:110::102"
+openbao-1:
+  - type: CNAME
+    value: k8s-1.unicornafk.fr.
+openbao-2:
+  - type: CNAME
+    value: k8s-2.unicornafk.fr.
+openbao-3:
+  - type: CNAME
+    value: k8s-3.unicornafk.fr.
 r1:
   - type: A
     value: "192.168.6.1"
