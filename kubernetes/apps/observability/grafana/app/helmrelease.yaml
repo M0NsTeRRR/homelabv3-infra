@@ -206,7 +206,7 @@ spec:
               value: *datasource
         VictoriaLogs:
           gnetId: 22084
-          revision: 9
+          revision: 11
           datasource:
             - name: DS_PROMETHEUS
               value: *datasource
