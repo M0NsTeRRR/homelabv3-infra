@@ -10,7 +10,8 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 3.0.3
+    tag: 3.4.1
+    digest: sha256:f07c19501718a5f2cfb8e528ebcc45f0979f07124d143c71d153a52a64d09df9
   url: oci://ghcr.io/m0nsterrr/helm-charts/radarr
   verify:
     provider: cosign
