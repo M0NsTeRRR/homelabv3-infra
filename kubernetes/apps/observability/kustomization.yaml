@@ -11,7 +11,6 @@ resources:
   - ./opentelemetry-operator/ks.yaml
   - ./prometheus-blackbox-exporter/ks.yaml
   - ./prometheus-operator-crds/ks.yaml
-  - ./prometheus-pve-exporter/ks.yaml
   - ./prometheus-smartctl-exporter/ks.yaml
   - ./prometheus-snmp-exporter/ks.yaml
   - ./victoria-logs-single/ks.yaml

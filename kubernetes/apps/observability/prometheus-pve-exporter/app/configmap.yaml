@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: prometheus-pve-exporter
-data:
-  REQUESTS_CA_BUNDLE: "/etc/ssl/certs/homelab.crt"

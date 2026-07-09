@@ -96,11 +96,6 @@ openbao_policies:
       - path: secret/data/homelab/prod/prometheus-snmp-exporter
         capabilities:
           - read
-  - name: prometheus-pve-exporter
-    rules:
-      - path: secret/data/homelab/prod/prometheus-pve-exporter
-        capabilities:
-          - read
   - name: as212510-net
     rules:
       - path: secret/data/homelab/prod/as212510-net
@@ -256,12 +251,6 @@ public_openbao_datas:
       bound_service_account_names: prometheus-snmp-exporter-openbao
       bound_service_account_namespaces: observability
       policies: prometheus-snmp-exporter
-      ttl: 1h
-  - path: auth/kubernetes/role/prometheus-pve-exporter
-    data:
-      bound_service_account_names: prometheus-pve-exporter-openbao
-      bound_service_account_namespaces: observability
-      policies: prometheus-pve-exporter
       ttl: 1h
   - path: auth/kubernetes/role/as212510-net
     data:
