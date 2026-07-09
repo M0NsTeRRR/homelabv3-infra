@@ -10,7 +10,8 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 1.1.1
+    tag: 1.1.2
+    digest: sha256:2d23b6fd929a0ea4ede19953fe51ef1b7d5a19d3b0bf31595f6e088d4b5302c9
   url: oci://ghcr.io/m0nsterrr/helm-charts/cert-manager-webhook-infomaniak
   verify:
     provider: cosign
