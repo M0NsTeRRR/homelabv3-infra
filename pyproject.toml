@@ -33,7 +33,7 @@ ansible = [
   # https://foss.heptapod.net/python-libs/passlib/-/issues/190
   "bcrypt~=4.0.1",
   "requests~=2.34.2",
-  "kubernetes~=35.0.0",
+  "kubernetes~=36.0.2",
   "PyYAML~=6.0.3",
   "jsonpatch~=1.33",
 ]
