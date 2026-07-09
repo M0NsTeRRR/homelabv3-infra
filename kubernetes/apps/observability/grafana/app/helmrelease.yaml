@@ -218,7 +218,7 @@ spec:
               value: *datasource
         VictoriaTraces:
           gnetId: 24136
-          revision: 2
+          revision: 3
           datasource:
             - name: DS_PROMETHEUS
               value: *datasource
