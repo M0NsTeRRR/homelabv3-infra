@@ -212,7 +212,7 @@ spec:
               value: *datasource
         VictoriaMetrics:
           gnetId: 10229
-          revision: 48
+          revision: 55
           datasource:
             - name: DS_PROMETHEUS
               value: *datasource
