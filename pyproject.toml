@@ -39,7 +39,7 @@ ansible = [
 ]
 documentation = ["mkdocs-material[imaging]~=9.7.6", "pytz~=2026.2"]
 octodns = [
-  "octodns~=1.20.0",
+  "octodns~=1.21.0",
   "octodns-infomaniak~=0.1.6",
   "octodns-mikrotik~=0.1.2",
 ]
