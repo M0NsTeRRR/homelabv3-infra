@@ -4,9 +4,7 @@
     {
       "customType": "regex",
       "description": ["Process raw github yaml Kustomization files"],
-      "fileMatch": [
-        "(^|/)kustomization.ya?ml$"
-      ],
+      "managerFilePatterns": ["/(^|/)kustomization\\.ya?ml$/"],
       "matchStrings": [
         "https:\/\/raw\\.githubusercontent\\.com\/v?(?<depName>[^\/]*\/[^\/]*)\/(?<currentValue>.*?)\/",
         "https:\/\/github\\.com\/(?<depName>[^\/]*\/[^\/]*)\/releases\/download\/.*(?<currentValue>\\d+.\\d+.\\d+)\/"
