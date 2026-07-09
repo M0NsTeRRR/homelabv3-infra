@@ -225,21 +225,8 @@ spec:
       name: csi-ceph-filesystem
       isDefault: false
       deletionPolicy: Delete
-    ingress:
+    route:
       dashboard:
-        annotations:
-          cert-manager.io/cluster-issuer: "openbao"
-          cert-manager.io/private-key-algorithm: "RSA"
-          cert-manager.io/private-key-size: "4096"
-        host:
-          name: ceph.unicornafk.fr
-          path: /
-        tls:
-          - secretName: ceph.unicornafk.fr
-            hosts:
-              - ceph.unicornafk.fr
-        ingressClassName: ingress-internal
-      route:
         host:
           name: ceph.unicornafk.fr
           path: /
