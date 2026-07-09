@@ -10,7 +10,8 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 3.5.2
+    tag: 3.7.1
+    digest: sha256:d541859391e73f81c24b826cc31feb02d2d9e33b51695212dc69dcb343eb841e
   url: oci://ghcr.io/m0nsterrr/helm-charts/prowlarr
   verify:
     provider: cosign
