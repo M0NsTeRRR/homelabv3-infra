@@ -21,7 +21,7 @@ jobs:
           - name: Install uv
             uses: astral-sh/setup-uv@d31148d669074a8d0a63714ba94f3201e7020bc3 # v8.3.0
           - name: Set up Python
-            uses: actions/setup-python@e797f83bcb11b83ae66e0230d6156d7c80228e7c # v6.0.0
+            uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6.3.0
             with:
               python-version-file: ".python-version"
       - name: Install the project
