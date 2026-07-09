@@ -11,5 +11,15 @@
       },
       "minimumGroupSize": 2,
     },
+    {
+      "description": "Flux Group",
+      "groupName": "Flux",
+      "matchDatasources": ["helm"],
+      "matchPackageNames": ["/flux-operator/", "/flux-instance/"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group",
+      },
+      "minimumGroupSize": 2,
+    },
   ],
 }
