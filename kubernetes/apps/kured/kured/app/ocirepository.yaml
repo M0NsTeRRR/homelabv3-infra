@@ -10,5 +10,6 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 5.10.0
+    tag: 6.1.0
+    digest: sha256:4a8b7ae11cb1b1f847b0dba298bec32a044d91a02343e2ab4294a53100c57336
   url: oci://ghcr.io/kubereboot/charts/kured
