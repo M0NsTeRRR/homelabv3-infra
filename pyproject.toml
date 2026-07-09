@@ -24,7 +24,7 @@ Repository = "https://github.com/M0NsTeRRR/homelabv3-infra"
 
 [project.optional-dependencies]
 ansible = [
-  "ansible-core~=2.20.5",
+  "ansible-core~=2.21.1",
   "ansible-lint~=26.6.0",
   "dnspython~=2.8.0",
   "netaddr~=1.3.0",
