@@ -10,5 +10,6 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 0.102.0
+    tag: 0.119.0
+    digest: sha256:facf518beea4102808f0371dfe352cf86fa1acd71480bb8b749a9eba74866ce4
   url: oci://ghcr.io/open-telemetry/opentelemetry-helm-charts/opentelemetry-operator
