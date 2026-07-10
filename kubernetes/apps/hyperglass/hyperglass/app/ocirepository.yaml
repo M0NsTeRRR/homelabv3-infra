@@ -11,6 +11,7 @@ spec:
     operation: copy
   ref:
     tag: 4.2.1
+    digest: sha256:4f84d6603254f14c0d21235bbe25432fabddb37fea1d1021707cd86040d1a802
   url: oci://ghcr.io/m0nsterrr/helm-charts/hyperglass
   verify:
     provider: cosign
