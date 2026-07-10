@@ -11,4 +11,5 @@ spec:
     operation: copy
   ref:
     tag: v1.19.7
+    digest: sha256:80fba3a79c781d5ccca1ead3a11977d27bb71d89a8e962aeed9f51eb4695ac56
   url: oci://ghcr.io/rook/rook-ceph-cluster

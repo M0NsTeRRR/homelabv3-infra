@@ -11,6 +11,7 @@ spec:
     operation: copy
   ref:
     tag: 1.21.1
+    digest: sha256:ce2e532b5d2d61b676fb01e04343d1f3433e752c90580a75a853aba6ac72b3aa
   url: oci://ghcr.io/home-operations/charts-mirror/external-dns
   verify:
     provider: cosign
