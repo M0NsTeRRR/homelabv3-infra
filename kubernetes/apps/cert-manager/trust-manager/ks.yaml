@@ -5,6 +5,8 @@ kind: Kustomization
 metadata:
   name: trust-manager
 spec:
+  dependsOn:
+    - name: cert-manager
   interval: 1h
   path: ./kubernetes/apps/cert-manager/trust-manager/app
   prune: true
