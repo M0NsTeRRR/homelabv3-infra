@@ -12,7 +12,9 @@ spec:
   values:
     cephClusterSpec:
       storage:
-        deviceFilter: sdb
+        devicePathFilter: /dev/disk/by-id/Lexar_SSD_NQ790_2TB_NHM259R004004P220B.*
+        useAllDevices: false
+        useAllNodes: true
       mgr:
         modules:
           - name: insights
