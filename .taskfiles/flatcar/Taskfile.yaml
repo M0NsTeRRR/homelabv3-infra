@@ -35,7 +35,7 @@ tasks:
       # configure apparmor
       - incus config set {{.SERVER_NAME}}:{{.FLATCAR_NODE_NAME}} raw.apparmor="{{.CURRENT_APPARMOR}} /dev/disk/by-id/{{.DISK_ID}} rwk, /var/lib/incus/storage-pools/local/custom/default_flatcar/{{.FLATCAR_NODE_NAME}}/ignition.json rk,"
       # configure disk
-      - incus config device add {{.SERVER_NAME}}:{{.FLATCAR_NODE_NAME}} data disk source=/dev/disk/by-id/{{.DISK_ID}}
+      - incus config device add {{.SERVER_NAME}}:{{.FLATCAR_NODE_NAME}} data disk source=/dev/disk/by-id/{{.DISK_ID}} wwn=0x5000000000000001
       # push ignition file
       - incus storage volume file create -t directory {{.SERVER_NAME}}:local flatcar/{{.FLATCAR_NODE_NAME}}
       - incus storage volume file push ./output/{{.FLATCAR_NODE_NAME}}.ign {{.SERVER_NAME}}:local flatcar/{{.FLATCAR_NODE_NAME}}/ignition.json
