@@ -5,7 +5,7 @@ metadata:
   name: media-smb
 provisioner: smb.csi.k8s.io
 parameters:
-  source: //nas.unicornafk.fr/Multimedia
+  source: //nas.unicornafk.fr/multimedia
   csi.storage.k8s.io/node-stage-secret-name: csi-driver-smb-openbao
   csi.storage.k8s.io/node-stage-secret-namespace: csi-driver-smb
 volumeBindingMode: Immediate

@@ -39,9 +39,13 @@ releases:
           - postsync
         showlogs: true
 
+  - name: local-path-provisioner
+    namespace: kube-system
+    needs: ["cilium/cilium"]
+
   - name: flux-operator
     namespace: flux-system
-    needs: ["cilium/cilium"]
+    needs: ["kube-system/local-path-provisioner"]
 
   - name: flux-instance
     namespace: flux-system
