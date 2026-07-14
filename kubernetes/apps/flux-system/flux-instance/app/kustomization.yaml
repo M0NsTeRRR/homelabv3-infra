@@ -9,6 +9,6 @@ secretGenerator:
   - name: pgp-public-keys
     files:
       - ./ressources/M0NsTeRRR.asc
-      - ./ressources/renovate.asc
+      - ./ressources/github-web-flow.asc
 generatorOptions:
   disableNameSuffixHash: true

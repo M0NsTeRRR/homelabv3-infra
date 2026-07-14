@@ -4,13 +4,14 @@
 
 ### Homelab infrastructure v3
 
-_... managed with Incusos, Flatcar, Flux, Renovate and GitHub Actions_ 🤖
+_... managed with Incusos, Flatcar, Flux, Renovate and Octodns_ 🤖
 
 </div>
 
 <div align="center">
 
-[![Kubernetes](https://img.shields.io/github/actions/workflow/status/M0NsTeRRR/homelabv3-infra/kubernetes-lint.yml?branch=main&label=&logo=kubernetes&style=for-the-badge&logoColor=white&color=blue)](https://github.com/M0NsTeRRR/homelabv3-infra/tree/main/.github/workflows/kubernetes-lint.yml)&nbsp;&nbsp;
+[![Kubernetes](https://img.shields.io/github/actions/workflow/status/M0NsTeRRR/homelabv3-infra/kubernetes-lint.yml?branch=main&label=&logo=kubernetes&style=for-the-badge&
+logoColor=white&color=blue)](https://github.com/M0NsTeRRR/homelabv3-infra/tree/main/.github/workflows/kubernetes-lint.yml)&nbsp;&nbsp;
 [![Octodns](https://img.shields.io/github/actions/workflow/status/M0NsTeRRR/homelabv3-infra/octodns.yml?branch=main&label=&logo=octopusdeploy&style=for-the-badge&logoColor=white&color=purple)](https://github.com/M0NsTeRRR/homelabv3-infra/tree/main/.github/workflows/octodns.yml)&nbsp;&nbsp;
 [![Renovate](https://img.shields.io/github/actions/workflow/status/M0NsTeRRR/homelabv3-infra/renovate-lint.yml?branch=main&label=&logo=renovatebot&style=for-the-badge&logoColor=white&color=blue)](https://github.com/M0NsTeRRR/homelabv3-infra/tree/main/.github/workflows/renovate-lint.yml)&nbsp;&nbsp;
 [![Documentation](https://img.shields.io/github/actions/workflow/status/M0NsTeRRR/homelabv3-infra/documentation.yml?branch=main&label=&logo=materialformkdocs&style=for-the-badge&logoColor=white&color=blue)](https://github.com/M0NsTeRRR/homelabv3-infra/tree/main/.github/workflows/documentation.yml)

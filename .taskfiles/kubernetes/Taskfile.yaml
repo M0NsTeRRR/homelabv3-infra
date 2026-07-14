@@ -28,7 +28,7 @@ tasks:
       - |
         kubectl -n flux-system create secret generic pgp-public-keys \
           --from-file=../kubernetes/apps/flux-system/flux-instance/app/ressources/M0NsTeRRR.asc \
-          --from-file=../kubernetes/apps/flux-system/flux-instance/app/ressources/renovate.asc \
+          --from-file=../kubernetes/apps/flux-system/flux-instance/app/ressources/github-web-flow.asc \
           --dry-run=client -o yaml | kubectl apply -f -
 
   configure-openbao:
