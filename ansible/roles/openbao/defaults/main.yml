@@ -1,14 +1,7 @@
 ---
-openbao_localhost_kubeconfig_path: /home/user/.kube/kubeconfig
 openbao_url: "https://openbao.example.fr:8200"
 openbao_root_token: "token"
-openbao_unseal_keys: []
 openbao_ca_path: /etc/ssl/certs/test.pem
-openbao_init_output_file_path: "/tmp/openbao_init.json"
-openbao_replicas: 3
-openbao_ca_filename: "/tmp/ca.crt"
-openbao_cert_filename: "/tmp/client.crt"
-openbao_key_filename: "/tmp/client.key"
 openbao_auth_methods: []
 openbao_secrets_engine: []
 openbao_policies: []

@@ -1,9 +1,4 @@
 ---
-openbao_localhost_kubeconfig_path: "{{ kubernetes_localhost_kubeconfig_path }}"
-openbao_init_output_file_path: "{{ root_dir_role_path }}/openbao.json.secrets"
-openbao_ca_filename: "{{ ca_certificates_local_path_ca_certificate }}"
-openbao_cert_filename: "{{ certs_dir_role_path }}homelab/openbao.unicornafk.fr/openbao.unicornafk.fr-fullchain.crt"
-openbao_key_filename: "{{ certs_dir_role_path }}homelab/openbao.unicornafk.fr/openbao.unicornafk.fr.key"
 openbao_ca_path: "{{ ca_certificates_local_path_ca_certificate }}"
 openbao_secrets_engine:
   - name: kv-v2
