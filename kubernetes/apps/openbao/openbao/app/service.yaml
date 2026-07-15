@@ -6,6 +6,7 @@ metadata:
   namespace: openbao
 spec:
   type: NodePort
+  publishNotReadyAddresses: true
   selector:
     app.kubernetes.io/name: openbao
     app.kubernetes.io/instance: openbao
