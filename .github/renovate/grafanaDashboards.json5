@@ -4,7 +4,7 @@
     "grafana-dashboards": {
       "defaultRegistryUrlTemplate": "https://grafana.com/api/dashboards/{{packageName}}",
       "format": "json",
-      "transformTemplates": ["{\"releases\":[{\"version\": $string(revision)}]}"]
+      "transformTemplates": ["{\"releases\":[{\"version\": $string(revision), \"releaseTimestamp\": $string(updatedAt)}]}"]
     }
   },
   "customManagers": [
@@ -21,6 +21,11 @@
     }
   ],
   "packageRules": [
+    {
+      "description": ["Disable abandonment check for Grafana dashboards"],
+      "matchDatasources": ["custom.grafana-dashboards"],
+      "abandonmentThreshold": null
+    },
     {
       "description": ["Process Grafana dashboards"],
       "addLabels": ["renovate/grafana-dashboard"],
