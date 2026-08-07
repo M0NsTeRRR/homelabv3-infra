@@ -10,6 +10,6 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 30.0.1
-    digest: sha256:4644ce07a63e35f0d4ebcb3146908451f091e1ba521599f2bde1c6b63192b836
+    tag: 31.0.0
+    digest: sha256:1632a0e96a3047b0761685378e3a63f9f8a21ff7e567920323eb66d8c438c5c0
   url: oci://ghcr.io/prometheus-community/charts/prometheus-operator-crds
