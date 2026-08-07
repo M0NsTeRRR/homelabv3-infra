@@ -10,8 +10,8 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 2.8.0
-    digest: sha256:694a544890f3928f08401d1dcd51904ee9fc2208843e935ececc97ac54eb9001
+    tag: 2.9.0
+    digest: sha256:d3cabae35fb82c645450a467362c8f074884a5bd434ae7da4af3333e9a5b8898
   url: oci://ghcr.io/m0nsterrr/helm-charts/actualbudget
   verify:
     provider: cosign
