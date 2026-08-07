@@ -10,8 +10,8 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 0.42.0
-    digest: sha256:77ae56a7061f449d307bb97a7efe8f48879990030e1603d7888d39706afda414
+    tag: 0.44.0
+    digest: sha256:d254253600818a88fd4a72d4c8ff23a4ee2c85017436325df22c9287f4254be8
   url: oci://ghcr.io/victoriametrics/helm-charts/victoria-metrics-single
   verify:
     provider: cosign
