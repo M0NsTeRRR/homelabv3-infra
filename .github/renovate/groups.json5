@@ -4,7 +4,7 @@
     {
       "description": "Rook-Ceph Group",
       "groupName": "Rook-Ceph",
-      "matchDatasources": ["helm"],
+      "matchDatasources": ["docker"],
       "matchPackageNames": ["/rook-ceph/", "/rook-ceph-cluster/"],
       "group": {
         "commitMessageTopic": "{{{groupName}}} group",
@@ -14,7 +14,7 @@
     {
       "description": "Flux Group",
       "groupName": "Flux",
-      "matchDatasources": ["helm"],
+      "matchDatasources": ["docker"],
       "matchPackageNames": ["/flux-operator/", "/flux-instance/"],
       "group": {
         "commitMessageTopic": "{{{groupName}}} group",
