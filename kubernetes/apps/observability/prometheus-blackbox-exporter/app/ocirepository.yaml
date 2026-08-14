@@ -10,6 +10,6 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 11.16.0
-    digest: sha256:69b5674b8f3bf5aff3c5dba3cf292567225a6291e72611f04d9bf9c36eb0bbeb
+    tag: 11.16.1
+    digest: sha256:c90f80f05b57a8cfc5a742a8ce5352183885096218040d1a64ba0768a7cb2395
   url: oci://ghcr.io/prometheus-community/charts/prometheus-blackbox-exporter
