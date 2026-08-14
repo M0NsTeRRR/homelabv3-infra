@@ -10,6 +10,6 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 9.17.0
-    digest: sha256:90813374ec8ad5e7d3db9acc6751ecc64af453a090d419df690a051f2c49b16c
+    tag: 9.17.1
+    digest: sha256:e2ea6372a52c3964774c90bd6961cc27b7af31f9450bc8468b8347551027e98e
   url: oci://ghcr.io/prometheus-community/charts/prometheus-snmp-exporter
