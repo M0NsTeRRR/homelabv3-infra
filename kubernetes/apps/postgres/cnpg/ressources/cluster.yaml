@@ -4,7 +4,7 @@ kind: Cluster
 metadata:
   name: postgres
 spec:
-  imageName: ghcr.io/cloudnative-pg/postgresql:18.4-system-trixie@sha256:e6e1f467b52112f7e08aa380de81473106ff54b1834d90bcb4265a2a018e1921
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.6-system-trixie@sha256:b1fd8d835001de14305c3ee0b25a75f25272a5829030a55bebb3bada711aaa75
 
   certificates:
     serverCASecret: postgres-server-cert
