@@ -20,6 +20,13 @@
 
 ## Post install setup
 
+Add the remote server
+```fish
+incus remote add serverX serverX.unicornafk.fr
+```
+
+Retrieve encryption recovery key in `OS` > `System` > `Security`
+
 Create Volumes
 ```fish
 # Volumes

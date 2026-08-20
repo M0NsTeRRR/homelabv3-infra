@@ -3,7 +3,7 @@
 version: "3"
 
 vars:
-  FLATCAR_VERSION: "4593.2.3" # https://www.flatcar.org/releases/
+  FLATCAR_VERSION: "4593.2.5" # https://www.flatcar.org/releases/
   FLATCAR_CHANNEL: "stable"
   FLATCAR_IMAGE_BASENAME: "flatcar_production_qemu_uefi_secure"
 
@@ -117,7 +117,7 @@ tasks:
           description: Flatcar {{.FLATCAR_VERSION}}
           os: Flatcar
           release: {{.FLATCAR_VERSION}}" > tmp/metadata.yaml
-      - tar -cvzf tmp/metadata.tar.gz tmp/metadata.yaml
+      - tar -cvzf tmp/metadata.tar.gz -C tmp metadata.yaml
     vars:
       CURRENT_DATE:
         sh: date +%s
@@ -164,6 +164,6 @@ tasks:
             path: /
             pool: local
             type: disk
-            size: 100GiB
+            size: 80GiB
         name: flatcar
         used_by:" | incus profile create flatcar
