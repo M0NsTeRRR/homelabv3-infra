@@ -10,7 +10,7 @@ spec:
     kind: ClusterIssuer
   privateKey:
     algorithm: ECDSA
-    size: 521
+    size: 384
     rotationPolicy: Always
   duration: 168h
   usages: ["digital signature"]
@@ -29,7 +29,7 @@ spec:
     kind: ClusterIssuer
   privateKey:
     algorithm: ECDSA
-    size: 521
+    size: 384
     rotationPolicy: Always
   duration: 168h
   usages: ["digital signature"]
