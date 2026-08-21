@@ -5,7 +5,6 @@ metadata:
   name: homepage
 data:
   TZ: "Europe/Paris"
-  HOMEPAGE_ALLOWED_HOSTS: "homepage.unicornafk.fr"
 ---
 apiVersion: v1
 kind: ConfigMap

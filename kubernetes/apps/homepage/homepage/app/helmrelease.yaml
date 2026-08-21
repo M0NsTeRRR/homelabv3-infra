@@ -10,6 +10,10 @@ spec:
     name: homepage
   interval: 1h
   values:
+    config:
+      allowedHosts:
+        - &hostname homepage.unicornafk.fr
+
     podAnnotations:
       reloader.stakater.com/auto: "true"
 
@@ -75,4 +79,4 @@ spec:
           - name: internal
             namespace: gateway
         hostnames:
-          - homepage.unicornafk.fr
+          - *hostname
