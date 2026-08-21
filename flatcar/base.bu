@@ -16,6 +16,10 @@ storage:
       mode: 0644
       contents:
         local: generated/hostname
+    - path: /etc/gai.conf
+      mode: 0644
+      contents:
+        local: files/gai.conf
     # modprobe
     - path: /etc/modprobe.d/blacklist.conf
       mode: 0644
