@@ -23,7 +23,6 @@ spec:
       - gateway-httproute
       - gateway-tlsroute
       - service
-    provider: "infomaniak"
     domainFilters:
       - adminafk.fr
       - as212510.net
@@ -31,17 +30,18 @@ spec:
       - --gateway-name=external
       - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
       - --crd-source-kind=DNSEndpoint
-    env:
-      - name: SCW_ACCESS_KEY
-        valueFrom:
-          secretKeyRef:
-            name: external-dns-openbao
-            key: SCW_ACCESS_KEY
-      - name: SCW_SECRET_KEY
-        valueFrom:
-          secretKeyRef:
-            name: external-dns-openbao
-            key: SCW_SECRET_KEY
+    provider:
+      name: webhook
+      webhook:
+        image:
+          repository: ghcr.io/m0nsterrr/external-dns-webhook-infomaniak
+          tag: v0.1.3@sha256:617820029b333f72e1e5375b67d5109d8a9e8427659f8826a9450dace4f80315
+        env:
+          - name: INFOMANIAK_API_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: external-dns-openbao
+                key: api-token
     service:
       ipFamilyPolicy: "PreferDualStack"
     serviceMonitor:
