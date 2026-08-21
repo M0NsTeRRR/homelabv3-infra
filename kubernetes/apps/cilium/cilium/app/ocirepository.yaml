@@ -10,6 +10,6 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 1.19.7
-    digest: sha256:10838283b2f99f2a24b5502220fe5ba850ec08718c7fc745f8cc4e04698ce124
+    tag: 1.20.1
+    digest: sha256:906ce40d35daad838d12add8a5ba7033e767767f51799a93c7eace2cec9cdc05
   url: oci://quay.io/cilium/charts/cilium
