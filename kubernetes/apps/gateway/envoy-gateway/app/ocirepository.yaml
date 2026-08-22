@@ -10,6 +10,6 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 1.8.3
-    digest: sha256:74551245ad0b0608f207e52c9ec3ce96ddd14e7655d12d5005c1c1d03b9d422a
+    tag: 1.9.0
+    digest: sha256:fa4c54a2f9813b98a9ab10c06b02db71752f36db1cb0a267609efa517f7f4211
   url: oci://docker.io/envoyproxy/gateway-helm
