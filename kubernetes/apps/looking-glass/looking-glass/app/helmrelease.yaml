@@ -3,11 +3,11 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: hyperglass
+  name: looking-glass
 spec:
   chartRef:
     kind: OCIRepository
-    name: hyperglass
+    name: looking-glass
   interval: 1h
   values:
     podAnnotations:
@@ -15,37 +15,18 @@ spec:
 
     extraEnvFrom:
       - configMapRef:
-          name: hyperglass
+          name: looking-glass
       - secretRef:
           name: &secret-ref hyperglass-openbao
 
     volumes:
-      - name: &volume-config hyperglass-files
+      - name: &volume-config looking-glass-files
         configMap:
-          name: hyperglass-files
-      - name: &volume-devices hyperglass-devices
-        secret:
-          secretName: hyperglass-devices-openbao
+          name: looking-glass-files
 
     volumeMounts:
       - name: *volume-config
-        mountPath: /etc/hyperglass/config.yaml
-        subPath: config.yaml
-        readOnly: true
-      - name: *volume-devices
-        mountPath: /etc/hyperglass/devices.yaml
-        subPath: devices.yaml
-        readOnly: true
-      - name: *volume-config
-        mountPath: /etc/hyperglass/directives.yaml
-        subPath: directives.yaml
-        readOnly: true
-      - name: *volume-config
-        mountPath: /etc/hyperglass/greeting.md
-        subPath: greeting.md
-        readOnly: true
-      - name: *volume-config
-        mountPath: /etc/hyperglass/unicornafk.svg
+        mountPath: /etc/looking-glass/unicornafk.svg
         subPath: unicornafk.svg
         readOnly: true
 
@@ -57,7 +38,7 @@ spec:
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/group: ASN
-          gethomepage.dev/name: Hyperglass
+          gethomepage.dev/name: looking-glass
           gethomepage.dev/description: Looking glass
         parentRefs:
           - name: external
@@ -71,7 +52,7 @@ spec:
         usersExistingSecret: *secret-ref
         aclUsers:
           default:
-            passwordKey: "HYPERGLASS_REDIS_PASSWORD"
+            passwordKey: "LOOKING_GLASS_REDIS_PASSWORD"
       metrics:
         enabled: true
         serviceMonitor:

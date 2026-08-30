@@ -3,16 +3,16 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
-  name: hyperglass
+  name: looking-glass
 spec:
   interval: 15m
   layerSelector:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 4.2.1
-    digest: sha256:4f84d6603254f14c0d21235bbe25432fabddb37fea1d1021707cd86040d1a802
-  url: oci://ghcr.io/m0nsterrr/helm-charts/hyperglass
+    tag: 1.1.0
+    digest: sha256:5d14d625a81361f6a06aee6c41dde5271bbe47b2de68a13c8b0b06e6dfba5222
+  url: oci://ghcr.io/m0nsterrr/helm-charts/looking-glass
   verify:
     provider: cosign
     matchOIDCIdentity:

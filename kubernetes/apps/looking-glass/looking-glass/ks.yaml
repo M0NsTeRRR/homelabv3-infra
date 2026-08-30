@@ -3,13 +3,13 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: hyperglass
+  name: looking-glass
 spec:
   interval: 1h
-  path: ./kubernetes/apps/hyperglass/hyperglass/app
+  path: ./kubernetes/apps/looking-glass/looking-glass/app
   prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
     namespace: flux-system
-  targetNamespace: hyperglass
+  targetNamespace: looking-glass

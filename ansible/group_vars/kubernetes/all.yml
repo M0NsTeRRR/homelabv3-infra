@@ -96,9 +96,9 @@ openbao_policies:
       - path: secret/data/homelab/prod/as212510-net
         capabilities:
           - read
-  - name: hyperglass
+  - name: looking-glass
     rules:
-      - path: secret/data/homelab/prod/hyperglass
+      - path: secret/data/homelab/prod/looking-glass
         capabilities:
           - read
   - name: jellyfin
@@ -253,11 +253,11 @@ public_openbao_datas:
       bound_service_account_namespaces: as212510-net
       policies: as212510-net
       ttl: 1h
-  - path: auth/kubernetes/role/hyperglass
+  - path: auth/kubernetes/role/looking-glass
     data:
-      bound_service_account_names: hyperglass-openbao
-      bound_service_account_namespaces: hyperglass
-      policies: hyperglass
+      bound_service_account_names: looking-glass-openbao
+      bound_service_account_namespaces: looking-glass
+      policies: looking-glass
       ttl: 1h
   - path: auth/kubernetes/role/qbittorrent
     data:

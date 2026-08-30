@@ -2,8 +2,8 @@
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: hyperglass
+namespace: looking-glass
 
 resources:
   - ./namespace.yaml
-  - ./hyperglass/ks.yaml
+  - ./looking-glass/ks.yaml
