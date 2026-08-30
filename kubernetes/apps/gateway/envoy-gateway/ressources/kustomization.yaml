@@ -11,3 +11,5 @@ resources:
   - ./gateway.yaml
   - ./monitoring.yaml
   - ./redirect.yaml
+  - ./robots-txt.yaml
+  - ./security.yaml
