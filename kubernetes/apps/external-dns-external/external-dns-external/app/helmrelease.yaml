@@ -30,6 +30,8 @@ spec:
       - --gateway-name=external
       - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
       - --crd-source-kind=DNSEndpoint
+      - --default-targets=82.65.135.80
+      - --default-targets=2a0c:b641:2c0:110::100
     provider:
       name: webhook
       webhook:
