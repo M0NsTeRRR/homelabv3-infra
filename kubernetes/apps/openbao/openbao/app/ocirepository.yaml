@@ -10,6 +10,6 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 0.29.3
-    digest: sha256:77390e11b52ec7430a617411f3692e025f4960697a60586b182bbbdfbe9f99eb
+    tag: 0.29.4
+    digest: sha256:42437a9d485fca3b23b744ce4f8542c0e1013f429b9d54255ef9e0f0936fbf41
   url: oci://ghcr.io/openbao/charts/openbao
