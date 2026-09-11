@@ -5,4 +5,4 @@ collections:
   - name: community.crypto
     version: "3.4.0"
   - name: community.general
-    version: "13.3.0"
+    version: "13.4.0"
