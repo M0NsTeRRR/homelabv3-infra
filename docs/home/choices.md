@@ -16,7 +16,3 @@ This server uses only 15W to operate. It is small and doesn't make any noises, a
 ### Why I'm using cloud european services ?
 
 My conviction regarding GAFAM and GDPR.
-
-### Why do I have an Oracle VPS ?
-
-Because this VPS is completely Free with disk encryption otherwise I would have used probably Hetzner like in the past.
