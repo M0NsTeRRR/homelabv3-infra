@@ -1,0 +1,33 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "customDatasources": {
+    "flatcar-releases": {
+      "defaultRegistryUrlTemplate": "https://{{packageName}}.release.flatcar-linux.net/amd64-usr/current/version.txt",
+      "format": "plain",
+      "transformTemplates": [
+        "($version := $match(releases[$match(version, /^FLATCAR_VERSION=/)].version, /FLATCAR_VERSION=(\\S+)/).groups[0]; {\"releases\": [{\"version\": $version, \"changelogUrl\": \"https://www.flatcar.org/releases#release-\" & $version}]})"
+      ]
+    }
+  },
+  "customManagers": [
+    {
+      "description": ["Process Flatcar version"],
+      "customType": "regex",
+      "managerFilePatterns": ["/(^|/)\\.taskfiles/flatcar/Taskfile\\.ya?ml$/"],
+      "matchStrings": [
+        "FLATCAR_VERSION:\\s+\"(?<currentValue>[^\"]+)\"(?<comment>[^\\n]*)\\n(?<indentation>\\s+)FLATCAR_CHANNEL:\\s+\"(?<packageName>[^\"]+)\""
+      ],
+      "autoReplaceStringTemplate": "FLATCAR_VERSION: \"{{{newValue}}}\"{{{comment}}}\n{{{indentation}}}FLATCAR_CHANNEL: \"{{{packageName}}}\"",
+      "depNameTemplate": "flatcar",
+      "datasourceTemplate": "custom.flatcar-releases",
+      "versioningTemplate": "semver-coerced"
+    }
+  ],
+  "packageRules": [
+    {
+      "description": ["Flatcar: always show the full version, even on major bumps"],
+      "matchDatasources": ["custom.flatcar-releases"],
+      "commitMessageExtra": "( {{currentVersion}} → {{newVersion}} )"
+    }
+  ]
+}
