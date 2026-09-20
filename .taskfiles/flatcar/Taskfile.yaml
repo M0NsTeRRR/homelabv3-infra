@@ -3,7 +3,7 @@
 version: "3"
 
 vars:
-  FLATCAR_VERSION: "4593.2.5" # https://www.flatcar.org/releases/
+  FLATCAR_VERSION: "4593.2.5"
   FLATCAR_CHANNEL: "stable"
   FLATCAR_IMAGE_BASENAME: "flatcar_production_qemu_uefi_secure"
 
