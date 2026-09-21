@@ -1,0 +1,35 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "customDatasources": {
+    "k3s-minor-channels": {
+      "defaultRegistryUrlTemplate": "https://update.k3s.io/v1-release/channels",
+      "format": "json",
+      "transformTemplates": [
+        "{\"releases\": data[$match(id, /^v[0-9]+\\.[0-9]+$/)].{\"version\": id}}"
+      ]
+    }
+  },
+  "customManagers": [
+    {
+      "description": ["Process k3s full version (extension file + release asset)"],
+      "customType": "regex",
+      "managerFilePatterns": ["/(^|/)flatcar/base\\.k3s\\.bu$/"],
+      "matchStrings": [
+        "k3s-(?<currentValue>v[0-9]+\\.[0-9]+\\.[0-9]+\\+k3s[0-9]+)-x86-64\\.raw"
+      ],
+      "packageNameTemplate": "k3s-io/k3s",
+      "datasourceTemplate": "github-releases"
+    },
+    {
+      "description": ["Process k3s minor track (systemd-sysupdate transfer file)"],
+      "customType": "regex",
+      "managerFilePatterns": ["/(^|/)flatcar/base\\.k3s\\.bu$/"],
+      "matchStrings": [
+        "k3s-(?<currentValue>v[0-9]+\\.[0-9]+)(?:\\.d|\\.conf|\\s)"
+      ],
+      "depNameTemplate": "k3s-minor",
+      "datasourceTemplate": "custom.k3s-minor-channels",
+      "versioningTemplate": "semver-coerced"
+    }
+  ]
+}
