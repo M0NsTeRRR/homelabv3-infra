@@ -4,12 +4,12 @@ kind: Gateway
 metadata:
   name: &name external
   annotations:
-    external-dns.kubernetes.io/target: &ips 192.168.10.100,2a0c:b641:2c0:110::100
+    external-dns.kubernetes.io/target: &ips 82.65.135.80,2a0c:b641:2c0:110::100
 spec:
   gatewayClassName: envoy
   infrastructure:
     annotations:
-      lbipam.cilium.io/ips: *ips
+      lbipam.cilium.io/ips: 192.168.10.100,2a0c:b641:2c0:110::100
     parametersRef:
       group: gateway.envoyproxy.io
       kind: EnvoyProxy
