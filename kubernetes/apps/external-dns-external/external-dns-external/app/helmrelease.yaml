@@ -27,6 +27,7 @@ spec:
       - adminafk.fr
       - as212510.net
     extraArgs:
+      - --min-ttl=60s
       - --gateway-name=external
       - --crd-source-apiversion=externaldns.k8s.io/v1alpha1
       - --crd-source-kind=DNSEndpoint
