@@ -11,5 +11,5 @@ spec:
     operation: copy
   ref:
     tag: 91.5.2
-    digest: sha256:6bcd041f645a556e22f899230c9aaac828e99e00b59c1cef836f670cfd27aafc
+    digest: sha256:0587c43a158cd4d8e0d50e5304c88753363c6d7ebd62606ae8f62258345e4a2d
   url: oci://ghcr.io/prometheus-community/charts/kube-prometheus-stack
