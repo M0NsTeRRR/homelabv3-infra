@@ -45,10 +45,8 @@ spec:
       dataStorage:
         enabled: true
         size: 20Gi
-        mountPath: "/openbao/data"
         storageClass: local-path
         accessMode: ReadWriteOnce
-        annotations: {}
 
       service:
         ipFamilyPolicy: "PreferDualStack"

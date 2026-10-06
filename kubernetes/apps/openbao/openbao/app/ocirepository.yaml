@@ -13,3 +13,8 @@ spec:
     tag: 0.30.2
     digest: sha256:d0a5089807f49d2afc15a432125447fa2750e19ecbf10d1a90152d9289664659
   url: oci://ghcr.io/openbao/charts/openbao
+  verify:
+    provider: cosign
+    matchOIDCIdentity:
+      - issuer: "^https://token.actions.githubusercontent.com$"
+        subject: "^https://github.com/openbao/openbao-helm.*$"
