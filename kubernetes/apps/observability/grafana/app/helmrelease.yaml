@@ -158,8 +158,6 @@ spec:
           gnetId: 15038
           revision: 3
           datasource: *datasource
-        External-secrets:
-          url: https://raw.githubusercontent.com/external-secrets/external-secrets/main/docs/snippets/dashboard.json
         Go-runtime:
           gnetId: 13240
           revision: 2
