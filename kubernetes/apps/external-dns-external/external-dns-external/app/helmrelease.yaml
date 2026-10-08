@@ -38,7 +38,7 @@ spec:
       webhook:
         image:
           repository: ghcr.io/m0nsterrr/external-dns-webhook-infomaniak
-          tag: v0.1.4@sha256:83ce6cee806c15d6ca51e52709751e73daf9941da678c9e81ae947d7cb26f350
+          tag: v0.1.5@sha256:313e126d1bd0226f59c9ba947dea873e3c34e9dc85a2cb05b7f63340058cf7ee
         env:
           - name: INFOMANIAK_API_TOKEN
             valueFrom:
