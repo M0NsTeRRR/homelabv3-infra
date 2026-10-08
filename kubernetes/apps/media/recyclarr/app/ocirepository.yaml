@@ -10,8 +10,8 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 2.7.2
-    digest: sha256:339e89700471d336ff22952ae035bf99db14368fd394afd828ce7bf3c151d950
+    tag: 2.7.3
+    digest: sha256:0717dd52431a5bdb75ab270153eac7c12cab143e332cc06d469ba0ab9d0247ab
   url: oci://ghcr.io/m0nsterrr/helm-charts/recyclarr
   verify:
     provider: cosign
