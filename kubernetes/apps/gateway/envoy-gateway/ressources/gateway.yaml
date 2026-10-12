@@ -4,7 +4,7 @@ kind: Gateway
 metadata:
   name: &name external
   annotations:
-    external-dns.kubernetes.io/target: &ips 82.65.135.80,2a0c:b641:2c0:110::100
+    external-dns.kubernetes.io/target: 82.65.135.80,2a0c:b641:2c0:110::100
 spec:
   gatewayClassName: envoy
   infrastructure:
