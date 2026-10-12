@@ -28,6 +28,8 @@ spec:
       service:
         ipDualStack:
           enabled: true
+      serviceMonitor:
+        authorization: null
     kube-state-metrics:
       service:
         ipDualStack:
@@ -82,6 +84,8 @@ spec:
         - "192.168.10.81"
         - "192.168.10.82"
         - "192.168.10.83"
+      serviceMonitor:
+        authorization: null
     kubeScheduler:
       service:
         ipDualStack:
