@@ -32,6 +32,17 @@ spec:
         certificateRefs:
           - kind: Secret
             name: as212510-net-tls
+    - name: https-apex-as212510
+      hostname: "as212510.net"
+      protocol: HTTPS
+      port: 443
+      allowedRoutes:
+        namespaces:
+          from: All
+      tls:
+        certificateRefs:
+          - kind: Secret
+            name: as212510-net-tls
     - name: https-1
       hostname: "*.adminafk.fr"
       protocol: HTTPS
