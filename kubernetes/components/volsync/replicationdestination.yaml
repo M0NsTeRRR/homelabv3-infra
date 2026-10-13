@@ -10,6 +10,7 @@ spec:
     repository: ${APP}-volsync-openbao
     enableFileDeletion: true
     copyMethod: Snapshot
+    capacity: ${VOLSYNC_CAPACITY:=5Gi}
     accessModes: ["ReadWriteOnce"]
     cleanupCachePVC: true
     cleanupTempPVC: true
