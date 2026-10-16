@@ -10,6 +10,6 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 2026.8.3
-    digest: sha256:d2caf78313874d8d8f4694ff8a696e7905898f22b2481c0b50438910f8cb0a8f
+    tag: 2026.8.4
+    digest: sha256:e09c1e3cd48ac16569f85a0794bb06a1f134bed8dd9d21fb1e3af42a58c5afb5
   url: oci://ghcr.io/goauthentik/helm-charts/authentik
