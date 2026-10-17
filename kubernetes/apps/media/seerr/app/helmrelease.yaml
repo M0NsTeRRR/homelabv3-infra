@@ -20,7 +20,8 @@ spec:
           name: seerr-openbao
 
     config:
-      existingClaim: ${APP}
+      persistence:
+        existingClaim: ${APP}
 
     volumes:
       - name: &volume-ca ca-certs

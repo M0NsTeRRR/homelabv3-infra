@@ -11,7 +11,9 @@ spec:
   interval: 1h
   values:
     config:
-      persistence: {}
+      persistence:
+        name: ${APP}
+        size: ${VOLSYNC_CAPACITY:=5Gi}
 
     volumes:
       - name: &volume-ca ca-certs
