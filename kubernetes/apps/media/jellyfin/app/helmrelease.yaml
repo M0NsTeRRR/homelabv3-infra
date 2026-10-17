@@ -11,8 +11,7 @@ spec:
   interval: 1h
   values:
     config:
-      persistence:
-        volumeName: ${APP}
+      persistence: {}
 
     volumes:
       - name: &volume-ca ca-certs

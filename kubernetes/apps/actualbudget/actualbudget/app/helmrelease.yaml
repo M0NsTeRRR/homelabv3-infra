@@ -15,7 +15,16 @@ spec:
 
     data:
       persistence:
-        volumeName: ${APP}
+        enabled: false
+
+    volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: ${APP}
+
+    volumeMounts:
+      - name: data
+        mountPath: /data
 
     route:
       main:
