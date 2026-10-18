@@ -5,6 +5,7 @@ metadata:
 data:
   TZ: "Europe/Paris"
   DB_TYPE: postgres
+  DB_USER: seerr
   DB_HOST: "pooler-rw.postgres.svc"
   DB_PORT: "5432"
   DB_NAME: seerr
