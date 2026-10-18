@@ -1,0 +1,15 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: DatabaseRole
+metadata:
+  name: postgres-${APP}
+  namespace: postgres
+spec:
+  cluster:
+    name: postgres
+  name: ${APP}
+  comment: "${APP} user"
+  login: true
+  superuser: false
+  disablePassword: true
+  databaseRoleReclaimPolicy: delete
