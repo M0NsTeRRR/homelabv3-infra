@@ -41,7 +41,6 @@ spec:
         readOnly: true
       - name: *volume-postgres
         mountPath: /var/run/secrets/postgresql
-        defaultMode: 0400
         readOnly: true
       - name: data
         mountPath: /movies
