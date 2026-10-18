@@ -10,49 +10,46 @@ spec:
     name: cilium
   interval: 1h
   values:
-    kubeProxyReplacement: true
-    routingMode: native
     autoDirectNodeRoutes: true
-    ipv4NativeRoutingCIDR: "10.42.0.0/16"
-    ipv6NativeRoutingCIDR: "2001:cafe:42:0::/96"
+    bandwidthManager:
+      enabled: true
+      bbr: true
+    bpfClockProbe: true
+    dashboards:
+      enabled: true
+    enableIPv4BIGTCP: true
+    enableIPv6BIGTCP: true
     enableIPv4Masquerade: true
     enableIPv6Masquerade: true
-    loadBalancer:
-      mode: dsr
-      acceleration: native
-    k8sServiceHost: 127.0.0.1
-    k8sServicePort: 6444
-    policyEnforcementMode: default
-    policyAuditMode: false
-    rollOutCiliumPods: true
-    l2announcements:
-      enabled: true
-    gatewayAPI:
-      enabled: false
-    hostFirewall:
-      enabled: true
-    extraConfig:
-      allow-localhost: policy
-    ipv4:
-      enabled: true
-    ipv6:
-      enabled: true
     endpointRoutes:
       enabled: true
+    envoy:
+      enabled: false
+    gatewayAPI:
+      enabled: false
+    hubble:
+      enabled: false
     ipam:
       mode: cluster-pool
       operator:
-        clusterPoolIPv4PodCIDRList: "10.42.0.0/16"
-        clusterPoolIPv6PodCIDRList: "2001:cafe:42:0::/96"
         clusterPoolIPv4MaskSize: 24
+        clusterPoolIPv4PodCIDRList: "10.42.0.0/16"
         clusterPoolIPv6MaskSize: 112
-    prometheus:
+        clusterPoolIPv6PodCIDRList: "2001:cafe:42:0::/96"
+    ipv4:
       enabled: true
-      serviceMonitor:
-        enabled: true
-        trustCRDsExist: true
-    dashboards:
+    ipv4NativeRoutingCIDR: "10.42.0.0/16"
+    ipv6:
       enabled: true
+    ipv6NativeRoutingCIDR: "2001:cafe:42:0::/96"
+    k8sServiceHost: 127.0.0.1
+    k8sServicePort: 6444
+    kubeProxyReplacement: true
+    l2announcements:
+      enabled: true
+    loadBalancer:
+      acceleration: native
+      mode: dsr
     operator:
       dashboards:
         enabled: true
@@ -60,24 +57,17 @@ spec:
         enabled: true
         serviceMonitor:
           enabled: true
-    hubble:
-      relay:
+    pmtuDiscovery:
+      enabled: true
+    policyAuditMode: false
+    policyEnforcementMode: default
+    prometheus:
+      enabled: true
+      serviceMonitor:
         enabled: true
-      metrics:
-        enabled:
-          - dns
-          - drop
-          - tcp
-          - flow
-          - port-distribution
-          - icmp
-          - http
-        serviceMonitor:
-          enabled: true
-        dashboards:
-          enabled: true
-    envoy:
-      enabled: false
+        trustCRDsExist: true
+    routingMode: native
+    rollOutCiliumPods: true
     securityContext:
       capabilities:
         ciliumAgent:
