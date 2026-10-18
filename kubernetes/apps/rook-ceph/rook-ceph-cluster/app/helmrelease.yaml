@@ -13,6 +13,9 @@ spec:
     cephClusterSpec:
       cleanupPolicy:
         wipeDevicesFromOtherClusters: true
+      csi:
+        cephfs:
+          kernelMountOptions: ms_mode=prefer-crc
       storage:
         devicePathFilter: /dev/disk/by-id/wwn-0x5000000000000001
         useAllDevices: false

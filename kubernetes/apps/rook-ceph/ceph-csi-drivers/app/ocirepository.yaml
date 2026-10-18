@@ -1,0 +1,15 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: ceph-csi-drivers
+spec:
+  interval: 15m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 1.1.0
+    digest: sha256:8c9ddb89e991889a41876b4eac85908a04dbe007b3766843bdac5db59ccab2a2
+  url: oci://ghcr.io/home-operations/charts-mirror/ceph-csi-drivers
