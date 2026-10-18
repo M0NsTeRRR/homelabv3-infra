@@ -12,6 +12,7 @@ data:
   SONARR__LOG__LEVEL: info
   SONARR__LOG__ANALYTICSENABLED: "False"
   SONARR__POSTGRES__HOST: "pooler-rw.postgres.svc"
+  SONARR__POSTGRES__USER: sonarr
   SONARR__POSTGRES__MAINDB: "sonarr"
   PGSSLROOTCERT: /var/run/secrets/root-ca/ca.crt
   PGSSLCERT: /var/run/secrets/postgresql/tls.crt

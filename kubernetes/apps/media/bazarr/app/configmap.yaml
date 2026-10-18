@@ -6,6 +6,7 @@ data:
   TZ: "Europe/Paris"
   POSTGRES_ENABLED: "True"
   POSTGRES_HOST: "pooler-rw.postgres.svc"
+  POSTGRES_USERNAME: bazarr
   POSTGRES_PORT: "5432"
   POSTGRES_DATABASE: "bazarr"
   PGSSLROOTCERT: /var/run/secrets/root-ca/ca.crt
