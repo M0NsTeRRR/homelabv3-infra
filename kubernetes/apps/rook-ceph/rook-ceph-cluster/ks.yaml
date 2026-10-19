@@ -19,6 +19,10 @@ spec:
       kind: CephCluster
       namespace: rook-ceph
       name: rook-ceph
+    - apiVersion: ceph.rook.io/v1
+      kind: CephObjectStore
+      namespace: rook-ceph
+      name: ceph-objectstore
   interval: 1h
   path: ./kubernetes/apps/rook-ceph/rook-ceph-cluster/app
   prune: true

@@ -9,8 +9,12 @@ spec:
     kind: OCIRepository
     name: rook-ceph-cluster
   interval: 1h
+  timeout: 10m
   values:
     cephClusterSpec:
+      cephConfig:
+        mon:
+          mon_cluster_log_level: info
       cleanupPolicy:
         wipeDevicesFromOtherClusters: true
       csi:
@@ -22,11 +26,7 @@ spec:
         useAllNodes: true
       mgr:
         modules:
-          - name: insights
-            enabled: true
           - name: pg_autoscaler
-            enabled: true
-          - name: rook
             enabled: true
       network:
         connections:
@@ -52,12 +52,11 @@ spec:
           gateway:
             port: 80
             resources:
-              limits:
-                cpu: "2000m"
-                memory: "2Gi"
               requests:
-                cpu: "0"
-                memory: "0"
+                cpu: 100m
+                memory: 1Gi
+              limits:
+                memory: 2Gi
             instances: 1
             priorityClassName: system-cluster-critical
         storageClass:
@@ -125,6 +124,15 @@ spec:
           metadataServer:
             activeCount: 1
             activeStandby: true
+            placement:
+              topologySpreadConstraints:
+                - maxSkew: 1
+                  topologyKey: kubernetes.io/hostname
+                  whenUnsatisfiable: DoNotSchedule
+                  labelSelector:
+                    matchLabels:
+                      app.kubernetes.io/name: ceph-mds
+                      app.kubernetes.io/part-of: ceph-filesystem
             resources:
               requests:
                 cpu: 100m
