@@ -42,7 +42,7 @@ spec:
     receivers:
       filelog:
         exclude:
-          - /var/log/pods/opentelemetry-operator_collector-collector*_*/*/*.log
+          - /var/log/pods/observability_collector-collector*_*/*/*.log
         include:
           - /var/log/pods/*/*/*.log
         include_file_name: false
@@ -54,26 +54,12 @@ spec:
         retry_on_failure:
           enabled: true
         start_at: end
-      receiver_creator/k8s_ingress:
-        watch_observers: [k8s_observer]
-        receivers:
-          prometheus_simple:
-            rule: type == "k8s.ingress"
-            config:
-              endpoint: "http://blackbox-exporter-prometheus-blackbox-exporter.observability.svc:9115"
-              metrics_path: "/probe"
-              params:
-                module: [http_2xx]
-                target: "`scheme`://`endpoint`:`port`"
-              collection_interval: 5s
-            resource_attributes:
-              service.name: "`endpoint`"
       otlp:
         protocols:
           grpc:
-            endpoint: ${env:K8S_POD_IP}:4317
+            endpoint: "[::]:4317"
           http:
-            endpoint: ${env:K8S_POD_IP}:4318
+            endpoint: "[::]:4318"
       prometheus:
         config:
           scrape_configs:
@@ -123,7 +109,6 @@ spec:
         logs:
           exporters:
             - otlphttp/victoriametrics
-            - debug
           processors:
             - k8sattributes/default
             - memory_limiter
@@ -140,7 +125,6 @@ spec:
             - memory_limiter
             - batch
           receivers:
-            - receiver_creator/k8s_ingress
             - prometheus
             - otlp
         traces:

@@ -11,6 +11,8 @@ spec:
   interval: 1h
   values:
     server:
+      extraArgs:
+        retention.maxDiskUsagePercent: 90
       persistentVolume:
         size: 100Gi
       service:
