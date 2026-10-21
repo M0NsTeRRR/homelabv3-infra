@@ -46,19 +46,29 @@ openbao_policies:
       - path: pki/issue/*
         capabilities:
           - create
+  - name: actualbudget
+    rules:
+      - path: secret/data/homelab/prod/actualbudget
+        capabilities:
+          - read
+  - name: as212510-net
+    rules:
+      - path: secret/data/homelab/prod/as212510-net
+        capabilities:
+          - read
+  - name: authentik
+    rules:
+      - path: secret/data/homelab/prod/authentik
+        capabilities:
+          - read
+  - name: bazarr
+    rules:
+      - path: secret/data/homelab/prod/bazarr
+        capabilities:
+          - read
   - name: cert-manager-webhook-infomaniak
     rules:
       - path: secret/data/homelab/prod/cert_manager_webhook_infomaniak
-        capabilities:
-          - read
-  - name: external-dns-internal
-    rules:
-      - path: secret/data/homelab/prod/external_dns/internal
-        capabilities:
-          - read
-  - name: external-dns-external
-    rules:
-      - path: secret/data/homelab/prod/external_dns/external
         capabilities:
           - read
   - name: cnpg
@@ -71,14 +81,14 @@ openbao_policies:
       - path: secret/data/homelab/prod/csi-driver-smb
         capabilities:
           - read
-  - name: authentik
+  - name: external-dns-external
     rules:
-      - path: secret/data/homelab/prod/authentik
+      - path: secret/data/homelab/prod/external_dns/external
         capabilities:
           - read
-  - name: rook-ceph-cluster
+  - name: external-dns-internal
     rules:
-      - path: secret/data/homelab/prod/rook-ceph-cluster
+      - path: secret/data/homelab/prod/external_dns/internal
         capabilities:
           - read
   - name: grafana
@@ -86,14 +96,9 @@ openbao_policies:
       - path: secret/data/homelab/prod/grafana
         capabilities:
           - read
-  - name: prometheus-snmp-exporter
+  - name: jellyfin
     rules:
-      - path: secret/data/homelab/prod/prometheus-snmp-exporter
-        capabilities:
-          - read
-  - name: as212510-net
-    rules:
-      - path: secret/data/homelab/prod/as212510-net
+      - path: secret/data/homelab/prod/jellyfin
         capabilities:
           - read
   - name: looking-glass
@@ -101,37 +106,14 @@ openbao_policies:
       - path: secret/data/homelab/prod/looking-glass
         capabilities:
           - read
-  - name: jellyfin
+  - name: prometheus-snmp-exporter
     rules:
-      - path: secret/data/homelab/prod/jellyfin
-        capabilities:
-          - read
-  - name: seerr
-    rules:
-      - path: secret/data/homelab/prod/seerr
+      - path: secret/data/homelab/prod/prometheus-snmp-exporter
         capabilities:
           - read
   - name: prowlarr
     rules:
       - path: secret/data/homelab/prod/prowlarr
-        capabilities:
-          - read
-  - name: radarr
-    rules:
-      - path: secret/data/homelab/prod/radarr
-        capabilities:
-          - read
-  - name: sonarr
-    rules:
-      - path: secret/data/homelab/prod/sonarr
-        capabilities:
-          - read
-  - name: recyclarr
-    rules:
-      - path: secret/data/homelab/prod/sonarr
-        capabilities:
-          - read
-      - path: secret/data/homelab/prod/radarr
         capabilities:
           - read
   - name: qbittorrent
@@ -142,17 +124,168 @@ openbao_policies:
       - path: secret/data/homelab/prod/gluetun
         capabilities:
           - read
-  - name: stirling-pdf
+  - name: radarr
     rules:
-      - path: secret/data/homelab/prod/stirling-pdf
+      - path: secret/data/homelab/prod/radarr
         capabilities:
           - read
-  - name: actualbudget
+  - name: recyclarr
     rules:
-      - path: secret/data/homelab/prod/actualbudget
+      - path: secret/data/homelab/prod/sonarr
+        capabilities:
+          - read
+      - path: secret/data/homelab/prod/radarr
+        capabilities:
+          - read
+  - name: rook-ceph-cluster
+    rules:
+      - path: secret/data/homelab/prod/rook-ceph-cluster
+        capabilities:
+          - read
+  - name: seerr
+    rules:
+      - path: secret/data/homelab/prod/seerr
+        capabilities:
+          - read
+  - name: sonarr
+    rules:
+      - path: secret/data/homelab/prod/sonarr
         capabilities:
           - read
 public_openbao_datas:
+  - path: auth/kubernetes/config
+    data:
+      kubernetes_host: "https://10.43.0.1:443"
+  - path: auth/kubernetes/role/actualbudget
+    data:
+      bound_service_account_names: actualbudget-openbao
+      bound_service_account_namespaces: actualbudget
+      policies: actualbudget
+      ttl: 1h
+  - path: auth/kubernetes/role/as212510-net
+    data:
+      bound_service_account_names: as212510-net-openbao
+      bound_service_account_namespaces: as212510-net
+      policies: as212510-net
+      ttl: 1h
+  - path: auth/kubernetes/role/authentik
+    data:
+      bound_service_account_names: authentik-openbao
+      bound_service_account_namespaces: authentik
+      policies: authentik
+      ttl: 1h
+  - path: auth/kubernetes/role/bazarr
+    data:
+      bound_service_account_names: bazarr-openbao
+      bound_service_account_namespaces: media
+      policies: bazarr
+      ttl: 1h
+  - path: auth/kubernetes/role/cert-manager-openbao
+    data:
+      bound_service_account_names: cert-manager-openbao
+      bound_service_account_namespaces: cert-manager
+      audience: "vault://openbao"
+      policies: pki
+      ttl: 1m
+  - path: auth/kubernetes/role/cert-manager-webhook-infomaniak
+    data:
+      bound_service_account_names: cert-manager-webhook-infomaniak-openbao
+      bound_service_account_namespaces: cert-manager-webhook-infomaniak
+      policies: cert-manager-webhook-infomaniak
+      ttl: 1h
+  - path: auth/kubernetes/role/cnpg
+    data:
+      bound_service_account_names: cnpg-openbao
+      bound_service_account_namespaces: postgres
+      policies: cnpg
+      ttl: 1h
+  - path: auth/kubernetes/role/csi-driver-smb
+    data:
+      bound_service_account_names: csi-driver-smb-openbao
+      bound_service_account_namespaces: csi-driver-smb
+      policies: csi-driver-smb
+      ttl: 1m
+  - path: auth/kubernetes/role/external-dns-external
+    data:
+      bound_service_account_names: external-dns-openbao
+      bound_service_account_namespaces: external-dns-external
+      policies: external-dns-external
+      ttl: 1h
+  - path: auth/kubernetes/role/external-dns-internal
+    data:
+      bound_service_account_names: external-dns-openbao
+      bound_service_account_namespaces: external-dns-internal
+      policies: external-dns-internal
+      ttl: 1h
+  - path: auth/kubernetes/role/grafana
+    data:
+      bound_service_account_names: grafana-openbao
+      bound_service_account_namespaces: observability
+      policies: grafana
+      ttl: 1h
+  - path: auth/kubernetes/role/jellyfin
+    data:
+      bound_service_account_names: jellyfin-openbao
+      bound_service_account_namespaces: media
+      policies: jellyfin
+      ttl: 1h
+  - path: auth/kubernetes/role/looking-glass
+    data:
+      bound_service_account_names: looking-glass-openbao
+      bound_service_account_namespaces: looking-glass
+      policies: looking-glass
+      ttl: 1h
+  - path: auth/kubernetes/role/prometheus-snmp-exporter
+    data:
+      bound_service_account_names: prometheus-snmp-exporter-openbao
+      bound_service_account_namespaces: observability
+      policies: prometheus-snmp-exporter
+      ttl: 1h
+  - path: auth/kubernetes/role/prowlarr
+    data:
+      bound_service_account_names: prowlarr-openbao
+      bound_service_account_namespaces: media
+      policies: prowlarr
+      ttl: 1h
+  - path: auth/kubernetes/role/qbittorrent
+    data:
+      bound_service_account_names: qbittorrent-openbao
+      bound_service_account_namespaces: media
+      policies: qbittorrent
+      ttl: 1h
+  - path: auth/kubernetes/role/radarr
+    data:
+      bound_service_account_names: radarr-openbao
+      bound_service_account_namespaces: media
+      policies: radarr
+      ttl: 1h
+  - path: auth/kubernetes/role/recyclarr
+    data:
+      bound_service_account_names: recyclarr-openbao
+      bound_service_account_namespaces: media
+      policies: recyclarr
+      ttl: 1h
+  - path: auth/kubernetes/role/rook-ceph-cluster
+    data:
+      bound_service_account_names: rook-ceph-cluster-openbao
+      bound_service_account_namespaces: rook-ceph
+      policies: rook-ceph-cluster
+      ttl: 1h
+  - path: auth/kubernetes/role/seerr
+    data:
+      bound_service_account_names: seerr-openbao
+      bound_service_account_namespaces: media
+      policies: seerr
+      ttl: 1h
+  - path: auth/kubernetes/role/sonarr
+    data:
+      bound_service_account_names: sonarr-openbao
+      bound_service_account_namespaces: media
+      policies: sonarr
+      ttl: 1h
+  - path: pki/config/acme
+    data:
+      enabled: true
   - path: pki/config/ca
     data:
       pem_bundle: |
@@ -169,9 +302,6 @@ public_openbao_datas:
       crl_distribution_points: "{{ '{{' }}cluster_aia_path{{ '}}' }}/issuer/{{ '{{' }}issuer_id{{ '}}' }}/crl/der"
       ocsp_servers: "{{ '{{' }}cluster_aia_path{{ '}}' }}/ocsp"
       enable_templating: true
-  - path: pki/config/acme
-    data:
-      enabled: true
   - path: pki/roles/cert-manager-openbao
     data:
       allow_any_name: true
@@ -183,140 +313,4 @@ public_openbao_datas:
       organization: "{{ organization }}"
       country: "{{ country }}"
       require_cn: false # must be disabled for cert-manager
-  - path: auth/kubernetes/config
-    data:
-      kubernetes_host: "https://10.43.0.1:443"
-  - path: auth/kubernetes/role/cert-manager-openbao
-    data:
-      bound_service_account_names: cert-manager-openbao
-      bound_service_account_namespaces: cert-manager
-      audience: "vault://openbao"
-      policies: pki
-      ttl: 1m
-  - path: auth/kubernetes/role/cert-manager-webhook-infomaniak
-    data:
-      bound_service_account_names: cert-manager-webhook-infomaniak-openbao
-      bound_service_account_namespaces: cert-manager-webhook-infomaniak
-      policies: cert-manager-webhook-infomaniak
-      ttl: 1h
-  - path: auth/kubernetes/role/external-dns-internal
-    data:
-      bound_service_account_names: external-dns-openbao
-      bound_service_account_namespaces: external-dns-internal
-      policies: external-dns-internal
-      ttl: 1h
-  - path: auth/kubernetes/role/external-dns-external
-    data:
-      bound_service_account_names: external-dns-openbao
-      bound_service_account_namespaces: external-dns-external
-      policies: external-dns-external
-      ttl: 1h
-  - path: auth/kubernetes/role/cnpg
-    data:
-      bound_service_account_names: cnpg-openbao
-      bound_service_account_namespaces: postgres
-      policies: cnpg
-      ttl: 1h
-  - path: auth/kubernetes/role/csi-driver-smb
-    data:
-      bound_service_account_names: csi-driver-smb-openbao
-      bound_service_account_namespaces: csi-driver-smb
-      policies: csi-driver-smb
-      ttl: 1m
-  - path: auth/kubernetes/role/authentik
-    data:
-      bound_service_account_names: authentik-openbao
-      bound_service_account_namespaces: authentik
-      policies: authentik
-      ttl: 1h
-  - path: auth/kubernetes/role/rook-ceph-cluster
-    data:
-      bound_service_account_names: rook-ceph-cluster-openbao
-      bound_service_account_namespaces: rook-ceph
-      policies: rook-ceph-cluster
-      ttl: 1h
-  - path: auth/kubernetes/role/grafana
-    data:
-      bound_service_account_names: grafana-openbao
-      bound_service_account_namespaces: observability
-      policies: grafana
-      ttl: 1h
-  - path: auth/kubernetes/role/prometheus-snmp-exporter
-    data:
-      bound_service_account_names: prometheus-snmp-exporter-openbao
-      bound_service_account_namespaces: observability
-      policies: prometheus-snmp-exporter
-      ttl: 1h
-  - path: auth/kubernetes/role/as212510-net
-    data:
-      bound_service_account_names: as212510-net-openbao
-      bound_service_account_namespaces: as212510-net
-      policies: as212510-net
-      ttl: 1h
-  - path: auth/kubernetes/role/looking-glass
-    data:
-      bound_service_account_names: looking-glass-openbao
-      bound_service_account_namespaces: looking-glass
-      policies: looking-glass
-      ttl: 1h
-  - path: auth/kubernetes/role/qbittorrent
-    data:
-      bound_service_account_names: qbittorrent-openbao
-      bound_service_account_namespaces: media
-      policies: qbittorrent
-      ttl: 1h
-  - path: auth/kubernetes/role/bazarr
-    data:
-      bound_service_account_names: bazarr-openbao
-      bound_service_account_namespaces: media
-      policies: bazarr
-      ttl: 1h
-  - path: auth/kubernetes/role/jellyfin
-    data:
-      bound_service_account_names: jellyfin-openbao
-      bound_service_account_namespaces: media
-      policies: jellyfin
-      ttl: 1h
-  - path: auth/kubernetes/role/seerr
-    data:
-      bound_service_account_names: seerr-openbao
-      bound_service_account_namespaces: media
-      policies: seerr
-      ttl: 1h
-  - path: auth/kubernetes/role/prowlarr
-    data:
-      bound_service_account_names: prowlarr-openbao
-      bound_service_account_namespaces: media
-      policies: prowlarr
-      ttl: 1h
-  - path: auth/kubernetes/role/radarr
-    data:
-      bound_service_account_names: radarr-openbao
-      bound_service_account_namespaces: media
-      policies: radarr
-      ttl: 1h
-  - path: auth/kubernetes/role/sonarr
-    data:
-      bound_service_account_names: sonarr-openbao
-      bound_service_account_namespaces: media
-      policies: sonarr
-      ttl: 1h
-  - path: auth/kubernetes/role/recyclarr
-    data:
-      bound_service_account_names: recyclarr-openbao
-      bound_service_account_namespaces: media
-      policies: recyclarr
-      ttl: 1h
-  - path: auth/kubernetes/role/stirling-pdf
-    data:
-      bound_service_account_names: stirling-pdf-openbao
-      bound_service_account_namespaces: stirling-pdf
-      policies: stirling-pdf
-      ttl: 1h
-  - path: auth/kubernetes/role/actualbudget
-    data:
-      bound_service_account_names: actualbudget-openbao
-      bound_service_account_namespaces: actualbudget
-      policies: actualbudget
-      ttl: 1h
 openbao_datas: "{{ public_openbao_datas + secret_openbao_datas }}"
