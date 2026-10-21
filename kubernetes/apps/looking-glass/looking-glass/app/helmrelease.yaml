@@ -22,18 +22,11 @@ spec:
         secret:
           secretName: looking-glass-config-openbao
           defaultMode: 0400
-      - name: &volume-files looking-glass-files
-        configMap:
-          name: looking-glass-files
 
     volumeMounts:
       - name: *volume-config
         mountPath: /config.yaml
         subPath: config.yaml
-        readOnly: true
-      - name: *volume-files
-        mountPath: /etc/looking-glass/unicornafk.svg
-        subPath: unicornafk.svg
         readOnly: true
 
     route:
