@@ -50,7 +50,7 @@ spec:
           gethomepage.dev/description: Media System
           gethomepage.dev/icon: qui.png
         parentRefs:
-          - name: external
+          - name: internal
             namespace: gateway
         hostnames:
           - qui.unicornafk.fr
