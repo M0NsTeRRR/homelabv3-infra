@@ -14,7 +14,7 @@ spec:
 
   storage:
     storageClass: ceph-block
-    size: 20Gi
+    size: 40Gi
 
   # bootstrap:
   #   recovery:
