@@ -1,4 +1,4 @@
-[kubernetes]
-k8s-1.unicornafk.fr
-k8s-2.unicornafk.fr
-k8s-3.unicornafk.fr
+[openbao]
+openbao-1.unicornafk.fr
+openbao-2.unicornafk.fr
+openbao-3.unicornafk.fr

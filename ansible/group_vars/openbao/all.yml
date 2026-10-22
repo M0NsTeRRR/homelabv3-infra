@@ -124,6 +124,11 @@ openbao_policies:
       - path: secret/data/homelab/prod/gluetun
         capabilities:
           - read
+  - name: qui
+    rules:
+      - path: secret/data/homelab/prod/qui
+        capabilities:
+          - read
   - name: radarr
     rules:
       - path: secret/data/homelab/prod/radarr
@@ -252,6 +257,12 @@ public_openbao_datas:
       bound_service_account_names: qbittorrent-openbao
       bound_service_account_namespaces: media
       policies: qbittorrent
+      ttl: 1h
+  - path: auth/kubernetes/role/qui
+    data:
+      bound_service_account_names: qui-openbao
+      bound_service_account_namespaces: media
+      policies: qui
       ttl: 1h
   - path: auth/kubernetes/role/radarr
     data:

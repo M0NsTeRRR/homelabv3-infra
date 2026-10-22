@@ -1,6 +1,6 @@
 ---
 - name: Configure kubernetes
-  hosts: kubernetes[0]
+  hosts: openbao[0]
   become: true
   gather_facts: false
   roles:
