@@ -10,8 +10,8 @@ data:
   QUI__SESSION_COOKIE_SECURE: "true"
   QUI__DATABASE_ENGINE: postgres
   QUI__DATABASE_HOST: "pooler-rw.postgres.svc"
-  QUI__DATABASE_USER: prowlarr
-  QUI__DATABASE_NAME: "prowlarr"
+  QUI__DATABASE_USER: qui
+  QUI__DATABASE_NAME: "qui"
   QUI__DATABASE_SSL_MODE: verify-full
   PGSSLROOTCERT: /var/run/secrets/root-ca/ca.crt
   PGSSLCERT: /var/run/secrets/postgresql/tls.crt
