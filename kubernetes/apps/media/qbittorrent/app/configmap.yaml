@@ -4,7 +4,7 @@ kind: ConfigMap
 metadata:
   name: qbittorrent-gluetun
 data:
-  FIREWALL_INPUT_PORTS: "80"
+  FIREWALL_INPUT_PORTS: "8080"
   FIREWALL_VPN_INPUT_PORTS: "8388"
   FIREWALL_OUTBOUND_SUBNETS: "10.0.0.0/8,2001:cafe:42:0::/64"
   VPN_SERVICE_PROVIDER: "custom"
