@@ -16,10 +16,6 @@ spec:
     strategy:
       type: RollingUpdate
 
-    config:
-      persistence:
-        enabled: false
-
     extraEnvFrom:
       - configMapRef:
           name: qui
