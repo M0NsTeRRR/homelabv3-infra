@@ -1,0 +1,63 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: qui
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: qui
+  interval: 1h
+  values:
+    podAnnotations:
+      reloader.stakater.com/auto: "true"
+
+    strategy:
+      type: RollingUpdate
+
+    config:
+      persistence:
+        enabled: false
+
+    extraEnvFrom:
+      - configMapRef:
+          name: qui
+      - secretRef:
+          name: qui-openbao
+    volumes:
+      - name: &volume-ca ca-certs
+        configMap:
+          name: homelab-ca
+      - name: &volume-postgres postgres-certs
+        secret:
+          secretName: postgres-cert-${APP}
+          defaultMode: 0400
+    volumeMounts:
+      - name: *volume-ca
+        mountPath: /var/run/secrets/root-ca/ca.crt
+        subPath: ca.crt
+        readOnly: true
+      - name: *volume-postgres
+        mountPath: /var/run/secrets/postgresql
+        readOnly: true
+
+    route:
+      main:
+        enabled: true
+        kind: HTTPRoute
+        apiVersion: gateway.networking.k8s.io/v1
+        annotations:
+          gethomepage.dev/enabled: "true"
+          gethomepage.dev/group: Media
+          gethomepage.dev/name: qui
+          gethomepage.dev/description: Media System
+          gethomepage.dev/icon: qui.png
+        parentRefs:
+          - name: external
+            namespace: gateway
+        hostnames:
+          - qui.unicornafk.fr
+
+    serviceMonitor:
+      enabled: true

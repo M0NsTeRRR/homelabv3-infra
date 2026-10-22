@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: qui
+data:
+  QUI__LOG_LEVEL: info
+  QUI__CHECK_FOR_UPDATES: "false"
+  QUI__DISABLE_SELF_UPDATE: "true"
+  QUI__CORS_ALLOWED_ORIGINS: "https://qui.unicornafk.fr"
+  QUI__SESSION_COOKIE_SECURE: "true"
+  QUI__DATABASE_ENGINE: postgres
+  QUI__DATABASE_HOST: "pooler-rw.postgres.svc"
+  QUI__DATABASE_USER: prowlarr
+  QUI__DATABASE_NAME: "prowlarr"
+  QUI__DATABASE_SSL_MODE: verify-full
+  PGSSLROOTCERT: /var/run/secrets/root-ca/ca.crt
+  PGSSLCERT: /var/run/secrets/postgresql/tls.crt
+  PGSSLKEY: /var/run/secrets/postgresql/tls.key
