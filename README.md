@@ -17,12 +17,6 @@ _... managed with Incusos, Flatcar, Flux, Renovate and Octodns_ 🤖
 
 </div>
 
-<div align="center">
-
-[![Status-Page](https://img.shields.io/uptimerobot/status/m793418416-67fe8e5a8853df15d81a1f29?color=brightgreeen&label=Status%20Page&style=for-the-badge&logo=uptimekuma&logoColor=white)](https://status.adminafk.fr/status/homelab)
-
-</div>
-
 # Documentation
 
 <https://homelab.adminafk.fr>
