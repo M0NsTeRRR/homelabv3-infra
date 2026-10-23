@@ -29,6 +29,9 @@ spec:
         secret:
           secretName: postgres-cert-${APP}
           defaultMode: 0400
+      - name: &volume-data data
+        persistentVolumeClaim:
+          claimName: media-storage
     volumeMounts:
       - name: *volume-ca
         mountPath: /var/run/secrets/root-ca/ca.crt
@@ -37,6 +40,15 @@ spec:
       - name: *volume-postgres
         mountPath: /var/run/secrets/postgresql
         readOnly: true
+      - name: *volume-data
+        mountPath: /tv
+        subPath: tv
+      - name: *volume-data
+        mountPath: /movies
+        subPath: movies
+      - name: *volume-data
+        mountPath: /downloads
+        subPath: downloads
 
     route:
       main:
