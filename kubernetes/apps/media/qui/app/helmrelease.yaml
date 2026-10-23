@@ -13,9 +13,6 @@ spec:
     podAnnotations:
       reloader.stakater.com/auto: "true"
 
-    strategy:
-      type: RollingUpdate
-
     extraEnvFrom:
       - configMapRef:
           name: qui
