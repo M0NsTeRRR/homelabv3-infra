@@ -91,6 +91,11 @@ openbao_policies:
       - path: secret/data/homelab/prod/external_dns/internal
         capabilities:
           - read
+  - name: flux
+    rules:
+      - path: secret/data/homelab/prod/flux
+        capabilities:
+          - read
   - name: grafana
     rules:
       - path: secret/data/homelab/prod/grafana
@@ -221,6 +226,12 @@ public_openbao_datas:
       bound_service_account_names: external-dns-openbao
       bound_service_account_namespaces: external-dns-internal
       policies: external-dns-internal
+      ttl: 1h
+  - path: auth/kubernetes/role/flux
+    data:
+      bound_service_account_names: flux-openbao
+      bound_service_account_namespaces: flux-system
+      policies: flux
       ttl: 1h
   - path: auth/kubernetes/role/grafana
     data:
