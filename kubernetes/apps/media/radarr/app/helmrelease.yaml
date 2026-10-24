@@ -10,7 +10,7 @@ spec:
     name: radarr
   interval: 1h
   values:
-    podAnnotations:
+    annotations:
       reloader.stakater.com/auto: "true"
 
     strategy:

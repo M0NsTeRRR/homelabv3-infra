@@ -14,7 +14,7 @@ spec:
       allowedHosts:
         - &hostname homepage.unicornafk.fr
 
-    podAnnotations:
+    annotations:
       reloader.stakater.com/auto: "true"
 
     extraEnvFrom:

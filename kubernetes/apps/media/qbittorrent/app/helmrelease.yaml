@@ -11,7 +11,7 @@ spec:
   interval: 1h
   values:
     qbittorrent:
-      podAnnotations:
+      annotations:
         reloader.stakater.com/auto: "true"
 
       config:

@@ -10,7 +10,7 @@ spec:
     name: actualbudget
   interval: 1h
   values:
-    podAnnotations:
+    annotations:
       reloader.stakater.com/auto: "true"
 
     data:

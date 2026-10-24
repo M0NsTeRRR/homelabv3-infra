@@ -25,7 +25,7 @@ spec:
     serviceMonitor:
       selfMonitor:
         enabled: true
-    podAnnotations:
+    deploymentAnnotations:
       reloader.stakater.com/auto: "true"
     prometheusRule:
       enabled: true

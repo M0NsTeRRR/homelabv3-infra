@@ -12,7 +12,7 @@ spec:
   values:
     nameOverride: "external-dns-external"
     logFormat: json
-    podAnnotations:
+    deploymentAnnotations:
       reloader.stakater.com/auto: "true"
     registry: txt
     txtOwnerId: "homelab.k8s"

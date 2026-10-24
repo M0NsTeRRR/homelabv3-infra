@@ -10,7 +10,7 @@ spec:
     name: looking-glass
   interval: 1h
   values:
-    podAnnotations:
+    annotations:
       reloader.stakater.com/auto: "true"
 
     extraEnvFrom:

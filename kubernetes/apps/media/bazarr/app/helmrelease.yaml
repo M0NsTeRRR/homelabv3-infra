@@ -10,7 +10,7 @@ spec:
     name: bazarr
   interval: 1h
   values:
-    podAnnotations:
+    annotations:
       reloader.stakater.com/auto: "true"
 
     strategy:
