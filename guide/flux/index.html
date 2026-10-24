@@ -777,6 +777,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#webhook-receiver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Webhook receiver
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1037,6 +1048,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#webhook-receiver" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Webhook receiver
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -1081,7 +1103,9 @@
 <p><a href="https://fluxcd.io/flux/">Flux</a> is a declarative, GitOps continuous delivery tool for Kubernetes.</p>
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
 <p>Configuration is stored in <code>kubernetes</code> folder.</p>
-<p>Nothing to do, configuration is deployed in the cluster from the Git repository.</p>
+<p>Configuration is deployed in the cluster from the Git repository.</p>
+<h2 id="webhook-receiver">Webhook receiver<a class="headerlink" href="#webhook-receiver" title="Permanent link">&para;</a></h2>
+<p>Once the Flux instance is deployed and the receiver is up and running, extract the webhook path with <code>kubectl get receiver -n flux-system github-webhook -o jsonpath='{.status.webhookPath}'</code>. Then, in your GitHub repository settings, create a webhook pointing to <code>https://flux-webhook.unicornafk.fr/&lt;hook_path&gt;</code>, with Content type set to <code>application/json</code>, the secret you chose, and the "push" event only.</p>
 
 
 
