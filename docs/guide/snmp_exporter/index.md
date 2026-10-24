@@ -10,7 +10,6 @@ Download the mib files :
 
 - [Mikrotik mib](https://mikrotik.com/download)
 - [Brocade](https://support.ruckuswireless.com/software)
-- Qnap : Go to Control Panel > Network & File Services > SNMP and Under SNMP MIB, click Download.
 
 Don't forget to change in the following configuration :
 
