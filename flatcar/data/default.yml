@@ -10,10 +10,11 @@ systemd_resolved_dns:
   - 192.168.6.1
   - 2a0c:b641:2c0:106::1
 systemd_resolved_fallback_dns:
-  - 9.9.9.9
-  - 149.112.112.112
-  - 2620:fe::fe
-  - 2620:fe::9
+  # adguard
+  - 94.140.14.14
+  - 94.140.15.15
+  - 2a10:50c0::ad1:ff
+  - 2a10:50c0::ad2:ff
 systemd_resolved_domains:
   - unicornafk.fr
 systemd_resolved_dot: false
