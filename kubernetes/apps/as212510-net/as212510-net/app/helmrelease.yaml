@@ -10,6 +10,9 @@ spec:
     name: as212510-net
   interval: 1h
   values:
+    annotations:
+      reloader.stakater.com/auto: "true"
+
     extraEnvFrom:
       - configMapRef:
           name: as212510-net
