@@ -10,9 +10,6 @@ spec:
     name: recyclarr
   interval: 1h
   values:
-    jobAnnotations:
-      reloader.stakater.com/auto: "true"
-
     extraEnvFrom:
       - configMapRef:
           name: recyclarr
