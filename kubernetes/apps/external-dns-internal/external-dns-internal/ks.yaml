@@ -3,10 +3,15 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: external-dns-internal
+  name: &app external-dns-internal
 spec:
+  components:
+    - ../../../../components/external-secrets
   interval: 1h
   path: ./kubernetes/apps/external-dns-internal/external-dns-internal/app
+  postBuild:
+    substitute:
+      APP: *app
   prune: true
   sourceRef:
     kind: GitRepository

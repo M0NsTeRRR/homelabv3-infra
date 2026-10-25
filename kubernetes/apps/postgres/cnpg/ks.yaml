@@ -35,10 +35,15 @@ kind: Kustomization
 metadata:
   name: cnpg-ressources
 spec:
+  components:
+    - ../../../../components/external-secrets
   dependsOn:
     - name: cnpg
   interval: 1h
   path: ./kubernetes/apps/postgres/cnpg/ressources
+  postBuild:
+    substitute:
+      APP: cnpg
   prune: true
   sourceRef:
     kind: GitRepository

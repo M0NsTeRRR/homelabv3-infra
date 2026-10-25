@@ -3,10 +3,15 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: csi-driver-smb
+  name: &app csi-driver-smb
 spec:
+  components:
+    - ../../../../components/external-secrets
   interval: 1h
   path: ./kubernetes/apps/csi-driver-smb/csi-driver-smb/app
+  postBuild:
+    substitute:
+      APP: *app
   prune: true
   sourceRef:
     kind: GitRepository

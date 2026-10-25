@@ -3,10 +3,15 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: as212510-net
+  name: &app as212510-net
 spec:
+  components:
+    - ../../../../components/external-secrets
   interval: 1h
   path: ./kubernetes/apps/as212510-net/as212510-net/app
+  postBuild:
+    substitute:
+      APP: *app
   prune: true
   sourceRef:
     kind: GitRepository

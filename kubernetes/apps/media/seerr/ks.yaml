@@ -6,6 +6,7 @@ metadata:
   name: &app seerr
 spec:
   components:
+    - ../../../../components/external-secrets
     - ../../../../components/volsync
     - ../../../../components/database/certificate
   dependsOn:

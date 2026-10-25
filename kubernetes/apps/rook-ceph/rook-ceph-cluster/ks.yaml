@@ -3,8 +3,10 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: rook-ceph-cluster
+  name: &app rook-ceph-cluster
 spec:
+  components:
+    - ../../../../components/external-secrets
   dependsOn:
     - name: ceph-csi-drivers
     - name: rook-ceph
@@ -25,6 +27,9 @@ spec:
       name: ceph-objectstore
   interval: 1h
   path: ./kubernetes/apps/rook-ceph/rook-ceph-cluster/app
+  postBuild:
+    substitute:
+      APP: *app
   prune: true
   sourceRef:
     kind: GitRepository

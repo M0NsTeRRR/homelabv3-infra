@@ -6,6 +6,7 @@ metadata:
   name: &app actualbudget
 spec:
   components:
+    - ../../../../components/external-secrets
     - ../../../../components/volsync
   dependsOn:
     - name: rook-ceph-cluster

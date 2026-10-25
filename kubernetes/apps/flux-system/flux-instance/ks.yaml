@@ -5,8 +5,13 @@ kind: Kustomization
 metadata:
   name: flux-instance
 spec:
+  components:
+    - ../../../../components/external-secrets
   interval: 1h
   path: ./kubernetes/apps/flux-system/flux-instance/app
+  postBuild:
+    substitute:
+      APP: flux
   prune: true
   sourceRef:
     kind: GitRepository

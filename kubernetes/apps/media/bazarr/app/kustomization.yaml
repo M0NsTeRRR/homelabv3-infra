@@ -7,4 +7,3 @@ resources:
   - ./ocirepository.yaml
   - ./configmap.yaml
   - ./pvc.yaml
-  - ./externalsecret.yaml
