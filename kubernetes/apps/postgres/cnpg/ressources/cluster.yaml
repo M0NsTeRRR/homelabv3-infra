@@ -4,6 +4,8 @@ kind: Cluster
 metadata:
   name: postgres
 spec:
+  instances: 3
+
   imageName: ghcr.io/cloudnative-pg/postgresql:18.6-system-trixie@sha256:40168f065c5814acb464f38c9e43beb971f496ff03a27419f205a905043c578e
 
   certificates:
