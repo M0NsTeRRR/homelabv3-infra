@@ -16,7 +16,7 @@ spec:
 
       config:
         persistence:
-          enabled: false
+          enabled: true
 
       extraEnvFrom:
         - secretRef:
@@ -27,7 +27,7 @@ spec:
             claimName: media-storage
       volumeMounts:
         - name: *volume-data
-          mountPath: /config/Downloads
+          mountPath: /downloads
           subPath: downloads
       gluetun:
         enabled: true

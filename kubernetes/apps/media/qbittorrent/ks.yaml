@@ -7,11 +7,13 @@ metadata:
 spec:
   components:
     - ../../../../components/external-secrets
+    - ../../../../components/volsync
   interval: 1h
   path: ./kubernetes/apps/media/qbittorrent/app
   postBuild:
     substitute:
       APP: *app
+      VOLSYNC_CAPACITY: 1Gi
   prune: true
   sourceRef:
     kind: GitRepository
