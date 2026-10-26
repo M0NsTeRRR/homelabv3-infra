@@ -27,7 +27,7 @@ spec:
             claimName: media-storage
       volumeMounts:
         - name: *volume-data
-          mountPath: /downloads
+          mountPath: /config/Downloads
           subPath: downloads
       gluetun:
         enabled: true
