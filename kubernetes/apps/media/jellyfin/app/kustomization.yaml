@@ -7,3 +7,4 @@ resources:
   - ./ocirepository.yaml
   - ./externalsecret.yaml
   - ./pvc.yaml
+  - ./httproute-http.yaml
