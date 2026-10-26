@@ -1,0 +1,16 @@
+---
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: seerr-http
+spec:
+  parentRefs:
+    - name: internal
+      namespace: gateway
+      sectionName: http
+  hostnames:
+    - seerr.unicornafk.fr
+  rules:
+    - backendRefs:
+        - name: seerr
+          port: 5055

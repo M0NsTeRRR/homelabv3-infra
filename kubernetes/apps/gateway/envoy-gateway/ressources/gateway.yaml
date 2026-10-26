@@ -83,7 +83,7 @@ spec:
                 operator: In
                 values:
                   - gateway # https-redirect HTTPRoute
-                  - media # jellyfin serves HTTP (Android TV app can't bypass self-signed cert)
+                  - media # jellyfin & seerr serve HTTP (Android app can't bypass self-signed cert, needed for TV)
     - name: https
       hostname: "*.unicornafk.fr"
       protocol: HTTPS
