@@ -21,7 +21,7 @@ data:
 
     sonarr:
       series:
-        base_url: http://sonarr.sonarr.svc.cluster.local
+        base_url: http://sonarr
         api_key: !env_var SONARR_API_KEY
         # quality_definition:
         #   type: series
@@ -248,7 +248,7 @@ data:
 
     radarr:
       movies:
-        base_url: http://radarr.radarr.svc.cluster.local
+        base_url: http://radarr
         api_key: !env_var RADARR_API_KEY
         quality_definition:
           type: movie
