@@ -330,8 +330,8 @@ public_openbao_datas:
       ttl: 7d
       max_ttl: 14d
       key_type: ec
-      key_bits: 521
-      signature_bits: 512
+      key_bits: 384
+      signature_bits: 384
       organization: "{{ organization }}"
       country: "{{ country }}"
       require_cn: false # must be disabled for cert-manager

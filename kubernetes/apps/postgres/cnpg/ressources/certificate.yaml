@@ -7,7 +7,7 @@ spec:
   secretName: postgres-server-cert
   privateKey:
     algorithm: ECDSA
-    size: 521
+    size: 384
   secretTemplate:
     labels:
       cnpg.io/reload: ""
@@ -35,7 +35,7 @@ spec:
   secretName: postgres-client-cert
   privateKey:
     algorithm: ECDSA
-    size: 521
+    size: 384
   secretTemplate:
     labels:
       cnpg.io/reload: ""
@@ -54,7 +54,7 @@ spec:
   secretName: pooler-server-cert
   privateKey:
     algorithm: ECDSA
-    size: 521
+    size: 384
   secretTemplate:
     labels:
       cnpg.io/reload: ""
@@ -75,7 +75,7 @@ spec:
   secretName: pooler-client-cert
   privateKey:
     algorithm: ECDSA
-    size: 521
+    size: 384
   secretTemplate:
     labels:
       cnpg.io/reload: ""

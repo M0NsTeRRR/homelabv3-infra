@@ -5,6 +5,7 @@ kind: Kustomization
 resources:
   - ./kanidm.yaml
   - ./backendtlspolicy.yaml
+  - ./backendtrafficpolicy.yaml
   - ./externalsecret.yaml
   - ./backuprepository.yaml
   - ./backupschedule.yaml

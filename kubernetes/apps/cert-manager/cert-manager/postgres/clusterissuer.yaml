@@ -17,7 +17,7 @@ spec:
   secretName: cert-manager-postgres-ca
   privateKey:
     algorithm: ECDSA
-    size: 521
+    size: 384
   issuerRef:
     name: selfsigned-issuer
     kind: Issuer

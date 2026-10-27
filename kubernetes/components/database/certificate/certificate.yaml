@@ -7,7 +7,7 @@ spec:
   secretName: postgres-cert-${APP}
   privateKey:
     algorithm: ECDSA
-    size: 521
+    size: 384
   usages:
     - client auth
   commonName: ${APP}
