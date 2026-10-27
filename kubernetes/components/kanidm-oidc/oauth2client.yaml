@@ -1,0 +1,26 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kaniop.rs/kanidmoauth2client_v1beta1.json
+apiVersion: kaniop.rs/v1beta1
+kind: KanidmOAuth2Client
+metadata:
+  name: ${APP}
+spec:
+  kanidmRef:
+    name: kanidm
+    namespace: kaniop
+  displayname: ${APP}
+  origin: ${OIDC_ORIGIN}
+  redirectUrl:
+    - ${OIDC_REDIRECT_URL}
+  scopeMap:
+    - group: ${APP}-viewer
+      scopes: &scopes
+        - openid
+        - profile
+        - email
+        - groups
+    - group: ${APP}-editor
+      scopes: *scopes
+    - group: ${APP}-admin
+      scopes: *scopes
+  disableConsentPrompt: true

@@ -56,11 +56,6 @@ openbao_policies:
       - path: secret/data/homelab/prod/as212510-net
         capabilities:
           - read
-  - name: authentik
-    rules:
-      - path: secret/data/homelab/prod/authentik
-        capabilities:
-          - read
   - name: bazarr
     rules:
       - path: secret/data/homelab/prod/bazarr
@@ -104,6 +99,11 @@ openbao_policies:
   - name: jellyfin
     rules:
       - path: secret/data/homelab/prod/jellyfin
+        capabilities:
+          - read
+  - name: kanidm
+    rules:
+      - path: secret/data/homelab/prod/kanidm
         capabilities:
           - read
   - name: looking-glass
@@ -178,12 +178,6 @@ public_openbao_datas:
       bound_service_account_namespaces: as212510-net
       policies: as212510-net
       ttl: 1h
-  - path: auth/kubernetes/role/authentik
-    data:
-      bound_service_account_names: authentik-openbao
-      bound_service_account_namespaces: authentik
-      policies: authentik
-      ttl: 1h
   - path: auth/kubernetes/role/bazarr
     data:
       bound_service_account_names: bazarr-openbao
@@ -244,6 +238,12 @@ public_openbao_datas:
       bound_service_account_names: jellyfin-openbao
       bound_service_account_namespaces: media
       policies: jellyfin
+      ttl: 1h
+  - path: auth/kubernetes/role/kanidm
+    data:
+      bound_service_account_names: kanidm-openbao
+      bound_service_account_namespaces: kaniop
+      policies: kanidm
       ttl: 1h
   - path: auth/kubernetes/role/looking-glass
     data:

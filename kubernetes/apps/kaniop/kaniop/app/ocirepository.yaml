@@ -3,13 +3,13 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: OCIRepository
 metadata:
-  name: authentik
+  name: kaniop
 spec:
   interval: 15m
   layerSelector:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 2026.8.5
-    digest: sha256:9683518d02b5e41f69d045b59a779c40260608b5631d18273407ea2cfe708712
-  url: oci://ghcr.io/goauthentik/helm-charts/authentik
+    tag: 0.19.1
+    digest: sha256:4feccd0b47176c044a6fe1b99a6264cab6447630cb5a9ce3927fe636324623db
+  url: oci://ghcr.io/pando85/helm-charts/kaniop

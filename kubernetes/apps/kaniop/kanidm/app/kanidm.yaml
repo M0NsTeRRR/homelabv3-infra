@@ -1,0 +1,69 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kaniop.rs/kanidm_v1beta1.json
+apiVersion: kaniop.rs/v1beta1
+kind: Kanidm
+metadata:
+  name: kanidm
+spec:
+  domain: sso.unicornafk.fr
+  image: kanidm/server:1.11.2@sha256:e45f00bd354c1fc1c06a4be484b4e87b094c431e78280f1d19e911815e63efb5
+
+  oauth2ClientNamespaceSelector:
+    matchLabels: {}
+  groupNamespaceSelector:
+    matchLabels: {}
+  personNamespaceSelector:
+    matchLabels: {}
+  serviceAccountNamespaceSelector:
+    matchLabels: {}
+
+  replicaGroups:
+    - name: default
+      replicas: 3
+      primaryNode: true
+      statefulSetAnnotations:
+        reloader.stakater.com/auto: "true"
+
+  storage:
+    volumeClaimTemplate:
+      spec:
+        storageClassName: ceph-block
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 389
+    runAsGroup: 389
+    fsGroup: 389
+    seccompProfile:
+      type: RuntimeDefault
+  containers:
+    - name: kanidm
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+            - ALL
+  initContainers:
+    - name: kanidm-generate-replication-config
+      securityContext:
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+            - ALL
+
+  gateway:
+    parentRefs:
+      - name: internal
+        namespace: gateway
+        sectionName: https
+    annotations:
+      gethomepage.dev/enabled: "true"
+      gethomepage.dev/group: Infrastructure
+      gethomepage.dev/name: KaniDM
+      gethomepage.dev/description: Identity Provider
+      gethomepage.dev/icon: kanidm.png
