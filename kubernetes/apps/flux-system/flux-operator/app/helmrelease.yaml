@@ -9,17 +9,25 @@ spec:
     kind: OCIRepository
     name: flux-operator
   interval: 1h
+  valuesFrom:
+    - kind: Secret
+      name: flux-kanidm-oauth2-credentials
+      valuesKey: CLIENT_SECRET
+      targetPath: web.config.authentication.oauth2.clientSecret
+      optional: true
   values:
     serviceMonitor:
       create: true
     web:
       config:
+        baseURL: https://flux.unicornafk.fr
         authentication:
-          type: Anonymous
-          anonymous:
-            username: flux
-            groups:
-              - flux-admin
+          type: OAuth2
+          oauth2:
+            provider: OIDC
+            clientID: ${APP}
+            issuerURL: https://sso.unicornafk.fr/oauth2/openid/${APP}
+            autoLogin: true
       httpRoute:
         enabled: true
         annotations:
@@ -34,3 +42,12 @@ spec:
           - flux.unicornafk.fr
       networkPolicy:
         create: false
+    extraVolumes:
+      - name: homelab-ca
+        configMap:
+          name: homelab-ca
+    extraVolumeMounts:
+      - name: homelab-ca
+        mountPath: /etc/ssl/certs/homelab-ca.crt
+        subPath: ca.crt
+        readOnly: true

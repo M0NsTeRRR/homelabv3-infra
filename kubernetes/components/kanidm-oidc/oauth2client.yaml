@@ -13,14 +13,13 @@ spec:
   redirectUrl:
     - ${OIDC_REDIRECT_URL}
   scopeMap:
-    - group: ${APP}-viewer
+    - group: ${APP}-user
       scopes: &scopes
         - openid
         - profile
         - email
         - groups
-    - group: ${APP}-editor
-      scopes: *scopes
+        - offline_access
     - group: ${APP}-admin
       scopes: *scopes
   disableConsentPrompt: true

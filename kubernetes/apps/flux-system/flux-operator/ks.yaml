@@ -5,8 +5,15 @@ kind: Kustomization
 metadata:
   name: flux-operator
 spec:
+  components:
+    - ../../../../components/kanidm-oidc
   interval: 1h
   path: ./kubernetes/apps/flux-system/flux-operator/app
+  postBuild:
+    substitute:
+      APP: flux
+      OIDC_ORIGIN: https://flux.unicornafk.fr
+      OIDC_REDIRECT_URL: https://flux.unicornafk.fr/oauth2/callback
   prune: true
   sourceRef:
     kind: GitRepository
