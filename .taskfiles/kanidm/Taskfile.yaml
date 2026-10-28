@@ -1,0 +1,47 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+---
+version: "3"
+
+vars:
+  KANIDM_NAMESPACE: kaniop
+  KANIDM_DOMAIN: sso.unicornafk.fr
+  KANIDM_ADMIN_SECRET: kanidm-admin-passwords
+
+tasks:
+  apply-users:
+    desc: Apply all users (injects SSH keys from flatcar/ssh_pub_keys/<name>.pub if present)
+    sources: [users/*.yaml]
+    method: none
+    cmds:
+      - for: sources
+        cmd: |
+          name=$(basename "{{.ITEM}}" .yaml)
+          pubkey_file="flatcar/ssh_pub_keys/${name}.pub"
+          if [ -f "$pubkey_file" ]; then
+            SSH_KEY=$(cat "$pubkey_file") yq e '.spec.sshPublicKeys.default = env(SSH_KEY)' "{{.ITEM}}" | kubectl apply -f -
+          else
+            kubectl apply -f "{{.ITEM}}"
+          fi
+
+  reset-password:
+    desc: "Send a credential reset token to a Kanidm user"
+    vars:
+      USER: '{{.USER | default ""}}'
+      LOCAL: '{{.LOCAL | default "false"}}'
+      IDM_ADMIN_USERNAME:
+        sh: kubectl get secret {{.KANIDM_ADMIN_SECRET}} -n {{.KANIDM_NAMESPACE}} -o jsonpath='{.data.IDM_ADMIN_USERNAME}' | base64 -d
+      IDM_ADMIN_PASSWORD:
+        sh: kubectl get secret {{.KANIDM_ADMIN_SECRET}} -n {{.KANIDM_NAMESPACE}} -o jsonpath='{.data.IDM_ADMIN_PASSWORD}' | base64 -d
+    preconditions:
+      - sh: test -n "{{.USER}}"
+        msg: "USER is required. Example: task kanidm:reset-password USER=ludovic.ortega"
+    env:
+      KANIDM_PASSWORD: "{{.IDM_ADMIN_PASSWORD}}"
+    cmds:
+      - kanidm login --name {{.IDM_ADMIN_USERNAME}} --url https://{{.KANIDM_DOMAIN}}
+      - |
+        if [ "{{.LOCAL}}" = "true" ]; then
+          kanidm person credential create-reset-token {{.USER}} --name {{.IDM_ADMIN_USERNAME}} --url https://{{.KANIDM_DOMAIN}}
+        else
+          kanidm person credential send-reset-token {{.USER}} --name {{.IDM_ADMIN_USERNAME}} --url https://{{.KANIDM_DOMAIN}}
+        fi

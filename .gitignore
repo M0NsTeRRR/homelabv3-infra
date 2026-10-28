@@ -1,8 +1,7 @@
-# ide
-.idea
 # python
 venv
 *.egg-info
+
 # ansible
 .vault_password.txt
 vault.json.secrets
@@ -13,8 +12,10 @@ vault.json.secrets
 *.key*
 *.pem*
 *.img
+
 # Doc
 .cache
+
 # flatcar
 flatcar/.env
 flatcar/*.ign
@@ -32,3 +33,6 @@ devenv.local.yaml
 
 # pre-commit
 .pre-commit-config.yaml
+
+# sso users
+users/*.yaml

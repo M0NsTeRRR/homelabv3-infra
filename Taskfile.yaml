@@ -20,6 +20,8 @@ includes:
   kubernetes:
     taskfile: .taskfiles/kubernetes
     dir: "{{.kubernetes_dir}}"
+  kanidm:
+    taskfile: .taskfiles/kanidm
   octodns:
     taskfile: .taskfiles/octodns
     dir: "{{.octodns_dir}}"

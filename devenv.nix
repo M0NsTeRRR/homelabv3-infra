@@ -26,6 +26,7 @@
     pkgs.kubernetes-helm
     pkgs.helmfile
     pkgs.fluxcd
+    pkgs.kanidm_1_11
   ];
 
   languages.python = {

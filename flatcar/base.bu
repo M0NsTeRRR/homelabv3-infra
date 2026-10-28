@@ -71,7 +71,7 @@ passwd:
   users:
     - name: core
       ssh_authorized_keys_local:
-        - ssh_pub_keys/lortega.pub
+        - ssh_pub_keys/ludovic.ortega.pub
 systemd:
   units:
     - name: auditd.service
