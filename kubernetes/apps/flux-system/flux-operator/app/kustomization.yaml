@@ -6,3 +6,4 @@ resources:
   - ./helmrelease.yaml
   - ./ocirepository.yaml
   - ./clusterrolebinding.yaml
+  - ./web-config-secret.yaml

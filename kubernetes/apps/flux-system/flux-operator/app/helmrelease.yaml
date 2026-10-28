@@ -9,25 +9,11 @@ spec:
     kind: OCIRepository
     name: flux-operator
   interval: 1h
-  valuesFrom:
-    - kind: Secret
-      name: flux-kanidm-oauth2-credentials
-      valuesKey: CLIENT_SECRET
-      targetPath: web.config.authentication.oauth2.clientSecret
-      optional: true
   values:
     serviceMonitor:
       create: true
     web:
-      config:
-        baseURL: https://flux.unicornafk.fr
-        authentication:
-          type: OAuth2
-          oauth2:
-            provider: OIDC
-            clientID: ${APP}
-            issuerURL: https://sso.unicornafk.fr/oauth2/openid/${APP}
-            autoLogin: true
+      configSecretName: flux-web-config
       httpRoute:
         enabled: true
         annotations:
