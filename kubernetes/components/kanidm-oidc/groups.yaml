@@ -7,6 +7,7 @@ spec:
   kanidmRef:
     name: kanidm
     namespace: kaniop
+  members: ${OIDC_USER_MEMBERS:-[]}
 ---
 apiVersion: kaniop.rs/v1beta1
 kind: KanidmGroup
@@ -16,3 +17,4 @@ spec:
   kanidmRef:
     name: kanidm
     namespace: kaniop
+  members: ${OIDC_ADMIN_MEMBERS:-["ludovic.ortega"]}
