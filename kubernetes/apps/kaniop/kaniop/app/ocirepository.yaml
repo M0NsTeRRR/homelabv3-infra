@@ -10,6 +10,6 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 0.19.1
-    digest: sha256:4feccd0b47176c044a6fe1b99a6264cab6447630cb5a9ce3927fe636324623db
+    tag: 0.19.2
+    digest: sha256:a71e01304476dbd0b67bc1a840456356f21b55088846b555979d1d0b976afad7
   url: oci://ghcr.io/pando85/helm-charts/kaniop

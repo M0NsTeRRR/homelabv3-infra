@@ -10,7 +10,9 @@ spec:
     region: us-west-1
     endpoint: https://nas.unicornafk.fr:30292
     forcePathStyle: true
-    caBundleRef: homelab-ca
+    caBundleRef:
+      name: homelab-ca
+      key: ca.crt
   authentication:
     writer:
       secretRef:
