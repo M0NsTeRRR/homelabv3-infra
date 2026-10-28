@@ -7,5 +7,6 @@ resources:
   - ./backendtlspolicy.yaml
   - ./backendtrafficpolicy.yaml
   - ./externalsecret.yaml
+  - ./externalsecret-smtp.yaml
   - ./backuprepository.yaml
   - ./backupschedule.yaml
