@@ -16,6 +16,9 @@ spec:
     replyToAddress: infra@adminafk.fr
     credentialsSecret:
       name: kanidm-smtp
+    caBundleRef:
+      name: homelab-ca
+      key: ca.crt
 
   oauth2ClientNamespaceSelector:
     matchLabels: {}

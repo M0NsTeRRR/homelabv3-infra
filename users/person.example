@@ -12,3 +12,4 @@ spec:
     displayname: John the Ripper
     mail:
       - john.ripper@example.com
+    credentialBootstrapDelivery: email
