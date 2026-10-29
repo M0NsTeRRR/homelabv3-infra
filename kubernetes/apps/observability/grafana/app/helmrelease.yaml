@@ -176,9 +176,23 @@ spec:
           datasource:
             - name: DS_PROMETHEUS
               value: *datasource
-        Flux2:
-          gnetId: 16714
-          revision: 1
+        Flux-cluster:
+          url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/refs/heads/main/monitoring/configs/dashboards/cluster.json
+          datasource:
+            - name: DS_PROMETHEUS
+              value: *datasource
+        Flux-control-plane:
+          url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/refs/heads/main/monitoring/configs/dashboards/control-plane.json
+          datasource:
+            - name: DS_PROMETHEUS
+              value: *datasource
+        Flux-performance:
+          url: https://raw.githubusercontent.com/controlplaneio-fluxcd/flux-operator/refs/heads/main/config/monitoring/dashboards/flux-performance.json
+          datasource:
+            - name: DS_PROMETHEUS
+              value: *datasource
+        Flux-k8s-api-performance:
+          url: https://raw.githubusercontent.com/controlplaneio-fluxcd/flux-operator/refs/heads/main/config/monitoring/dashboards/flux-k8s-api-performance.json
           datasource:
             - name: DS_PROMETHEUS
               value: *datasource
