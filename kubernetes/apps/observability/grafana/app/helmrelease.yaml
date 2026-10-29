@@ -61,11 +61,10 @@ spec:
         check_for_updates: true
       server:
         root_url: "https://%(domain)s/"
-      auth:
-        oauth_auto_login: false
       auth.generic_oauth:
         name: kanidm
         enabled: true
+        auto_login: true
         scopes: "openid profile email groups_name offline_access"
         auth_url: "https://sso.unicornafk.fr/ui/oauth2"
         token_url: "https://sso.unicornafk.fr/oauth2/token"
