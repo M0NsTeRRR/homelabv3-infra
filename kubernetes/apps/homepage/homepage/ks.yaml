@@ -5,8 +5,17 @@ kind: Kustomization
 metadata:
   name: homepage
 spec:
+  components:
+    - ../../../../components/external-secrets
+    - ../../../../components/kanidm-oidc
   interval: 1h
   path: ./kubernetes/apps/homepage/homepage/app
+  postBuild:
+    substitute:
+      APP: homepage
+      OIDC_LEGACY_CRYPTO: "true" # next-auth only accepts RS256, Kanidm signs ES256 by default
+      OIDC_ORIGIN: https://homepage.unicornafk.fr
+      OIDC_REDIRECT_URL: https://homepage.unicornafk.fr/api/auth/callback/homepage-oidc
   prune: true
   sourceRef:
     kind: GitRepository

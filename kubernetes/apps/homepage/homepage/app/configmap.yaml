@@ -5,6 +5,12 @@ metadata:
   name: homepage
 data:
   TZ: "Europe/Paris"
+  HOMEPAGE_AUTH_ENABLED: "true"
+  HOMEPAGE_EXTERNAL_URL: https://homepage.unicornafk.fr
+  HOMEPAGE_OIDC_ISSUER: https://sso.unicornafk.fr/oauth2/openid/homepage
+  HOMEPAGE_OIDC_NAME: Kanidm
+  HOMEPAGE_OIDC_AUTO_LOGIN: "true"
+  NODE_EXTRA_CA_CERTS: /etc/ssl/certs/homelab.crt
 ---
 apiVersion: v1
 kind: ConfigMap

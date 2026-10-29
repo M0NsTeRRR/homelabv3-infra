@@ -17,9 +17,22 @@ spec:
     annotations:
       reloader.stakater.com/auto: "true"
 
+    extraEnv:
+      - name: HOMEPAGE_OIDC_CLIENT_ID
+        valueFrom:
+          secretKeyRef:
+            name: ${APP}-kanidm-oauth2-credentials
+            key: CLIENT_ID
+      - name: HOMEPAGE_OIDC_CLIENT_SECRET
+        valueFrom:
+          secretKeyRef:
+            name: ${APP}-kanidm-oauth2-credentials
+            key: CLIENT_SECRET
     extraEnvFrom:
       - configMapRef:
           name: homepage
+      - secretRef:
+          name: homepage-openbao
 
     volumes:
       - name: &volume-config homepage-configs
@@ -28,7 +41,14 @@ spec:
       - name: &volume-images images
         configMap:
           name: homepage-images
+      - name: &volume-ca ca-certs
+        configMap:
+          name: homelab-ca
     volumeMounts:
+      - name: *volume-ca
+        mountPath: /etc/ssl/certs/homelab.crt
+        subPath: ca.crt
+        readOnly: true
       - name: *volume-config
         mountPath: /app/config/settings.yaml
         subPath: settings.yaml
