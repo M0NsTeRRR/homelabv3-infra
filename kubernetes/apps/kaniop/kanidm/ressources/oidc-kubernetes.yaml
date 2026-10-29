@@ -1,0 +1,50 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kaniop.rs/kanidmgroup_v1beta1.json
+apiVersion: kaniop.rs/v1beta1
+kind: KanidmGroup
+metadata:
+  name: kubernetes-admin
+spec:
+  kanidmRef:
+    name: kanidm
+    namespace: kaniop
+  members:
+    - ludovic.ortega
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kaniop.rs/kanidmoauth2client_v1beta1.json
+apiVersion: kaniop.rs/v1beta1
+kind: KanidmOAuth2Client
+metadata:
+  name: kubernetes
+spec:
+  kanidmRef:
+    name: kanidm
+    namespace: kaniop
+  displayname: kubernetes
+  origin: http://localhost:8000
+  redirectUrl:
+    - http://localhost:8000
+    - http://localhost:18000
+  public: true
+  allowLocalhostRedirect: true
+  scopeMap:
+    - group: kubernetes-admin
+      scopes:
+        - openid
+        - profile
+        - email
+        - groups
+  disableConsentPrompt: true
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: kubernetes-admin-oidc
+subjects:
+  - kind: Group
+    name: kubernetes-admin@sso.unicornafk.fr
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: ClusterRole
+  name: cluster-admin
+  apiGroup: rbac.authorization.k8s.io
