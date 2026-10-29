@@ -1,0 +1,47 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kaniop.rs/kanidmgroup_v1beta1.json
+apiVersion: kaniop.rs/v1beta1
+kind: KanidmGroup
+metadata:
+  name: openbao-admin
+spec:
+  kanidmRef:
+    name: kanidm
+    namespace: kaniop
+  members:
+    - ludovic.ortega
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kaniop.rs/kanidmgroup_v1beta1.json
+apiVersion: kaniop.rs/v1beta1
+kind: KanidmGroup
+metadata:
+  name: openbao-viewer
+spec:
+  kanidmRef:
+    name: kanidm
+    namespace: kaniop
+  members: []
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kaniop.rs/kanidmoauth2client_v1beta1.json
+apiVersion: kaniop.rs/v1beta1
+kind: KanidmOAuth2Client
+metadata:
+  name: openbao
+spec:
+  kanidmRef:
+    name: kanidm
+    namespace: kaniop
+  displayname: openbao
+  origin: https://openbao.unicornafk.fr:8200
+  redirectUrl:
+    - https://openbao.unicornafk.fr:8200/ui/vault/auth/oidc/oidc/callback
+  preferShortUsername: true
+  scopeMap:
+    - group: openbao-admin
+      scopes: &scopes
+        - openid
+        - profile
+        - groups_name
+    - group: openbao-viewer
+      scopes: *scopes
+  disableConsentPrompt: true

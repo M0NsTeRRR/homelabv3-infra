@@ -13,6 +13,17 @@ spec:
     annotations:
       reloader.stakater.com/auto: "true"
 
+    extraEnv:
+      - name: QUI__OIDC_CLIENT_ID
+        valueFrom:
+          secretKeyRef:
+            name: ${APP}-kanidm-oauth2-credentials
+            key: CLIENT_ID
+      - name: QUI__OIDC_CLIENT_SECRET
+        valueFrom:
+          secretKeyRef:
+            name: ${APP}-kanidm-oauth2-credentials
+            key: CLIENT_SECRET
     extraEnvFrom:
       - configMapRef:
           name: qui
@@ -32,6 +43,10 @@ spec:
     volumeMounts:
       - name: *volume-ca
         mountPath: /var/run/secrets/root-ca/ca.crt
+        subPath: ca.crt
+        readOnly: true
+      - name: *volume-ca
+        mountPath: /etc/ssl/certs/homelab.crt
         subPath: ca.crt
         readOnly: true
       - name: *volume-postgres

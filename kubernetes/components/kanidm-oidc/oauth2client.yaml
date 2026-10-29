@@ -18,6 +18,7 @@ spec:
       scopes: &scopes
         - openid
         - profile
+        - email
         - groups_name
         - offline_access
     - group: ${APP}-admin

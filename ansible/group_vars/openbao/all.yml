@@ -23,6 +23,16 @@ openbao_auth_methods:
   - name: kubernetes
     path: kubernetes
 openbao_policies:
+  - name: admin
+    rules:
+      - path: "*"
+        capabilities:
+          - create
+          - read
+          - update
+          - delete
+          - list
+          - sudo
   - name: viewer
     rules:
       - path: /secret/*
@@ -305,6 +315,34 @@ public_openbao_datas:
       bound_service_account_namespaces: media
       policies: sonarr
       ttl: 1h
+  - path: auth/oidc/role/admin
+    data:
+      bound_audiences: openbao
+      allowed_redirect_uris:
+        - https://openbao.unicornafk.fr:8200/ui/vault/auth/oidc/oidc/callback
+      user_claim: preferred_username
+      oidc_scopes: openid,profile,groups_name
+      groups_claim: groups
+      bound_claims:
+        groups:
+          - openbao-admin
+      jwt_supported_algs:
+        - ES256
+      policies: admin
+  - path: auth/oidc/role/viewer
+    data:
+      bound_audiences: openbao
+      allowed_redirect_uris:
+        - https://openbao.unicornafk.fr:8200/ui/vault/auth/oidc/oidc/callback
+      user_claim: preferred_username
+      oidc_scopes: openid,profile,groups_name
+      groups_claim: groups
+      bound_claims:
+        groups:
+          - openbao-viewer
+      jwt_supported_algs:
+        - ES256
+      policies: viewer
   - path: pki/config/acme
     data:
       enabled: true

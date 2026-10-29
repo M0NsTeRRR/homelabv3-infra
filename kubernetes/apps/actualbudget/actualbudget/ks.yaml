@@ -8,6 +8,7 @@ spec:
   components:
     - ../../../../components/external-secrets
     - ../../../../components/volsync
+    - ../../../../components/kanidm-oidc
   dependsOn:
     - name: rook-ceph-cluster
       namespace: rook-ceph
@@ -16,6 +17,8 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      OIDC_ORIGIN: https://actualbudget.unicornafk.fr
+      OIDC_REDIRECT_URL: https://actualbudget.unicornafk.fr/openid/callback
       VOLSYNC_CAPACITY: 1Gi
       VOLSYNC_PUID: "65534"
       VOLSYNC_PGID: "65534"
