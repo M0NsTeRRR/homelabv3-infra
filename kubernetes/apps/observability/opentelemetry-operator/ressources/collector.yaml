@@ -98,6 +98,15 @@ spec:
         limit_mib: 4000
         spike_limit_mib: 800
       k8sattributes/default: {}
+      # Restore the Prometheus job/instance labels: VictoriaMetrics drops OTLP
+      # resource attributes, but dashboards filter on job/instance.
+      transform/prometheus-labels:
+        error_mode: ignore
+        metric_statements:
+          - context: datapoint
+            statements:
+              - set(attributes["job"], resource.attributes["service.name"]) where attributes["job"] == nil
+              - set(attributes["instance"], resource.attributes["service.instance.id"]) where attributes["instance"] == nil
     service:
       telemetry:
         metrics:
@@ -122,6 +131,7 @@ spec:
             - debug
           processors:
             - k8sattributes/default
+            - transform/prometheus-labels
             - memory_limiter
             - batch
           receivers:
