@@ -7,6 +7,8 @@ resources:
   - ./ocirepository.yaml
   - ./externalsecret.yaml
   - ./receiver.yaml
+  - ./provider.yaml
+  - ./alert.yaml
   - ./httproute.yaml
   - ./podmonitor.yaml
 secretGenerator:
