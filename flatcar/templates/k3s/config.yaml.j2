@@ -19,7 +19,9 @@ kube-apiserver-arg:
 - "oidc-issuer-url={{ k3s_issuer_url }}"
 - "oidc-client-id={{ k3s_client_id }}"
 - "oidc-username-claim=preferred_username"
+- "oidc-username-prefix=oidc:"
 - "oidc-groups-claim=groups"
+- "oidc-signing-algs=ES256"
 {%- endif %}
 etcd-expose-metrics: true
 cluster-cidr: {{ k3s_cluster_cidr_ipv4 }},{{ k3s_cluster_cidr_ipv6 }}
