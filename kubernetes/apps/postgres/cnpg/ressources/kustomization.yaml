@@ -9,3 +9,4 @@ resources:
   - ./scheduledbackup.yaml
   - ./externalsecret.yaml
   - ./pooler.yaml
+  - ./podmonitor.yaml
