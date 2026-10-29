@@ -214,10 +214,6 @@ spec:
           datasource:
             - name: DS_PROMETHEUS
               value: *datasource
-        Traefik:
-          gnetId: 17347
-          revision: 9
-          datasource: *datasource
         Volsync:
           gnetId: 21356
           revision: 3
