@@ -203,8 +203,8 @@ spec:
             - name: DS_PROMETHEUS
               value: *datasource
         Smartctl-exporter:
-          gnetId: 20204
-          revision: 1
+          gnetId: 22604
+          revision: 4
           datasource:
             - name: DS_PROMETHEUS
               value: *datasource
