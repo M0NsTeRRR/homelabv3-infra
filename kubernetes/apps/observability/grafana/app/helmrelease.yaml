@@ -245,4 +245,4 @@ spec:
           - name: internal
             namespace: gateway
         hostnames:
-          - monitoring.unicornafk.fr
+          - grafana.unicornafk.fr
