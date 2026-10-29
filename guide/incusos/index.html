@@ -839,6 +839,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#configure-oidc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configure OIDC
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#usage" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1171,6 +1182,17 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#configure-oidc" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Configure OIDC
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#usage" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -1308,18 +1330,24 @@ incus network create lab <span class="nv">parent</span><span class="o">=</span>e
 </code></pre></div></p>
 <h2 id="add-custom-ca-certs">Add custom CA certs<a class="headerlink" href="#add-custom-ca-certs" title="Permanent link">&para;</a></h2>
 <p><a href="https://linuxcontainers.org/incus-os/docs/main/reference/system/security/#configuration-options">https://linuxcontainers.org/incus-os/docs/main/reference/system/security/#configuration-options</a></p>
-<h2 id="configure-acme">Configure ACME<a class="headerlink" href="#configure-acme" title="Permanent link">&para;</a></h2>
 <p>In <code>OS</code> &gt; <code>System</code> &gt; <code>Security</code> add custom CA cert.
 <div class="highlight"><pre><span></span><code>custom_ca_certs:
   - |
     -----BEGIN CERTIFICATE-----
     xxxxxxx
 </code></pre></div></p>
+<h2 id="configure-acme">Configure ACME<a class="headerlink" href="#configure-acme" title="Permanent link">&para;</a></h2>
 <p>In settings page configure the following :</p>
 <p><code>acme.agree_tos</code>: <code>true</code>
 <code>acme.ca_url</code>: <code>https://openbao.unicornafk.fr:8200/v1/pki/acme/directory</code>
 <code>acme.domain</code>: <code>server.unicornafk.fr,serverX.unicornafk.fr</code> (where <code>X</code> represents the server number)
 <code>acme.email</code>: <code>admin@unicornafk.fr</code></p>
+<h2 id="configure-oidc">Configure OIDC<a class="headerlink" href="#configure-oidc" title="Permanent link">&para;</a></h2>
+<p>In settings page configure the following :</p>
+<p><code>oidc.claim</code>: <code>sub</code>
+<code>oidc.client.id</code>: <code>incus</code>
+<code>oidc.issuer</code>: <code>https://sso.unicornafk.fr/oauth2/openid/incus</code>
+<code>oidc.scopes</code>: <code>openid,profile,email</code></p>
 <h2 id="usage">Usage<a class="headerlink" href="#usage" title="Permanent link">&para;</a></h2>
 <h3 id="task">Task<a class="headerlink" href="#task" title="Permanent link">&para;</a></h3>
 <p>Use <code>uv run task --list</code> to find Flatcar group recipes for deploying the base VM infrastructure.</p>
