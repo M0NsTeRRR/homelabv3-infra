@@ -11,4 +11,4 @@ spec:
   interval: 1h
   values:
     serviceMonitor:
-      create: true
+      enabled: true
