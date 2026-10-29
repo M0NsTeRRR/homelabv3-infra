@@ -43,8 +43,6 @@ incus network create lab parent=enp3s0 vlan=20 --type=physical
 
 https://linuxcontainers.org/incus-os/docs/main/reference/system/security/#configuration-options
 
-## Configure ACME
-
 In `OS` > `System` > `Security` add custom CA cert.
 ```
 custom_ca_certs:
@@ -53,12 +51,23 @@ custom_ca_certs:
     xxxxxxx
 ```
 
+## Configure ACME
+
 In settings page configure the following :
 
 `acme.agree_tos`: `true`
 `acme.ca_url`: `https://openbao.unicornafk.fr:8200/v1/pki/acme/directory`
 `acme.domain`: `server.unicornafk.fr,serverX.unicornafk.fr` (where `X` represents the server number)
 `acme.email`: `admin@unicornafk.fr`
+
+## Configure OIDC
+
+In settings page configure the following :
+
+`oidc.claim`: `sub`
+`oidc.client.id`: `incus`
+`oidc.issuer`: `https://sso.unicornafk.fr/oauth2/openid/incus`
+`oidc.scopes`: `openid,profile,email`
 
 ## Usage
 
