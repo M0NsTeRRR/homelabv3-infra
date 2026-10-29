@@ -1,3 +1,19 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-prometheus-stack-kubelet
+  namespace: kube-system
+  labels:
+    app.kubernetes.io/name: kubelet
+    k8s-app: kubelet
+spec:
+  clusterIP: None
+  ports:
+    - name: https-metrics
+      port: 10250
+      protocol: TCP
+---
 apiVersion: discovery.k8s.io/v1
 kind: EndpointSlice
 metadata:
@@ -12,12 +28,21 @@ endpoints:
   - addresses:
       - 192.168.10.81
     hostname: k8s-1
+    nodeName: k8s-1
+    conditions:
+      ready: true
   - addresses:
       - 192.168.10.82
     hostname: k8s-2
+    nodeName: k8s-2
+    conditions:
+      ready: true
   - addresses:
       - 192.168.10.83
     hostname: k8s-3
+    nodeName: k8s-3
+    conditions:
+      ready: true
 ports:
   - name: https-metrics
     port: 10250
