@@ -4,5 +4,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - ./oidc-kubernetes.yaml
+  - ./oidc-home-assistant.yaml
   - ./oidc-incus.yaml
   - ./oidc-openbao.yaml

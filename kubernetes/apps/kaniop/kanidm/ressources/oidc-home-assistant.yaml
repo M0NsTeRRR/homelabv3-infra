@@ -1,0 +1,49 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kaniop.rs/kanidmgroup_v1beta1.json
+apiVersion: kaniop.rs/v1beta1
+kind: KanidmGroup
+metadata:
+  name: homeassistant-admin
+spec:
+  kanidmRef:
+    name: kanidm
+    namespace: kaniop
+  members:
+    - ludovic.ortega
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kaniop.rs/kanidmgroup_v1beta1.json
+apiVersion: kaniop.rs/v1beta1
+kind: KanidmGroup
+metadata:
+  name: homeassistant-user
+spec:
+  kanidmRef:
+    name: kanidm
+    namespace: kaniop
+  members:
+    - saveiria.grillet
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kaniop.rs/kanidmoauth2client_v1beta1.json
+apiVersion: kaniop.rs/v1beta1
+kind: KanidmOAuth2Client
+metadata:
+  name: homeassistant
+spec:
+  kanidmRef:
+    name: kanidm
+    namespace: kaniop
+  displayname: Home Assistant
+  origin: https://home-assistant.unicornafk.fr/auth/oidc/welcome
+  redirectUrl:
+    - https://home-assistant.unicornafk.fr/auth/oidc/callback
+  public: true
+  preferShortUsername: true
+  scopeMap:
+    - group: homeassistant-admin
+      scopes: &scopes
+        - openid
+        - profile
+        - email
+        - groups_name
+    - group: homeassistant-user
+      scopes: *scopes
