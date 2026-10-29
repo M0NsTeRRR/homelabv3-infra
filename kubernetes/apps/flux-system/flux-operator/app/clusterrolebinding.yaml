@@ -5,7 +5,7 @@ metadata:
   name: flux-admin
 subjects:
   - kind: Group
-    name: flux-admin@sso.unicornafk.fr
+    name: flux-admin
     apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: ClusterRole
@@ -18,7 +18,7 @@ metadata:
   name: flux-user
 subjects:
   - kind: Group
-    name: flux-user@sso.unicornafk.fr
+    name: flux-user
     apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: ClusterRole

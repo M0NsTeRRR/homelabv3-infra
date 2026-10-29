@@ -27,13 +27,13 @@ spec:
     - http://localhost:18000
   public: true
   allowLocalhostRedirect: true
+  preferShortUsername: true
   scopeMap:
     - group: kubernetes-admin
       scopes:
         - openid
         - profile
-        - email
-        - groups
+        - groups_name
   disableConsentPrompt: true
 ---
 apiVersion: rbac.authorization.k8s.io/v1
@@ -42,7 +42,7 @@ metadata:
   name: kubernetes-admin-oidc
 subjects:
   - kind: Group
-    name: kubernetes-admin@sso.unicornafk.fr
+    name: kubernetes-admin
     apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: ClusterRole

@@ -12,13 +12,13 @@ spec:
   origin: ${OIDC_ORIGIN}
   redirectUrl:
     - ${OIDC_REDIRECT_URL}
+  preferShortUsername: true
   scopeMap:
     - group: ${APP}-user
       scopes: &scopes
         - openid
         - profile
-        - email
-        - groups
+        - groups_name
         - offline_access
     - group: ${APP}-admin
       scopes: *scopes
