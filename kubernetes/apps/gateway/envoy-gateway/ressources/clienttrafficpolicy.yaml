@@ -26,8 +26,6 @@ spec:
           value: SAMEORIGIN
         - name: X-Permitted-Cross-Domain-Policies
           value: none
-        - name: Cross-Origin-Opener-Policy
-          value: same-origin
         - name: Cross-Origin-Resource-Policy
           value: same-origin
         - name: Permissions-Policy
