@@ -1,0 +1,34 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kaniop.rs/kanidmgroup_v1beta1.json
+apiVersion: kaniop.rs/v1beta1
+kind: KanidmGroup
+metadata:
+  name: rustfs-admin
+spec:
+  kanidmRef:
+    name: kanidm
+    namespace: kaniop
+  members:
+    - ludovic.ortega
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kaniop.rs/kanidmoauth2client_v1beta1.json
+apiVersion: kaniop.rs/v1beta1
+kind: KanidmOAuth2Client
+metadata:
+  name: rustfs
+spec:
+  kanidmRef:
+    name: kanidm
+    namespace: kaniop
+  displayname: RustFS
+  origin: https://nas.unicornafk.fr:30293
+  redirectUrl:
+    - https://nas.unicornafk.fr:30293/rustfs/admin/v3/oidc/callback/default
+  preferShortUsername: true
+  scopeMap:
+    - group: rustfs-admin
+      scopes:
+        - openid
+        - profile
+        - email
+  disableConsentPrompt: true

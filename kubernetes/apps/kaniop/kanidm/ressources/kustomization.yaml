@@ -7,3 +7,4 @@ resources:
   - ./oidc-home-assistant.yaml
   - ./oidc-incus.yaml
   - ./oidc-openbao.yaml
+  - ./oidc-rustfs.yaml
