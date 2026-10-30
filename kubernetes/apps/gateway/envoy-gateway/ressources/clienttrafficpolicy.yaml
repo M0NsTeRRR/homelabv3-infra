@@ -14,9 +14,33 @@ spec:
       set:
         - name: X-Real-Ip
           value: "%DOWNSTREAM_REMOTE_ADDRESS_WITHOUT_PORT%"
+    lateResponseHeaders:
+      set:
+        - name: Strict-Transport-Security
+          value: max-age=31536000
+        - name: X-Content-Type-Options
+          value: nosniff
+        - name: Referrer-Policy
+          value: strict-origin-when-cross-origin
+        - name: X-Frame-Options
+          value: SAMEORIGIN
+        - name: X-Permitted-Cross-Domain-Policies
+          value: none
+        - name: Cross-Origin-Opener-Policy
+          value: same-origin
+        - name: Cross-Origin-Resource-Policy
+          value: same-origin
+        - name: Permissions-Policy
+          value: camera=(), microphone=(), geolocation=(), payment=(), usb=(), serial=(), hid=(), bluetooth=(), accelerometer=(), gyroscope=(), magnetometer=()
+      add: # add (not set) so an app's own CSP is kept and both are enforced
+        - name: Content-Security-Policy
+          value: frame-ancestors 'self'; base-uri 'self'; object-src 'none'
   targetSelectors:
     - group: gateway.networking.k8s.io
       kind: Gateway
+  timeout:
+    http:
+      requestHeadersReceivedTimeout: 10s
   tls:
     minVersion: "1.2"
     alpnProtocols:
