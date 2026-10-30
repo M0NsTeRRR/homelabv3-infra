@@ -6,5 +6,6 @@ resources:
   - ./oidc-kubernetes.yaml
   - ./oidc-home-assistant.yaml
   - ./oidc-incus.yaml
+  - ./oidc-jellyfin.yaml
   - ./oidc-openbao.yaml
   - ./oidc-rustfs.yaml
