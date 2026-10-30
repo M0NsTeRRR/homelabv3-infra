@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../assets/unicornafk.svg">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
     
     
       
@@ -31,10 +31,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -961,10 +961,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#acme-dns-challenge-with-vault-pki-and-pdns" class="md-nav__link">
+  <a href="#acme-dns-challenge-with-openbao-pki-and-mikrotik-dns" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ACME DNS Challenge with vault PKI and PDNS
+        ACME DNS Challenge with OpenBao PKI and MikroTik DNS
       
     </span>
   </a>
@@ -1025,10 +1025,10 @@
 </li>
       
         <li class="md-nav__item">
-  <a href="#acme-dns-challenge-with-vault-pki-and-pdns" class="md-nav__link">
+  <a href="#acme-dns-challenge-with-openbao-pki-and-mikrotik-dns" class="md-nav__link">
     <span class="md-ellipsis">
       
-        ACME DNS Challenge with vault PKI and PDNS
+        ACME DNS Challenge with OpenBao PKI and MikroTik DNS
       
     </span>
   </a>
@@ -1077,48 +1077,87 @@
 <h1 id="truenas">Truenas<a class="headerlink" href="#truenas" title="Permanent link">&para;</a></h1>
 <h2 id="what-is-truenas">What is Truenas ?<a class="headerlink" href="#what-is-truenas" title="Permanent link">&para;</a></h2>
 <p><a href="https://www.truenas.com/">Truenas</a> is a family of network-attached storage (NAS) products produced by iXsystems, incorporating both FOSS, as well as commercial offerings.</p>
-<h2 id="acme-dns-challenge-with-vault-pki-and-pdns">ACME DNS Challenge with vault PKI and PDNS<a class="headerlink" href="#acme-dns-challenge-with-vault-pki-and-pdns" title="Permanent link">&para;</a></h2>
+<h2 id="acme-dns-challenge-with-openbao-pki-and-mikrotik-dns">ACME DNS Challenge with OpenBao PKI and MikroTik DNS<a class="headerlink" href="#acme-dns-challenge-with-openbao-pki-and-mikrotik-dns" title="Permanent link">&para;</a></h2>
+<p>TrueNAS only supports the <code>DNS-01</code> challenge and has no MikroTik authenticator. The built-in <code>shell</code> authenticator is used with a small script that creates and removes the <code>_acme-challenge</code> TXT record through the RouterOS REST API.</p>
 <ol>
-<li>Create a dataset (home directories can't execute scripts see <a href="https://ixsystems.atlassian.net/browse/NAS-127825">here</a>)</li>
-<li>Select an user and create an API Key for it</li>
-<li>Connect to truenas through SSH with your user and execute every action with it (do not use root) and move inside your new dataset</li>
-<li>Clone acme.sh <code>git clone https://github.com/acmesh-official/acme.sh .acme.sh</code></li>
-<li>Create an env file <code>/home/&lt;user&gt;/.acme.sh.env</code> with the below contents</li>
-</ol>
-<div class="highlight"><pre><span></span><code><span class="c1"># PDNS</span>
-<span class="nv">PDNS_Url</span><span class="o">=</span>&lt;TO_REPLACE&gt;
-<span class="nv">PDNS_ServerId</span><span class="o">=</span>localhost
-<span class="nv">PDNS_Token</span><span class="o">=</span>&lt;TO_REPLACE&gt;
-<span class="nv">PDNS_Ttl</span><span class="o">=</span><span class="m">60</span>
-<span class="c1"># PKI CA</span>
-<span class="nv">CA_CERT_PATH</span><span class="o">=</span>/etc/ssl/certs/ca-certificates.crt
-<span class="c1"># Truenas</span>
-<span class="nv">DEPLOY_TRUENAS_APIKEY</span><span class="o">=</span>&lt;TO_REPLACE&gt;
-<span class="nv">DEPLOY_TRUENAS_SCHEME</span><span class="o">=</span>https
+<li>Connect to truenas through SSH with your user (do not use root)</li>
+<li>
+<p>Create the credentials file <code>/home/admin/.acme-mikrotik</code> with <code>chmod 600</code>. The file is sourced by the shell, quote the password with single quotes if it contains special characters</p>
+<div class="highlight"><pre><span></span><code><span class="nv">MIKROTIK_USER</span><span class="o">=</span>&lt;TO_REPLACE&gt;
+<span class="nv">MIKROTIK_PASS</span><span class="o">=</span>&lt;TO_REPLACE&gt;
 </code></pre></div>
-<ol>
-<li>Change your current directory to acme.sh project <code>cd .acme.sh</code></li>
-<li>Register ACME server <code>./acme.sh --set-default-ca --server &lt;vault_acme_url&gt; --home /home/admin</code> (in my case <code>https://openbao.unicornafk.fr:8200/v1/pki/acme/directory</code>)</li>
-<li>Register DNS issuer <code>./acme.sh --issue --insecure --dns dns_pdns -d &lt;truenas_fqdn&gt; --dnssleep 30 --home /home/admin</code></li>
-<li>Deploy the certificate <code>./acme.sh -d &lt;truenas_fqdn&gt; --insecure --deploy --deploy-hook truenas --home /home/admin</code></li>
-<li>
-<p>Setup cron through the webui</p>
 </li>
 <li>
-<p>Description: ACME.Sh renew certificates</p>
+<p>Create the script <code>/mnt/ssd-sata/scripts/acme-mikrotik.sh</code>, owned by the authenticator user with <code>chmod 700</code></p>
+<div class="highlight"><pre><span></span><code><span class="ch">#!/bin/sh</span>
+<span class="c1"># Called by the TrueNAS shell authenticator:</span>
+<span class="c1"># script set|unset &lt;domain&gt; &lt;validation_name&gt; &lt;validation_content&gt;</span>
+<span class="nb">set</span><span class="w"> </span>-eu
+<span class="nv">ACTION</span><span class="o">=</span><span class="s2">"</span><span class="nv">$1</span><span class="s2">"</span><span class="p">;</span><span class="w"> </span><span class="nv">NAME</span><span class="o">=</span><span class="s2">"</span><span class="nv">$3</span><span class="s2">"</span><span class="p">;</span><span class="w"> </span><span class="nv">VALUE</span><span class="o">=</span><span class="s2">"</span><span class="si">${</span><span class="nv">4</span><span class="k">:-</span><span class="si">}</span><span class="s2">"</span>
+.<span class="w"> </span>/home/admin/.acme-mikrotik
+<span class="nv">HOST</span><span class="o">=</span><span class="s2">"https://r1.unicornafk.fr"</span>
+
+api<span class="o">()</span><span class="w"> </span><span class="o">{</span>
+<span class="w">  </span><span class="nv">esc</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span><span class="w"> </span><span class="s1">'%s:%s'</span><span class="w"> </span><span class="s2">"</span><span class="nv">$MIKROTIK_USER</span><span class="s2">"</span><span class="w"> </span><span class="s2">"</span><span class="nv">$MIKROTIK_PASS</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sed<span class="w"> </span><span class="s1">'s/\\/\\\\/g; s/"/\\"/g'</span><span class="k">)</span>
+<span class="w">  </span><span class="nb">printf</span><span class="w"> </span><span class="s1">'user = "%s"\n'</span><span class="w"> </span><span class="s2">"</span><span class="nv">$esc</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span>
+<span class="w">    </span>curl<span class="w"> </span>-fsS<span class="w"> </span>-m<span class="w"> </span><span class="m">15</span><span class="w"> </span>-K<span class="w"> </span>-<span class="w"> </span>-H<span class="w"> </span><span class="s1">'content-type: application/json'</span><span class="w"> </span><span class="s2">"</span><span class="nv">$@</span><span class="s2">"</span>
+<span class="o">}</span>
+
+<span class="k">case</span><span class="w"> </span><span class="s2">"</span><span class="nv">$ACTION</span><span class="s2">"</span><span class="w"> </span><span class="k">in</span>
+<span class="w">  </span><span class="nb">set</span><span class="o">)</span>
+<span class="w">    </span><span class="nv">body</span><span class="o">=</span><span class="k">$(</span>jq<span class="w"> </span>-n<span class="w"> </span>--arg<span class="w"> </span>n<span class="w"> </span><span class="s2">"</span><span class="nv">$NAME</span><span class="s2">"</span><span class="w"> </span>--arg<span class="w"> </span>t<span class="w"> </span><span class="s2">"</span><span class="nv">$VALUE</span><span class="s2">"</span><span class="w"> </span><span class="s1">'{name:$n,type:"TXT",text:$t,ttl:"1m"}'</span><span class="k">)</span>
+<span class="w">    </span>api<span class="w"> </span>-X<span class="w"> </span>PUT<span class="w"> </span><span class="s2">"</span><span class="nv">$HOST</span><span class="s2">/rest/ip/dns/static"</span><span class="w"> </span>-d<span class="w"> </span><span class="s2">"</span><span class="nv">$body</span><span class="s2">"</span><span class="w"> </span>&gt;/dev/null<span class="w"> </span><span class="p">;;</span>
+<span class="w">  </span><span class="nb">unset</span><span class="o">)</span>
+<span class="w">    </span><span class="nv">list</span><span class="o">=</span><span class="k">$(</span>api<span class="w"> </span><span class="s2">"</span><span class="nv">$HOST</span><span class="s2">/rest/ip/dns/static?name=</span><span class="nv">$NAME</span><span class="s2">&amp;type=TXT"</span><span class="k">)</span>
+<span class="w">    </span><span class="nv">ids</span><span class="o">=</span><span class="k">$(</span><span class="nb">printf</span><span class="w"> </span><span class="s1">'%s'</span><span class="w"> </span><span class="s2">"</span><span class="nv">$list</span><span class="s2">"</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>jq<span class="w"> </span>-r<span class="w"> </span>--arg<span class="w"> </span>t<span class="w"> </span><span class="s2">"</span><span class="nv">$VALUE</span><span class="s2">"</span><span class="w"> </span><span class="s1">'.[] | select(.text == $t) | .".id"'</span><span class="k">)</span>
+<span class="w">    </span><span class="k">for</span><span class="w"> </span>id<span class="w"> </span><span class="k">in</span><span class="w"> </span><span class="nv">$ids</span><span class="p">;</span><span class="w"> </span><span class="k">do</span><span class="w"> </span>api<span class="w"> </span>-X<span class="w"> </span>DELETE<span class="w"> </span><span class="s2">"</span><span class="nv">$HOST</span><span class="s2">/rest/ip/dns/static/</span><span class="nv">$id</span><span class="s2">"</span><span class="w"> </span>&gt;/dev/null<span class="p">;</span><span class="w"> </span><span class="k">done</span><span class="w"> </span><span class="p">;;</span>
+<span class="w">  </span>*<span class="o">)</span><span class="w"> </span><span class="nb">echo</span><span class="w"> </span><span class="s2">"unknown action: </span><span class="nv">$ACTION</span><span class="s2">"</span><span class="w"> </span>&gt;<span class="p">&amp;</span><span class="m">2</span><span class="p">;</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">2</span><span class="w"> </span><span class="p">;;</span>
+<span class="k">esac</span>
+</code></pre></div>
 </li>
-<li>User: <code>&lt;user&gt;</code></li>
-<li>Schedule: Daily</li>
 <li>
-<p>Command: <code>. /home/&lt;user&gt;/.acme.sh.env &amp;&amp; "&lt;dataset path&gt;/.acme.sh"/acme.sh --issue --dns dns_pdns -d &lt;truenas_fqdn&gt; --dnssleep 30 --insecure --deploy --deploy-hook truenas --ca-bundle /home/admin/ca.crt --home /home/admin</code></p>
+<p>Test the script by hand, the TXT record must appear on the router and then disappear</p>
+<div class="highlight"><pre><span></span><code><span class="nv">N</span><span class="o">=</span>_acme-challenge.test.unicornafk.fr
+/mnt/ssd-sata/scripts/acme-mikrotik.sh<span class="w"> </span><span class="nb">set</span><span class="w"> </span>x<span class="w"> </span><span class="nv">$N</span><span class="w"> </span><span class="nb">test</span>
+dig<span class="w"> </span>+short<span class="w"> </span>TXT<span class="w"> </span><span class="nv">$N</span><span class="w"> </span>@r1.unicornafk.fr
+/mnt/ssd-sata/scripts/acme-mikrotik.sh<span class="w"> </span><span class="nb">unset</span><span class="w"> </span>x<span class="w"> </span><span class="nv">$N</span><span class="w"> </span><span class="nb">test</span>
+</code></pre></div>
 </li>
 <li>
-<p>If you want to check if your cron is successfull run it and check the log with</p>
+<p>Create the ACME DNS authenticator: <code>Credentials</code> &gt; <code>Certificates</code> &gt; <code>ACME DNS-Authenticators</code> &gt; <code>Add</code></p>
+<ul>
+<li>Name: <code>mikrotik-r1</code></li>
+<li>Authenticator: <code>shell</code></li>
+<li>Script: <code>/mnt/ssd-sata/scripts/acme-mikrotik.sh</code></li>
+<li>User: the user that owns the script</li>
+<li>Timeout: <code>60</code></li>
+<li>Delay (propagation): <code>10</code></li>
+</ul>
+</li>
+<li>
+<p>Create the CSR: <code>Credentials</code> &gt; <code>Certificates</code> &gt; <code>Certificate Signing Requests</code> &gt; <code>Add CSR</code></p>
+<ul>
+<li>Identifier: <code>nas-acme-csr</code></li>
+<li>Key Type: <code>EC</code> with the curve <code>SECP384R1</code></li>
+<li>Digest Algorithm: <code>SHA384</code></li>
+<li>Common Name: <code>nas.unicornafk.fr</code></li>
+<li>Subject Alternative Name: <code>nas.unicornafk.fr</code> (the Common Name alone is not enough)</li>
+</ul>
+</li>
+<li>
+<p>Create the ACME certificate from the CSR: in <code>Certificate Signing Requests</code>, open the actions of <code>nas-acme-csr</code> &gt; <code>Create ACME Certificate</code></p>
+<ul>
+<li>Identifier: <code>nas-acme</code></li>
+<li>Accept the <code>Terms of Service</code></li>
+<li>ACME Directory URI: <code>https://openbao.unicornafk.fr:8200/v1/pki/acme/directory</code></li>
+<li>Renew Certificate Days: <code>10</code> (TrueNAS renews the certificate by itself this many days before the expiration)</li>
+<li>Authenticator: <code>mikrotik-r1</code> for <code>nas.unicornafk.fr</code></li>
+</ul>
+<p>!! info "<code>nas-acme</code> also appears in the CSR list"</p>
+<pre><code>The UI lists every entry that keeps a CSR in `Certificate Signing Requests`. `nas-acme` is the signed certificate (it is also in `Certificates`), do not delete it. `nas-acme-csr` can be deleted once the certificate is issued
+</code></pre>
 </li>
 </ol>
-<div class="highlight"><pre><span></span><code>cat<span class="w"> </span>/var/log/syslog<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>-w<span class="w"> </span><span class="s1">'cron'</span>
-</code></pre></div>
-<p>!! info "sudo is broken <a href="https://ixsystems.atlassian.net/browse/NAS-131540">https://ixsystems.atlassian.net/browse/NAS-131540</a>"</p>
 
 
 
@@ -1225,10 +1264,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.instant.prefetch", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.expand", "navigation.path", "navigation.footer", "content.action.edit", "content.action.view", "content.code.copy"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.instant", "navigation.instant.prefetch", "navigation.instant.progress", "navigation.tracking", "navigation.tabs", "navigation.sections", "navigation.expand", "navigation.path", "navigation.footer", "content.action.edit", "content.action.view", "content.code.copy"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
       
     
   </body>
