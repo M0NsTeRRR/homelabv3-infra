@@ -30,7 +30,7 @@ flannel-backend: none
 disable-network-policy: true
 disable-kube-proxy: true
 resolv-conf: /run/systemd/resolve/resolv.conf
-disable: traefik,servicelb,metrics-server,local-storage
+disable: traefik,servicelb,metrics-server,local-storage,gateway-api-crd
 write-kubeconfig-mode: 0640
 write-kubeconfig-group: wheel
 write-kubeconfig: /etc/rancher/k3s/kubeconfig
