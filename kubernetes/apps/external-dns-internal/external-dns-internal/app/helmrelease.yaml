@@ -40,19 +40,19 @@ spec:
           - name: MIKROTIK_BASEURL
             valueFrom:
               secretKeyRef:
-                name: external-dns-openbao
+                name: external-dns-internal-openbao
                 key: MIKROTIK_BASEURL
           - name: MIKROTIK_CA_CERT
             value: /etc/external-dns/ssl/ca.crt
           - name: MIKROTIK_USERNAME
             valueFrom:
               secretKeyRef:
-                name: external-dns-openbao
+                name: external-dns-internal-openbao
                 key: MIKROTIK_USERNAME
           - name: MIKROTIK_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: external-dns-openbao
+                name: external-dns-internal-openbao
                 key: MIKROTIK_PASSWORD
         extraVolumeMounts:
           - name: "homelab-ca"

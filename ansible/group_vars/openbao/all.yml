@@ -226,13 +226,13 @@ public_openbao_datas:
       ttl: 1m
   - path: auth/kubernetes/role/external-dns-external
     data:
-      bound_service_account_names: external-dns-openbao
+      bound_service_account_names: external-dns-external-openbao
       bound_service_account_namespaces: external-dns-external
       policies: external-dns-external
       ttl: 1h
   - path: auth/kubernetes/role/external-dns-internal
     data:
-      bound_service_account_names: external-dns-openbao
+      bound_service_account_names: external-dns-internal-openbao
       bound_service_account_namespaces: external-dns-internal
       policies: external-dns-internal
       ttl: 1h
