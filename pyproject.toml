@@ -37,7 +37,7 @@ ansible = [
   "PyYAML~=6.0.3",
   "jsonpatch~=1.33",
 ]
-documentation = ["mkdocs-material[imaging]~=9.7.6", "pytz~=2026.2"]
+documentation = ["mkdocs-material[imaging]~=9.8.0", "pytz~=2026.2"]
 octodns = [
   "octodns~=1.22.0",
   "octodns-infomaniak~=0.1.6",
