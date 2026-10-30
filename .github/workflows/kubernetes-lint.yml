@@ -27,3 +27,7 @@ jobs:
 
       - name: Test Flux resources
         run: flate test all --path ./kubernetes --no-progress
+        env:
+          # The action defaults FLATE_BASE to the default branch (changed-only mode),
+          # which needs origin/main in the checkout. The full test only takes seconds.
+          FLATE_BASE: ""
