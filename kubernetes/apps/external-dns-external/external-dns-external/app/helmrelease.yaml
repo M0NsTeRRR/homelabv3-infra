@@ -16,6 +16,7 @@ spec:
       reloader.stakater.com/auto: "true"
     registry: txt
     txtOwnerId: "homelab.k8s"
+    txtPrefix: "extdns-%{record_type}."
     triggerLoopOnEvent: true
     policy: sync
     sources:
