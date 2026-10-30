@@ -49,6 +49,32 @@ rules:
       - namespaces
     verbs: ["get", "list", "watch"]
 ---
+# The allocator watches the secrets of its own namespace (ServiceMonitor auth), so it needs list/watch there.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: otel-targetallocator-secrets
+  annotations:
+    ignore-check.kube-linter.io/access-to-secrets: "target allocator watches secrets referenced by ServiceMonitors, namespace scoped"
+rules:
+  - apiGroups: [""]
+    resources:
+      - secrets
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: otel-targetallocator-secrets
+subjects:
+  - kind: ServiceAccount
+    name: targetallocator
+    namespace: observability
+roleRef:
+  kind: Role
+  name: otel-targetallocator-secrets
+  apiGroup: rbac.authorization.k8s.io
+---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
