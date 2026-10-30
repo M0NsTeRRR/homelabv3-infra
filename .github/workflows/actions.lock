@@ -5,18 +5,18 @@ version: 'v0.0.3'
 workflows:
     '.github/workflows/ansible-lint.yml':
         - 'actions/checkout@v7.0.1'
-        - 'actions/setup-python@v7.0.0'
+        - 'actions/setup-python@v7.1.0'
         - 'astral-sh/setup-uv@v10.3.2'
     '.github/workflows/documentation.yml':
         - 'actions/checkout@v7.0.1'
-        - 'actions/setup-python@v7.0.0'
+        - 'actions/setup-python@v7.1.0'
         - 'astral-sh/setup-uv@v10.3.2'
     '.github/workflows/kubernetes-lint.yml':
         - 'actions/checkout@v7.0.1'
         - 'stackrox/kube-linter-action@v1.0.7'
     '.github/workflows/octodns.yml':
         - 'actions/checkout@v7.0.1'
-        - 'actions/setup-python@v7.0.0'
+        - 'actions/setup-python@v7.1.0'
         - 'astral-sh/setup-uv@v10.3.2'
     '.github/workflows/renovate-lint.yml':
         - 'actions/checkout@v7.0.1'
@@ -26,9 +26,9 @@ dependencies:
         commit: 'sha1-3d3c42e5aac5ba805825da76410c181273ba90b1'
         owner_id: 44036562
         repo_id: 197814629
-    'actions/setup-python@v7.0.0':
-        ref: 'v7.0.0'
-        commit: 'sha1-5fda3b95a4ea91299a34e894583c3862153e4b97'
+    'actions/setup-python@v7.1.0':
+        ref: 'v7.1.0'
+        commit: 'sha1-6d4fd22b20465ccc0f7354476588e8df7c9ca0e0'
         owner_id: 44036562
         repo_id: 192625525
     'astral-sh/setup-uv@v10.3.2':
