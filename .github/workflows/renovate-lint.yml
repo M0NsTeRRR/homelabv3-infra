@@ -10,7 +10,7 @@ permissions: {}
 jobs:
   renovatebot-lint:
     name: Lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04-arm
     permissions:
       contents: read
       pull-requests: read
@@ -19,6 +19,7 @@ jobs:
         uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
+
       - name: Check renovate config
         run: npx -p renovate renovate-config-validator
         env:

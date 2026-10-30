@@ -13,7 +13,7 @@ workflows:
         - 'astral-sh/setup-uv@v10.3.2'
     '.github/workflows/kubernetes-lint.yml':
         - 'actions/checkout@v7.0.1'
-        - 'stackrox/kube-linter-action@v1.0.7'
+        - 'home-operations/flate@v0.6.5'
     '.github/workflows/octodns.yml':
         - 'actions/checkout@v7.0.1'
         - 'actions/setup-python@v7.1.0'
@@ -21,6 +21,11 @@ workflows:
     '.github/workflows/renovate-lint.yml':
         - 'actions/checkout@v7.0.1'
 dependencies:
+    'actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9':
+        ref: 'v6.1.0'
+        commit: 'sha1-55cc8345863c7cc4c66a329aec7e433d2d1c52a9'
+        owner_id: 44036562
+        repo_id: 215566462
     'actions/checkout@v7.0.1':
         ref: 'v7.0.1'
         commit: 'sha1-3d3c42e5aac5ba805825da76410c181273ba90b1'
@@ -36,8 +41,10 @@ dependencies:
         commit: 'sha1-07a047e608db84b3d8c06cd9a7c7dcc9c355c18e'
         owner_id: 115962839
         repo_id: 846733598
-    'stackrox/kube-linter-action@v1.0.7':
-        ref: 'v1.0.7'
-        commit: 'sha1-87802a2f4e01abebb3ee3c67a3002fea71f6eae5'
-        owner_id: 40638982
-        repo_id: 317968736
+    'home-operations/flate@v0.6.5':
+        ref: 'v0.6.5'
+        commit: 'sha1-631b76b69c4e58c6f4d1cb01e23616fa61aebafa'
+        owner_id: 152294696
+        repo_id: 1246047993
+        uses:
+            - 'actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9'

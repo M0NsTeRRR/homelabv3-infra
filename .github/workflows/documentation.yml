@@ -10,7 +10,7 @@ jobs:
   deploy:
     name: Deploy
     if: github.ref == 'refs/heads/main'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04-arm
     permissions:
       contents: write
     steps:
@@ -24,8 +24,10 @@ jobs:
             uses: actions/setup-python@v7.1.0
             with:
               python-version-file: ".python-version"
+
       - name: Install the project
         run: uv sync --extra documentation
+
       - name: Deploy documentation
         run: |
           git fetch origin gh-pages --depth=1

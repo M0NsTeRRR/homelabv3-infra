@@ -10,7 +10,7 @@ permissions: {}
 jobs:
   octodns-lint:
     name: Lint
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04-arm
     permissions:
       contents: read
       pull-requests: read
@@ -19,14 +19,18 @@ jobs:
         uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
-      - name: Install uv
-        uses: astral-sh/setup-uv@v10.3.2
-      - name: Set up Python
-        uses: actions/setup-python@v7.1.0
-        with:
-          python-version-file: ".python-version"
+
+      - parallel:
+          - name: Install uv
+            uses: astral-sh/setup-uv@v10.3.2
+          - name: Set up Python
+            uses: actions/setup-python@v7.1.0
+            with:
+              python-version-file: ".python-version"
+
       - name: Install the project
         run: uv sync --extra octodns
+
       - name: Validate octodns config
         run: |
           cd octodns
@@ -40,7 +44,7 @@ jobs:
     name: Deploy
     if: github.ref == 'refs/heads/main'
     needs: [octodns-lint]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04-arm
     permissions:
       contents: read
       pull-requests: read
@@ -49,6 +53,7 @@ jobs:
         uses: actions/checkout@v7.0.1
         with:
           persist-credentials: false
+
       - parallel:
           - name: Install uv
             uses: astral-sh/setup-uv@v10.3.2
@@ -56,8 +61,10 @@ jobs:
             uses: actions/setup-python@v7.1.0
             with:
               python-version-file: ".python-version"
+
       - name: Install the project
         run: uv sync --extra octodns
+
       - name: Apply octodns config
         run: |
           cd octodns
