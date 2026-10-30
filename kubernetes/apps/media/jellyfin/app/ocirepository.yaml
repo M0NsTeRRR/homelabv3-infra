@@ -10,8 +10,8 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 2.5.0
-    digest: sha256:3377f140ef7819ed7bc2638e016d594fdb257c35bf61c28262a1a538f31e6b3d
+    tag: 3.0.0
+    digest: sha256:3814e66f8096488232e62432114eeaff306262cba7fb3f8f22662d16b7a41c80
   url: oci://ghcr.io/m0nsterrr/helm-charts/jellyfin
   verify:
     provider: cosign
