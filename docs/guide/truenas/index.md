@@ -4,42 +4,79 @@
 
 [Truenas](https://www.truenas.com/) is a family of network-attached storage (NAS) products produced by iXsystems, incorporating both FOSS, as well as commercial offerings.
 
-## ACME DNS Challenge with vault PKI and PDNS
+## ACME DNS Challenge with OpenBao PKI and MikroTik DNS
 
-1. Create a dataset (home directories can't execute scripts see [here](https://ixsystems.atlassian.net/browse/NAS-127825))
-2. Select an user and create an API Key for it
-3. Connect to truenas through SSH with your user and execute every action with it (do not use root) and move inside your new dataset
-4. Clone acme.sh `git clone https://github.com/acmesh-official/acme.sh .acme.sh`
-5. Create an env file `/home/<user>/.acme.sh.env` with the below contents
+TrueNAS only supports the `DNS-01` challenge and has no MikroTik authenticator. The built-in `shell` authenticator is used with a small script that creates and removes the `_acme-challenge` TXT record through the RouterOS REST API.
 
-```bash
-# PDNS
-PDNS_Url=<TO_REPLACE>
-PDNS_ServerId=localhost
-PDNS_Token=<TO_REPLACE>
-PDNS_Ttl=60
-# PKI CA
-CA_CERT_PATH=/etc/ssl/certs/ca-certificates.crt
-# Truenas
-DEPLOY_TRUENAS_APIKEY=<TO_REPLACE>
-DEPLOY_TRUENAS_SCHEME=https
-```
 
-1. Change your current directory to acme.sh project `cd .acme.sh`
-2. Register ACME server `./acme.sh --set-default-ca --server <vault_acme_url> --home /home/admin` (in my case `https://openbao.unicornafk.fr:8200/v1/pki/acme/directory`)
-3. Register DNS issuer `./acme.sh --issue --insecure --dns dns_pdns -d <truenas_fqdn> --dnssleep 30 --home /home/admin`
-4. Deploy the certificate `./acme.sh -d <truenas_fqdn> --insecure --deploy --deploy-hook truenas --home /home/admin`
-5. Setup cron through the webui
+1. Connect to truenas through SSH with your user (do not use root)
+2. Create the credentials file `/home/admin/.acme-mikrotik` with `chmod 600`. The file is sourced by the shell, quote the password with single quotes if it contains special characters
 
-- Description: ACME.Sh renew certificates
-- User: `<user>`
-- Schedule: Daily
-- Command: `. /home/<user>/.acme.sh.env && "<dataset path>/.acme.sh"/acme.sh --issue --dns dns_pdns -d <truenas_fqdn> --dnssleep 30 --insecure --deploy --deploy-hook truenas --ca-bundle /home/admin/ca.crt --home /home/admin`
+    ```bash
+    MIKROTIK_USER=<TO_REPLACE>
+    MIKROTIK_PASS=<TO_REPLACE>
+    ```
 
-1. If you want to check if your cron is successfull run it and check the log with
+3. Create the script `/mnt/ssd-sata/scripts/acme-mikrotik.sh`, owned by the authenticator user with `chmod 700`
 
-```bash
-cat /var/log/syslog | grep -w 'cron'
-```
+    ```sh
+    #!/bin/sh
+    # Called by the TrueNAS shell authenticator:
+    # script set|unset <domain> <validation_name> <validation_content>
+    set -eu
+    ACTION="$1"; NAME="$3"; VALUE="${4:-}"
+    . /home/admin/.acme-mikrotik
+    HOST="https://r1.unicornafk.fr"
 
-!! info "sudo is broken <https://ixsystems.atlassian.net/browse/NAS-131540>"
+    api() {
+      esc=$(printf '%s:%s' "$MIKROTIK_USER" "$MIKROTIK_PASS" | sed 's/\\/\\\\/g; s/"/\\"/g')
+      printf 'user = "%s"\n' "$esc" |
+        curl -fsS -m 15 -K - -H 'content-type: application/json' "$@"
+    }
+
+    case "$ACTION" in
+      set)
+        body=$(jq -n --arg n "$NAME" --arg t "$VALUE" '{name:$n,type:"TXT",text:$t,ttl:"1m"}')
+        api -X PUT "$HOST/rest/ip/dns/static" -d "$body" >/dev/null ;;
+      unset)
+        list=$(api "$HOST/rest/ip/dns/static?name=$NAME&type=TXT")
+        ids=$(printf '%s' "$list" | jq -r --arg t "$VALUE" '.[] | select(.text == $t) | .".id"')
+        for id in $ids; do api -X DELETE "$HOST/rest/ip/dns/static/$id" >/dev/null; done ;;
+      *) echo "unknown action: $ACTION" >&2; exit 2 ;;
+    esac
+    ```
+
+4. Test the script by hand, the TXT record must appear on the router and then disappear
+
+    ```bash
+    N=_acme-challenge.test.unicornafk.fr
+    /mnt/ssd-sata/scripts/acme-mikrotik.sh set x $N test
+    dig +short TXT $N @r1.unicornafk.fr
+    /mnt/ssd-sata/scripts/acme-mikrotik.sh unset x $N test
+    ```
+
+5. Create the ACME DNS authenticator: `Credentials` > `Certificates` > `ACME DNS-Authenticators` > `Add`
+    - Name: `mikrotik-r1`
+    - Authenticator: `shell`
+    - Script: `/mnt/ssd-sata/scripts/acme-mikrotik.sh`
+    - User: the user that owns the script
+    - Timeout: `60`
+    - Delay (propagation): `10`
+
+6. Create the CSR: `Credentials` > `Certificates` > `Certificate Signing Requests` > `Add CSR`
+    - Identifier: `nas-acme-csr`
+    - Key Type: `EC` with the curve `SECP384R1`
+    - Digest Algorithm: `SHA384`
+    - Common Name: `nas.unicornafk.fr`
+    - Subject Alternative Name: `nas.unicornafk.fr` (the Common Name alone is not enough)
+
+7. Create the ACME certificate from the CSR: in `Certificate Signing Requests`, open the actions of `nas-acme-csr` > `Create ACME Certificate`
+    - Identifier: `nas-acme`
+    - Accept the `Terms of Service`
+    - ACME Directory URI: `https://openbao.unicornafk.fr:8200/v1/pki/acme/directory`
+    - Renew Certificate Days: `10` (TrueNAS renews the certificate by itself this many days before the expiration)
+    - Authenticator: `mikrotik-r1` for `nas.unicornafk.fr`
+
+    !! info "`nas-acme` also appears in the CSR list"
+
+        The UI lists every entry that keeps a CSR in `Certificate Signing Requests`. `nas-acme` is the signed certificate (it is also in `Certificates`), do not delete it. `nas-acme-csr` can be deleted once the certificate is issued
