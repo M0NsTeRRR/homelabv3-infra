@@ -23,7 +23,7 @@ spec:
   displayname: RustFS
   origin: https://nas.unicornafk.fr:30293
   redirectUrl:
-    - https://nas.unicornafk.fr:30293/rustfs/admin/v3/oidc/callback/default
+    - https://nas.unicornafk.fr:30293/rustfs/admin/v3/oidc/callback/rustfs
   preferShortUsername: true
   scopeMap:
     - group: rustfs-admin
