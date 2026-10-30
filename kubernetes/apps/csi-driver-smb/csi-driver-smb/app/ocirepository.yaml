@@ -10,8 +10,8 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 1.20.3
-    digest: sha256:483802b7b177d82767c4433aad17d338dcb2fd4a85b41a6a40c7cdac0d5aa9b7
+    tag: 1.20.4
+    digest: sha256:2bdcb6c4bae0f46fe485e5e17df05a34b0f543bc41a9328e2769b701cb090f7f
   url: oci://ghcr.io/home-operations/charts-mirror/csi-driver-smb
   verify:
     provider: cosign
