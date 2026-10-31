@@ -40,6 +40,10 @@ spec:
     http:
       requestHeadersReceivedTimeout: 10s
   tls:
+    ecdhCurves:
+      - X25519MLKEM768
+      - X25519
+      - P-256
     minVersion: "1.2"
     alpnProtocols:
       - h2
