@@ -1141,14 +1141,14 @@
 <p><code>MIKROTIK_USER</code> and <code>MIKROTIK_PASSWORD</code> represent the username and password used to connect to your MikroTik router to manage your DNS zone.</p>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">MIKROTIK_USER</span><span class="o">=</span>&lt;MIKROTIK_USER&gt;
 <span class="nb">export</span><span class="w"> </span><span class="nv">MIKROTIK_PASSWORD</span><span class="o">=</span>&lt;MIKROTIK_PASSWORD&gt;
-uv<span class="w"> </span>run<span class="w"> </span>task<span class="w"> </span>octodns:sync-internal
+just<span class="w"> </span>octodns<span class="w"> </span>sync-internal
 </code></pre></div>
 <h3 id="external">External<a class="headerlink" href="#external" title="Permanent link">&para;</a></h3>
 <p>You should not normally use it by hand it's running in a Github action.</p>
 <p>Configuration is stored in <code>octodns/external</code> folder.</p>
 <p><code>INFOMANIAK_TOKEN</code> represents the API token to manage your DNS zone</p>
 <div class="highlight"><pre><span></span><code><span class="nb">export</span><span class="w"> </span><span class="nv">INFOMANIAK_TOKEN</span><span class="o">=</span>&lt;INFOMANIAK_TOKEN&gt;
-uv<span class="w"> </span>run<span class="w"> </span>task<span class="w"> </span>octodns:sync-external
+just<span class="w"> </span>octodns<span class="w"> </span>sync-external
 </code></pre></div>
 
 

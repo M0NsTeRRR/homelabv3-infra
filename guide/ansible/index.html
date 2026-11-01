@@ -1118,7 +1118,7 @@
 <p>Configuration is stored in <code>ansible</code> folder.</p>
 <p>Fill <code>ssl</code> folders with certificates.
 Fill <code>.vault_password.txt</code> at root with ansible vault password used.</p>
-<div class="highlight"><pre><span></span><code>uv<span class="w"> </span>run<span class="w"> </span>task<span class="w"> </span>ansible:&lt;openbao<span class="p">|</span>generate_certs&gt;
+<div class="highlight"><pre><span></span><code>just<span class="w"> </span>ansible<span class="w"> </span>&lt;openbao<span class="p">|</span>generate_certs&gt;
 </code></pre></div>
 
 
