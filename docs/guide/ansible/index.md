@@ -14,6 +14,6 @@ Fill `ssl` folders with certificates.
 Fill `.vault_password.txt` at root with ansible vault password used.
 
 ```sh
-uv run task ansible:<openbao|generate_certs>
+just ansible <openbao|generate_certs>
 ```
 

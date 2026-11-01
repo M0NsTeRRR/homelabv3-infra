@@ -8,4 +8,4 @@
 
 ### Task
 
-Use `uv run task --list` to find Kubernetes group recipes for deploying the base infrastructure until Flux can take over.
+Use `just --list --list-submodules` to find Kubernetes group recipes for deploying the base infrastructure until Flux can take over.

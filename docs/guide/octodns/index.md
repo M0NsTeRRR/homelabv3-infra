@@ -16,7 +16,7 @@ Configuration is stored in `octodns/internal` folder.
 ```sh
 export MIKROTIK_USER=<MIKROTIK_USER>
 export MIKROTIK_PASSWORD=<MIKROTIK_PASSWORD>
-uv run task octodns:sync-internal
+just octodns sync-internal
 ```
 
 ### External
@@ -29,5 +29,5 @@ Configuration is stored in `octodns/external` folder.
 
 ```sh
 export INFOMANIAK_TOKEN=<INFOMANIAK_TOKEN>
-uv run task octodns:sync-external
+just octodns sync-external
 ```

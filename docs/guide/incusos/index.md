@@ -73,7 +73,7 @@ In settings page configure the following :
 
 ### Task
 
-Use `uv run task --list` to find Flatcar group recipes for deploying the base VM infrastructure.
+Use `just --list --list-submodules` to find Flatcar group recipes for deploying the base VM infrastructure.
 
 ## Tips
 

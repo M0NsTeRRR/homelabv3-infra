@@ -15,7 +15,7 @@
   packages = [
     pkgs.secretspec
     pkgs.cairo # documentation
-    pkgs.go-task
+    pkgs.just
     pkgs.incus
     pkgs.gnupg
     pkgs.gnutar
