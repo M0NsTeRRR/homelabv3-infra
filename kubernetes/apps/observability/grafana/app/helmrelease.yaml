@@ -196,6 +196,11 @@ spec:
           datasource:
             - name: DS_PROMETHEUS
               value: *datasource
+        FreeTransit:
+          url: https://freetransit.net/grafana/freetransit-customer.json
+          datasource:
+            - name: DS_PROMETHEUS
+              value: *datasource
         Routinator:
           gnetId: 11922
           revision: 7

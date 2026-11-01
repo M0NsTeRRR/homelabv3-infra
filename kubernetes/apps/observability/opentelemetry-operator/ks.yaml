@@ -20,10 +20,15 @@ kind: Kustomization
 metadata:
   name: opentelemetry-operator-ressources
 spec:
+  components:
+    - ../../../../components/external-secrets
   dependsOn:
     - name: opentelemetry-operator
   interval: 1h
   path: ./kubernetes/apps/observability/opentelemetry-operator/ressources
+  postBuild:
+    substitute:
+      APP: observability
   prune: true
   sourceRef:
     kind: GitRepository

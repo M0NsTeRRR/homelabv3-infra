@@ -3,6 +3,9 @@ apiVersion: opentelemetry.io/v1beta1
 kind: OpenTelemetryCollector
 metadata:
   name: collector
+  annotations:
+    # config uses ${env:...}, which Flux postBuild would try to substitute
+    kustomize.toolkit.fluxcd.io/substitute: disabled
 spec:
   mode: daemonset
   targetAllocator:

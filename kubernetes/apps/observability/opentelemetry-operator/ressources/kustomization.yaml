@@ -6,3 +6,4 @@ resources:
   - ./rbac_allocator.yaml
   - ./collector.yaml
   - ./autoinstrumentation.yaml
+  - ./freetransit.yaml

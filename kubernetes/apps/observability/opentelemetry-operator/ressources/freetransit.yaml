@@ -1,0 +1,41 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/external-secrets.io/externalsecret_v1.json
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: freetransit-openbao
+spec:
+  refreshInterval: "1m"
+  target:
+    creationPolicy: "Owner"
+    deletionPolicy: "Retain"
+  secretStoreRef:
+    kind: SecretStore
+    name: observability-openbao
+  data:
+    - secretKey: TOKEN
+      remoteRef:
+        conversionStrategy: Default
+        decodingStrategy: None
+        metadataPolicy: None
+        key: secret/data/homelab/prod/observability
+        property: FREETRANSIT_TOKEN
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/monitoring.coreos.com/scrapeconfig_v1alpha1.json
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: freetransit
+spec:
+  jobName: freetransit
+  scheme: HTTPS
+  metricsPath: /metrics
+  scrapeInterval: 60s
+  authorization:
+    type: Bearer
+    credentials:
+      name: freetransit-openbao
+      key: TOKEN
+  staticConfigs:
+    - targets:
+        - freetransit.net
