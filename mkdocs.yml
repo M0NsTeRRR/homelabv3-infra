@@ -15,6 +15,7 @@ extra:
 
 theme:
   name: material
+  variant: modern
   logo: assets/unicornafk.svg
   favicon: assets/unicornafk.svg
   palette:

@@ -4,15 +4,15 @@ on:
     paths:
       - docs/**
       - mkdocs.yml
-      - .github/workflows/doc.yml
+      - .github/workflows/documentation.yml
 permissions: {}
 jobs:
-  deploy:
-    name: Deploy
+  build:
+    name: Build
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-26.04-arm
     permissions:
-      contents: write
+      contents: read
     steps:
       - name: Checkout code
         uses: actions/checkout@v7.0.1
@@ -28,9 +28,25 @@ jobs:
       - name: Install the project
         run: uv sync --extra documentation
 
+      - name: Build documentation
+        run: uv run zensical build --clean
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v5.0.0
+        with:
+          path: site
+
+  deploy:
+    name: Deploy
+    needs: build
+    runs-on: ubuntu-26.04-arm
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
       - name: Deploy documentation
-        run: |
-          git fetch origin gh-pages --depth=1
-          git config user.name github-actions[bot]
-          git config user.email github-actions[bot]@users.noreply.github.com
-          uv run mkdocs gh-deploy --force
+        id: deployment
+        uses: actions/deploy-pages@v5.0.1

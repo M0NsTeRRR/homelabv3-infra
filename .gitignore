@@ -15,6 +15,7 @@ vault.json.secrets
 
 # Doc
 .cache
+site
 
 # flatcar
 flatcar/.env

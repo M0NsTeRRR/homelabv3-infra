@@ -28,4 +28,6 @@ Configuration is stored at root as `.kube-linter.yaml`
 
 ### Documentation
 
-Configuration is stored at root as `mkdocs.yml`
+Built with [Zensical](https://zensical.org) and deployed to GitHub Pages.
+
+GitHub Pages must be configured to publish using `GitHub Actions` in the repository settings (`Settings > Pages > Source`).

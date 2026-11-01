@@ -9,7 +9,9 @@ workflows:
         - 'astral-sh/setup-uv@v10.3.2'
     '.github/workflows/documentation.yml':
         - 'actions/checkout@v7.0.1'
+        - 'actions/deploy-pages@v5.0.1'
         - 'actions/setup-python@v7.1.0'
+        - 'actions/upload-pages-artifact@v5.0.0'
         - 'astral-sh/setup-uv@v10.3.2'
     '.github/workflows/kubernetes-lint.yml':
         - 'actions/checkout@v7.0.1'
@@ -31,11 +33,28 @@ dependencies:
         commit: 'sha1-3d3c42e5aac5ba805825da76410c181273ba90b1'
         owner_id: 44036562
         repo_id: 197814629
+    'actions/deploy-pages@v5.0.1':
+        ref: 'v5.0.1'
+        commit: 'sha1-368f82528645a54fb793d4d04e342629a3f51346'
+        owner_id: 44036562
+        repo_id: 438112499
     'actions/setup-python@v7.1.0':
         ref: 'v7.1.0'
         commit: 'sha1-6d4fd22b20465ccc0f7354476588e8df7c9ca0e0'
         owner_id: 44036562
         repo_id: 192625525
+    'actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f':
+        ref: 'v7.0.0'
+        commit: 'sha1-bbbca2ddaa5d8feaa63e36b76fdaad77386f024f'
+        owner_id: 44036562
+        repo_id: 192625955
+    'actions/upload-pages-artifact@v5.0.0':
+        ref: 'v5.0.0'
+        commit: 'sha1-fc324d3547104276b827a68afc52ff2a11cc49c9'
+        owner_id: 44036562
+        repo_id: 496012378
+        uses:
+            - 'actions/upload-artifact@bbbca2ddaa5d8feaa63e36b76fdaad77386f024f'
     'astral-sh/setup-uv@v10.3.2':
         ref: 'v10.3.2'
         commit: 'sha1-07a047e608db84b3d8c06cd9a7c7dcc9c355c18e'
