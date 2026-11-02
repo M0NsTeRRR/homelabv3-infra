@@ -20,6 +20,8 @@ openbao_secrets_engine:
 openbao_auth_methods:
   - name: oidc
     path: oidc
+    tunes:
+      listing_visibility: unauth
   - name: kubernetes
     path: kubernetes
 openbao_policies:

@@ -1,3 +1,4 @@
 {
-    "type": "{{ item.name }}"
+    "type": "{{ item.name }}"{% if 'tunes' in item %},
+    "config": {{ item.tunes | to_nice_json | indent(2) }}{% endif %}
 }

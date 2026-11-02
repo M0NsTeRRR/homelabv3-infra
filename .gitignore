@@ -3,6 +3,7 @@ venv
 *.egg-info
 
 # ansible
+ansible/.ansible
 .vault_password.txt
 vault.json.secrets
 *secrets.yml
