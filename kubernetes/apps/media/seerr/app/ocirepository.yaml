@@ -10,8 +10,8 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 3.10.1
-    digest: sha256:5bda959777d3f1cddc747fe0c344c7ecd3b7340a8f2db4978781cbe2f3405108
+    tag: 3.11.0
+    digest: sha256:11351afde08bc01530cfa17ac69539e5323f078b3b73b88f0209d896ac898c07
   url: oci://ghcr.io/seerr-team/seerr/seerr-chart
   verify:
     provider: cosign
