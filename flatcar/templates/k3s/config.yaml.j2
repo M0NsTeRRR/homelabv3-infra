@@ -1,9 +1,9 @@
 {% autoescape false %}
 node-name: {{ hostname }}
-{%- if k3s_server_init %}
+{%- if k3s_bootstrap and k3s_server_init %}
 cluster-init: true
 {%- else %}
-server: {{ k3s_join_url }}
+server: {{ k3s_bootstrap_join_url if k3s_bootstrap else k3s_join_url }}
 {%- endif %}
 token-file: /etc/rancher/k3s/token
 {%- if k3s_server %}

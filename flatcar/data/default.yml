@@ -20,7 +20,11 @@ systemd_resolved_domains:
 systemd_resolved_dot: false
 
 k3s_server: true
-k3s_join_url: https://192.168.10.81:6443
+# Passed by the justfile when creating a new cluster: the node with k3s_server_init runs cluster-init,
+# the others join it directly because the VIP (kube-vip) needs a running cluster
+k3s_bootstrap: false
+k3s_bootstrap_join_url: https://192.168.10.81:6443
+k3s_join_url: https://192.168.10.80:6443
 k3s_ha_controlplane_ip:
   - 192.168.10.80
   - 2a0c:b641:2c0:110::80

@@ -7,14 +7,14 @@ base_url := 'https://' + flatcar_channel + '.release.flatcar-linux.net/amd64-usr
 servers := 'server1 server2 server3'
 self := just_executable() + " --justfile " + justfile_directory() + "/justfile flatcar"
 
-# Deploy all Flatcar nodes
+# Deploy all Flatcar nodes as a new cluster (k3s_bootstrap), use deploy-node to add or replace a node
 deploy:
-    {{ self }} deploy-node k8s-1 server1 nvme-Lexar_SSD_NQ790_2TB_NHM259R004004P220B
-    {{ self }} deploy-node k8s-2 server2 nvme-Lexar_SSD_NQ790_2TB_NHM259R006082P220B
-    {{ self }} deploy-node k8s-3 server3 nvme-Lexar_SSD_NQ790_2TB_NHM259R002638P220B
+    {{ self }} deploy-node k8s-1 server1 nvme-Lexar_SSD_NQ790_2TB_NHM259R004004P220B yes
+    {{ self }} deploy-node k8s-2 server2 nvme-Lexar_SSD_NQ790_2TB_NHM259R006082P220B yes
+    {{ self }} deploy-node k8s-3 server3 nvme-Lexar_SSD_NQ790_2TB_NHM259R002638P220B yes
 
-# Deploy a single Flatcar node
-deploy-node node server disk: (generate-ignition node)
+# Deploy a single Flatcar node, it joins the existing cluster unless bootstrap=yes (new cluster)
+deploy-node node server disk bootstrap='': (generate-ignition node bootstrap)
     #!/usr/bin/env bash
     set -euo pipefail
     target="{{ server }}:{{ node }}"
@@ -37,13 +37,13 @@ deploy-node node server disk: (generate-ignition node)
 
 # Generate ignition for a single Flatcar node
 [private]
-generate-ignition node:
+generate-ignition node bootstrap='':
     mkdir -p generated/{{ node }}
     minijinja-cli templates/hostname.j2 data/default.yml data/hosts/{{ node }}.yml -o generated/hostname
     minijinja-cli templates/network.conf.j2 data/default.yml data/hosts/{{ node }}.yml -o generated/network.conf
     minijinja-cli templates/resolved.conf.j2 data/default.yml data/hosts/{{ node }}.yml -o generated/resolved.conf
     minijinja-cli templates/timesyncd.conf.j2 data/default.yml data/hosts/{{ node }}.yml -o generated/timesyncd.conf
-    minijinja-cli templates/k3s/config.yaml.j2 data/default.yml data/hosts/{{ node }}.yml -o generated/k3s_config.yaml
+    minijinja-cli -D k3s_bootstrap={{ bootstrap }} templates/k3s/config.yaml.j2 data/default.yml data/hosts/{{ node }}.yml -o generated/k3s_config.yaml
     minijinja-cli -D k3s_token=$K3S_TOKEN templates/k3s/token.j2 data/default.yml data/hosts/{{ node }}.yml -o generated/k3s_token
     butane -d . --pretty --strict base.bu > generated/base.ign
     butane -d . --pretty --strict base.k3s.bu > generated/base.k3s.ign
