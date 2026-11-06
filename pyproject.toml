@@ -8,13 +8,13 @@ classifiers = [
   "License :: OSI Approved :: CEA CNRS Inria Logiciel Libre License, version 2.1 (CeCILL-2.1)",
   "Operating System :: OS Independent",
   "Programming Language :: Python",
-  "Programming Language :: Python :: 3.12",
   "Programming Language :: Python :: 3.13",
   "Programming Language :: Python :: 3.14",
+  "Programming Language :: Python :: 3.15",
   "Topic :: Utilities",
 ]
 
-requires-python = ">=3.12,<4.0.0"
+requires-python = ">=3.13,<4.0.0"
 
 [project.urls]
 Funding = "https://ko-fi.com/ludovicortega"
@@ -24,7 +24,7 @@ Repository = "https://github.com/M0NsTeRRR/homelabv3-infra"
 
 [project.optional-dependencies]
 ansible = [
-  "ansible-core~=2.21.1",
+  "ansible-core~=2.22.0",
   "ansible-lint~=26.10.1",
   "dnspython~=2.9.0",
   "netaddr~=1.3.0",
