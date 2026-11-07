@@ -1,4 +1,4 @@
-# Proxmox acme
+# IncusOS
 
 ## What is IncusOS ?
 
@@ -20,60 +20,57 @@
 
 ## Post install setup
 
-Add the remote server
+Add each server as a remote **and retrieve its encryption recovery key** in `OS` > `System` > `Security`.
 ```fish
-incus remote add serverX serverX.unicornafk.fr
+incus remote add server1 server1.unicornafk.fr
+incus remote add server2 server2.unicornafk.fr
+incus remote add server3 server3.unicornafk.fr
 ```
 
-Retrieve encryption recovery key in `OS` > `System` > `Security`
+!!! warning
+    Do **not** create networks, storage volumes, profiles or instances on a server before it has joined the cluster.
+    A joining server must be empty: it cannot have preexisting networks, storage pools, volumes, profiles or instances.
+    Otherwise `incus cluster join` fails. Create everything **after** the cluster is formed.
 
-Create Volumes
-```fish
-# Volumes
-incus storage volume create local flatcar
-```
+## Create the cluster
 
-Create Networks
-```fish
-incus network create prod parent=enp3s0 vlan=10 --type=physical
-incus network create lab parent=enp3s0 vlan=20 --type=physical
-```
+`just incus bootstrap`
 
-## Add custom CA certs
+It creates the cluster `homelab` and theses ressources.
 
-https://linuxcontainers.org/incus-os/docs/main/reference/system/security/#configuration-options
+### Join server2 and server3
 
-In `OS` > `System` > `Security` add custom CA cert.
-```
-custom_ca_certs:
-  - |
-    -----BEGIN CERTIFICATE-----
-    xxxxxxx
-```
+The join asks for the member-specific configuration: for the `local` storage pool use `local/incus` as value for `source` and `zfs.pool_name`, and for the `prod` and `lab` networks use `enp3s0` as `parent`.
+Once joined, the recipe removes the node remote.
 
-## Configure ACME
-
-In settings page configure the following :
-
-`acme.agree_tos`: `true`
-`acme.ca_url`: `https://openbao.unicornafk.fr:8200/v1/pki/acme/directory`
-`acme.domain`: `server.unicornafk.fr,serverX.unicornafk.fr` (where `X` represents the server number)
-`acme.email`: `admin@unicornafk.fr`
-
-## Configure OIDC
-
-In settings page configure the following :
-
-`oidc.claim`: `sub`
-`oidc.client.id`: `incus`
-`oidc.issuer`: `https://sso.unicornafk.fr/oauth2/openid/incus`
-`oidc.scopes`: `openid,profile,email`
+If a previous attempt left a `cluster.https_address` on a server, it can be reset with a reinstall (see [Wipe a drive](#wipe-a-drive)).
 
 ## Usage
 
 ### Task
 
-Use `just --list --list-submodules` to find Flatcar group recipes for deploying the base VM infrastructure.
+Use `just --list flatcar` to find the Flatcar recipes for deploying the base VM infrastructure.
+
+Once the cluster is formed, run `just flatcar add-image` and `just flatcar add-profile` once, then `just flatcar deploy`. Each node gets its own `flatcar-<node>` volume holding its EFI files and ignition.
+
+### Update the flatcar nodes
+
+The flatcar nodes are not updated in place: each VM is replaced with a fresh one built from the new ignition, and its data disk (rook-ceph) is kept.
+
+1. Download and import the new image:
+    ```fish
+    just flatcar add-image
+    ```
+2. Replace the nodes:
+    ```fish
+    # all nodes, one at a time
+    just flatcar replace
+
+    # or a single node
+    just flatcar replace-node k8s-1
+    ```
+
+For each node, `replace-node` checks that the three nodes are `Ready` and Ceph is `HEALTH_OK`, drains and deletes the node, deletes the VM and its `flatcar-<node>` volume, deploys the new VM, then waits for the node to be `Ready` and Ceph to be `HEALTH_OK` again before moving on.
 
 ## Tips
 

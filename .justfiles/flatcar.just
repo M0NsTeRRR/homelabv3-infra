@@ -1,39 +1,48 @@
 set working-directory := '../flatcar'
 
-flatcar_version := '4757.2.0'
+import 'common.just'
+
+flatcar_version := '4757.2.3'
 flatcar_channel := 'stable'
 image_basename := 'flatcar_production_qemu_uefi_secure'
 base_url := 'https://' + flatcar_channel + '.release.flatcar-linux.net/amd64-usr/' + flatcar_version
-servers := 'server1 server2 server3'
-self := just_executable() + " --justfile " + justfile_directory() + "/justfile flatcar"
+volume_dir := '/var/lib/incus/storage-pools/local/custom/default_flatcar-'
+wait_nodes := 'kubectl wait --for=condition=Ready node/k8s-1 node/k8s-2 node/k8s-3 --timeout=1m'
+wait_ceph := "kubectl -n rook-ceph wait cephcluster/rook-ceph --for=jsonpath='{.status.ceph.health}'=HEALTH_OK --timeout=30m"
 
 # Deploy all Flatcar nodes as a new cluster (k3s_bootstrap), use deploy-node to add or replace a node
-deploy:
-    {{ self }} deploy-node k8s-1 server1 nvme-Lexar_SSD_NQ790_2TB_NHM259R004004P220B yes
-    {{ self }} deploy-node k8s-2 server2 nvme-Lexar_SSD_NQ790_2TB_NHM259R006082P220B yes
-    {{ self }} deploy-node k8s-3 server3 nvme-Lexar_SSD_NQ790_2TB_NHM259R002638P220B yes
+deploy: (deploy-node 'k8s-1' 'yes') (deploy-node 'k8s-2' 'yes') (deploy-node 'k8s-3' 'yes')
 
-# Deploy a single Flatcar node, it joins the existing cluster unless bootstrap=yes (new cluster)
-deploy-node node server disk bootstrap='': (generate-ignition node bootstrap)
-    #!/usr/bin/env bash
-    set -euo pipefail
-    target="{{ server }}:{{ node }}"
-    pool_dir=/var/lib/incus/storage-pools/local/custom/default_flatcar
-    current_qemu=$(incus profile get flatcar raw.qemu)
-    current_apparmor=$(incus profile get flatcar raw.apparmor)
-    # create VM
-    incus init flatcar/{{ flatcar_version }} "$target" --vm --profile flatcar
-    # configure qemu
-    incus config set "$target" raw.qemu="$current_qemu -fw_cfg name=opt/org.flatcar-linux/config,file=$pool_dir/{{ node }}/ignition.json"
-    # configure apparmor
-    incus config set "$target" raw.apparmor="$current_apparmor /dev/disk/by-id/{{ disk }} rwk, $pool_dir/{{ node }}/ignition.json rk,"
-    # configure disk
-    incus config device add "$target" data disk source=/dev/disk/by-id/{{ disk }} wwn=0x5000000000000001
-    # push ignition file
-    incus storage volume file create -t directory {{ server }}:local flatcar/{{ node }}
-    incus storage volume file push ./output/{{ node }}.ign {{ server }}:local flatcar/{{ node }}/ignition.json
-    # start vm
-    incus start "$target"
+# Replace all Flatcar nodes one at a time (bump flatcar_version / k3s version and run add-image first)
+replace: (replace-node 'k8s-1') (replace-node 'k8s-2') (replace-node 'k8s-3')
+
+# Deploy a single Flatcar node, it joins the existing cluster unless bootstrap=yes (new cluster). Each node has its own volume with its EFI files and ignition
+deploy-node node bootstrap='' server=shell('yq .incus_server "$1"', 'data/hosts/' + node + '.yml') disk=shell('yq .incus_disk "$1"', 'data/hosts/' + node + '.yml'): (generate-ignition node bootstrap)
+    incus storage volume create {{ cluster }}:local flatcar-{{ node }} --target {{ server }}
+    incus storage volume file push tmp/{{ image_basename }}_efi_code.fd {{ cluster }}:local flatcar-{{ node }}/efi_code.fd
+    incus storage volume file push tmp/{{ image_basename }}_efi_vars.fd {{ cluster }}:local flatcar-{{ node }}/efi_vars.fd
+    incus storage volume file push output/{{ node }}.ign {{ cluster }}:local flatcar-{{ node }}/ignition.json
+    incus init {{ cluster }}:flatcar/{{ flatcar_version }} {{ cluster }}:{{ node }} --target {{ server }} --vm --profile flatcar
+    incus config set {{ cluster }}:{{ node }} raw.qemu="-drive if=pflash,format=raw,file={{ volume_dir }}{{ node }}/efi_code.fd,readonly=on -drive if=pflash,format=raw,file={{ volume_dir }}{{ node }}/efi_vars.fd -fw_cfg name=opt/org.flatcar-linux/config,file={{ volume_dir }}{{ node }}/ignition.json"
+    incus config set {{ cluster }}:{{ node }} raw.apparmor="{{ volume_dir }}{{ node }}/efi_code.fd rk, {{ volume_dir }}{{ node }}/efi_vars.fd rwk, {{ volume_dir }}{{ node }}/ignition.json rk, /dev/disk/by-id/{{ disk }} rwk,"
+    incus config device add {{ cluster }}:{{ node }} data disk source=/dev/disk/by-id/{{ disk }} wwn=0x5000000000000001
+    incus config device add {{ cluster }}:{{ node }} efi disk pool=local source=flatcar-{{ node }} path=/mnt/efi
+    incus start {{ cluster }}:{{ node }}
+
+# Replace a single Flatcar node (same name, same IP), its data disk is kept for rook-ceph
+replace-node node server=shell('yq .incus_server "$1"', 'data/hosts/' + node + '.yml') disk=shell('yq .incus_disk "$1"', 'data/hosts/' + node + '.yml'): && (deploy-node node '' server disk) (wait-node node)
+    {{ wait_nodes }}
+    {{ wait_ceph }}
+    kubectl drain {{ node }} --ignore-daemonsets --delete-emptydir-data --timeout=15m
+    kubectl delete node {{ node }}
+    incus delete -f {{ cluster }}:{{ node }}
+    incus storage volume delete {{ cluster }}:local flatcar-{{ node }} --target {{ server }}
+
+[private]
+wait-node node:
+    kubectl wait --for=create node/{{ node }} --timeout=15m
+    kubectl wait --for=condition=Ready node/{{ node }} --timeout=15m
+    {{ wait_ceph }}
 
 # Generate ignition for a single Flatcar node
 [private]
@@ -49,85 +58,26 @@ generate-ignition node bootstrap='':
     butane -d . --pretty --strict base.k3s.bu > generated/base.k3s.ign
     butane -d . --pretty --strict k3s-server.bu > output/{{ node }}.ign
 
-# Deploy Flatcar image to incusos
-add-image node: download-artifacts
-    for server in {{ servers }}; do {{ self }} import-artifacts "$server" {{ node }}; done
+# Import the Flatcar image into the cluster
+add-image: download-artifacts
+    incus image import tmp/metadata.tar.gz tmp/{{ image_basename }}.img {{ cluster }}: --alias flatcar/{{ flatcar_version }}
 
-# Deploy Flatcar profile to incusos
+# Create the Flatcar profile in the cluster
 add-profile:
-    for server in {{ servers }}; do {{ self }} import-profile "$server"; done
+    incus profile create {{ cluster }}:flatcar < incus-profile.yaml
 
 # Download and prepare artifacts for incusos
 [private]
 download-artifacts:
-    #!/usr/bin/env bash
-    set -euo pipefail
-    mkdir -p tmp/
+    mkdir -p tmp
     curl -Lo tmp/flatcar.asc https://www.flatcar.org/security/image-signing-key/Flatcar_Image_Signing_Key.asc
     curl -Lo tmp/{{ image_basename }}.img {{ base_url }}/{{ image_basename }}_image.img
     curl -Lo tmp/{{ image_basename }}.img.sig {{ base_url }}/{{ image_basename }}_image.img.sig
     curl -Lo tmp/{{ image_basename }}_efi_code.qcow2 {{ base_url }}/{{ image_basename }}_efi_code.qcow2
     curl -Lo tmp/{{ image_basename }}_efi_vars.qcow2 {{ base_url }}/{{ image_basename }}_efi_vars.qcow2
-    # Verify image signature
     gpg --import --keyid-format LONG tmp/flatcar.asc
     gpg tmp/{{ image_basename }}.img.sig
-    # Convert efi code and vars from qcow2 to raw
     qemu-img convert -f qcow2 -O raw tmp/{{ image_basename }}_efi_code.qcow2 tmp/{{ image_basename }}_efi_code.fd
     qemu-img convert -f qcow2 -O raw tmp/{{ image_basename }}_efi_vars.qcow2 tmp/{{ image_basename }}_efi_vars.fd
-    # Create the metadata file (https://linuxcontainers.org/incus/docs/main/reference/image_format/#metadata)
-    cat > tmp/metadata.yaml <<YAML
-    ---
-    architecture: x86_64
-    creation_date: $(date +%s)
-    properties:
-      description: Flatcar {{ flatcar_version }}
-      os: Flatcar
-      release: {{ flatcar_version }}
-    YAML
-    tar -cvzf tmp/metadata.tar.gz -C tmp metadata.yaml
-
-# Import Flatcar artifacts into incusos
-[private]
-import-artifacts server node:
-    incus image import tmp/metadata.tar.gz tmp/{{ image_basename }}.img "{{ server }}:" --alias flatcar/{{ flatcar_version }}
-    incus storage volume file push tmp/{{ image_basename }}_efi_code.fd {{ server }}:local flatcar/{{ node }}/{{ image_basename }}_efi_code.fd
-    incus storage volume file push tmp/{{ image_basename }}_efi_vars.fd {{ server }}:local flatcar/{{ node }}/{{ image_basename }}_efi_vars.fd
-
-# Import Flatcar profile into incusos
-[private]
-import-profile server:
-    #!/usr/bin/env bash
-    set -euo pipefail
-    incus remote switch {{ server }}
-    incus profile create flatcar <<'YAML'
-    ---
-    config:
-      limits.cpu: 12
-      limits.memory: 50GiB
-      boot.autostart: true
-      raw.apparmor: |-
-        /var/lib/incus/storage-pools/local/custom/default_flatcar/{{ image_basename }}_efi_code.fd rk,
-        /var/lib/incus/storage-pools/local/custom/default_flatcar/{{ image_basename }}_efi_vars.fd rwk,
-      raw.qemu: |-
-        -drive if=pflash,format=raw,file=/var/lib/incus/storage-pools/local/custom/default_flatcar/{{ image_basename }}_efi_code.fd,readonly=on
-        -drive if=pflash,format=raw,file=/var/lib/incus/storage-pools/local/custom/default_flatcar/{{ image_basename }}_efi_vars.fd
-      raw.qemu.conf: |-
-        [drive][0]
-        [drive][1]
-    devices:
-      eth0:
-        network: prod
-        type: nic
-      efi:
-        type: disk
-        pool: local
-        source: flatcar
-        path: /mnt/efi
-      root:
-        path: /
-        pool: local
-        type: disk
-        size: 200GiB
-    name: flatcar
-    used_by:
-    YAML
+    minijinja-cli -D flatcar_version={{ flatcar_version }} -D creation_date={{ datetime("%s") }} incus-metadata.yaml.j2 -o tmp/metadata.yaml
+    tar -czf tmp/metadata.tar.gz -C tmp metadata.yaml

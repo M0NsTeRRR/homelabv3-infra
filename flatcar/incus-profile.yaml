@@ -1,0 +1,18 @@
+---
+config:
+  limits.cpu: 12
+  limits.memory: 50GiB
+  boot.autostart: true
+  raw.qemu.conf: |-
+    [drive][0]
+    [drive][1]
+devices:
+  eth0:
+    network: prod
+    type: nic
+  root:
+    path: /
+    pool: local
+    type: disk
+    size: 200GiB
+name: flatcar

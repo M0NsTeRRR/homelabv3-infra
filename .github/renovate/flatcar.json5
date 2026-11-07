@@ -13,11 +13,11 @@
     {
       "description": ["Process Flatcar version"],
       "customType": "regex",
-      "managerFilePatterns": ["/(^|/)\\.taskfiles/flatcar/Taskfile\\.ya?ml$/"],
+      "managerFilePatterns": ["/(^|/)\\.justfiles/flatcar\\.just$/"],
       "matchStrings": [
-        "FLATCAR_VERSION:\\s+\"(?<currentValue>[^\"]+)\"(?<comment>[^\\n]*)\\n(?<indentation>\\s+)FLATCAR_CHANNEL:\\s+\"(?<packageName>[^\"]+)\""
+        "flatcar_version := '(?<currentValue>[^']+)'(?<comment>[^\\n]*)\\nflatcar_channel := '(?<packageName>[^']+)'"
       ],
-      "autoReplaceStringTemplate": "FLATCAR_VERSION: \"{{{newValue}}}\"{{{comment}}}\n{{{indentation}}}FLATCAR_CHANNEL: \"{{{packageName}}}\"",
+      "autoReplaceStringTemplate": "flatcar_version := '{{{newValue}}}'{{{comment}}}\nflatcar_channel := '{{{packageName}}}'",
       "depNameTemplate": "flatcar",
       "datasourceTemplate": "custom.flatcar-releases",
       "versioningTemplate": "semver-coerced"

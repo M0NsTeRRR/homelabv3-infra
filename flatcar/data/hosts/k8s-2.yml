@@ -2,3 +2,6 @@
 hostname: k8s-2
 network_node_ipv4: 192.168.10.82/24
 network_node_ipv6: 2a0c:b641:02c0:110::82/64
+
+incus_server: server2
+incus_disk: nvme-Lexar_SSD_NQ790_2TB_NHM259R006082P220B
