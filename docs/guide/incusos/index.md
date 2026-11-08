@@ -38,12 +38,24 @@ incus remote add server3 server3.unicornafk.fr
 
 It creates the cluster `homelab` and theses ressources.
 
-### Join server2 and server3
+### Join node
 
-The join asks for the member-specific configuration: for the `local` storage pool use `local/incus` as value for `source` and `zfs.pool_name`, and for the `prod` and `lab` networks use `enp3s0` as `parent`.
-Once joined, the recipe removes the node remote.
+`just incus join server2`
 
-If a previous attempt left a `cluster.https_address` on a server, it can be reset with a reinstall (see [Wipe a drive](#wipe-a-drive)).
+This installs the custom CA on the node, **reboots it** (the Incus daemon only loads the system CAs at startup), then joins it to the existing cluster.
+
+Answer the prompts as follows:
+
+| Question | Answer |
+|---|---|
+| What IP address or DNS name should be used to reach this server? | Enter (default) |
+| What member name should be used to identify this server in the cluster? | Enter (default) |
+| All existing data is lost when joining a cluster, continue? | `yes` |
+| Choose "parent" property for network "enp3s0" | `enp3s0` |
+| Choose "parent" property for network "lab" | `enp3s0` |
+| Choose "parent" property for network "prod" | `enp3s0` |
+| Choose "source" property for storage pool "local" | `local/incus` |
+| Choose "zfs.pool_name" property for storage pool "local" | `local/incus` |
 
 ## Usage
 

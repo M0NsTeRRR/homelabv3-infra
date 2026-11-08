@@ -5,5 +5,5 @@ network_node_ipv6: 2a0c:b641:02c0:110::81/64
 
 k3s_server_init: true
 
-incus_server: server1
+incus_server: server1.unicornafk.fr
 incus_disk: nvme-Lexar_SSD_NQ790_2TB_NHM259R004004P220B
