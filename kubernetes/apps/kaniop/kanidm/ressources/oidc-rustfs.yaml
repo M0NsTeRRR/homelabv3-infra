@@ -21,6 +21,8 @@ spec:
     name: kanidm
     namespace: kaniop
   displayname: RustFS
+  image:
+    url: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/svg/rustfs.svg
   origin: https://nas.unicornafk.fr:30293
   redirectUrl:
     - https://nas.unicornafk.fr:30293/rustfs/admin/v3/oidc/callback/rustfs

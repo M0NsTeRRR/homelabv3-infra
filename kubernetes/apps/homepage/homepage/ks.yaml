@@ -13,6 +13,7 @@ spec:
   postBuild:
     substitute:
       APP: homepage
+      OIDC_IMAGE: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/homepage.png
       OIDC_LEGACY_CRYPTO: "true" # next-auth only accepts RS256, Kanidm signs ES256 by default
       OIDC_ORIGIN: https://homepage.unicornafk.fr
       OIDC_REDIRECT_URL: https://homepage.unicornafk.fr/api/auth/callback/homepage-oidc

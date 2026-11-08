@@ -32,6 +32,8 @@ spec:
     name: kanidm
     namespace: kaniop
   displayname: Jellyfin
+  image:
+    url: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/jellyfin.png
   origin: https://jellyfin.unicornafk.fr
   redirectUrl:
     # SSO plugin (9p4/jellyfin-plugin-sso): provider name configured in the plugin must be "kanidm"

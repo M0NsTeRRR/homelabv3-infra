@@ -32,6 +32,8 @@ spec:
     name: kanidm
     namespace: kaniop
   displayname: openbao
+  image:
+    url: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/openbao.png
   origin: https://openbao.unicornafk.fr:8200
   redirectUrl:
     - https://openbao.unicornafk.fr:8200/ui/vault/auth/oidc/oidc/callback

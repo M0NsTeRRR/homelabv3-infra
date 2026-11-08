@@ -17,6 +17,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      OIDC_IMAGE: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/qui.png
       OIDC_ORIGIN: https://qui.unicornafk.fr
       OIDC_REDIRECT_URL: https://qui.unicornafk.fr/api/auth/oidc/callback
   prune: true

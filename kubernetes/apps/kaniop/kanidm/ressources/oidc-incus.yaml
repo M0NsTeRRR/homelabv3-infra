@@ -21,6 +21,8 @@ spec:
     name: kanidm
     namespace: kaniop
   displayname: incus
+  image:
+    url: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/incus.png
   origin: https://server1.unicornafk.fr:8443
   redirectUrl:
     - https://server1.unicornafk.fr:8443/oidc/callback

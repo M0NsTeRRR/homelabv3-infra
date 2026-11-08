@@ -12,6 +12,7 @@ spec:
   postBuild:
     substitute:
       APP: flux
+      OIDC_IMAGE: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/flux-cd.png
       OIDC_ORIGIN: https://flux.unicornafk.fr
       OIDC_REDIRECT_URL: https://flux.unicornafk.fr/oauth2/callback
     substituteFrom:

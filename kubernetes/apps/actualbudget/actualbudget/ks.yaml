@@ -17,6 +17,7 @@ spec:
   postBuild:
     substitute:
       APP: *app
+      OIDC_IMAGE: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/actual-budget.png
       OIDC_ORIGIN: https://actualbudget.unicornafk.fr
       OIDC_REDIRECT_URL: https://actualbudget.unicornafk.fr/openid/callback
       VOLSYNC_CAPACITY: 1Gi

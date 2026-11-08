@@ -21,6 +21,8 @@ spec:
     name: kanidm
     namespace: kaniop
   displayname: kubernetes
+  image:
+    url: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/kubernetes.png
   origin: http://localhost:8000
   redirectUrl:
     - http://localhost:8000

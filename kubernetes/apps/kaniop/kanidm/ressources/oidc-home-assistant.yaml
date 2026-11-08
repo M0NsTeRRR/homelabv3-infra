@@ -33,6 +33,8 @@ spec:
     name: kanidm
     namespace: kaniop
   displayname: Home Assistant
+  image:
+    url: https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/home-assistant.png
   origin: https://home-assistant.unicornafk.fr/auth/oidc/welcome
   redirectUrl:
     - https://home-assistant.unicornafk.fr/auth/oidc/callback

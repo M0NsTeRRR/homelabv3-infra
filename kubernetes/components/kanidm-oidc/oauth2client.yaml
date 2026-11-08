@@ -9,6 +9,8 @@ spec:
     name: kanidm
     namespace: kaniop
   displayname: ${APP}
+  image:
+    url: ${OIDC_IMAGE}
   origin: ${OIDC_ORIGIN}
   redirectUrl:
     - ${OIDC_REDIRECT_URL}
