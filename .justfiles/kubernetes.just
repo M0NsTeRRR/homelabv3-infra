@@ -1,7 +1,7 @@
 set working-directory := '../kubernetes'
 
 # Bootstrap kubernetes cluster
-bootstrap: update-openbao-certs init-flux-pgp-keys
+bootstrap: update-openbao-certs init-flux-pgp-keys init-homelab-ca
     helmfile template -f bootstrap/crds.yaml -q | yq ea -r -e 'select(.kind == "CustomResourceDefinition")' | kubectl apply --server-side --force-conflicts -f -
     helmfile sync -f bootstrap/apps.yaml --hide-notes
 
@@ -19,6 +19,13 @@ init-flux-pgp-keys:
     kubectl -n flux-system create secret generic pgp-public-keys \
       --from-file=../kubernetes/apps/flux-system/flux-instance/app/ressources/M0NsTeRRR.asc \
       --from-file=../kubernetes/apps/flux-system/flux-instance/app/ressources/github-web-flow.asc \
+      --dry-run=client -o yaml | kubectl apply -f -
+
+# Seed homelab-ca ConfigMap (flux-operator mounts it before trust-manager exists; trust-manager takes over later)
+init-homelab-ca:
+    kubectl create namespace flux-system --dry-run=client -o yaml | kubectl apply -f -
+    kubectl -n flux-system create configmap homelab-ca \
+      --from-file=ca.crt=../ssl/unicornafk.crt \
       --dry-run=client -o yaml | kubectl apply -f -
 
 # Init openbao
