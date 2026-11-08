@@ -18,23 +18,28 @@ spec:
     storageClass: ceph-block
     size: 40Gi
 
-  # bootstrap:
-  #   recovery:
-  #     source: &source source
+  # Only used when the Cluster is created: restores the latest backup + WAL from the object store.
+  bootstrap:
+    recovery:
+      source: &source source
 
   plugins:
     - name: &plugin barman-cloud.cloudnative-pg.io
       isWALArchiver: true
       parameters:
         barmanObjectName: &store rustfs-store
+        # Archive folder of THIS cluster. Must differ from the externalClusters serverName
+        # below, otherwise barman refuses to archive into a non-empty folder.
+        # Bump (v3, v4...) on every new recovery.
+        serverName: postgres-v2
 
-  # externalClusters:
-  #   - name: *source
-  #     plugin:
-  #       name: *plugin
-  #       parameters:
-  #         barmanObjectName: *store
-  #         serverName: postgres
+  externalClusters:
+    - name: *source
+      plugin:
+        name: *plugin
+        parameters:
+          barmanObjectName: *store
+          serverName: postgres # archive folder of the previous cluster to restore from
 
   postgresql:
     pg_hba:
