@@ -367,9 +367,6 @@ public_openbao_datas:
       jwt_supported_algs:
         - ES256
       policies: viewer
-  - path: pki/config/acme
-    data:
-      enabled: true
   - path: pki/config/ca
     data:
       pem_bundle: |
@@ -380,6 +377,9 @@ public_openbao_datas:
     data:
       path: https://openbao.unicornafk.fr:8200/v1/pki
       aia_path: https://openbao.unicornafk.fr:8200/v1/pki
+  - path: pki/config/acme # requires pki/config/cluster 'path' to be set first
+    data:
+      enabled: true
   - path: pki/config/urls
     data:
       issuing_certificates: "{{ '{{' }}cluster_aia_path{{ '}}' }}/issuer/{{ '{{' }}issuer_id{{ '}}' }}/der"
