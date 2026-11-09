@@ -1,3 +1,40 @@
-.md-header, .md-tabs {
+/* The "modern" variant does not use the primary color for the header, so the
+   starry background is applied by hand in both color schemes. Its text uses the
+   default foreground color (dark in light mode), so force it to white. */
+.md-header,
+.md-tabs {
     background: url("/assets/fond_etoiles.svg");
+    color: #fff;
+}
+
+.md-header__button,
+.md-header__topic,
+.md-tabs__link,
+.md-header .md-search__input,
+.md-header .md-search__input::placeholder {
+    color: #fff;
+}
+
+.md-header .md-search__button,
+.md-header .md-source,
+.md-header .md-source__repository,
+.md-header .md-source__facts {
+    color: #fff;
+}
+
+.md-header .md-search__button:before {
+    background-color: #fff;
+}
+
+.md-header .md-search__button:after {
+    color: #fff;
+}
+
+.md-header .md-source__icon svg {
+    fill: currentcolor;
+}
+
+.md-header--shadow,
+.md-tabs__item--active {
+    border-bottom-color: #fff;
 }
