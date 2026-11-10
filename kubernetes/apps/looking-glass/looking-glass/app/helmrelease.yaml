@@ -46,6 +46,7 @@ spec:
           - lg.as212510.net
 
     valkey:
+      enabled: true
       auth:
         enabled: true
         usersExistingSecret: *secret-ref
