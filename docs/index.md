@@ -20,6 +20,6 @@ To start, I would like to thank all maintainers and contributors to open source 
 - [x] Monitoring, logging and alerting
 - [x] Offsite encrypted backup to S3 multi A-Z
 - [x] Manage everything except :
-  - [ ] Emails
+    - [ ] Emails
 - [x] Eveything is automated with scripts, IaC, etc except :
-  - [ ] Networking hardware device configuration (routers, switchs)
+    - [ ] Networking hardware device configuration (routers, switchs)

@@ -77,6 +77,5 @@ TrueNAS only supports the `DNS-01` challenge and has no MikroTik authenticator. 
     - Renew Certificate Days: `10` (TrueNAS renews the certificate by itself this many days before the expiration)
     - Authenticator: `mikrotik-r1` for `nas.unicornafk.fr`
 
-    !! info "`nas-acme` also appears in the CSR list"
-
-        The UI lists every entry that keeps a CSR in `Certificate Signing Requests`. `nas-acme` is the signed certificate (it is also in `Certificates`), do not delete it. `nas-acme-csr` can be deleted once the certificate is issued
+    !!! info "`nas-acme` also appears in the CSR list"
+      The UI lists every entry that keeps a CSR in `Certificate Signing Requests`. `nas-acme` is the signed certificate (it is also in `Certificates`), do not delete it. `nas-acme-csr` can be deleted once the certificate is issued
