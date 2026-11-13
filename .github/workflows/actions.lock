@@ -15,7 +15,7 @@ workflows:
         - 'astral-sh/setup-uv@v10.3.3'
     '.github/workflows/kubernetes-lint.yml':
         - 'actions/checkout@v7.0.1'
-        - 'home-operations/flate@v0.6.5'
+        - 'home-operations/flate@v0.7.3'
     '.github/workflows/octodns.yml':
         - 'actions/checkout@v7.0.1'
         - 'actions/setup-python@v7.1.0'
@@ -60,9 +60,9 @@ dependencies:
         commit: 'sha1-68559e99cc807c1eb7e9238fd43a15bba460eec2'
         owner_id: 115962839
         repo_id: 846733598
-    'home-operations/flate@v0.6.5':
-        ref: 'v0.6.5'
-        commit: 'sha1-631b76b69c4e58c6f4d1cb01e23616fa61aebafa'
+    'home-operations/flate@v0.7.3':
+        ref: 'v0.7.3'
+        commit: 'sha1-bbb6ebc344da051752dbdb1b413860ceffcfb63d'
         owner_id: 152294696
         repo_id: 1246047993
         uses:
