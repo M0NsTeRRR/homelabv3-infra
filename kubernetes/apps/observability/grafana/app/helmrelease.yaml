@@ -219,6 +219,12 @@ spec:
           datasource:
             - name: DS_PROMETHEUS
               value: *datasource
+        Valkey:
+          gnetId: 763
+          revision: 6
+          datasource:
+            - name: DS_PROM
+              value: *datasource
         Volsync:
           gnetId: 21356
           revision: 3

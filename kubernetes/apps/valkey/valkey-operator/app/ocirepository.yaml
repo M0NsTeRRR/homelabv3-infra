@@ -1,0 +1,15 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/source.toolkit.fluxcd.io/ocirepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: valkey-operator
+spec:
+  interval: 15m
+  layerSelector:
+    mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
+    operation: copy
+  ref:
+    tag: 0.9.0
+    digest: sha256:31dd742746d87835ad11be4022e7fe79e479b4a2e45bbee3ea11479a28237aa0
+  url: oci://ghcr.io/valkey-io/valkey-helm/valkey-operator
