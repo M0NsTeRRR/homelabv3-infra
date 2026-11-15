@@ -7,3 +7,4 @@ namespace: postgres
 resources:
   - ./namespace.yaml
   - ./cnpg/ks.yaml
+  - ./postgres/ks.yaml
