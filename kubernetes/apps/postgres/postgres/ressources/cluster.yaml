@@ -6,7 +6,7 @@ metadata:
 spec:
   instances: 3
 
-  imageName: ghcr.io/cloudnative-pg/postgresql:18.7-system-trixie@sha256:705c19a78ccf8a412c81ac71b0c2c3e6cbe656c67c13375c4db12aa96d4058eb
+  imageName: ghcr.io/cloudnative-pg/postgresql:18.7-system-trixie@sha256:252807135e4e824d105f7c8195d675bcec4d2da4f68bbc9aabe72f6a44743d97
 
   certificates:
     serverCASecret: postgres-server-cert
