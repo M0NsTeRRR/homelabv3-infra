@@ -10,8 +10,8 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 4.2.0
-    digest: sha256:e56dbd33d964a85a3e5db902ee41730d2048371cfcc54e7584c9ab2b35998890
+    tag: 4.2.1
+    digest: sha256:7a314fab5581f4f5a40ce07cf871971bd7edbe11413c15c223a4484584218a77
   url: oci://ghcr.io/m0nsterrr/helm-charts/as212510-net
   verify:
     provider: cosign
