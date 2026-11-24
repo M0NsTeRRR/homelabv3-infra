@@ -58,11 +58,6 @@ openbao_policies:
       - path: pki/issue/*
         capabilities:
           - create
-  - name: actualbudget
-    rules:
-      - path: secret/data/homelab/prod/actualbudget
-        capabilities:
-          - read
   - name: as212510-net
     rules:
       - path: secret/data/homelab/prod/as212510-net
@@ -174,6 +169,11 @@ openbao_policies:
       - path: secret/data/homelab/prod/rook-ceph-cluster
         capabilities:
           - read
+  - name: securo
+    rules:
+      - path: secret/data/homelab/prod/securo
+        capabilities:
+          - read
   - name: seerr
     rules:
       - path: secret/data/homelab/prod/seerr
@@ -188,12 +188,6 @@ public_openbao_datas:
   - path: auth/kubernetes/config
     data:
       kubernetes_host: "https://10.43.0.1:443"
-  - path: auth/kubernetes/role/actualbudget
-    data:
-      bound_service_account_names: actualbudget-openbao
-      bound_service_account_namespaces: actualbudget
-      policies: actualbudget
-      ttl: 1h
   - path: auth/kubernetes/role/as212510-net
     data:
       bound_service_account_names: as212510-net-openbao
@@ -326,6 +320,12 @@ public_openbao_datas:
       bound_service_account_names: rook-ceph-cluster-openbao
       bound_service_account_namespaces: rook-ceph
       policies: rook-ceph-cluster
+      ttl: 1h
+  - path: auth/kubernetes/role/securo
+    data:
+      bound_service_account_names: securo-openbao
+      bound_service_account_namespaces: securo
+      policies: securo
       ttl: 1h
   - path: auth/kubernetes/role/seerr
     data:

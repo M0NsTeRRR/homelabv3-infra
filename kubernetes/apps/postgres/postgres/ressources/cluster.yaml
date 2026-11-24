@@ -42,6 +42,12 @@ spec:
           serverName: postgres # archive folder of the previous cluster to restore from
 
   postgresql:
+    extensions:
+      - name: pgvector
+        image:
+          # Tracked by .github/renovate/cnpg.json5. The tag embeds the PG major: bump it with imageName.
+          reference: ghcr.io/cloudnative-pg/pgvector:0.8.7-19-trixie@sha256:7841009160a7a595e76432c897102c47224f3dfe0db6ae7dd60b3c81094daba9
+
     pg_hba:
       - hostssl all all all cert clientcert=verify-full map=pooler-map
 

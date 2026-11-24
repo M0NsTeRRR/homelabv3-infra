@@ -1,0 +1,18 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+components:
+  - ../../../../components/database/base
+# Securo's migrations need pgvector, and the shared Database component has no
+# extensions: add it here only, via the Database resource (run by the operator).
+patches:
+  - target:
+      kind: Database
+    patch: |-
+      - op: add
+        path: /spec/extensions
+        value:
+          - name: vector
+            # renovate: depName=ghcr.io/cloudnative-pg/pgvector extractVersion=^(?<version>\d+(\.\d+)*)-19-trixie$
+            version: "0.8.7"

@@ -1,0 +1,54 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: &app securo
+spec:
+  components:
+    - ../../../../components/external-secrets
+    - ../../../../components/database/certificate
+    - ../../../../components/volsync
+    - ../../../../components/kanidm-oidc
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+    - name: securo-database
+  interval: 1h
+  path: ./kubernetes/apps/securo/securo/app
+  postBuild:
+    substitute:
+      APP: *app
+      OIDC_IMAGE: https://raw.githubusercontent.com/securo-finance/securo/main/favicons/android-icon-192x192.png
+      OIDC_ORIGIN: https://securo.unicornafk.fr
+      OIDC_REDIRECT_URL: https://securo.unicornafk.fr/api/auth/oidc/callback
+      VOLSYNC_CAPACITY: 5Gi
+      VOLSYNC_PUID: "0"
+      VOLSYNC_PGID: "0"
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: securo
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: securo-database
+spec:
+  dependsOn:
+    - name: postgres
+      namespace: postgres
+  interval: 1h
+  path: ./kubernetes/apps/securo/securo/database
+  postBuild:
+    substitute:
+      APP: securo
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  targetNamespace: postgres

@@ -1,0 +1,93 @@
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: securo
+spec:
+  chartRef:
+    kind: OCIRepository
+    name: securo
+  interval: 1h
+  values:
+    global:
+      domain: securo.unicornafk.fr
+      tls: true
+
+    secret:
+      # Authentication is a client certificate (see securo-postgres ConfigMap): no password.
+      databaseUrl: postgresql+asyncpg://securo@pooler-rw.postgres.svc:5432/securo
+
+    config:
+      oidcEnabled: "true"
+      oidcProviderName: Kanidm
+      oidcDiscoveryUrl: https://sso.unicornafk.fr/oauth2/openid/${APP}/.well-known/openid-configuration
+      # groups_name: Kanidm only sends the `groups` claim (short names) when asked.
+      oidcScopes: openid profile email groups_name
+      oidcSyncRoles: "true"
+      oidcRolesClaim: groups
+      oidcAdminRoles: ${APP}-admin
+
+    postgresql:
+      enabled: false
+
+    persistence:
+      attachments:
+        existingClaim: ${APP}
+
+    httpRoute:
+      enabled: true
+      parentRefs:
+        - name: internal
+          namespace: gateway
+
+    backend:
+      extraEnvFrom: &pg-env-from
+        - configMapRef:
+            name: securo-postgres
+      extraEnv:
+        # Kanidm is served with the homelab CA; httpx reads SSL_CERT_FILE.
+        # This replaces the default bundle for the backend only.
+        - name: SSL_CERT_FILE
+          value: /var/run/secrets/root-ca/ca.crt
+        - name: OIDC_CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: ${APP}-kanidm-oauth2-credentials
+              key: CLIENT_ID
+        - name: OIDC_CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: ${APP}-kanidm-oauth2-credentials
+              key: CLIENT_SECRET
+      extraVolumes: &pg-volumes
+        - name: ca-certs
+          configMap:
+            name: homelab-ca
+        - name: postgres-certs
+          secret:
+            secretName: postgres-cert-${APP}
+            defaultMode: 0400
+      extraVolumeMounts: &pg-mounts
+        - name: ca-certs
+          mountPath: /var/run/secrets/root-ca/ca.crt
+          subPath: ca.crt
+          readOnly: true
+        - name: postgres-certs
+          mountPath: /var/run/secrets/postgresql
+          readOnly: true
+
+    celeryWorker:
+      extraEnvFrom: *pg-env-from
+      extraVolumes: *pg-volumes
+      extraVolumeMounts: *pg-mounts
+
+    celeryBeat:
+      extraEnvFrom: *pg-env-from
+      extraVolumes: *pg-volumes
+      extraVolumeMounts: *pg-mounts
+
+    migration:
+      extraEnvFrom: *pg-env-from
+      extraVolumes: *pg-volumes
+      extraVolumeMounts: *pg-mounts

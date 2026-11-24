@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: securo-postgres
+data:
+  PGSSLMODE: verify-full
+  PGSSLROOTCERT: /var/run/secrets/root-ca/ca.crt
+  PGSSLCERT: /var/run/secrets/postgresql/tls.crt
+  PGSSLKEY: /var/run/secrets/postgresql/tls.key

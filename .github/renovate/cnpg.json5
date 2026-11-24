@@ -7,6 +7,48 @@
       "managerFilePatterns": ["/(^|/)kubernetes/.+\\.ya?ml$/"],
       "matchStrings": ["imageName: (?<depName>[^\\s:]+):(?<currentValue>\\S+)(@(?<currentDigest>sha256:\\S+)?)"],
       "datasourceTemplate": "docker"
+    },
+    {
+      "customType": "regex",
+      "description": ["Process image volume extension images (cloudnative-pg), any extension"],
+      "managerFilePatterns": ["/(^|/)kubernetes/.+\\.ya?ml$/"],
+      "matchStrings": ["reference: (?<depName>ghcr\\.io/cloudnative-pg/[^\\s:]+):(?<currentValue>[^\\s@]+)(@(?<currentDigest>sha256:\\S+))?"],
+      "datasourceTemplate": "docker",
+      "depTypeTemplate": "cnpg-extension"
+    },
+    {
+      "customType": "regex",
+      "description": [
+        "Process the extension version of a CNPG Database, kept in sync with its image.",
+        "Annotate the version line: '# renovate: depName=<image> extractVersion=<regex>'",
+      ],
+      "managerFilePatterns": ["/(^|/)kubernetes/.+\\.ya?ml$/"],
+      "matchStrings": ["# renovate: depName=(?<depName>\\S+) extractVersion=(?<extractVersion>\\S+)\\n\\s*version: \"?(?<currentValue>[^\"\\s]+)\"?"],
+      "datasourceTemplate": "docker",
+      "depTypeTemplate": "cnpg-extension-version"
     }
+  ],
+  "packageRules": [
+    {
+      "description": [
+        "Extension image tags are <version>-<pg major>-<distro>: only follow tags of the same PG major and distro",
+        "(the compatibility group), which also ignores the timestamped tags.",
+      ],
+      "matchDepTypes": ["cnpg-extension"],
+      "versioning": "regex:^(?<major>\\d+)(\\.(?<minor>\\d+))?(\\.(?<patch>\\d+))?-(?<compatibility>\\d+-[a-z]+)$",
+    },
+    {
+      "description": ["The extension version in the Database is a bare x.y.z (extractVersion strips the tag suffix): no digest to pin"],
+      "matchDepTypes": ["cnpg-extension-version"],
+      "pinDigests": false,
+    },
+    {
+      "description": ["Update every CNPG extension (image and Database version) in one PR: one rolling restart"],
+      "matchDepTypes": ["cnpg-extension", "cnpg-extension-version"],
+      "groupName": "CNPG extensions",
+      "group": {
+        "commitMessageTopic": "{{{groupName}}}",
+      },
+    },
   ]
 }
