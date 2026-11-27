@@ -2,173 +2,84 @@
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "packageRules": [
     {
-      "matchDatasources": ["docker"],
-      "matchUpdateTypes": ["major"],
-      "commitMessagePrefix": "feat(container)!: ",
-      "commitMessageTopic": "{{depName}}",
-      "commitMessageExtra": " ( {{currentVersion}} → {{newVersion}} )"
+      'matchPackageNames': ['*'],
+      'matchUpdateTypes': ['major', 'minor', 'patch', 'digest', 'pin', 'pinDigest'],
+      'commitMessageTopic': '{{depName}}',
+      'commitMessageExtra': '( {{#if currentVersion}}{{currentVersion}}{{else}}{{currentDigestShort}}{{/if}} → {{#if newVersion}}{{newVersion}}{{else}}{{newDigestShort}}{{/if}} )',
     },
     {
-      "matchDatasources": ["docker"],
-      "matchUpdateTypes": ["minor"],
-      "semanticCommitType": "feat",
-      "semanticCommitScope": "container",
-      "commitMessageTopic": "{{depName}}",
-      "commitMessageExtra": "( {{currentVersion}} → {{newVersion}} )"
+      'matchDatasources': ['docker'],
+      'matchUpdateTypes': ['major'],
+      'commitMessagePrefix': 'feat(container)!: '
     },
     {
-      "matchDatasources": ["docker"],
-      "matchUpdateTypes": ["patch"],
-      "semanticCommitType": "fix",
-      "semanticCommitScope": "container",
-      "commitMessageTopic": "{{depName}}",
-      "commitMessageExtra": "( {{currentVersion}} → {{newVersion}} )"
+      'matchDatasources': ['docker'],
+      'matchUpdateTypes': ['minor'],
+      'semanticCommitType': 'feat',
+      'semanticCommitScope': 'container'
     },
     {
-      "matchDatasources": ["docker"],
-      "matchUpdateTypes": ["digest"],
-      "semanticCommitType": "chore",
-      "semanticCommitScope": "container",
-      "commitMessageTopic": "{{depName}}",
-      "commitMessageExtra": "( {{currentDigestShort}} → {{newDigestShort}} )"
+      'matchDatasources': ['docker'],
+      'matchUpdateTypes': ['patch'],
+      'semanticCommitType': 'fix',
+      'semanticCommitScope': 'container'
     },
     {
-      "matchDatasources": ["helm"],
-      "matchUpdateTypes": ["major"],
-      "commitMessagePrefix": "feat(helm)!: ",
-      "commitMessageTopic": "{{depName}}",
-      "commitMessageExtra": "( {{currentVersion}} → {{newVersion}} )"
+      'matchDatasources': ['docker'],
+      'matchUpdateTypes': ['digest'],
+      'semanticCommitType': 'chore',
+      'semanticCommitScope': 'container'
     },
     {
-      "matchDatasources": ["helm"],
-      "matchUpdateTypes": ["minor"],
-      "semanticCommitType": "feat",
-      "semanticCommitScope": "helm",
-      "commitMessageTopic": "{{depName}}",
-      "commitMessageExtra": "( {{currentVersion}} → {{newVersion}} )"
+      'matchDatasources': ['galaxy', 'galaxy-collection'],
+      'matchUpdateTypes': ['major'],
+      'commitMessagePrefix': 'feat(ansible)!: '
     },
     {
-      "matchDatasources": ["helm"],
-      "matchUpdateTypes": ["patch"],
-      "semanticCommitType": "fix",
-      "semanticCommitScope": "helm",
-      "commitMessageTopic": "{{depName}}",
-      "commitMessageExtra": "( {{currentVersion}} → {{newVersion}} )"
+      'matchDatasources': ['galaxy', 'galaxy-collection'],
+      'matchUpdateTypes': ['minor'],
+      'semanticCommitType': 'feat',
+      'semanticCommitScope': 'ansible'
     },
     {
-      "matchDatasources": ["kustomize"],
-      "matchUpdateTypes": ["major"],
-      "commitMessagePrefix": "feat(kustomize)!: ",
-      "commitMessageTopic": "{{depName}}",
-      "commitMessageExtra": "( {{currentVersion}} → {{newVersion}} )"
+      'matchDatasources': ['galaxy', 'galaxy-collection'],
+      'matchUpdateTypes': ['patch'],
+      'semanticCommitType': 'fix',
+      'semanticCommitScope': 'ansible'
     },
     {
-      "matchDatasources": ["kustomize"],
-      "matchUpdateTypes": ["minor"],
-      "semanticCommitType": "feat",
-      "semanticCommitScope": "kustomize",
-      "commitMessageTopic": "{{depName}}",
-      "commitMessageExtra": "( {{currentVersion}} → {{newVersion}} )"
+      'matchDatasources': ['github-releases', 'github-tags'],
+      'matchUpdateTypes': ['major'],
+      'commitMessagePrefix': 'feat(github-release)!: '
     },
     {
-      "matchDatasources": ["kustomize"],
-      "matchUpdateTypes": ["patch"],
-      "semanticCommitType": "fix",
-      "semanticCommitScope": "kustomize",
-      "commitMessageTopic": "{{depName}}",
-      "commitMessageExtra": "( {{currentVersion}} → {{newVersion}} )"
+      'matchDatasources': ['github-releases', 'github-tags'],
+      'matchUpdateTypes': ['minor'],
+      'semanticCommitType': 'feat',
+      'semanticCommitScope': 'github-release'
     },
     {
-      "matchDatasources": ["galaxy", "galaxy-collection"],
-      "matchUpdateTypes": ["major"],
-      "commitMessagePrefix": "feat(ansible)!: ",
-      "commitMessageTopic": "{{depName}}",
-      "commitMessageExtra": "( {{currentVersion}} → {{newVersion}} )"
+      'matchDatasources': ['github-releases', 'github-tags'],
+      'matchUpdateTypes': ['patch'],
+      'semanticCommitType': 'fix',
+      'semanticCommitScope': 'github-release'
     },
     {
-      "matchDatasources": ["galaxy", "galaxy-collection"],
-      "matchUpdateTypes": ["minor"],
-      "semanticCommitType": "feat",
-      "semanticCommitScope": "ansible",
-      "commitMessageTopic": "{{depName}}",
-      "commitMessageExtra": "( {{currentVersion}} → {{newVersion}} )"
+      'matchDatasources': ['pypi'],
+      'matchUpdateTypes': ['major'],
+      'commitMessagePrefix': 'feat(python)!: '
     },
     {
-      "matchDatasources": ["galaxy", "galaxy-collection"],
-      "matchUpdateTypes": ["patch"],
-      "semanticCommitType": "fix",
-      "semanticCommitScope": "ansible",
-      "commitMessageTopic": "{{depName}}",
-      "commitMessageExtra": "( {{currentVersion}} → {{newVersion}} )"
+      'matchDatasources': ['pypi'],
+      'matchUpdateTypes': ['minor'],
+      'semanticCommitType': 'feat',
+      'semanticCommitScope': 'python'
     },
     {
-      "matchDatasources": ["github-releases", "github-tags"],
-      "matchUpdateTypes": ["major"],
-      "commitMessagePrefix": "feat(github-release)!: ",
-      "commitMessageTopic": "{{depName}}",
-      "commitMessageExtra": "( {{currentVersion}} → {{newVersion}} )"
+      'matchDatasources': ['pypi'],
+      'matchUpdateTypes': ['patch'],
+      'semanticCommitType': 'fix',
+      'semanticCommitScope': 'python'
     },
-    {
-      "matchDatasources": ["github-releases", "github-tags"],
-      "matchUpdateTypes": ["minor"],
-      "semanticCommitType": "feat",
-      "semanticCommitScope": "github-release",
-      "commitMessageTopic": "{{depName}}",
-      "commitMessageExtra": "( {{currentVersion}} → {{newVersion}} )"
-    },
-    {
-      "matchDatasources": ["github-releases", "github-tags"],
-      "matchUpdateTypes": ["patch"],
-      "semanticCommitType": "fix",
-      "semanticCommitScope": "github-release",
-      "commitMessageTopic": "{{depName}}",
-      "commitMessageExtra": "( {{currentVersion}} → {{newVersion}} )"
-    },
-    {
-      "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["major"],
-      "commitMessagePrefix": "feat(github-action)!: ",
-      "commitMessageTopic": "{{depName}}",
-      "commitMessageExtra": "( {{currentVersion}} → {{newVersion}} )"
-    },
-    {
-      "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["minor"],
-      "semanticCommitType": "feat",
-      "semanticCommitScope": "github-action",
-      "commitMessageTopic": "{{depName}}",
-      "commitMessageExtra": "( {{currentVersion}} → {{newVersion}} )"
-    },
-    {
-      "matchManagers": ["github-actions"],
-      "matchUpdateTypes": ["patch"],
-      "semanticCommitType": "fix",
-      "semanticCommitScope": "github-action",
-      "commitMessageTopic": "{{depName}}",
-      "commitMessageExtra": "( {{currentVersion}} → {{newVersion}} )"
-    },
-    {
-      "matchDatasources": ["pypi"],
-      "matchUpdateTypes": ["major"],
-      "commitMessagePrefix": "feat(python)!: ",
-      "commitMessageTopic": "{{depName}}",
-      "commitMessageExtra": "( {{currentVersion}} → {{newVersion}} )"
-    },
-    {
-      "matchDatasources": ["pypi"],
-      "matchUpdateTypes": ["minor"],
-      "semanticCommitType": "feat",
-      "semanticCommitScope": "python",
-      "commitMessageTopic": "{{depName}}",
-      "commitMessageExtra": "( {{currentVersion}} → {{newVersion}} )"
-    },
-    {
-      "matchDatasources": ["pypi"],
-      "matchUpdateTypes": ["patch"],
-      "semanticCommitType": "fix",
-      "semanticCommitScope": "python",
-      "commitMessageTopic": "{{depName}}",
-      "commitMessageExtra": "( {{currentVersion}} → {{newVersion}} )"
-    }
   ]
 }
