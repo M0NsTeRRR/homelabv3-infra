@@ -46,7 +46,7 @@ spec:
       - name: pgvector
         image:
           # Tracked by .github/renovate/cnpg.json5. The tag embeds the PG major: bump it with imageName.
-          reference: ghcr.io/cloudnative-pg/pgvector:0.8.7-19-trixie@sha256:daba0ae3f815e5bec8eb0fc72db4cc37570e0723a2720b5f6245710abe257cef
+          reference: ghcr.io/cloudnative-pg/pgvector:0.8.7-19-trixie@sha256:ad900cd33c9a5520930659b0a99bef6ebc16f1977daaf37b6df4edce08fa71e0
 
     pg_hba:
       - hostssl all all all cert clientcert=verify-full map=pooler-map
