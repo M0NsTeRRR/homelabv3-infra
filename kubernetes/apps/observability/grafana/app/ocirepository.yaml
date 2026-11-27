@@ -10,6 +10,6 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 14.5.0
-    digest: sha256:ed4f62a8132a3cae18ef7db5ea1e727e08d2e1fdd87f24819dcf9d7b267f3b0c
+    tag: 14.5.1
+    digest: sha256:b42508ad5055f44b5b78c509afcc8dfe16f0573fd187e44eec0627e02cb8e665
   url: oci://ghcr.io/grafana-community/helm-charts/grafana
