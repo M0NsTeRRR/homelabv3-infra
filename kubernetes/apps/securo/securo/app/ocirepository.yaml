@@ -10,6 +10,6 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 0.22.0
-    digest: sha256:ad09ac70368b6f3bf7bf304f70b0f864efa044451ba4b863b0c90e9ae275bd1b
+    tag: 0.23.0
+    digest: sha256:7aa4dd3575acb08fd1a41b5a410e0d9118079d9774dac2cefd6245932f24622d
   url: oci://ghcr.io/securo-finance/charts/securo
