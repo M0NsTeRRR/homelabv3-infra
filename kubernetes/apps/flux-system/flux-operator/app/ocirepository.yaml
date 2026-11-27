@@ -10,8 +10,8 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 0.63.0
-    digest: sha256:62c547ad36803ebc2d679d0b50c1e1ad965cfec6352f27720907361e411891d2
+    tag: 0.63.1
+    digest: sha256:81f946f697a1df9ee3d75cafa9cd979ae3a2ea79f0922b07b279bbeda34ff6df
   url: oci://ghcr.io/controlplaneio-fluxcd/charts/flux-operator
   verify:
     provider: cosign
