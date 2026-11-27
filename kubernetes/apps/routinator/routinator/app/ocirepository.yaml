@@ -10,8 +10,8 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 2.6.1
-    digest: sha256:0fe46f9a625028af26336fde2f874e8b16c682c7432f5b8a3885af0e4adc7302
+    tag: 2.6.2
+    digest: sha256:ab653172484a1bb1ff57cecf88fcaf4077d37eeed2cd1fceaf571da81f1e86ff
   url: oci://ghcr.io/m0nsterrr/helm-charts/routinator
   verify:
     provider: cosign
