@@ -10,6 +10,6 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 5.4.0
-    digest: sha256:b885ec62379a71eca0a6b97373fc342280c7f65885608d522ee908c023f86bae
+    tag: 5.4.1
+    digest: sha256:dae3f46022b42a46a1f6d2489a4ee16d9b55f85e07c36c3d6063bcb0e1b35a69
   url: oci://ghcr.io/piraeusdatastore/helm-charts/snapshot-controller
