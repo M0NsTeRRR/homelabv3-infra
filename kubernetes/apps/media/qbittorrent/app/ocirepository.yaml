@@ -10,8 +10,8 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 7.5.0
-    digest: sha256:9fcf4f06c67c37a3b222e3523fbf9466c5e88cbc9664591f7a7c395a90e0a183
+    tag: 7.5.1
+    digest: sha256:bbb55fae9133d433f4fb9f2839e0f5ce37882db8ee9a23bb57d13dbff8092d24
   url: oci://ghcr.io/m0nsterrr/helm-charts/qbittorrent
   verify:
     provider: cosign
