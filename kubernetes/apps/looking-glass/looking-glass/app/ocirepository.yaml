@@ -10,8 +10,8 @@ spec:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
   ref:
-    tag: 1.4.0
-    digest: sha256:b2031dae44e3adbca7e97fb50341f5b00b259d9a99562cb732137d2e1e48e900
+    tag: 1.5.0
+    digest: sha256:3e7594c6901ac0ae7504f4c465cc6008aca8e8feb609606e9abf1aa29cbea93f
   url: oci://ghcr.io/m0nsterrr/helm-charts/looking-glass
   verify:
     provider: cosign
