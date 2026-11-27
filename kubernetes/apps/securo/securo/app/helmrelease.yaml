@@ -15,14 +15,13 @@ spec:
       tls: true
 
     secret:
-      # Authentication is a client certificate (see securo-postgres ConfigMap): no password.
       databaseUrl: postgresql+asyncpg://securo@pooler-rw.postgres.svc:5432/securo
 
     config:
+      localAuthEnabled: "false"
       oidcEnabled: "true"
       oidcProviderName: Kanidm
       oidcDiscoveryUrl: https://sso.unicornafk.fr/oauth2/openid/${APP}/.well-known/openid-configuration
-      # groups_name: Kanidm only sends the `groups` claim (short names) when asked.
       oidcScopes: openid profile email groups_name
       oidcSyncRoles: "true"
       oidcRolesClaim: groups
@@ -46,8 +45,6 @@ spec:
         - configMapRef:
             name: securo-postgres
       extraEnv:
-        # Kanidm is served with the homelab CA; httpx reads SSL_CERT_FILE.
-        # This replaces the default bundle for the backend only.
         - name: SSL_CERT_FILE
           value: /var/run/secrets/root-ca/ca.crt
         - name: OIDC_CLIENT_ID
